@@ -5,15 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import scene_creator.MainSceneCreator;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/main_scene_view.fxml"));
-        primaryStage.setTitle("Procesador de Imagenes - Untref 2018");
-        primaryStage.setScene(new Scene(root, 700, 600));
-        primaryStage.show();
+
+        MainSceneCreator mainSceneCreator = new MainSceneCreator(primaryStage);
+
     }
 
 

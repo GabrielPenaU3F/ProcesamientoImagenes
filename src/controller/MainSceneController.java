@@ -7,18 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import scene_creator.ImageSceneCreator;
 
 public class MainSceneController {
 
     @FXML
-    private void showImageScene(ActionEvent event) throws Exception{
+    private void showImageScene(ActionEvent event) {
 
-        Parent root = FXMLLoader.load(getClass().getResource("../view/image_scene_view.fxml"));
-        Scene imageScene = new Scene(root);
-        Stage imageStage = new Stage(StageStyle.DECORATED);
-        imageStage.setTitle("Imagen Cargada");
-        imageStage.setScene(imageScene);
-        imageStage.show();
+        ImageSceneCreator imageSceneCreator = new ImageSceneCreator();
 
 
     }
