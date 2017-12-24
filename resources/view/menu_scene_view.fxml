@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="presentation.controller.MenuSceneController" alignment="center" hgap="10" vgap="10">
+    <padding>
+        <Insets top="25" right="50" bottom="10" left="50"/>
+    </padding>
+
+    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <Button text="Trabajo Practico 1" onAction="#onClickButtonTP1"/>
+    </HBox>
+    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Button text="Trabajo Practico 2" onAction="#onClickButtonTP2"/>
+    </HBox>
+    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Button text="Trabajo Practico 3" onAction="#onClickButtonTP3"/>
+    </HBox>
+</GridPane>

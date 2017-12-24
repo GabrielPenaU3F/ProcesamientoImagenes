@@ -1,4 +1,4 @@
-package controller;
+package presentation.controller;
 
 public class ImageSceneController {
 }

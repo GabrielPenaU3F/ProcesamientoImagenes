@@ -1,36 +1,30 @@
-package scene_creator;
+package presentation.scenecreator;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class MainSceneCreator implements SceneCreator{
+public class MenuSceneCreator implements SceneCreator{
 
     private Stage stage;
 
-    public MainSceneCreator(Stage stage) {
-
+    public MenuSceneCreator(Stage stage) {
         this.stage = stage;
-        this.createScene();
-
     }
 
     @Override
     public void createScene() {
 
         try {
-
-            Parent root = FXMLLoader.load(getClass().getResource("../view/main_scene_view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/menu_scene_view.fxml"));
             this.stage.setTitle("Procesador de Imagenes - Untref 2018");
-            this.stage.setScene(new Scene(root, 700, 600));
+            this.stage.setScene(new Scene(root, 400, 250));
             this.stage.show();
 
         } catch (Exception e) {
-
-            throw new RuntimeException("Failed to create new scene");
-
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-
     }
 }

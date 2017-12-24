@@ -7,8 +7,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainSceneController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImageSelectionSceneController">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="603.0">
         <columnConstraints>
@@ -49,7 +50,7 @@
                   </HBox>
                   <Pane layoutX="48.0" layoutY="58.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cargar imagen" />
+                        <Button mnemonicParsing="false" onAction="#saveImage" text="Cargar imagen" />
                      </children>
                   </Pane>
                   <Button layoutX="181.0" layoutY="58.0" mnemonicParsing="false" onAction="#showImageScene" text="Mostrar imagen" />
@@ -58,4 +59,4 @@
          </children>
       </GridPane>
    </children>
-</Pane>
+</AnchorPane>

@@ -1,4 +1,4 @@
-package scene_creator;
+package presentation.scenecreator;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -6,20 +6,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ImageSceneCreator implements SceneCreator{
+public class ImageSceneCreator implements SceneCreator {
 
-    public ImageSceneCreator() {
+    private String value;
 
-        this.createScene();
+    public ImageSceneCreator(String value) {
 
+        this.value = value;
     }
 
     @Override
     public void createScene() {
 
         try {
-
-            Parent root = FXMLLoader.load(getClass().getResource("../view/image_scene_view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/image_scene_view.fxml"));
             Scene imageScene = new Scene(root);
             Stage imageStage = new Stage(StageStyle.DECORATED);
             imageStage.setTitle("Imagen Cargada");
@@ -27,10 +27,7 @@ public class ImageSceneCreator implements SceneCreator{
             imageStage.show();
 
         } catch (Exception e) {
-
             throw new RuntimeException("Failed to create new scene");
-
         }
-
     }
 }
