@@ -19,7 +19,7 @@ public class MenuSceneCreator implements SceneCreator{
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/menu_scene_view.fxml"));
             this.stage.setTitle("Procesador de Imagenes - Untref 2018");
-            this.stage.setScene(new Scene(root, 400, 250));
+            this.stage.setScene(new Scene(root, 800, 600));
             this.stage.show();
 
         } catch (Exception e) {
