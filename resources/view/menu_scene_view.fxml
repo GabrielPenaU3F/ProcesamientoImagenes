@@ -28,22 +28,22 @@
                      <children>
                         <Pane>
                            <children>
-                              <RadioButton mnemonicParsing="false" text="raw" wrapText="true" />
+                              <RadioButton fx:id="rad_raw" mnemonicParsing="false" text="raw" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane prefWidth="70.0">
                            <children>
-                              <RadioButton layoutX="15.0" mnemonicParsing="false" text="pgm" wrapText="true" />
+                              <RadioButton fx:id="rad_pgm" layoutX="15.0" mnemonicParsing="false" text="pgm" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane>
                            <children>
-                              <RadioButton layoutX="15.0" mnemonicParsing="false" text="ppm" wrapText="true" />
+                              <RadioButton fx:id="rad_ppm" layoutX="15.0" mnemonicParsing="false" text="ppm" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane>
                            <children>
-                              <RadioButton layoutX="15.0" mnemonicParsing="false" text="bmp" wrapText="true" />
+                              <RadioButton fx:id="rad_bmp" layoutX="15.0" mnemonicParsing="false" text="bmp" wrapText="true" />
                            </children>
                         </Pane>
                      </children>
