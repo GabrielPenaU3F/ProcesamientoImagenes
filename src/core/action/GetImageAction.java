@@ -1,6 +1,7 @@
 package core.action;
 
 import core.repository.ImageRepository;
+import javafx.scene.image.Image;
 
 public class GetImageAction {
 
@@ -10,7 +11,7 @@ public class GetImageAction {
         this.imageRepository = imageRepository;
     }
 
-    public String execute(String key) {
-        return imageRepository.get(key);
+    public Image execute() {
+        return imageRepository.get(imageRepository.getCurrentImagePath());
     }
 }

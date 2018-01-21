@@ -1,17 +1,36 @@
 package core.action;
 
 import core.repository.ImageRepository;
+import core.service.OpenFileService;
+import ij.ImagePlus;
+import ij.io.Opener;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class SaveImageAction {
 
     private ImageRepository imageRepository;
+    private OpenFileService openFileService;
+    private Opener opener;
 
-    public SaveImageAction(ImageRepository imageRepository) {
+    public SaveImageAction(ImageRepository imageRepository, OpenFileService openFileService, Opener opener) {
         this.imageRepository = imageRepository;
+        this.openFileService = openFileService;
+        this.opener = opener;
     }
 
-    public void execute(String key, String value) {
-        //TODO: FileChooserService open a dialog and choose the image
-        imageRepository.put(key, value);
+    public String execute() {
+        File file = openFileService.open();
+        String path = file.toPath().toString();
+        ImagePlus img = opener.openImage(path);
+        BufferedImage bufferedImage = img.getBufferedImage();
+
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        imageRepository.put(path, image);
+
+        return path;
     }
 }

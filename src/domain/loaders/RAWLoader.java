@@ -1,4 +1,4 @@
-package domain.Loaders;
+package domain.loaders;
 
 import domain.Format;
 import domain.Image;

@@ -1,24 +1,24 @@
 package presentation.presenter;
 
 
-import core.action.GetImageAction;
+import core.action.SaveCurrentImagePathAction;
 import core.action.SaveImageAction;
 
 public class ImageSelectionPresenter {
 
-    private GetImageAction getImageAction;
     private SaveImageAction saveImageAction;
+    private SaveCurrentImagePathAction saveCurrentImagePathAction;
 
-    public ImageSelectionPresenter(GetImageAction getImageAction, SaveImageAction saveImageAction) {
-        this.getImageAction = getImageAction;
+    public ImageSelectionPresenter(SaveImageAction saveImageAction, SaveCurrentImagePathAction saveCurrentImagePathAction) {
         this.saveImageAction = saveImageAction;
+        this.saveCurrentImagePathAction = saveCurrentImagePathAction;
     }
 
-    public String getImage(String key) {
-        return getImageAction.execute(key);
+    public String saveImage() {
+        return saveImageAction.execute();
     }
 
-    public void saveImage(String key, String value) {
-        saveImageAction.execute(key, value);
+    public void saveCurrentImagePath(String currentImagePath) {
+        saveCurrentImagePathAction.execute(currentImagePath);
     }
 }

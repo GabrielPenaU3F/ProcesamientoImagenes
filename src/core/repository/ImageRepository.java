@@ -1,21 +1,33 @@
 package core.repository;
 
+import javafx.scene.image.Image;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ImageRepository {
 
-    private Map<String, String> images;
+    private Map<String, Image> images;
+    private String currentImagePath;
 
     public ImageRepository() {
-        images = new HashMap<>();
+        this.images = new HashMap<>();
+        this.currentImagePath = "";
     }
 
-    public void put(String key, String value) {
-        images.put(key, value);
+    public void put(String path, Image image) {
+        this.images.put(path, image);
     }
 
-    public String get(String key) {
-        return images.get(key);
+    public Image get(String path) {
+        return this.images.get(path);
+    }
+
+    public void put(String currentImagePath) {
+        this.currentImagePath = currentImagePath;
+    }
+
+    public String getCurrentImagePath() {
+        return currentImagePath;
     }
 }

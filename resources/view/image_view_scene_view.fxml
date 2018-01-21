@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.image.Image?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="presentation.controller.ImageViewSceneController"
+          prefHeight="600.0" prefWidth="600.0">
+
+    <children>
+        <ImageView fx:id="imageView"
+                   fitHeight="600.0"
+                   fitWidth="600.0"
+                   layoutX="600.0"
+                   layoutY="600.0"
+                   pickOnBounds="true"
+                   preserveRatio="true">
+
+        </ImageView>
+    </children>
+
+</GridPane>

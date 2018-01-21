@@ -1,27 +1,37 @@
 package presentation.controller;
 
+import com.sun.javafx.collections.ImmutableObservableList;
 import core.provider.PresenterProvider;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import presentation.presenter.ImageSelectionPresenter;
-import presentation.scenecreator.ImageSceneCreator;
+import presentation.scenecreator.ImageViewSceneCreator;
 
 public class MenuSceneController {
 
     private final ImageSelectionPresenter imageSelectionPresenter;
+    @FXML
+    public ComboBox<String> imageComboBox;
 
     public MenuSceneController() {
         imageSelectionPresenter = PresenterProvider.provideImageSelectionPresenter();
     }
 
     @FXML
-    private void showImageScene(ActionEvent event) {
-        new ImageSceneCreator(imageSelectionPresenter.getImage("image1")).createScene();
+    private void saveImage(ActionEvent event) {
+        String imagePath = imageSelectionPresenter.saveImage();
+        ObservableList<String> items = imageComboBox.getItems();
+        items.add(imagePath);
+        imageComboBox.setItems(items);
     }
 
     @FXML
-    private void saveImage(ActionEvent event) {
-        imageSelectionPresenter.saveImage("image1", "IMAGE 1");
+    public void showImage(ActionEvent event) {
+        imageSelectionPresenter.saveCurrentImagePath(imageComboBox.getSelectionModel().getSelectedItem());
+        new ImageViewSceneCreator().createScene();
     }
 
     @FXML

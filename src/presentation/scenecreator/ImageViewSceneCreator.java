@@ -6,20 +6,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ImageSceneCreator implements SceneCreator {
-
-    private String value;
-
-    public ImageSceneCreator(String value) {
-
-        this.value = value;
-    }
+public class ImageViewSceneCreator implements SceneCreator {
 
     @Override
     public void createScene() {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/image_scene_view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/image_view_scene_view.fxml"));
             Scene imageScene = new Scene(root);
             Stage imageStage = new Stage(StageStyle.DECORATED);
             imageStage.setTitle("Imagen Cargada");

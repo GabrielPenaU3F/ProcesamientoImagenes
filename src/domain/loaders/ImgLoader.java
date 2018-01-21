@@ -1,8 +1,6 @@
-package domain.Loaders;
+package domain.loaders;
 
 import domain.Image;
-
-import java.io.FileInputStream;
 
 public interface ImgLoader {
 
