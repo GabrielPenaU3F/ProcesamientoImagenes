@@ -10,7 +10,7 @@ public class PresenterProvider {
 
     public static ImageSelectionPresenter provideImageSelectionPresenter() {
         if (imageSelectionPresenter == null) {
-            imageSelectionPresenter = new ImageSelectionPresenter(ActionProvider.provideSaveImageAction(), ActionProvider.provideSaveCurrentImagePathAction());
+            imageSelectionPresenter = new ImageSelectionPresenter(ActionProvider.provideLoadImageAction(), ActionProvider.provideSetCurrentImagePathOnRepoAction());
             return imageSelectionPresenter;
         }
         return imageSelectionPresenter;

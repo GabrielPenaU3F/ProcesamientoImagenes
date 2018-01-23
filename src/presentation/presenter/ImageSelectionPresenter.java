@@ -1,24 +1,25 @@
 package presentation.presenter;
 
 
-import core.action.SaveCurrentImagePathAction;
-import core.action.SaveImageAction;
+import core.action.SetCurrentImagePathOnRepoAction;
+import core.action.LoadImageAction;
 
 public class ImageSelectionPresenter {
 
-    private SaveImageAction saveImageAction;
-    private SaveCurrentImagePathAction saveCurrentImagePathAction;
+    private LoadImageAction loadImageAction;
+    private SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
 
-    public ImageSelectionPresenter(SaveImageAction saveImageAction, SaveCurrentImagePathAction saveCurrentImagePathAction) {
-        this.saveImageAction = saveImageAction;
-        this.saveCurrentImagePathAction = saveCurrentImagePathAction;
+    public ImageSelectionPresenter(LoadImageAction loadImageAction, SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction) {
+        this.loadImageAction = loadImageAction;
+        this.setCurrentImagePathOnRepoAction = setCurrentImagePathOnRepoAction;
     }
 
-    public String saveImage() {
-        return saveImageAction.execute();
+    //Loads the imagen and returns its path
+    public String loadImage() {
+        return loadImageAction.execute();
     }
 
-    public void saveCurrentImagePath(String currentImagePath) {
-        saveCurrentImagePathAction.execute(currentImagePath);
+    public void setCurrentImagePathOnRepo(String currentImagePath) {
+        setCurrentImagePathOnRepoAction.execute(currentImagePath);
     }
 }

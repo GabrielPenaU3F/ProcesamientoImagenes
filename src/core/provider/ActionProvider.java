@@ -1,14 +1,14 @@
 package core.provider;
 
 import core.action.GetImageAction;
-import core.action.SaveCurrentImagePathAction;
-import core.action.SaveImageAction;
+import core.action.SetCurrentImagePathOnRepoAction;
+import core.action.LoadImageAction;
 
 public class ActionProvider {
 
     private static GetImageAction getImageAction;
-    private static SaveImageAction saveImageAction;
-    private static SaveCurrentImagePathAction saveCurrentImagePathAction;
+    private static LoadImageAction loadImageAction;
+    private static SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -18,22 +18,22 @@ public class ActionProvider {
         return getImageAction;
     }
 
-    public static SaveImageAction provideSaveImageAction() {
-        if (saveImageAction == null) {
-            saveImageAction = new SaveImageAction(
+    public static LoadImageAction provideLoadImageAction() {
+        if (loadImageAction == null) {
+            loadImageAction = new LoadImageAction(
                     RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideOpenFileService(),
                     CommonProvider.provideOpener());
-            return saveImageAction;
+            return loadImageAction;
         }
-        return saveImageAction;
+        return loadImageAction;
     }
 
-    public static SaveCurrentImagePathAction provideSaveCurrentImagePathAction() {
-        if (saveCurrentImagePathAction == null) {
-            saveCurrentImagePathAction = new SaveCurrentImagePathAction(RepositoryProvider.provideImageRepository());
-            return saveCurrentImagePathAction;
+    public static SetCurrentImagePathOnRepoAction provideSetCurrentImagePathOnRepoAction() {
+        if (setCurrentImagePathOnRepoAction == null) {
+            setCurrentImagePathOnRepoAction = new SetCurrentImagePathOnRepoAction(RepositoryProvider.provideImageRepository());
+            return setCurrentImagePathOnRepoAction;
         }
-        return saveCurrentImagePathAction;
+        return setCurrentImagePathOnRepoAction;
     }
 }

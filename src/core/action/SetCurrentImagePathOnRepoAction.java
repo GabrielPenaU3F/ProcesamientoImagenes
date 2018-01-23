@@ -2,11 +2,11 @@ package core.action;
 
 import core.repository.ImageRepository;
 
-public class SaveCurrentImagePathAction {
+public class SetCurrentImagePathOnRepoAction {
 
     private ImageRepository imageRepository;
 
-    public SaveCurrentImagePathAction(ImageRepository imageRepository) {
+    public SetCurrentImagePathOnRepoAction(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 

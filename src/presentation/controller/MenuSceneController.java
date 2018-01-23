@@ -21,8 +21,8 @@ public class MenuSceneController {
     }
 
     @FXML
-    private void saveImage(ActionEvent event) {
-        String imagePath = imageSelectionPresenter.saveImage();
+    private void loadImage(ActionEvent event) {
+        String imagePath = imageSelectionPresenter.loadImage();
         ObservableList<String> items = imageComboBox.getItems();
         items.add(imagePath);
         imageComboBox.setItems(items);
@@ -30,7 +30,7 @@ public class MenuSceneController {
 
     @FXML
     public void showImage(ActionEvent event) {
-        imageSelectionPresenter.saveCurrentImagePath(imageComboBox.getSelectionModel().getSelectedItem());
+        imageSelectionPresenter.setCurrentImagePathOnRepo(imageComboBox.getSelectionModel().getSelectedItem());
         new ImageViewSceneCreator().createScene();
     }
 

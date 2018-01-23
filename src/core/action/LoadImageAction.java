@@ -10,13 +10,13 @@ import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class SaveImageAction {
+public class LoadImageAction {
 
     private ImageRepository imageRepository;
     private OpenFileService openFileService;
     private Opener opener;
 
-    public SaveImageAction(ImageRepository imageRepository, OpenFileService openFileService, Opener opener) {
+    public LoadImageAction(ImageRepository imageRepository, OpenFileService openFileService, Opener opener) {
         this.imageRepository = imageRepository;
         this.openFileService = openFileService;
         this.opener = opener;

@@ -51,7 +51,7 @@
                   </HBox>
                   <Pane layoutX="48.0" layoutY="58.0">
                       <children>
-                          <Button layoutX="48.0" layoutY="58.0" mnemonicParsing="false" onAction="#saveImage"
+                          <Button layoutX="48.0" layoutY="58.0" mnemonicParsing="false" onAction="#loadImage"
                                   text="Cargar imagen"/>
                           <Button layoutX="181.0" layoutY="100.0" mnemonicParsing="false" onAction="#showImage"
                                   text="Mostrar imagen"/>
