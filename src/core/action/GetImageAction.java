@@ -1,6 +1,7 @@
 package core.action;
 
 import core.repository.ImageRepository;
+import domain.CustomImage;
 
 import java.awt.image.BufferedImage;
 
@@ -12,7 +13,7 @@ public class GetImageAction {
         this.imageRepository = imageRepository;
     }
 
-    public BufferedImage execute() {
+    public CustomImage execute() {
         return imageRepository.get(imageRepository.getCurrentImagePath());
     }
 }

@@ -2,10 +2,11 @@ package core.action;
 
 import core.repository.ImageRepository;
 import core.service.OpenFileService;
+import domain.CustomImage;
+import domain.Format;
 import ij.ImagePlus;
 import ij.io.Opener;
-import javafx.embed.swing.SwingFXUtils;
-import domain.Image;
+import org.apache.commons.io.FilenameUtils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,8 +28,8 @@ public class LoadImageAction {
         String path = file.toPath().toString();
         ImagePlus img = opener.openImage(path);
         BufferedImage bufferedImage = img.getBufferedImage();
-        //We should create an Image class (OUR IMAGE CLASS) based on this BufferedImage object
-        imageRepository.put(path, bufferedImage);
+        String formatString = FilenameUtils.getExtension(path); //Como obtengo el formato real??
+        imageRepository.put(path, new CustomImage(bufferedImage, formatString));
         return path;
     }
 }

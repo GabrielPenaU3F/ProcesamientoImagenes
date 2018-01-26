@@ -2,6 +2,7 @@ package presentation.presenter;
 
 
 import core.action.*;
+import domain.CustomImage;
 
 import java.awt.image.BufferedImage;
 
@@ -37,12 +38,12 @@ public class ImageSelectionPresenter {
 
     public void saveImage(String filename) {
 
-        BufferedImage image = this.getImage();
+        CustomImage image = this.getImage();
         saveImageAction.execute(image, filename);
 
     }
 
-    private BufferedImage getImage() {
+    private CustomImage getImage() {
         return getImageAction.execute();
     }
 }

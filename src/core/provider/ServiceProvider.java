@@ -11,7 +11,7 @@ public class ServiceProvider {
 
     private static FileChooser createFileChooser() {
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Image");
+        fileChooser.setTitle("Open CustomImage");
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("All Images", "*.*"), new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                         new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("RAW", "*.raw"),

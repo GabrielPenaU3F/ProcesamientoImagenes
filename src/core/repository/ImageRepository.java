@@ -1,13 +1,15 @@
 package core.repository;
 
 
+import domain.CustomImage;
+
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ImageRepository {
 
-    private Map<String, BufferedImage> images;
+    private Map<String, CustomImage> images;
     private String currentImagePath;
 
     public ImageRepository() {
@@ -15,11 +17,11 @@ public class ImageRepository {
         this.currentImagePath = "";
     }
 
-    public void put(String path, BufferedImage image) {
+    public void put(String path, CustomImage image) {
         this.images.put(path, image);
     }
 
-    public BufferedImage get(String path) {
+    public CustomImage get(String path) {
         return this.images.get(path);
     }
 
