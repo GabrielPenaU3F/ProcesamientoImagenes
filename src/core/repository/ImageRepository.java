@@ -1,13 +1,13 @@
 package core.repository;
 
-import javafx.scene.image.Image;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ImageRepository {
 
-    private Map<String, Image> images;
+    private Map<String, BufferedImage> images;
     private String currentImagePath;
 
     public ImageRepository() {
@@ -15,11 +15,11 @@ public class ImageRepository {
         this.currentImagePath = "";
     }
 
-    public void put(String path, Image image) {
+    public void put(String path, BufferedImage image) {
         this.images.put(path, image);
     }
 
-    public Image get(String path) {
+    public BufferedImage get(String path) {
         return this.images.get(path);
     }
 

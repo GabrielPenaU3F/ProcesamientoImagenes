@@ -1,7 +1,10 @@
 package presentation.presenter;
 
 import core.action.GetImageAction;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+
+import java.awt.image.BufferedImage;
 
 public class ImageViewPresenter {
 
@@ -11,7 +14,13 @@ public class ImageViewPresenter {
         this.getImageAction = getImageAction;
     }
 
-    public Image getCurrentImage() {
+    private BufferedImage getCurrentImage() {
         return this.getImageAction.execute();
+    }
+
+    public Image getFXImage() {
+        BufferedImage bufferedImage = this.getCurrentImage();
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        return image;
     }
 }

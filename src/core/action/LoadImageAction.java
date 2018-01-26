@@ -5,7 +5,7 @@ import core.service.OpenFileService;
 import ij.ImagePlus;
 import ij.io.Opener;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
+import domain.Image;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,10 +27,8 @@ public class LoadImageAction {
         String path = file.toPath().toString();
         ImagePlus img = opener.openImage(path);
         BufferedImage bufferedImage = img.getBufferedImage();
-
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-        imageRepository.put(path, image);
-
+        //We should create an Image class (OUR IMAGE CLASS) based on this BufferedImage object
+        imageRepository.put(path, bufferedImage);
         return path;
     }
 }

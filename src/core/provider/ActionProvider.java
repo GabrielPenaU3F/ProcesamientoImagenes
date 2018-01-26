@@ -1,5 +1,6 @@
 package core.provider;
 
+import core.action.GetCurrentImagePathAction;
 import core.action.GetImageAction;
 import core.action.SetCurrentImagePathOnRepoAction;
 import core.action.LoadImageAction;
@@ -9,6 +10,7 @@ public class ActionProvider {
     private static GetImageAction getImageAction;
     private static LoadImageAction loadImageAction;
     private static SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
+    private static GetCurrentImagePathAction getCurrentImagePathAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -36,4 +38,15 @@ public class ActionProvider {
         }
         return setCurrentImagePathOnRepoAction;
     }
+
+    public static GetCurrentImagePathAction provideGetCurrentImagePathAction() {
+
+        if (getCurrentImagePathAction == null) {
+            getCurrentImagePathAction = new GetCurrentImagePathAction(RepositoryProvider.provideImageRepository());
+            return getCurrentImagePathAction;
+        }
+        return getCurrentImagePathAction;
+    }
+
+
 }

@@ -1,7 +1,8 @@
 package core.action;
 
 import core.repository.ImageRepository;
-import javafx.scene.image.Image;
+
+import java.awt.image.BufferedImage;
 
 public class GetImageAction {
 
@@ -11,7 +12,7 @@ public class GetImageAction {
         this.imageRepository = imageRepository;
     }
 
-    public Image execute() {
+    public BufferedImage execute() {
         return imageRepository.get(imageRepository.getCurrentImagePath());
     }
 }
