@@ -1,10 +1,8 @@
 package presentation.presenter;
 
 
-import core.action.GetImageAction;
-import core.action.SetCurrentImagePathOnRepoAction;
-import core.action.GetCurrentImagePathAction;
-import core.action.LoadImageAction;
+import core.action.*;
+
 import java.awt.image.BufferedImage;
 
 public class ImageSelectionPresenter {
@@ -13,13 +11,15 @@ public class ImageSelectionPresenter {
     private SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
     private GetCurrentImagePathAction getCurrentImagePathAction;
     private GetImageAction getImageAction;
+    private SaveImageAction saveImageAction;
 
 
-    public ImageSelectionPresenter(LoadImageAction loadImageAction, SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction, GetCurrentImagePathAction getCurrentImagePathAction, GetImageAction getImageAction) {
+    public ImageSelectionPresenter(LoadImageAction loadImageAction, SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction, GetCurrentImagePathAction getCurrentImagePathAction, GetImageAction getImageAction, SaveImageAction saveImageAction) {
         this.loadImageAction = loadImageAction;
         this.setCurrentImagePathOnRepoAction = setCurrentImagePathOnRepoAction;
         this.getCurrentImagePathAction = getCurrentImagePathAction;
         this.getImageAction = getImageAction;
+        this.saveImageAction = saveImageAction;
     }
 
     //Loads the imagen and returns its path
@@ -35,10 +35,10 @@ public class ImageSelectionPresenter {
         return getCurrentImagePathAction.execute();
     }
 
-    public void saveImage() {
+    public void saveImage(String filename) {
 
         BufferedImage image = this.getImage();
-
+        saveImageAction.execute(image, filename);
 
     }
 

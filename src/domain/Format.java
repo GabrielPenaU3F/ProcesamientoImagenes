@@ -2,6 +2,6 @@ package domain;
 
 public enum Format {
 
-    RAW, PGM, PPM;
+    RAW, PGM, PPM, BMP;
 
 }

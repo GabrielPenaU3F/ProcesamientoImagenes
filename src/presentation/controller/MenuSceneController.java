@@ -5,14 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import presentation.presenter.ImageSelectionPresenter;
 import presentation.scenecreator.ImageViewSceneCreator;
 
 public class MenuSceneController {
 
     private final ImageSelectionPresenter imageSelectionPresenter;
-    @FXML
-    public ComboBox<String> imageComboBox;
+    @FXML public ComboBox<String> imageComboBox;
+    @FXML private TextField fileNameInput;
 
     public MenuSceneController() {
         imageSelectionPresenter = PresenterProvider.provideImageSelectionPresenter();
@@ -30,7 +31,11 @@ public class MenuSceneController {
     public void saveImage(ActionEvent event) {
 
         imageSelectionPresenter.setCurrentImagePathOnRepo(imageComboBox.getSelectionModel().getSelectedItem());
-        imageSelectionPresenter.saveImage();
+        String fileName = fileNameInput.getText();
+        if(fileName == "") {
+            fileName = "Image1"; //Default name
+        }
+        imageSelectionPresenter.saveImage(fileName);
 
     }
 

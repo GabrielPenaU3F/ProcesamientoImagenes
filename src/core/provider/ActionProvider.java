@@ -1,9 +1,6 @@
 package core.provider;
 
-import core.action.GetCurrentImagePathAction;
-import core.action.GetImageAction;
-import core.action.SetCurrentImagePathOnRepoAction;
-import core.action.LoadImageAction;
+import core.action.*;
 
 public class ActionProvider {
 
@@ -11,6 +8,7 @@ public class ActionProvider {
     private static LoadImageAction loadImageAction;
     private static SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
     private static GetCurrentImagePathAction getCurrentImagePathAction;
+    private static SaveImageAction saveImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -49,4 +47,13 @@ public class ActionProvider {
     }
 
 
+    public static SaveImageAction provideSaveImageAction() {
+
+        if (saveImageAction == null) {
+            saveImageAction = new SaveImageAction();
+            return saveImageAction;
+        }
+        return saveImageAction;
+
+    }
 }
