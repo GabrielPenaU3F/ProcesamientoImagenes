@@ -7,7 +7,6 @@ import java.io.IOException;
 
 public class SaveImageAction {
 
-    //TODO: The format is hardcoded. We should retain the original format of the image
 
     public void execute(CustomImage image, String filename) {
 
