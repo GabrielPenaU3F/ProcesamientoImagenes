@@ -1,6 +1,8 @@
-package core.action;
+package core.action.currentimage;
 
 import core.repository.ImageRepository;
+
+import java.util.Optional;
 
 public class GetCurrentImagePathAction {
 
@@ -10,7 +12,7 @@ public class GetCurrentImagePathAction {
         this.imageRepository = imageRepository;
     }
 
-    public String execute() {
+    public Optional<String> execute() {
         return this.imageRepository.getCurrentImagePath();
     }
 

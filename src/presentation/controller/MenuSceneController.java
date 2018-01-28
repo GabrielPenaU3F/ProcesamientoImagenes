@@ -12,16 +12,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import presentation.presenter.ImageSelectionPresenter;
 import presentation.scenecreator.ImageViewSceneCreator;
 
 public class MenuSceneController {
 
+    public static final String EMPTY = "";
+    @FXML
+    public ComboBox<String> imageComboBox;
+    @FXML
+    private TextField fileNameInput;
+
     private final ImageSelectionPresenter imageSelectionPresenter;
-    @FXML public ComboBox<String> imageComboBox;
-    @FXML private TextField fileNameInput;
 
     public MenuSceneController() {
         imageSelectionPresenter = PresenterProvider.provideImageSelectionPresenter();
@@ -29,18 +32,21 @@ public class MenuSceneController {
 
     @FXML
     private void loadImage(ActionEvent event) {
+
         String imagePath = imageSelectionPresenter.loadImage();
-        ObservableList<String> items = imageComboBox.getItems();
-        items.add(imagePath);
-        imageComboBox.setItems(items);
+        if (!imagePath.equals(EMPTY)) {
+            ObservableList<String> items = imageComboBox.getItems();
+            items.add(imagePath);
+            imageComboBox.setItems(items);
+        }
     }
 
     @FXML
     public void saveImage(ActionEvent event) {
 
-        imageSelectionPresenter.setCurrentImagePathOnRepo(imageComboBox.getSelectionModel().getSelectedItem());
+        imageSelectionPresenter.setCurrentImagePath(imageComboBox.getSelectionModel().getSelectedItem());
         String fileName = fileNameInput.getText();
-        if(fileName.equals("")) {
+        if (fileName.equals(EMPTY)) {
             this.showNoFilenamePopup();
         } else {
             imageSelectionPresenter.saveImage(fileName);
@@ -57,7 +63,7 @@ public class MenuSceneController {
         Button closeButton = new Button("Cerrar");
         closeButton.setOnAction(e -> popupWindow.close());
 
-        VBox layout= new VBox(10);
+        VBox layout = new VBox(10);
         layout.getChildren().addAll(popupLabel, closeButton);
         layout.setAlignment(Pos.CENTER);
 
@@ -68,7 +74,7 @@ public class MenuSceneController {
 
     @FXML
     public void showImage(ActionEvent event) {
-        imageSelectionPresenter.setCurrentImagePathOnRepo(imageComboBox.getSelectionModel().getSelectedItem());
+        imageSelectionPresenter.setCurrentImagePath(imageComboBox.getSelectionModel().getSelectedItem());
         new ImageViewSceneCreator().createScene();
     }
 

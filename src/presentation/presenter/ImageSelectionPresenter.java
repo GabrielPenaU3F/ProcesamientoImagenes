@@ -1,49 +1,53 @@
 package presentation.presenter;
 
-
-import core.action.*;
+import core.action.currentimage.GetCurrentImagePathAction;
+import core.action.currentimage.SetCurrentImagePathAction;
+import core.action.image.GetImageAction;
+import core.action.image.LoadImageAction;
+import core.action.image.SaveImageAction;
 import domain.CustomImage;
 
-import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class ImageSelectionPresenter {
 
     private LoadImageAction loadImageAction;
-    private SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
+    private SetCurrentImagePathAction setCurrentImagePathAction;
     private GetCurrentImagePathAction getCurrentImagePathAction;
     private GetImageAction getImageAction;
     private SaveImageAction saveImageAction;
 
 
-    public ImageSelectionPresenter(LoadImageAction loadImageAction, SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction, GetCurrentImagePathAction getCurrentImagePathAction, GetImageAction getImageAction, SaveImageAction saveImageAction) {
+    public ImageSelectionPresenter(LoadImageAction loadImageAction,
+                                   SetCurrentImagePathAction setCurrentImagePathAction,
+                                   GetCurrentImagePathAction getCurrentImagePathAction,
+                                   GetImageAction getImageAction,
+                                   SaveImageAction saveImageAction) {
         this.loadImageAction = loadImageAction;
-        this.setCurrentImagePathOnRepoAction = setCurrentImagePathOnRepoAction;
+        this.setCurrentImagePathAction = setCurrentImagePathAction;
         this.getCurrentImagePathAction = getCurrentImagePathAction;
         this.getImageAction = getImageAction;
         this.saveImageAction = saveImageAction;
     }
 
-    //Loads the imagen and returns its path
+    //Loads the image in memory repository and returns its path
     public String loadImage() {
         return loadImageAction.execute();
     }
 
-    public void setCurrentImagePathOnRepo(String currentImagePath) {
-        setCurrentImagePathOnRepoAction.execute(currentImagePath);
+    public void setCurrentImagePath(String currentImagePath) {
+        setCurrentImagePathAction.execute(currentImagePath);
     }
 
-    public String getCurrentImagePath() {
+    public Optional<String> getCurrentImagePath() {
         return getCurrentImagePathAction.execute();
     }
 
     public void saveImage(String filename) {
-
-        CustomImage image = this.getImage();
-        saveImageAction.execute(image, filename);
-
+        this.getImage().ifPresent(image -> saveImageAction.execute(image, filename));
     }
 
-    private CustomImage getImage() {
+    private Optional<CustomImage> getImage() {
         return getImageAction.execute();
     }
 }

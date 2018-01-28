@@ -1,12 +1,12 @@
 package presentation.presenter;
 
-import core.action.GetImageAction;
+import core.action.image.GetImageAction;
 import domain.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class ImageViewPresenter {
 
@@ -16,18 +16,19 @@ public class ImageViewPresenter {
         this.getImageAction = getImageAction;
     }
 
-    private CustomImage getCurrentImage() {
+    private Optional<CustomImage> getCurrentImage() {
         return this.getImageAction.execute();
     }
 
-    public Image getFXImage() {
-        BufferedImage bufferedImage = this.getCurrentImage().getBufferedImage();
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-        return image;
+    public Optional<Image> getFXImage() {
+        return this.getCurrentImage().map(customImage -> {
+            BufferedImage bufferedImage = customImage.getBufferedImage();
+            return SwingFXUtils.toFXImage(bufferedImage, null);
+        });
     }
 
-    public Integer getRGB(Integer pixelX, Integer pixelY) {
-        return this.getCurrentImage().getRGB(pixelX, pixelY);
+    public Optional<Integer> getRGB(Integer pixelX, Integer pixelY) {
+        return this.getCurrentImage().map(customImage -> customImage.getPixelValue(pixelX, pixelY));
     }
 
 }

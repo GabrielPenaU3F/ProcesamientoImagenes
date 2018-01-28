@@ -1,9 +1,9 @@
-package core.action;
+package core.action.image;
 
 import core.repository.ImageRepository;
 import domain.CustomImage;
 
-import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class GetImageAction {
 
@@ -13,7 +13,7 @@ public class GetImageAction {
         this.imageRepository = imageRepository;
     }
 
-    public CustomImage execute() {
-        return imageRepository.get(imageRepository.getCurrentImagePath());
+    public Optional<CustomImage> execute() {
+        return imageRepository.getCurrentImagePath().map(s -> imageRepository.get(s));
     }
 }

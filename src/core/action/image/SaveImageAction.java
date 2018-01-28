@@ -1,4 +1,4 @@
-package core.action;
+package core.action.image;
 
 import domain.CustomImage;
 import javax.imageio.ImageIO;
@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class SaveImageAction {
-
 
     public void execute(CustomImage image, String filename) {
 

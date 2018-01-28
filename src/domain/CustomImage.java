@@ -1,38 +1,48 @@
 package domain;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.PixelReader;
+import javafx.scene.paint.Color;
+
 import java.awt.image.BufferedImage;
 
 public class CustomImage {
 
+    private final PixelReader reader;
     private BufferedImage bufferedImage;
     private Format format;
     private Integer width;
     private Integer height;
-    private Integer[][] rgbMatrix;
-
+    private Double red = 0.0;
+    private Double green = 0.0;
+    private Double blue = 0.0;
+    private Double gray = 0.0;
+    private Integer totalPixel = 0;
 
     public CustomImage(BufferedImage bufferedImage, String formatString) {
         this.bufferedImage = bufferedImage;
         this.format = new Format(formatString);
         this.height = bufferedImage.getHeight();
         this.width = bufferedImage.getWidth();
-        //You'll always reach this line with width and height properly setted.
-        this.rgbMatrix = this.calculateRGBMatrix();
+
+        this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
+
+        this.calculateParams();
     }
 
-    private Integer[][] calculateRGBMatrix() {
+    private void calculateParams() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
 
-        Integer[][] rgbMatrix = new Integer[this.width][this.height];
+                Color color = reader.getColor(x, y);
+                this.red += (color.getRed());
+                this.green += (color.getGreen());
+                this.blue += (color.getBlue());
+                this.gray += ((color.getRed() + color.getGreen() + color.getBlue()) / 3);
 
-        for (int i=0; i < this.width; i++) {
-            for (int j=0; j < this.height; j++) {
-
-                rgbMatrix[i][j] = bufferedImage.getRGB(i, j);
-
+                this.totalPixel++;
             }
         }
-        return rgbMatrix;
-
     }
 
     public String getFormatString() {
@@ -43,7 +53,44 @@ public class CustomImage {
         return this.bufferedImage;
     }
 
-    public Integer getRGB(Integer pixelX, Integer pixelY) {
-        return rgbMatrix[pixelX][pixelY];
+    public Integer getPixelValue(Integer x, Integer y) {
+        return (int) ((this.getValueChannelR(x, y) * 255 +
+                this.getValueChannelG(x, y) * 255 +
+                this.getValueChannelB(x, y) * 255)
+                / 3
+        );
     }
+
+    public Double getValueChannelR(int x, int y) {
+        return reader.getColor(x, y).getRed();
+    }
+
+    public Double getValueChannelG(int x, int y) {
+        return reader.getColor(x, y).getGreen();
+    }
+
+    public Double getValueChannelB(int x, int y) {
+        return reader.getColor(x, y).getBlue();
+    }
+
+    public Double getAverageGrey() {
+        return this.gray / this.totalPixel;
+    }
+
+    public Double getTotalValueChannelR() {
+        return this.red;
+    }
+
+    public Double getTotalValueChannelG() {
+        return this.green;
+    }
+
+    public Double getTotalValueChannelB() {
+        return this.blue;
+    }
+
+    public int getTotalPixel() {
+        return this.totalPixel;
+    }
+
 }

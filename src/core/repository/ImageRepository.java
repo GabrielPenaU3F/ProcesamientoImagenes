@@ -3,9 +3,9 @@ package core.repository;
 
 import domain.CustomImage;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ImageRepository {
 
@@ -29,7 +29,7 @@ public class ImageRepository {
         this.currentImagePath = currentImagePath;
     }
 
-    public String getCurrentImagePath() {
-        return currentImagePath;
+    public Optional<String> getCurrentImagePath() {
+        return Optional.ofNullable(currentImagePath);
     }
 }

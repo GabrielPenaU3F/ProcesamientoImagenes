@@ -1,12 +1,16 @@
 package core.provider;
 
-import core.action.*;
+import core.action.currentimage.GetCurrentImagePathAction;
+import core.action.currentimage.SetCurrentImagePathAction;
+import core.action.image.GetImageAction;
+import core.action.image.LoadImageAction;
+import core.action.image.SaveImageAction;
 
 public class ActionProvider {
 
     private static GetImageAction getImageAction;
     private static LoadImageAction loadImageAction;
-    private static SetCurrentImagePathOnRepoAction setCurrentImagePathOnRepoAction;
+    private static SetCurrentImagePathAction setCurrentImagePathAction;
     private static GetCurrentImagePathAction getCurrentImagePathAction;
     private static SaveImageAction saveImageAction;
 
@@ -29,12 +33,12 @@ public class ActionProvider {
         return loadImageAction;
     }
 
-    public static SetCurrentImagePathOnRepoAction provideSetCurrentImagePathOnRepoAction() {
-        if (setCurrentImagePathOnRepoAction == null) {
-            setCurrentImagePathOnRepoAction = new SetCurrentImagePathOnRepoAction(RepositoryProvider.provideImageRepository());
-            return setCurrentImagePathOnRepoAction;
+    public static SetCurrentImagePathAction provideSetCurrentImagePathOnRepoAction() {
+        if (setCurrentImagePathAction == null) {
+            setCurrentImagePathAction = new SetCurrentImagePathAction(RepositoryProvider.provideImageRepository());
+            return setCurrentImagePathAction;
         }
-        return setCurrentImagePathOnRepoAction;
+        return setCurrentImagePathAction;
     }
 
     public static GetCurrentImagePathAction provideGetCurrentImagePathAction() {

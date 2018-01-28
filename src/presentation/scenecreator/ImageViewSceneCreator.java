@@ -20,7 +20,7 @@ public class ImageViewSceneCreator implements SceneCreator {
             imageStage.show();
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create new scene");
+            e.printStackTrace();
         }
     }
 }
