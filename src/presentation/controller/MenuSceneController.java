@@ -41,25 +41,29 @@ public class MenuSceneController {
         imageSelectionPresenter.setCurrentImagePathOnRepo(imageComboBox.getSelectionModel().getSelectedItem());
         String fileName = fileNameInput.getText();
         if(fileName.equals("")) {
-            Stage popupWindow = new Stage();
-            popupWindow.initModality(Modality.APPLICATION_MODAL);
-            popupWindow.setTitle("Error");
-
-            Label popupLabel = new Label("Por favor ingrese un nombre para el archivo");
-            Button closeButton = new Button("Cerrar");
-            closeButton.setOnAction(e -> popupWindow.close());
-
-            VBox layout= new VBox(10);
-            layout.getChildren().addAll(popupLabel, closeButton);
-            layout.setAlignment(Pos.CENTER);
-
-            Scene popupScene = new Scene(layout, 250, 100);
-            popupWindow.setScene(popupScene);
-            popupWindow.showAndWait();
-
+            this.showNoFilenamePopup();
         } else {
             imageSelectionPresenter.saveImage(fileName);
         }
+    }
+
+    private void showNoFilenamePopup() {
+
+        Stage popupWindow = new Stage();
+        popupWindow.initModality(Modality.APPLICATION_MODAL);
+        popupWindow.setTitle("Error");
+
+        Label popupLabel = new Label("Por favor ingrese un nombre para el archivo");
+        Button closeButton = new Button("Cerrar");
+        closeButton.setOnAction(e -> popupWindow.close());
+
+        VBox layout= new VBox(10);
+        layout.getChildren().addAll(popupLabel, closeButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene popupScene = new Scene(layout, 250, 100);
+        popupWindow.setScene(popupScene);
+        popupWindow.showAndWait();
     }
 
     @FXML

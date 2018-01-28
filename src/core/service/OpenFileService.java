@@ -13,6 +13,7 @@ public class OpenFileService {
         this.fileChooser = fileChooser;
     }
 
+    //TODO: Implementar la validacion del archivo y el boton Cancelar!
     public File open() {
         Optional<File> file = Optional.ofNullable(fileChooser.showOpenDialog(null));
         if (!file.isPresent()) {
