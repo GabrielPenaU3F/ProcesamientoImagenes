@@ -10,6 +10,7 @@ import java.util.Optional;
 public class ImageRepository {
 
     private Map<String, CustomImage> images;
+    private CustomImage modifiedImage;
     private String currentImagePath;
 
     public ImageRepository() {
@@ -31,5 +32,13 @@ public class ImageRepository {
 
     public Optional<String> getCurrentImagePath() {
         return Optional.ofNullable(currentImagePath);
+    }
+
+    public void putModifiedImage(CustomImage modifiedImage) {
+        this.modifiedImage = modifiedImage;
+    }
+
+    public CustomImage getModifiedImage() {
+        return this.modifiedImage;
     }
 }
