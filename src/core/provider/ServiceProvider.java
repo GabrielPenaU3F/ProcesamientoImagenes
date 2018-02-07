@@ -1,5 +1,6 @@
 package core.provider;
 
+import core.service.ImageRawService;
 import core.service.OpenFileService;
 import javafx.stage.FileChooser;
 
@@ -18,5 +19,9 @@ public class ServiceProvider {
                         new FileChooser.ExtensionFilter("PGM", "*.pgm"), new FileChooser.ExtensionFilter("PPM", "*.ppm"),
                         new FileChooser.ExtensionFilter("BMP", "*.bmp"));
         return fileChooser;
+    }
+
+    public static ImageRawService provideImageRawService() {
+        return new ImageRawService();
     }
 }

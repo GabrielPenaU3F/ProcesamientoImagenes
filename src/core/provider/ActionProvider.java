@@ -27,7 +27,8 @@ public class ActionProvider {
             loadImageAction = new LoadImageAction(
                     RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideOpenFileService(),
-                    CommonProvider.provideOpener());
+                    CommonProvider.provideOpener(),
+                    ServiceProvider.provideImageRawService());
             return loadImageAction;
         }
         return loadImageAction;
