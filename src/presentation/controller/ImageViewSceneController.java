@@ -62,7 +62,7 @@ public class ImageViewSceneController {
     }
 
     @FXML
-    private void calcularValorPixel(ActionEvent e) {
+    private void calculatePixelValue(ActionEvent e) {
 
         if (this.radioOriginal.isSelected()) {
             if (this.validatePixelCoordinates()) {
@@ -70,7 +70,7 @@ public class ImageViewSceneController {
             }
         } else if (this.radioModificada.isSelected()) {
 
-            if (this.validarModificada()) {
+            if (this.validateModifiedImage()) {
                 if (this.validatePixelCoordinates()) {
                     pixelValue.setText(imageViewPresenter.getModifiedRGB(Integer.parseInt(pixelX.getText()), Integer.parseInt(pixelY.getText())).toString());
                 }
@@ -83,7 +83,7 @@ public class ImageViewSceneController {
     }
 
     @FXML
-    private void modificarValorPixel(ActionEvent e) {
+    private void modifyPixelValue(ActionEvent e) {
 
         if (this.validatePixelCoordinates()) {
 
@@ -112,19 +112,16 @@ public class ImageViewSceneController {
     }
 
     private boolean validatePixelCoordinates() {
-        if (!pixelX.getText().equals("") && !pixelY.getText().equals("")) return true;
-        else return false;
+        return (!pixelX.getText().equals("") && !pixelY.getText().equals(""));
     }
 
     private boolean validateNewValue() {
-        if (!nuevoValorPixel.getText().equals("")) return true;
-        else return false;
+        return !nuevoValorPixel.getText().equals("");
     }
 
     //Verifica que haya cargada una imagen modificada
-    private boolean validarModificada() {
-        if (this.modifiedImageView.getImage() != null) return true;
-        else return false;
+    private boolean validateModifiedImage() {
+        return this.modifiedImageView.getImage() != null;
     }
 
 }

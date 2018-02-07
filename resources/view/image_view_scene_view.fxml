@@ -81,12 +81,12 @@
                <children>
                         <TextField fx:id="pixelValue" layoutX="34.0" layoutY="53.0" prefHeight="25.0" prefWidth="65.0" />
                         <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="35.0" text="Valor" textAlignment="CENTER" />
-                  <Button layoutX="36.0" layoutY="4.0" mnemonicParsing="false" onAction="#calcularValorPixel" text="Calcular" />
+                  <Button layoutX="36.0" layoutY="4.0" mnemonicParsing="false" onAction="#calculatePixelValue" text="Calcular" />
                </children>
                 </Pane>
             <Pane prefHeight="184.0" prefWidth="132.0">
                <children>
-                  <Button layoutX="39.0" layoutY="108.0" mnemonicParsing="false" onAction="#modificarValorPixel" text="Modificar" />
+                  <Button layoutX="39.0" layoutY="108.0" mnemonicParsing="false" onAction="#modifyPixelValue" text="Modificar" />
                   <Label layoutX="7.0" layoutY="141.0" text="Nuevo valor" />
                   <TextField fx:id="nuevoValorPixel" layoutX="72.0" layoutY="137.0" prefHeight="17.0" prefWidth="58.0" />
                         <Label layoutX="17.0" layoutY="33.0" text="R" />
