@@ -30,13 +30,13 @@ public class ImageViewSceneController {
     @FXML
     public TextField pixelBValue;
     @FXML
-    public TextField nuevoValorPixel;
+    public TextField newPixelValue;
     @FXML
-    public Label ingreseValorLabel;
+    public Label insertPixelValueLabel;
     @FXML
-    public RadioButton radioOriginal;
+    public RadioButton originalRadio;
     @FXML
-    public RadioButton radioModificada;
+    public RadioButton modifiedRadio;
 
     private ImageViewPresenter imageViewPresenter;
 
@@ -64,22 +64,23 @@ public class ImageViewSceneController {
     @FXML
     private void calculatePixelValue(ActionEvent e) {
 
-        if (this.radioOriginal.isSelected()) {
+        if (this.originalRadio.isSelected()) {
+
             if (this.validatePixelCoordinates()) {
                 imageViewPresenter.getRGB(Integer.parseInt(pixelX.getText()), Integer.parseInt(pixelY.getText())).ifPresent(rgb -> pixelValue.setText(rgb.toString()));
             }
-        } else if (this.radioModificada.isSelected()) {
+
+        } else if (this.modifiedRadio.isSelected()) {
 
             if (this.validateModifiedImage()) {
                 if (this.validatePixelCoordinates()) {
                     pixelValue.setText(imageViewPresenter.getModifiedRGB(Integer.parseInt(pixelX.getText()), Integer.parseInt(pixelY.getText())).toString());
                 }
             } else {
-                ingreseValorLabel.setText("Imagen erronea");
+                insertPixelValueLabel.setText("Imagen erronea");
             }
 
         }
-
     }
 
     @FXML
@@ -92,8 +93,8 @@ public class ImageViewSceneController {
 
             if (this.validateNewValue()) {
 
-                Double valor = Double.parseDouble(nuevoValorPixel.getText());
-                this.imageViewPresenter.modifyPixelValue(pixelX, pixelY, valor);
+                Double value = Double.parseDouble(newPixelValue.getText());
+                this.imageViewPresenter.modifyPixelValue(pixelX, pixelY, value);
 
                 Image modifiedFXImage = this.imageViewPresenter.getModifiedFXImage();
                 modifiedImageView.setPickOnBounds(true);
@@ -101,11 +102,11 @@ public class ImageViewSceneController {
                 modifiedImageView.setImage(modifiedFXImage);
 
             } else {
-                ingreseValorLabel.setText("Ingrese un valor");
+                insertPixelValueLabel.setText("Ingrese un valor");
             }
 
         } else {
-            ingreseValorLabel.setText("Seleccione pixel");
+            insertPixelValueLabel.setText("Seleccione pixel");
         }
 
 
@@ -116,7 +117,7 @@ public class ImageViewSceneController {
     }
 
     private boolean validateNewValue() {
-        return !nuevoValorPixel.getText().equals("");
+        return !newPixelValue.getText().equals("");
     }
 
     //Verifica que haya cargada una imagen modificada

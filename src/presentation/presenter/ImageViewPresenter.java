@@ -50,7 +50,7 @@ public class ImageViewPresenter {
         return this.getModifiedImage().getPixelValue(pixelX, pixelY);
     }
 
-    public void modifyPixelValue(Integer pixelX, Integer pixelY, Double valor) {
-        this.modifyPixelAction.execute(pixelX, pixelY, valor);
+    public void modifyPixelValue(Integer pixelX, Integer pixelY, Double value) {
+        this.modifyPixelAction.execute(pixelX, pixelY, value);
     }
 }

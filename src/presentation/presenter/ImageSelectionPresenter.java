@@ -6,8 +6,10 @@ import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
 import domain.CustomImage;
+import io.reactivex.functions.Consumer;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ImageSelectionPresenter {
 
@@ -31,8 +33,8 @@ public class ImageSelectionPresenter {
     }
 
     //Loads the image in memory repository and returns its path
-    public String loadImage() {
-        return loadImageAction.execute();
+    public String loadImage(Supplier<String> nameConsumer) {
+        return loadImageAction.execute(nameConsumer);
     }
 
     public void setCurrentImagePath(String currentImagePath) {
