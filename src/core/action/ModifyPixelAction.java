@@ -11,11 +11,13 @@ public class ModifyPixelAction {
         this.imageRepository = imageRepository;
     }
 
-    public void execute(Integer pixelX, Integer pixelY, Double value) {
+    public CustomImage execute(Integer pixelX, Integer pixelY, Double value) {
 
-        CustomImage modifiedImage = this.imageRepository.get(this.imageRepository.getCurrentImagePath().get());
+        CustomImage modifiedImage = imageRepository.get(imageRepository.getCurrentImagePath().get());
         modifiedImage.modifyPixel(pixelX, pixelY, value);
-        this.imageRepository.putModifiedImage(modifiedImage);
+        imageRepository.putModifiedImage(modifiedImage);
+
+        return modifiedImage;
     }
 
 }

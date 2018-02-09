@@ -3,13 +3,16 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import presentation.presenter.ImageViewPresenter;
+import presentation.util.InsertValuePopup;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ImageViewSceneController {
 
@@ -24,19 +27,7 @@ public class ImageViewSceneController {
     @FXML
     public TextField pixelValue;
     @FXML
-    public TextField pixelRValue;
-    @FXML
-    public TextField pixelGValue;
-    @FXML
-    public TextField pixelBValue;
-    @FXML
-    public TextField newPixelValue;
-    @FXML
-    public Label insertPixelValueLabel;
-    @FXML
-    public RadioButton originalRadio;
-    @FXML
-    public RadioButton modifiedRadio;
+    public TextField pixelValueModified;
 
     private ImageViewPresenter imageViewPresenter;
 
@@ -59,27 +50,26 @@ public class ImageViewSceneController {
         Integer mouseY = (int) e.getY();
         pixelX.setText(mouseX.toString());
         pixelY.setText(mouseY.toString());
+        calculatePixelValue();
     }
 
     @FXML
-    private void calculatePixelValue(ActionEvent e) {
+    public void calculatePixelValue() {
 
-        if (this.originalRadio.isSelected()) {
+        if (this.validatePixelCoordinates()) {
 
-            if (this.validatePixelCoordinates()) {
-                imageViewPresenter.getRGB(Integer.parseInt(pixelX.getText()), Integer.parseInt(pixelY.getText())).ifPresent(rgb -> pixelValue.setText(rgb.toString()));
-            }
+            int pixelX = Integer.parseInt(this.pixelX.getText());
+            int pixelY = Integer.parseInt(this.pixelY.getText());
 
-        } else if (this.modifiedRadio.isSelected()) {
+            imageViewPresenter.getRGB(pixelX, pixelY)
+                    .ifPresent(rgb -> pixelValue.setText(rgb.toString()));
 
-            if (this.validateModifiedImage()) {
-                if (this.validatePixelCoordinates()) {
-                    pixelValue.setText(imageViewPresenter.getModifiedRGB(Integer.parseInt(pixelX.getText()), Integer.parseInt(pixelY.getText())).toString());
-                }
-            } else {
-                insertPixelValueLabel.setText("Imagen erronea");
-            }
+            Optional.ofNullable(modifiedImageView.getImage())
+                    .ifPresent(image ->
+                            pixelValueModified.setText(imageViewPresenter.getModifiedRGB(pixelX, pixelY).toString()));
 
+        } else {
+            pixelValue.setText("Error");
         }
     }
 
@@ -91,38 +81,20 @@ public class ImageViewSceneController {
             Integer pixelX = Integer.parseInt(this.pixelX.getText());
             Integer pixelY = Integer.parseInt(this.pixelY.getText());
 
-            if (this.validateNewValue()) {
+            String newValue = InsertValuePopup.show("Insertar valor", "0").get();
 
-                Double value = Double.parseDouble(newPixelValue.getText());
-                this.imageViewPresenter.modifyPixelValue(pixelX, pixelY, value);
+            Double value = Double.parseDouble(newValue);
+            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, value);
 
-                Image modifiedFXImage = this.imageViewPresenter.getModifiedFXImage();
-                modifiedImageView.setPickOnBounds(true);
-                modifiedImageView.setOnMouseClicked(this::onPixelClick);
-                modifiedImageView.setImage(modifiedFXImage);
-
-            } else {
-                insertPixelValueLabel.setText("Ingrese un valor");
-            }
+            pixelValueModified.setText(newValue);
+            modifiedImageView.setImage(modifiedFXImage);
 
         } else {
-            insertPixelValueLabel.setText("Seleccione pixel");
+            pixelValueModified.setText("Seleccione pixel");
         }
-
-
     }
 
     private boolean validatePixelCoordinates() {
         return (!pixelX.getText().equals("") && !pixelY.getText().equals(""));
     }
-
-    private boolean validateNewValue() {
-        return !newPixelValue.getText().equals("");
-    }
-
-    //Verifica que haya cargada una imagen modificada
-    private boolean validateModifiedImage() {
-        return this.modifiedImageView.getImage() != null;
-    }
-
 }

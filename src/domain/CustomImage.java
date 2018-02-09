@@ -3,6 +3,7 @@ package domain;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 
 import java.awt.image.BufferedImage;
 
@@ -21,11 +22,11 @@ public class CustomImage {
     }
 
     public String getFormatString() {
-        return this.format.getFormatString();
+        return format.getFormatString();
     }
 
     public BufferedImage getBufferedImage() {
-        return this.bufferedImage;
+        return bufferedImage;
     }
 
     public Integer getPixelValue(Integer x, Integer y) {
@@ -34,7 +35,7 @@ public class CustomImage {
                 this.getValueChannelG(x, y) * 255 +
                 this.getValueChannelB(x, y) * 255)
                 / 3
-        ); //Que loco, no sabia que el valor de pixel era exactamente el promedio de los tres valores sumados
+        );
     }
 
     private Double getValueChannelR(int x, int y) {
@@ -50,9 +51,6 @@ public class CustomImage {
     }
 
     public void modifyPixel(Integer pixelX, Integer pixelY, Double valor) {
-
-        //Tengo dudas con esta linea
-        this.writer.setArgb(pixelX, pixelY, valor.intValue());
-
+        writer.setArgb(pixelX, pixelY, valor.intValue());
     }
 }

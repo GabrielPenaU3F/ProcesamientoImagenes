@@ -25,9 +25,6 @@ public class ImageViewPresenter {
     private Optional<CustomImage> getCurrentImage() {
         return this.getImageAction.execute();
     }
-    private CustomImage getModifiedImage() {
-        return this.getModifiedImageAction.execute();
-    }
 
     public Optional<Image> getFXImage() {
         return this.getCurrentImage().map(customImage -> {
@@ -36,21 +33,19 @@ public class ImageViewPresenter {
         });
     }
 
-    public Image getModifiedFXImage() {
-            CustomImage modifiedImage = this.getModifiedImage();
-            BufferedImage bufferedImage = modifiedImage.getBufferedImage();
-            return SwingFXUtils.toFXImage(bufferedImage, null);
-    }
-
     public Optional<Integer> getRGB(Integer pixelX, Integer pixelY) {
         return this.getCurrentImage().map(customImage -> customImage.getPixelValue(pixelX, pixelY));
+    }
+
+    private CustomImage getModifiedImage() {
+        return getModifiedImageAction.execute();
     }
 
     public Integer getModifiedRGB(Integer pixelX, Integer pixelY) {
         return this.getModifiedImage().getPixelValue(pixelX, pixelY);
     }
 
-    public void modifyPixelValue(Integer pixelX, Integer pixelY, Double value) {
-        this.modifyPixelAction.execute(pixelX, pixelY, value);
+    public Image modifyPixelValue(Integer pixelX, Integer pixelY, Double value) {
+        return SwingFXUtils.toFXImage(modifyPixelAction.execute(pixelX, pixelY, value).getBufferedImage(), null);
     }
 }
