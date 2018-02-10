@@ -73,16 +73,10 @@
                 </Pane>
                 <Pane prefHeight="209.0" prefWidth="132.0">
                     <children>
-                  <Pane layoutX="19.0" layoutY="134.0" prefHeight="67.0" prefWidth="102.0">
-                     <children>
-                              <TextField fx:id="pixelValueModified" editable="false" layoutX="18.0" layoutY="40.0" prefHeight="27.0" prefWidth="67.0" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="14.0" text="Valor Modificado" textAlignment="CENTER" />
-                     </children>
-                  </Pane>
                   <Pane layoutX="14.0" layoutY="14.0" prefHeight="66.0" prefWidth="112.0">
                      <children>
                         <TextField fx:id="pixelValue" editable="false" layoutX="23.0" layoutY="33.0" prefHeight="27.0" prefWidth="67.0" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="6.0" text="Valor Original" textAlignment="CENTER" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="6.0" text="Valor" textAlignment="CENTER" />
                      </children>
                   </Pane>
                             <Button alignment="CENTER" layoutX="28.0" layoutY="100.0" mnemonicParsing="false" onAction="#modifyPixelValue" text="Modificar" />

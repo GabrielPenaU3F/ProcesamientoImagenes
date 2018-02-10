@@ -1,10 +1,10 @@
 package core.provider;
 
+import core.action.GetImageListAction;
 import core.action.ModifyPixelAction;
 import core.action.currentimage.GetCurrentImagePathAction;
 import core.action.currentimage.SetCurrentImagePathAction;
 import core.action.image.GetImageAction;
-import core.action.image.GetModifiedImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
 
@@ -16,7 +16,7 @@ public class ActionProvider {
     private static GetCurrentImagePathAction getCurrentImagePathAction;
     private static SaveImageAction saveImageAction;
     private static ModifyPixelAction modifyPixelAction;
-    private static GetModifiedImageAction getModifiedImageAction;
+    private static GetImageListAction getImageListAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -76,14 +76,11 @@ public class ActionProvider {
 
     }
 
-    public static GetModifiedImageAction provideGetModifiedImageAction() {
-
-        if (getModifiedImageAction == null) {
-            getModifiedImageAction = new GetModifiedImageAction(RepositoryProvider.provideImageRepository());
-            return getModifiedImageAction;
+    public static GetImageListAction provideGetImageListAction() {
+        if (getImageListAction == null) {
+            getImageListAction = new GetImageListAction(RepositoryProvider.provideImageRepository());
+            return getImageListAction;
         }
-        return getModifiedImageAction;
-
+        return getImageListAction;
     }
-
 }

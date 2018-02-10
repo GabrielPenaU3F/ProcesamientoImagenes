@@ -5,6 +5,7 @@ import domain.CustomImage;
 
 public class ModifyPixelAction {
 
+    public static final String COPY_PATH = "%s(%s)";
     ImageRepository imageRepository;
 
     public ModifyPixelAction(ImageRepository imageRepository) {
@@ -13,9 +14,10 @@ public class ModifyPixelAction {
 
     public CustomImage execute(Integer pixelX, Integer pixelY, Double value) {
 
-        CustomImage modifiedImage = imageRepository.get(imageRepository.getCurrentImagePath().get());
+        String path = imageRepository.getCurrentImagePath().get();
+        CustomImage modifiedImage = imageRepository.get(path);
         modifiedImage.modifyPixel(pixelX, pixelY, value);
-        imageRepository.putModifiedImage(modifiedImage);
+        imageRepository.put(String.format(COPY_PATH, path, imageRepository.size()), modifiedImage);
 
         return modifiedImage;
     }

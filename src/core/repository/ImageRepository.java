@@ -3,14 +3,11 @@ package core.repository;
 
 import domain.CustomImage;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ImageRepository {
 
     private Map<String, CustomImage> images;
-    private CustomImage modifiedImage;
     private String currentImagePath;
 
     public ImageRepository() {
@@ -34,11 +31,11 @@ public class ImageRepository {
         return Optional.ofNullable(currentImagePath);
     }
 
-    public void putModifiedImage(CustomImage modifiedImage) {
-        this.modifiedImage = modifiedImage;
+    public int size(){
+        return images.size();
     }
 
-    public CustomImage getModifiedImage() {
-        return this.modifiedImage;
+    public List<String> getImages() {
+        return new ArrayList<>(images.keySet());
     }
 }

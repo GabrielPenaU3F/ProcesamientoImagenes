@@ -1,6 +1,7 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import presentation.presenter.ImageSelectionPresenter;
 import presentation.scenecreator.ImageViewSceneCreator;
 import presentation.util.InsertValuePopup;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class MenuSceneController {
@@ -53,6 +55,11 @@ public class MenuSceneController {
     public void showImage(ActionEvent event) {
         imageSelectionPresenter.setCurrentImagePath(imageComboBox.getSelectionModel().getSelectedItem());
         new ImageViewSceneCreator().createScene();
+    }
+
+    @FXML
+    public void reloadImages(ActionEvent actionEvent) {
+        imageComboBox.setItems(FXCollections.observableArrayList(imageSelectionPresenter.getImages()));
     }
 
     @FXML

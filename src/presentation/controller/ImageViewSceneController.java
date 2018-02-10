@@ -3,7 +3,6 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,10 +10,9 @@ import javafx.scene.input.MouseEvent;
 import presentation.presenter.ImageViewPresenter;
 import presentation.util.InsertValuePopup;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
 public class ImageViewSceneController {
+
+    private static final String EMPTY = "";
 
     @FXML
     public ImageView imageView;
@@ -26,8 +24,6 @@ public class ImageViewSceneController {
     public TextField pixelY;
     @FXML
     public TextField pixelValue;
-    @FXML
-    public TextField pixelValueModified;
 
     private ImageViewPresenter imageViewPresenter;
 
@@ -62,11 +58,9 @@ public class ImageViewSceneController {
             int pixelY = Integer.parseInt(this.pixelY.getText());
 
             imageViewPresenter.getRGB(pixelX, pixelY)
-                    .ifPresent(rgb -> pixelValue.setText(rgb.toString()));
-
-            Optional.ofNullable(modifiedImageView.getImage())
-                    .ifPresent(image ->
-                            pixelValueModified.setText(imageViewPresenter.getModifiedRGB(pixelX, pixelY).toString()));
+                    .ifPresent(rgb -> {
+                        pixelValue.setText(rgb.toString());
+                    });
 
         } else {
             pixelValue.setText("Error");
@@ -83,18 +77,16 @@ public class ImageViewSceneController {
 
             String newValue = InsertValuePopup.show("Insertar valor", "0").get();
 
-            Double value = Double.parseDouble(newValue);
-            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, value);
+            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, Double.parseDouble(newValue));
 
-            pixelValueModified.setText(newValue);
             modifiedImageView.setImage(modifiedFXImage);
 
         } else {
-            pixelValueModified.setText("Seleccione pixel");
+            pixelValue.setText("Seleccione pixel");
         }
     }
 
     private boolean validatePixelCoordinates() {
-        return (!pixelX.getText().equals("") && !pixelY.getText().equals(""));
+        return (!pixelX.getText().equals(EMPTY) && !pixelY.getText().equals(EMPTY));
     }
 }

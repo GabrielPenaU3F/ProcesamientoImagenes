@@ -10,7 +10,13 @@ public class PresenterProvider {
 
     public static ImageSelectionPresenter provideImageSelectionPresenter() {
         if (imageSelectionPresenter == null) {
-            imageSelectionPresenter = new ImageSelectionPresenter(ActionProvider.provideLoadImageAction(), ActionProvider.provideSetCurrentImagePathOnRepoAction(), ActionProvider.provideGetCurrentImagePathAction(), ActionProvider.provideGetImageAction(), ActionProvider.provideSaveImageAction());
+            imageSelectionPresenter = new ImageSelectionPresenter(
+                    ActionProvider.provideLoadImageAction(),
+                    ActionProvider.provideSetCurrentImagePathOnRepoAction(),
+                    ActionProvider.provideGetCurrentImagePathAction(),
+                    ActionProvider.provideGetImageAction(),
+                    ActionProvider.provideSaveImageAction(),
+                    ActionProvider.provideGetImageListAction());
             return imageSelectionPresenter;
         }
         return imageSelectionPresenter;
@@ -18,7 +24,10 @@ public class PresenterProvider {
 
     public static ImageViewPresenter provideImageViewPresenter() {
         if (imageViewPresenter == null) {
-            imageViewPresenter = new ImageViewPresenter(ActionProvider.provideGetImageAction(), ActionProvider.provideModifyPixelAction(), ActionProvider.provideGetModifiedImageAction());
+            imageViewPresenter = new ImageViewPresenter(
+                    ActionProvider.provideGetImageAction(),
+                    ActionProvider.provideModifyPixelAction()
+            );
             return imageViewPresenter;
         }
         return imageViewPresenter;

@@ -1,13 +1,14 @@
 package presentation.presenter;
 
+import core.action.GetImageListAction;
 import core.action.currentimage.GetCurrentImagePathAction;
 import core.action.currentimage.SetCurrentImagePathAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
 import domain.CustomImage;
-import io.reactivex.functions.Consumer;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -18,18 +19,21 @@ public class ImageSelectionPresenter {
     private GetCurrentImagePathAction getCurrentImagePathAction;
     private GetImageAction getImageAction;
     private SaveImageAction saveImageAction;
+    private GetImageListAction getImageListAction;
 
 
     public ImageSelectionPresenter(LoadImageAction loadImageAction,
                                    SetCurrentImagePathAction setCurrentImagePathAction,
                                    GetCurrentImagePathAction getCurrentImagePathAction,
                                    GetImageAction getImageAction,
-                                   SaveImageAction saveImageAction) {
+                                   SaveImageAction saveImageAction,
+                                   GetImageListAction getImageListAction) {
         this.loadImageAction = loadImageAction;
         this.setCurrentImagePathAction = setCurrentImagePathAction;
         this.getCurrentImagePathAction = getCurrentImagePathAction;
         this.getImageAction = getImageAction;
         this.saveImageAction = saveImageAction;
+        this.getImageListAction = getImageListAction;
     }
 
     //Loads the image in memory repository and returns its path
@@ -51,5 +55,9 @@ public class ImageSelectionPresenter {
 
     private Optional<CustomImage> getImage() {
         return getImageAction.execute();
+    }
+
+    public List<String> getImages() {
+        return getImageListAction.execute();
     }
 }

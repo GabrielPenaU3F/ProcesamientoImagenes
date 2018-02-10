@@ -1,6 +1,7 @@
 package domain;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -9,16 +10,14 @@ import java.awt.image.BufferedImage;
 
 public class CustomImage {
 
-    private final PixelReader reader;
-    private final PixelWriter writer;
-    private final BufferedImage bufferedImage;
+    private PixelReader reader;
+    private BufferedImage bufferedImage;
     private final Format format;
 
     public CustomImage(BufferedImage bufferedImage, String formatString) {
         this.bufferedImage = bufferedImage;
         this.format = new Format(formatString);
         this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
-        this.writer = SwingFXUtils.toFXImage(bufferedImage,null).getPixelWriter();
     }
 
     public String getFormatString() {
@@ -50,7 +49,21 @@ public class CustomImage {
         return reader.getColor(x, y).getBlue();
     }
 
-    public void modifyPixel(Integer pixelX, Integer pixelY, Double valor) {
-        writer.setArgb(pixelX, pixelY, valor.intValue());
+    public void modifyPixel(Integer pixelX, Integer pixelY, Double value) {
+
+        WritableImage writableImage = SwingFXUtils.toFXImage(bufferedImage, null);
+
+        int width = (int) writableImage.getWidth();
+        int height = (int) writableImage.getHeight();
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                pixelWriter.setColor(x, y, reader.getColor(x, y));
+            }
+        }
+
+        pixelWriter.setArgb(pixelX, pixelY, value.intValue());
+        bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
     }
 }
