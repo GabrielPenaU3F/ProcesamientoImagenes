@@ -1,5 +1,6 @@
 package presentation.presenter;
 
+import core.action.PutModifiedImageAction;
 import core.action.edit.LoadModifiedImageAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;
@@ -17,13 +18,16 @@ public class ImageViewPresenter {
     private GetImageAction getImageAction;
     private ModifyPixelAction modifyPixelAction;
     private LoadModifiedImageAction loadModifiedImageAction;
+    private PutModifiedImageAction putModifiedImageAction;
 
     public ImageViewPresenter(GetImageAction getImageAction,
                               ModifyPixelAction modifyPixelAction,
-                              LoadModifiedImageAction loadModifiedImageAction) {
+                              LoadModifiedImageAction loadModifiedImageAction,
+                              PutModifiedImageAction putModifiedImageAction) {
         this.getImageAction = getImageAction;
         this.modifyPixelAction = modifyPixelAction;
         this.loadModifiedImageAction = loadModifiedImageAction;
+        this.putModifiedImageAction = putModifiedImageAction;
     }
 
     private Optional<CustomImage> getCurrentImage() {
@@ -32,6 +36,7 @@ public class ImageViewPresenter {
 
     public Optional<Image> getFXImage() {
         return this.getCurrentImage().map(customImage -> {
+            this.putModifiedImageAction.execute(customImage);
             BufferedImage bufferedImage = customImage.getBufferedImage();
             return SwingFXUtils.toFXImage(bufferedImage, null);
         });

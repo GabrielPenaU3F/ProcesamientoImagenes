@@ -27,7 +27,8 @@ public class PresenterProvider {
             imageViewPresenter = new ImageViewPresenter(
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.provideModifyPixelAction(),
-                    ActionProvider.provideLoadModifiedImageAction());
+                    ActionProvider.provideLoadModifiedImageAction(),
+                    ActionProvider.providePutModifiedImageAction());
             return imageViewPresenter;
         }
         return imageViewPresenter;
