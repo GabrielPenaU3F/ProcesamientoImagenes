@@ -59,11 +59,15 @@ public class CustomImage {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                pixelWriter.setColor(x, y, reader.getColor(x, y));
+                pixelWriter.setArgb(x, y, reader.getArgb(x, y));
             }
         }
 
         pixelWriter.setArgb(pixelX, pixelY, value.intValue());
         bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
+    }
+
+    public PixelReader getPixelReader() {
+        return reader;
     }
 }

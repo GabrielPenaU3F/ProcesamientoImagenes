@@ -1,5 +1,6 @@
 package core.provider;
 
+import core.service.ModifyImageService;
 import core.service.ImageRawService;
 import core.service.OpenFileService;
 import javafx.stage.FileChooser;
@@ -23,5 +24,9 @@ public class ServiceProvider {
 
     public static ImageRawService provideImageRawService() {
         return new ImageRawService();
+    }
+
+    public static ModifyImageService provideModifyImageService() {
+        return new ModifyImageService();
     }
 }

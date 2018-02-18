@@ -77,7 +77,7 @@ public class ImageViewSceneController {
 
             String newValue = InsertValuePopup.show("Insertar valor", "0").get();
 
-            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, Double.parseDouble(newValue));
+            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, newValue);
 
             modifiedImageView.setImage(modifiedFXImage);
 
@@ -88,5 +88,12 @@ public class ImageViewSceneController {
 
     private boolean validatePixelCoordinates() {
         return (!pixelX.getText().equals(EMPTY) && !pixelY.getText().equals(EMPTY));
+    }
+
+    @FXML
+    public void saveModifiedImage(ActionEvent e) {
+        modifiedImageView.setImage(null);
+        imageViewPresenter.saveChanges()
+                .ifPresent(image -> imageView.setImage(image));
     }
 }

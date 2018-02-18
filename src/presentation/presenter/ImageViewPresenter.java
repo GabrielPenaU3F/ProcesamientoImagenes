@@ -1,22 +1,29 @@
 package presentation.presenter;
 
-import core.action.ModifyPixelAction;
+import core.action.edit.LoadModifiedImageAction;
+import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;
 import domain.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import presentation.util.InsertValuePopup;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ImageViewPresenter {
 
     private GetImageAction getImageAction;
     private ModifyPixelAction modifyPixelAction;
+    private LoadModifiedImageAction loadModifiedImageAction;
 
-    public ImageViewPresenter(GetImageAction getImageAction, ModifyPixelAction modifyPixelAction1) {
+    public ImageViewPresenter(GetImageAction getImageAction,
+                              ModifyPixelAction modifyPixelAction,
+                              LoadModifiedImageAction loadModifiedImageAction) {
         this.getImageAction = getImageAction;
-        this.modifyPixelAction = modifyPixelAction1;
+        this.modifyPixelAction = modifyPixelAction;
+        this.loadModifiedImageAction = loadModifiedImageAction;
     }
 
     private Optional<CustomImage> getCurrentImage() {
@@ -34,7 +41,12 @@ public class ImageViewPresenter {
         return this.getCurrentImage().map(customImage -> customImage.getPixelValue(pixelX, pixelY));
     }
 
-    public Image modifyPixelValue(Integer pixelX, Integer pixelY, Double value) {
-        return SwingFXUtils.toFXImage(modifyPixelAction.execute(pixelX, pixelY, value).getBufferedImage(), null);
+    public Image modifyPixelValue(Integer pixelX, Integer pixelY, String value) {
+        return modifyPixelAction.execute(pixelX, pixelY, value);
+    }
+
+    public Optional<Image> saveChanges() {
+        Supplier<String> fileNameSupplier = InsertValuePopup.show("Save Modified Image", "modified");
+        return loadModifiedImageAction.execute(fileNameSupplier);
     }
 }
