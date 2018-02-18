@@ -26,7 +26,10 @@ public class PresenterProvider {
         if (imageViewPresenter == null) {
             imageViewPresenter = new ImageViewPresenter(
                     ActionProvider.provideGetImageAction(),
-                    ActionProvider.provideModifyPixelAction()
+                    ActionProvider.provideModifyPixelAction(),
+                    ActionProvider.provideCheckIfModifyingAction(),
+                    ActionProvider.provideGetModifiedImageAction(),
+                    ActionProvider.provideSaveChangesAction()
             );
             return imageViewPresenter;
         }

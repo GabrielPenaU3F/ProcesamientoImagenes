@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImageViewSceneController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImageViewSceneController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="510.0" minWidth="10.0" prefWidth="488.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="431.0" />
@@ -80,6 +80,7 @@
                      </children>
                   </Pane>
                             <Button alignment="CENTER" layoutX="28.0" layoutY="100.0" mnemonicParsing="false" onAction="#modifyPixelValue" text="Modificar" />
+                  <Button layoutX="8.0" layoutY="151.0" mnemonicParsing="false" onAction="#saveChanges" text="Guardar cambios" />
                     </children>
                 </Pane>
             </children>

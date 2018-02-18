@@ -8,6 +8,7 @@ import java.util.*;
 public class ImageRepository {
 
     private Map<String, CustomImage> images;
+    private CustomImage currentModifiedImage;
     private String currentImagePath;
 
     public ImageRepository() {
@@ -37,5 +38,13 @@ public class ImageRepository {
 
     public List<String> getImages() {
         return new ArrayList<>(images.keySet());
+    }
+
+    public void setCurrentModifiedImage(CustomImage currentModifiedImage) {
+        this.currentModifiedImage = currentModifiedImage;
+    }
+
+    public CustomImage getCurrentModifiedImage() {
+        return this.currentModifiedImage;
     }
 }

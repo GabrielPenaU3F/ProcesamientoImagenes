@@ -36,21 +36,37 @@ public class ImageViewSceneController {
     public void initialize() {
         this.imageViewPresenter.getFXImage().ifPresent(image -> {
             imageView.setPickOnBounds(true);
-            imageView.setOnMouseClicked(this::onPixelClick);
+            imageView.setOnMouseClicked(this::onPixelClickInOriginalImage);
             imageView.setImage(image);
         });
     }
 
-    private void onPixelClick(MouseEvent e) {
+    private void onPixelClickInOriginalImage(MouseEvent e) {
         Integer mouseX = (int) e.getX();
         Integer mouseY = (int) e.getY();
         pixelX.setText(mouseX.toString());
         pixelY.setText(mouseY.toString());
-        calculatePixelValue();
+        calculatePixelValueFromOriginalImage();
+    }
+
+    private void onPixelClickInModifiedImage(MouseEvent e) {
+        Integer mouseX = (int) e.getX();
+        Integer mouseY = (int) e.getY();
+        pixelX.setText(mouseX.toString());
+        pixelY.setText(mouseY.toString());
+        calculatePixelValueFromModifiedImage();
     }
 
     @FXML
     public void calculatePixelValue() {
+
+        if (imageViewPresenter.checkIfModifying()) this.calculatePixelValueFromModifiedImage();
+        else this.calculatePixelValueFromOriginalImage();
+        //If you are modifying, by default it'll calculate the values from the modified image
+
+    }
+
+    public void calculatePixelValueFromOriginalImage() {
 
         if (this.validatePixelCoordinates()) {
 
@@ -67,8 +83,23 @@ public class ImageViewSceneController {
         }
     }
 
+    public void calculatePixelValueFromModifiedImage() {
+
+        if (this.validatePixelCoordinates()) {
+
+            int pixelX = Integer.parseInt(this.pixelX.getText());
+            int pixelY = Integer.parseInt(this.pixelY.getText());
+
+            Integer rgb = imageViewPresenter.getModifiedRGB(pixelX, pixelY);
+            pixelValue.setText(rgb.toString());
+
+        } else {
+            pixelValue.setText("Error");
+        }
+    }
+
     @FXML
-    private void modifyPixelValue(ActionEvent e) {
+    public void modifyPixelValue(ActionEvent e) {
 
         if (this.validatePixelCoordinates()) {
 
@@ -77,13 +108,25 @@ public class ImageViewSceneController {
 
             String newValue = InsertValuePopup.show("Insertar valor", "0").get();
 
-            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, Double.parseDouble(newValue));
-
-            modifiedImageView.setImage(modifiedFXImage);
+            imageViewPresenter.modifyPixelValue(pixelX, pixelY, Double.parseDouble(newValue));
+            modifiedImageView.setPickOnBounds(true);
+            //Now you can also get pixel values from the modified image.
+            modifiedImageView.setOnMouseClicked(this::onPixelClickInModifiedImage);
+            modifiedImageView.setImage(imageViewPresenter.getFXModifiedFXImage());
 
         } else {
             pixelValue.setText("Seleccione pixel");
         }
+    }
+
+    @FXML
+    public void saveChanges(ActionEvent e) {
+
+        modifiedImageView.setImage(null);
+        imageViewPresenter.saveChanges();
+        this.imageViewPresenter.getFXImage().ifPresent(image -> imageView.setImage(image));
+        //TODO: This should add the modified image to the observable image list on the other window. I don't know how to do that
+
     }
 
     private boolean validatePixelCoordinates() {

@@ -1,12 +1,11 @@
 package core.provider;
 
+import core.action.CheckIfModifyingAction;
 import core.action.GetImageListAction;
 import core.action.ModifyPixelAction;
 import core.action.currentimage.GetCurrentImagePathAction;
 import core.action.currentimage.SetCurrentImagePathAction;
-import core.action.image.GetImageAction;
-import core.action.image.LoadImageAction;
-import core.action.image.SaveImageAction;
+import core.action.image.*;
 
 public class ActionProvider {
 
@@ -17,6 +16,9 @@ public class ActionProvider {
     private static SaveImageAction saveImageAction;
     private static ModifyPixelAction modifyPixelAction;
     private static GetImageListAction getImageListAction;
+    private static CheckIfModifyingAction checkIfModifyingAction;
+    private static GetModifiedImageAction getModifiedImageAction;
+    private static SaveChangesAction saveChangesAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -82,5 +84,29 @@ public class ActionProvider {
             return getImageListAction;
         }
         return getImageListAction;
+    }
+
+    public static CheckIfModifyingAction provideCheckIfModifyingAction() {
+        if (checkIfModifyingAction == null) {
+            checkIfModifyingAction = new CheckIfModifyingAction(RepositoryProvider.provideImageRepository());
+            return checkIfModifyingAction;
+        }
+        return checkIfModifyingAction;
+    }
+
+    public static GetModifiedImageAction provideGetModifiedImageAction() {
+        if (getModifiedImageAction == null) {
+            getModifiedImageAction = new GetModifiedImageAction(RepositoryProvider.provideImageRepository());
+            return getModifiedImageAction;
+        }
+        return getModifiedImageAction; 
+    }
+
+    public static SaveChangesAction provideSaveChangesAction() {
+        if (saveChangesAction == null) {
+            saveChangesAction = new SaveChangesAction(RepositoryProvider.provideImageRepository());
+            return saveChangesAction;
+        }
+        return saveChangesAction;
     }
 }
