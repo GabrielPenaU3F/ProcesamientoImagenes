@@ -12,6 +12,6 @@ public class PutModifiedImageAction {
     }
 
     public void execute(CustomImage customImage) {
-        imageRepository.putModifiedCurrentPath(customImage);
+        imageRepository.putCurrentModifiedImage(customImage);
     }
 }

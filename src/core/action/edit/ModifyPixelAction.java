@@ -23,14 +23,14 @@ public class ModifyPixelAction {
 
         imageRepository.getCurrentImagePath().ifPresent(path -> this.path = path);
 
-        if (!imageRepository.getModifiedCurrentImagePath().isPresent()) {
+        if (!imageRepository.getCurrentModifiedImage().isPresent()) {
             image = imageRepository.get(path);
         } else {
-            image = imageRepository.getModifiedCurrentImagePath().get();
+            image = imageRepository.getCurrentModifiedImage().get();
         }
 
         CustomImage modifiedImage = modifyImageService.modify(image, pixelX, pixelY, Integer.parseInt(value));
-        imageRepository.putModifiedCurrentPath(modifiedImage);
+        imageRepository.putCurrentModifiedImage(modifiedImage);
 
         return SwingFXUtils.toFXImage(modifiedImage.getBufferedImage(), null);
     }

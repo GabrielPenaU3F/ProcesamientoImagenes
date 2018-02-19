@@ -9,7 +9,7 @@ public class ImageRepository {
 
     private Map<String, CustomImage> images;
     private String currentImagePath;
-    private CustomImage currentModifiedImagePath;
+    private CustomImage currentModifiedImage;
 
     public ImageRepository() {
         this.images = new HashMap<>();
@@ -31,12 +31,12 @@ public class ImageRepository {
         return Optional.ofNullable(currentImagePath);
     }
 
-    public void putModifiedCurrentPath(CustomImage modifiedCurrentImagePath) {
-        this.currentModifiedImagePath = modifiedCurrentImagePath;
+    public void putCurrentModifiedImage(CustomImage currentModifiedImage) {
+        this.currentModifiedImage = currentModifiedImage;
     }
 
-    public Optional<CustomImage> getModifiedCurrentImagePath() {
-        return Optional.ofNullable(currentModifiedImagePath);
+    public Optional<CustomImage> getCurrentModifiedImage() {
+        return Optional.ofNullable(currentModifiedImage);
     }
 
     public int size(){

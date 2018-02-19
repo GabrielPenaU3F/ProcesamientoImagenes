@@ -16,7 +16,7 @@ public class LoadModifiedImageAction {
     }
 
     public Optional<Image> execute(Supplier<String> fileNameSupplier) {
-        return imageRepository.getModifiedCurrentImagePath().map(customImage -> {
+        return imageRepository.getCurrentModifiedImage().map(customImage -> {
             imageRepository.put(fileNameSupplier.get(), customImage);
             return SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
         });
