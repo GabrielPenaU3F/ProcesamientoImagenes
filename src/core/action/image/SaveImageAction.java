@@ -1,20 +1,25 @@
 package core.action.image;
 
 import domain.CustomImage;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class SaveImageAction {
 
-    public void execute(CustomImage image, String filename) {
+    public Image execute(CustomImage image, String filename) {
 
         String fullFilename = filename + "." + image.getFormatString();
-        File outputfile = new File(fullFilename);
         try {
-            ImageIO.write(image.getBufferedImage(), image.getFormatString(), outputfile);
+            BufferedImage bufferedImage = image.getBufferedImage();
+            ImageIO.write(bufferedImage, image.getFormatString(), new File(fullFilename));
+            return SwingFXUtils.toFXImage(bufferedImage, null);
         } catch (IOException e) {
-            throw new RuntimeException ("IOException");
+            throw new RuntimeException("IOException");
         }
     }
 

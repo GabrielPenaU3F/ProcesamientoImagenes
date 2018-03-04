@@ -14,6 +14,6 @@ public class GetImageAction {
     }
 
     public Optional<CustomImage> execute() {
-        return imageRepository.getCurrentImagePath().map(s -> imageRepository.get(s));
+        return imageRepository.getCurrentImagePath().map(path -> imageRepository.get(path));
     }
 }

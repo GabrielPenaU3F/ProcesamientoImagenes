@@ -25,24 +25,24 @@ public class LoadImageAction {
         this.imageRawService = imageRawService;
     }
 
-    public String execute() {
+    public String execute(String fileName) {
 
         openFileService.open().ifPresent(file -> {
 
             path = file.toPath().toString();
             String extension = FilenameUtils.getExtension(path);
             if(extension.equalsIgnoreCase("raw")){
-                putOnRepository(extension, imageRawService.load(file, 256, 256));
+                putOnRepository(fileName, extension, imageRawService.load(file, 256, 256));
             } else {
-                putOnRepository(extension, opener.openImage(path).getBufferedImage());
+                putOnRepository(fileName, extension, opener.openImage(path).getBufferedImage());
             }
 
         });
 
-        return path;
+        return fileName;
     }
 
-    private void putOnRepository(String extension, BufferedImage bufferedImage) {
-        imageRepository.put(path, new CustomImage(bufferedImage, extension));
+    private void putOnRepository(String filePath, String extension, BufferedImage bufferedImage) {
+        imageRepository.put(filePath, new CustomImage(bufferedImage, extension));
     }
 }

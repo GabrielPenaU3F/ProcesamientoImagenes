@@ -1,32 +1,29 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import presentation.presenter.ImageViewPresenter;
+import presentation.util.InsertValuePopup;
 
 public class ImageViewSceneController {
+
+    private static final String EMPTY = "";
 
     @FXML
     public ImageView imageView;
     @FXML
-    public Pane imageViewPane;
+    public ImageView modifiedImageView;
     @FXML
     public TextField pixelX;
     @FXML
     public TextField pixelY;
     @FXML
     public TextField pixelValue;
-    @FXML
-    public TextField pixelRValue;
-    @FXML
-    public TextField pixelGValue;
-    @FXML
-    public TextField pixelBValue;
 
     private ImageViewPresenter imageViewPresenter;
 
@@ -49,7 +46,54 @@ public class ImageViewSceneController {
         Integer mouseY = (int) e.getY();
         pixelX.setText(mouseX.toString());
         pixelY.setText(mouseY.toString());
-        imageViewPresenter.getRGB(mouseX, mouseY).ifPresent(rgb -> pixelValue.setText(rgb.toString()));
+        calculatePixelValue();
     }
 
+    @FXML
+    public void calculatePixelValue() {
+
+        if (this.validatePixelCoordinates()) {
+
+            int pixelX = Integer.parseInt(this.pixelX.getText());
+            int pixelY = Integer.parseInt(this.pixelY.getText());
+
+            imageViewPresenter.getRGB(pixelX, pixelY)
+                    .ifPresent(rgb -> {
+                        pixelValue.setText(rgb.toString());
+                    });
+
+        } else {
+            pixelValue.setText("Error");
+        }
+    }
+
+    @FXML
+    private void modifyPixelValue(ActionEvent e) {
+
+        if (this.validatePixelCoordinates()) {
+
+            Integer pixelX = Integer.parseInt(this.pixelX.getText());
+            Integer pixelY = Integer.parseInt(this.pixelY.getText());
+
+            String newValue = InsertValuePopup.show("Insertar valor", "0").get();
+
+            Image modifiedFXImage = imageViewPresenter.modifyPixelValue(pixelX, pixelY, newValue);
+
+            modifiedImageView.setImage(modifiedFXImage);
+
+        } else {
+            pixelValue.setText("Seleccione pixel");
+        }
+    }
+
+    private boolean validatePixelCoordinates() {
+        return (!pixelX.getText().equals(EMPTY) && !pixelY.getText().equals(EMPTY));
+    }
+
+    @FXML
+    public void saveModifiedImage(ActionEvent e) {
+        modifiedImageView.setImage(null);
+        imageViewPresenter.saveChanges()
+                .ifPresent(image -> imageView.setImage(image));
+    }
 }

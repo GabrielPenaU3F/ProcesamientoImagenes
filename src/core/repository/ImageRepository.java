@@ -3,18 +3,16 @@ package core.repository;
 
 import domain.CustomImage;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ImageRepository {
 
     private Map<String, CustomImage> images;
     private String currentImagePath;
+    private CustomImage currentModifiedImage;
 
     public ImageRepository() {
         this.images = new HashMap<>();
-        this.currentImagePath = "";
     }
 
     public void put(String path, CustomImage image) {
@@ -31,5 +29,21 @@ public class ImageRepository {
 
     public Optional<String> getCurrentImagePath() {
         return Optional.ofNullable(currentImagePath);
+    }
+
+    public void putCurrentModifiedImage(CustomImage currentModifiedImage) {
+        this.currentModifiedImage = currentModifiedImage;
+    }
+
+    public Optional<CustomImage> getCurrentModifiedImage() {
+        return Optional.ofNullable(currentModifiedImage);
+    }
+
+    public int size(){
+        return images.size();
+    }
+
+    public List<String> getImages() {
+        return new ArrayList<>(images.keySet());
     }
 }
