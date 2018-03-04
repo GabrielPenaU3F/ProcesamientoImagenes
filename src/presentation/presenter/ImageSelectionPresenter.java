@@ -21,7 +21,6 @@ public class ImageSelectionPresenter {
     private SaveImageAction saveImageAction;
     private GetImageListAction getImageListAction;
 
-
     public ImageSelectionPresenter(LoadImageAction loadImageAction,
                                    SetCurrentImagePathAction setCurrentImagePathAction,
                                    GetCurrentImagePathAction getCurrentImagePathAction,
@@ -38,7 +37,7 @@ public class ImageSelectionPresenter {
 
     //Loads the image in memory repository and returns its path
     public String loadImage(Supplier<String> nameConsumer) {
-        return loadImageAction.execute(nameConsumer);
+        return loadImageAction.execute(nameConsumer.get());
     }
 
     public void setCurrentImagePath(String currentImagePath) {
