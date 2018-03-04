@@ -29,13 +29,9 @@ public class ImageViewPresenter {
         this.loadModifiedImageAction = loadModifiedImageAction;
         this.putModifiedImageAction = putModifiedImageAction;
     }
-
-    private Optional<CustomImage> getCurrentImage() {
-        return this.getImageAction.execute();
-    }
-
+    
     public Optional<Image> getFXImage() {
-        return this.getCurrentImage().map(customImage -> {
+        return this.getImageAction.execute().map(customImage -> {
             this.putModifiedImageAction.execute(customImage);
             BufferedImage bufferedImage = customImage.getBufferedImage();
             return SwingFXUtils.toFXImage(bufferedImage, null);
@@ -43,7 +39,7 @@ public class ImageViewPresenter {
     }
 
     public Optional<Integer> getRGB(Integer pixelX, Integer pixelY) {
-        return this.getCurrentImage().map(customImage -> customImage.getPixelValue(pixelX, pixelY));
+        return this.getImageAction.execute().map(customImage -> customImage.getPixelValue(pixelX, pixelY));
     }
 
     public Image modifyPixelValue(Integer pixelX, Integer pixelY, String value) {
