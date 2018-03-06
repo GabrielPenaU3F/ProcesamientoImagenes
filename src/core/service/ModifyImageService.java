@@ -28,7 +28,9 @@ public class ModifyImageService {
             }
         }
 
-        pixelWriter.setArgb(pixelX, pixelY, value);
+        Color modifiedColor = Color.rgb(value,value,value); //For gray images
+        //pixelWriter.setArgb(pixelX, pixelY, value);
+        pixelWriter.setColor(pixelX,pixelY,modifiedColor);
         return new CustomImage(SwingFXUtils.fromFXImage(writableImage, null), image.getFormatString());
     }
 
