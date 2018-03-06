@@ -1,5 +1,6 @@
 package core.provider;
 
+import presentation.presenter.GreyGradientPresenter;
 import presentation.presenter.ImageSelectionPresenter;
 import presentation.presenter.ImageViewPresenter;
 
@@ -7,6 +8,7 @@ public class PresenterProvider {
 
     private static ImageSelectionPresenter imageSelectionPresenter;
     private static ImageViewPresenter imageViewPresenter;
+    private static GreyGradientPresenter greyGradientPresenter;
 
     public static ImageSelectionPresenter provideImageSelectionPresenter() {
         if (imageSelectionPresenter == null) {
@@ -32,5 +34,13 @@ public class PresenterProvider {
             return imageViewPresenter;
         }
         return imageViewPresenter;
+    }
+
+    public static GreyGradientPresenter provideGreyGradientPresenter() {
+        if (greyGradientPresenter == null) {
+            greyGradientPresenter = new GreyGradientPresenter();
+            return greyGradientPresenter;
+        }
+        return greyGradientPresenter;
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presentation.presenter.ImageSelectionPresenter;
+import presentation.scenecreator.GreyGradientSceneCreator;
 import presentation.scenecreator.ImageViewSceneCreator;
 import presentation.util.InsertValuePopup;
 
@@ -63,22 +64,9 @@ public class MenuSceneController {
     }
 
     @FXML
-    private void onClickButtonTP1(ActionEvent event) {
+    public void showGreyGradient(ActionEvent event) {
 
-    }
-
-    @FXML
-    public void onClickButtonTP2(ActionEvent event) {
-
-    }
-
-    @FXML
-    public void onClickButtonTP3(ActionEvent event) {
-
-    }
-
-    @FXML
-    public void onClickButtonTP4(ActionEvent event) {
+        new GreyGradientSceneCreator().createScene();
 
     }
 
