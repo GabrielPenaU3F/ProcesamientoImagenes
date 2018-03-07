@@ -1,29 +1,29 @@
 package core.provider;
 
+import presentation.presenter.MenuPresenter;
 import presentation.presenter.ColorGradientPresenter;
 import presentation.presenter.GreyGradientPresenter;
-import presentation.presenter.ImageSelectionPresenter;
 import presentation.presenter.ImageViewPresenter;
 
 public class PresenterProvider {
 
-    private static ImageSelectionPresenter imageSelectionPresenter;
+    private static MenuPresenter menuPresenter;
     private static ImageViewPresenter imageViewPresenter;
     private static GreyGradientPresenter greyGradientPresenter;
     private static ColorGradientPresenter colorGradientPresenter;
 
-    public static ImageSelectionPresenter provideImageSelectionPresenter() {
-        if (imageSelectionPresenter == null) {
-            imageSelectionPresenter = new ImageSelectionPresenter(
+    public static MenuPresenter provideImageSelectionPresenter() {
+        if (menuPresenter == null) {
+            menuPresenter = new MenuPresenter(
                     ActionProvider.provideLoadImageAction(),
                     ActionProvider.provideSetCurrentImagePathOnRepoAction(),
                     ActionProvider.provideGetCurrentImagePathAction(),
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.provideSaveImageAction(),
                     ActionProvider.provideGetImageListAction());
-            return imageSelectionPresenter;
+            return menuPresenter;
         }
-        return imageSelectionPresenter;
+        return menuPresenter;
     }
 
     public static ImageViewPresenter provideImageViewPresenter() {
@@ -51,6 +51,6 @@ public class PresenterProvider {
             colorGradientPresenter = new ColorGradientPresenter();
             return colorGradientPresenter;
         }
-        return colorGradientPresenter;  
+        return colorGradientPresenter;
     }
 }

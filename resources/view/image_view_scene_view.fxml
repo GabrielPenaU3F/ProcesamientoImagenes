@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -21,20 +23,23 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Pane>
-            <children>
-                <Pane fx:id="imgViewPane">
-                    <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <Group fx:id="groupImageView" autoSizeChildren="true" BorderPane.alignment="CENTER">
+               <children>
                         <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
-                    </children>
-                </Pane>
-            </children>
-        </Pane>
-        <Pane GridPane.columnIndex="1">
-            <children>
-                <ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true" />
-            </children>
-        </Pane>
+               </children>
+            </Group>
+         </center>
+         <right>
+            <Button mnemonicParsing="false" onAction="#cutPartialImage" text="Recortar" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+         <center>
+                <ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
         <VBox alignment="CENTER" GridPane.columnIndex="2">
             <children>
                 <Pane prefHeight="130.0" prefWidth="132.0">
