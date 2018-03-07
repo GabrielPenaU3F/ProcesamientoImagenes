@@ -23,5 +23,4 @@ public class GreyGradientSceneController {
         imageView.setPickOnBounds(true);
         imageView.setImage(greyGradient);
     }
-
 }

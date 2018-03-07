@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MenuSceneController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MenuSceneController">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="209.0" prefWidth="603.0">
             <columnConstraints>
@@ -49,9 +49,10 @@
                      </font>
                   </Label>
                   <Button layoutX="33.0" layoutY="43.0" mnemonicParsing="false" onAction="#showGreyGradient" text="Degradee grises" />
+                  <Button layoutX="282.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithCircle" text="Circulo blanco" />
                   <Button layoutX="154.0" layoutY="43.0" mnemonicParsing="false" onAction="#showColorGradient" text="Degradee colores" />
-                  <Button layoutX="282.0" layoutY="43.0" mnemonicParsing="false" text="Circulo blanco" />
-                  <Button layoutX="393.0" layoutY="43.0" mnemonicParsing="false" text="Cuadrado blanco" />
+                  <Button layoutX="282.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithCircle" text="Circulo blanco" />
+                  <Button layoutX="393.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithRectangle" text="Cuadrado blanco" />
                </children>
             </Pane>
             </children>
