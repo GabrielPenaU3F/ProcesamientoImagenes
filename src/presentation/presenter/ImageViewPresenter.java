@@ -1,6 +1,6 @@
 package presentation.presenter;
 
-import core.action.PutModifiedImageAction;
+import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.edit.LoadModifiedImageAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;

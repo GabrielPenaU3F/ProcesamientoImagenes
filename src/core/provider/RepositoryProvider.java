@@ -9,7 +9,6 @@ public class RepositoryProvider {
     public static ImageRepository provideImageRepository() {
         if (imageRepository == null) {
             imageRepository = new ImageRepository();
-            return imageRepository;
         }
         return imageRepository;
     }

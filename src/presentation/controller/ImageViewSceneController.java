@@ -5,11 +5,14 @@ import io.reactivex.functions.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import presentation.presenter.ImageViewPresenter;
+import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.ImageViewSceneCreator;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
 
@@ -29,6 +32,8 @@ public class ImageViewSceneController {
     public TextField pixelY;
     @FXML
     public TextField pixelValue;
+    @FXML
+    public Button inform;
 
     private ImageViewPresenter imageViewPresenter;
     private CustomImageView customImageView;
@@ -112,5 +117,11 @@ public class ImageViewSceneController {
         Image image = customImageView.cutPartialImage();
         modifiedImageView.setImage(image);
         imageViewPresenter.putModifiedImage(image);
+        inform.setVisible(true);
+    }
+
+    @FXML
+    public void showPartialImageInform(ActionEvent actionEvent) {
+        new ImageInformSceneCreator().createScene();
     }
 }

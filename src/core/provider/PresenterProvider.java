@@ -1,5 +1,6 @@
 package core.provider;
 
+import presentation.presenter.ImageInformPresenter;
 import presentation.presenter.MenuPresenter;
 import presentation.presenter.ColorGradientPresenter;
 import presentation.presenter.GreyGradientPresenter;
@@ -9,6 +10,7 @@ public class PresenterProvider {
 
     private static MenuPresenter menuPresenter;
     private static ImageViewPresenter imageViewPresenter;
+    private static ImageInformPresenter imageInformPresenter;
     private static GreyGradientPresenter greyGradientPresenter;
     private static ColorGradientPresenter colorGradientPresenter;
 
@@ -20,8 +22,8 @@ public class PresenterProvider {
                     ActionProvider.provideGetCurrentImagePathAction(),
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.provideSaveImageAction(),
-                    ActionProvider.provideGetImageListAction());
-            return menuPresenter;
+                    ActionProvider.provideGetImageListAction()
+            );
         }
         return menuPresenter;
     }
@@ -32,10 +34,20 @@ public class PresenterProvider {
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.provideModifyPixelAction(),
                     ActionProvider.provideLoadModifiedImageAction(),
-                    ActionProvider.providePutModifiedImageAction());
-            return imageViewPresenter;
+                    ActionProvider.providePutModifiedImageAction()
+            );
         }
         return imageViewPresenter;
+    }
+
+    public static ImageInformPresenter provideImageInformPresenter() {
+        if (imageInformPresenter == null) {
+            imageInformPresenter = new ImageInformPresenter(
+                    ActionProvider.provideGetModifiedImageAction(),
+                    ActionProvider.provideCreateImageInformAction()
+            );
+        }
+        return imageInformPresenter;
     }
 
     public static GreyGradientPresenter provideGreyGradientPresenter() {
