@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class ImageSelectionPresenter {
+public class MenuPresenter {
 
     private LoadImageAction loadImageAction;
     private SetCurrentImagePathAction setCurrentImagePathAction;
@@ -21,12 +21,13 @@ public class ImageSelectionPresenter {
     private SaveImageAction saveImageAction;
     private GetImageListAction getImageListAction;
 
-    public ImageSelectionPresenter(LoadImageAction loadImageAction,
-                                   SetCurrentImagePathAction setCurrentImagePathAction,
-                                   GetCurrentImagePathAction getCurrentImagePathAction,
-                                   GetImageAction getImageAction,
-                                   SaveImageAction saveImageAction,
-                                   GetImageListAction getImageListAction) {
+    public MenuPresenter(LoadImageAction loadImageAction,
+                         SetCurrentImagePathAction setCurrentImagePathAction,
+                         GetCurrentImagePathAction getCurrentImagePathAction,
+                         GetImageAction getImageAction,
+                         SaveImageAction saveImageAction,
+                         GetImageListAction getImageListAction) {
+
         this.loadImageAction = loadImageAction;
         this.setCurrentImagePathAction = setCurrentImagePathAction;
         this.getCurrentImagePathAction = getCurrentImagePathAction;

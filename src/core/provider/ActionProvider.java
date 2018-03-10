@@ -1,7 +1,9 @@
 package core.provider;
 
 import core.action.GetImageListAction;
-import core.action.PutModifiedImageAction;
+import core.action.image.CreateImageInformAction;
+import core.action.modifiedimage.GetModifiedImageAction;
+import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.currentimage.GetCurrentImagePathAction;
 import core.action.currentimage.SetCurrentImagePathAction;
 import core.action.edit.LoadModifiedImageAction;
@@ -21,11 +23,12 @@ public class ActionProvider {
     private static GetImageListAction getImageListAction;
     private static LoadModifiedImageAction loadModifiedImageAction;
     private static PutModifiedImageAction putModifiedImageAction;
+    private static GetModifiedImageAction getModifiedImageAction;
+    private static CreateImageInformAction createImageInformAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
             getImageAction = new GetImageAction(RepositoryProvider.provideImageRepository());
-            return getImageAction;
         }
         return getImageAction;
     }
@@ -37,7 +40,6 @@ public class ActionProvider {
                     ServiceProvider.provideOpenFileService(),
                     CommonProvider.provideOpener(),
                     ServiceProvider.provideImageRawService());
-            return loadImageAction;
         }
         return loadImageAction;
     }
@@ -45,7 +47,6 @@ public class ActionProvider {
     public static SetCurrentImagePathAction provideSetCurrentImagePathOnRepoAction() {
         if (setCurrentImagePathAction == null) {
             setCurrentImagePathAction = new SetCurrentImagePathAction(RepositoryProvider.provideImageRepository());
-            return setCurrentImagePathAction;
         }
         return setCurrentImagePathAction;
     }
@@ -53,7 +54,6 @@ public class ActionProvider {
     public static GetCurrentImagePathAction provideGetCurrentImagePathAction() {
         if (getCurrentImagePathAction == null) {
             getCurrentImagePathAction = new GetCurrentImagePathAction(RepositoryProvider.provideImageRepository());
-            return getCurrentImagePathAction;
         }
         return getCurrentImagePathAction;
     }
@@ -61,7 +61,6 @@ public class ActionProvider {
     public static SaveImageAction provideSaveImageAction() {
         if (saveImageAction == null) {
             saveImageAction = new SaveImageAction();
-            return saveImageAction;
         }
         return saveImageAction;
     }
@@ -72,7 +71,6 @@ public class ActionProvider {
                     RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideModifyImageService()
             );
-            return modifyPixelAction;
         }
         return modifyPixelAction;
     }
@@ -80,7 +78,6 @@ public class ActionProvider {
     public static GetImageListAction provideGetImageListAction() {
         if (getImageListAction == null) {
             getImageListAction = new GetImageListAction(RepositoryProvider.provideImageRepository());
-            return getImageListAction;
         }
         return getImageListAction;
     }
@@ -88,7 +85,6 @@ public class ActionProvider {
     public static LoadModifiedImageAction provideLoadModifiedImageAction() {
         if (loadModifiedImageAction == null) {
             loadModifiedImageAction = new LoadModifiedImageAction(RepositoryProvider.provideImageRepository());
-            return loadModifiedImageAction;
         }
         return loadModifiedImageAction;
     }
@@ -96,8 +92,21 @@ public class ActionProvider {
     public static PutModifiedImageAction providePutModifiedImageAction() {
         if (putModifiedImageAction == null) {
             putModifiedImageAction = new PutModifiedImageAction(RepositoryProvider.provideImageRepository());
-            return putModifiedImageAction;
         }
         return putModifiedImageAction;
+    }
+
+    public static GetModifiedImageAction provideGetModifiedImageAction() {
+        if (getModifiedImageAction == null) {
+            getModifiedImageAction = new GetModifiedImageAction(RepositoryProvider.provideImageRepository());
+        }
+        return getModifiedImageAction;
+    }
+
+    public static CreateImageInformAction provideCreateImageInformAction() {
+        if (createImageInformAction == null) {
+            createImageInformAction = new CreateImageInformAction();
+        }
+        return createImageInformAction;
     }
 }

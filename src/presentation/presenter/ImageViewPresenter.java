@@ -1,6 +1,6 @@
 package presentation.presenter;
 
-import core.action.PutModifiedImageAction;
+import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.edit.LoadModifiedImageAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;
@@ -24,12 +24,13 @@ public class ImageViewPresenter {
                               ModifyPixelAction modifyPixelAction,
                               LoadModifiedImageAction loadModifiedImageAction,
                               PutModifiedImageAction putModifiedImageAction) {
+
         this.getImageAction = getImageAction;
         this.modifyPixelAction = modifyPixelAction;
         this.loadModifiedImageAction = loadModifiedImageAction;
         this.putModifiedImageAction = putModifiedImageAction;
     }
-    
+
     public Optional<Image> getFXImage() {
         return this.getImageAction.execute().map(customImage -> {
             this.putModifiedImageAction.execute(customImage);
@@ -49,5 +50,9 @@ public class ImageViewPresenter {
     public Optional<Image> saveChanges() {
         Supplier<String> fileNameSupplier = InsertValuePopup.show("Save Modified Image", "modified");
         return loadModifiedImageAction.execute(fileNameSupplier);
+    }
+
+    public void putModifiedImage(Image image) {
+        this.putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), "png"));
     }
 }

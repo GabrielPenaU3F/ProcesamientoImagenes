@@ -21,7 +21,7 @@ public class ModifyPixelAction {
 
         CustomImage image;
 
-        imageRepository.getCurrentImagePath().ifPresent(path -> this.path = path);
+        imageRepository.getCurrentImage().ifPresent(path -> this.path = path);
 
         if (!imageRepository.getCurrentModifiedImage().isPresent()) {
             image = imageRepository.get(path);

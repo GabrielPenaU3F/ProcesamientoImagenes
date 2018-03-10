@@ -8,7 +8,7 @@ import java.util.*;
 public class ImageRepository {
 
     private Map<String, CustomImage> images;
-    private String currentImagePath;
+    private String currentImage;
     private CustomImage currentModifiedImage;
 
     public ImageRepository() {
@@ -24,11 +24,11 @@ public class ImageRepository {
     }
 
     public void put(String currentImagePath) {
-        this.currentImagePath = currentImagePath;
+        this.currentImage = currentImagePath;
     }
 
-    public Optional<String> getCurrentImagePath() {
-        return Optional.ofNullable(currentImagePath);
+    public Optional<String> getCurrentImage() {
+        return Optional.ofNullable(currentImage);
     }
 
     public void putCurrentModifiedImage(CustomImage currentModifiedImage) {
@@ -37,10 +37,6 @@ public class ImageRepository {
 
     public Optional<CustomImage> getCurrentModifiedImage() {
         return Optional.ofNullable(currentModifiedImage);
-    }
-
-    public int size(){
-        return images.size();
     }
 
     public List<String> getImages() {

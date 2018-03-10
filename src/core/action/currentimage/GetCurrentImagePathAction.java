@@ -13,7 +13,7 @@ public class GetCurrentImagePathAction {
     }
 
     public Optional<String> execute() {
-        return this.imageRepository.getCurrentImagePath();
+        return this.imageRepository.getCurrentImage();
     }
 
 }

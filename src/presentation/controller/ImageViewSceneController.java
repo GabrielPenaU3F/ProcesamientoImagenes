@@ -1,19 +1,27 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
+import io.reactivex.functions.Action;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import presentation.presenter.ImageViewPresenter;
+import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.ImageViewSceneCreator;
 import presentation.util.InsertValuePopup;
+import presentation.view.CustomImageView;
 
 public class ImageViewSceneController {
 
     private static final String EMPTY = "";
 
+    @FXML
+    public Group groupImageView;
     @FXML
     public ImageView imageView;
     @FXML
@@ -24,8 +32,11 @@ public class ImageViewSceneController {
     public TextField pixelY;
     @FXML
     public TextField pixelValue;
+    @FXML
+    public Button inform;
 
     private ImageViewPresenter imageViewPresenter;
+    private CustomImageView customImageView;
 
     public ImageViewSceneController() {
         this.imageViewPresenter = PresenterProvider.provideImageViewPresenter();
@@ -34,19 +45,23 @@ public class ImageViewSceneController {
     @FXML
     //JavaFX invoke this method after constructor
     public void initialize() {
-        this.imageViewPresenter.getFXImage().ifPresent(image -> {
-            imageView.setPickOnBounds(true);
-            imageView.setOnMouseClicked(this::onPixelClick);
-            imageView.setImage(image);
-        });
+        this.imageViewPresenter.getFXImage().ifPresent(this::createCustomImageView);
     }
 
-    private void onPixelClick(MouseEvent e) {
-        Integer mouseX = (int) e.getX();
-        Integer mouseY = (int) e.getY();
-        pixelX.setText(mouseX.toString());
-        pixelY.setText(mouseY.toString());
-        calculatePixelValue();
+    private void createCustomImageView(Image image) {
+        customImageView = new CustomImageView(this.groupImageView, this.imageView)
+                .withImage(image)
+                .withSetPickOnBounds(true)
+                .withOnPixelClick(this::onPixelClick)
+                .withSelectionMode();
+    }
+
+    private Action onPixelClick(Integer x, Integer y) {
+        return () -> {
+            pixelX.setText(x.toString());
+            pixelY.setText(y.toString());
+            calculatePixelValue();
+        };
     }
 
     @FXML
@@ -94,6 +109,19 @@ public class ImageViewSceneController {
     public void saveModifiedImage(ActionEvent e) {
         modifiedImageView.setImage(null);
         imageViewPresenter.saveChanges()
-                .ifPresent(image -> imageView.setImage(image));
+                .ifPresent(image -> customImageView.withImage(image));
+    }
+
+    @FXML
+    public void cutPartialImage(ActionEvent e) {
+        Image image = customImageView.cutPartialImage();
+        modifiedImageView.setImage(image);
+        imageViewPresenter.putModifiedImage(image);
+        inform.setVisible(true);
+    }
+
+    @FXML
+    public void showPartialImageInform(ActionEvent actionEvent) {
+        new ImageInformSceneCreator().createScene();
     }
 }
