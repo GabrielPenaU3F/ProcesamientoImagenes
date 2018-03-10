@@ -31,11 +31,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                         <Label text="Average Band R" />
-                         <Label text="Average Band G" GridPane.rowIndex="1" />
-                         <Label text="Average Band B" GridPane.rowIndex="2" />
-                         <Label text="Average Band Grey" GridPane.rowIndex="3" />
-                         <Label text="Total Pixel" GridPane.rowIndex="4" />
+                         <Label text="Promedio Banda R" />
+                         <Label text="Promedio Banda G" GridPane.rowIndex="1" />
+                         <Label text="Promedio Banda B" GridPane.rowIndex="2" />
+                         <Label text="Promedio Banda Gris" GridPane.rowIndex="3" />
+                         <Label text="Total de Pixels" GridPane.rowIndex="4" />
                          <Label fx:id="avgBandR" text="Label" GridPane.columnIndex="1" />
                          <Label fx:id="avgBandG" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                          <Label fx:id="avgBandB" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
