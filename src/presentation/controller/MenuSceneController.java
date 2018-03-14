@@ -1,11 +1,14 @@
 package presentation.controller;
 
+import aux_classes.RGBSemaphore;
 import core.provider.PresenterProvider;
+import domain.RGBChannel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import presentation.scenecreator.ChannelSceneCreator;
 import presentation.presenter.MenuPresenter;
 import presentation.scenecreator.ColorGradientSceneCreator;
 import presentation.scenecreator.GreyGradientSceneCreator;
@@ -39,9 +42,9 @@ public class MenuSceneController {
 
     @FXML
     public void saveImage(ActionEvent event) {
-        String imageSelected = imageComboBox.getSelectionModel().getSelectedItem();
-        menuPresenter.setCurrentImagePath(imageSelected);
-        menuPresenter.saveImage(imageSelected);
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        menuPresenter.saveImage(selectedImage);
     }
 
     @FXML
@@ -63,6 +66,30 @@ public class MenuSceneController {
     @FXML
     public void showColorGradient(ActionEvent event) {
         new ColorGradientSceneCreator().createScene();
+    }
+
+    @FXML
+    public void showRGBImageRedChannel(ActionEvent event) {
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        RGBSemaphore.setValue(RGBChannel.RED);
+        new ChannelSceneCreator().createScene();
+    }
+
+    @FXML
+    public void showRGBImageGreenChannel(ActionEvent event) {
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        RGBSemaphore.setValue(RGBChannel.GREEN);
+        new ChannelSceneCreator().createScene();
+    }
+
+    @FXML
+    public void showRGBImageBlueChannel(ActionEvent event) {
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        RGBSemaphore.setValue(RGBChannel.BLUE);
+        new ChannelSceneCreator().createScene();
     }
 
     @FXML

@@ -1,10 +1,7 @@
 package domain;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 
 import java.awt.image.BufferedImage;
 
@@ -30,44 +27,31 @@ public class CustomImage {
 
     public Integer getPixelValue(Integer x, Integer y) {
         return (int) ((
-                this.getValueChannelR(x, y) * 255 +
-                this.getValueChannelG(x, y) * 255 +
-                this.getValueChannelB(x, y) * 255)
+                this.getRChannelValue(x, y) +
+                this.getGChannelValue(x, y) +
+                this.getBChannelValue(x, y))
                 / 3
         );
     }
 
-    private Double getValueChannelR(int x, int y) {
-        return reader.getColor(x, y).getRed();
+    public Double getRChannelValue(int x, int y) {
+        return reader.getColor(x, y).getRed()*255;
     }
 
-    private Double getValueChannelG(int x, int y) {
-        return reader.getColor(x, y).getGreen();
+    public Double getGChannelValue(int x, int y) {
+        return reader.getColor(x, y).getGreen()*255;
     }
 
-    private Double getValueChannelB(int x, int y) {
-        return reader.getColor(x, y).getBlue();
+    public Double getBChannelValue(int x, int y) {
+        return reader.getColor(x, y).getBlue()*255;
     }
 
-    public void modifyPixel(Integer pixelX, Integer pixelY, Double value) {
+    public Integer getHeight() {return this.bufferedImage.getHeight();}
 
-        WritableImage writableImage = SwingFXUtils.toFXImage(bufferedImage, null);
-
-        int width = (int) writableImage.getWidth();
-        int height = (int) writableImage.getHeight();
-        PixelWriter pixelWriter = writableImage.getPixelWriter();
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                pixelWriter.setArgb(x, y, reader.getArgb(x, y));
-            }
-        }
-
-        pixelWriter.setArgb(pixelX, pixelY, value.intValue());
-        bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
-    }
+    public Integer getWidth() {return this.bufferedImage.getWidth();}
 
     public PixelReader getPixelReader() {
         return reader;
     }
+
 }

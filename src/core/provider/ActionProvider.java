@@ -1,6 +1,7 @@
 package core.provider;
 
 import core.action.GetImageListAction;
+import core.action.channels.ObtainRGBChannelAction;
 import core.action.image.CreateImageInformAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
@@ -25,6 +26,7 @@ public class ActionProvider {
     private static PutModifiedImageAction putModifiedImageAction;
     private static GetModifiedImageAction getModifiedImageAction;
     private static CreateImageInformAction createImageInformAction;
+    private static ObtainRGBChannelAction obtainRGBChannelAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -101,6 +103,14 @@ public class ActionProvider {
             getModifiedImageAction = new GetModifiedImageAction(RepositoryProvider.provideImageRepository());
         }
         return getModifiedImageAction;
+    }
+
+    public static ObtainRGBChannelAction provideObtainRGBChannelAction() {
+        if (obtainRGBChannelAction == null) {
+            obtainRGBChannelAction = new ObtainRGBChannelAction(RepositoryProvider.provideImageRepository());
+            return obtainRGBChannelAction;
+        }
+        return obtainRGBChannelAction;
     }
 
     public static CreateImageInformAction provideCreateImageInformAction() {
