@@ -1,10 +1,6 @@
 package core.provider;
 
-import presentation.presenter.ImageInformPresenter;
-import presentation.presenter.MenuPresenter;
-import presentation.presenter.ColorGradientPresenter;
-import presentation.presenter.GreyGradientPresenter;
-import presentation.presenter.ImageViewPresenter;
+import presentation.presenter.*;
 
 public class PresenterProvider {
 
@@ -12,6 +8,8 @@ public class PresenterProvider {
     private static ImageViewPresenter imageViewPresenter;
     private static ImageInformPresenter imageInformPresenter;
     private static GreyGradientPresenter greyGradientPresenter;
+    private static ImageQuadratePresenter imageQuadratePresenter;
+    private static ImageCirclePresenter imageCirclePresenter;
     private static ColorGradientPresenter colorGradientPresenter;
 
     public static MenuPresenter provideImageSelectionPresenter() {
@@ -56,6 +54,22 @@ public class PresenterProvider {
             return greyGradientPresenter;
         }
         return greyGradientPresenter;
+    }
+
+    public static ImageQuadratePresenter provideImageQuadratePresenter() {
+        if (imageQuadratePresenter == null) {
+            imageQuadratePresenter = new ImageQuadratePresenter(ActionProvider.provideSaveImageAction());
+            return imageQuadratePresenter;
+        }
+        return imageQuadratePresenter;
+    }
+
+    public static ImageCirclePresenter provideImageCirclePresenter() {
+        if (imageCirclePresenter == null) {
+            imageCirclePresenter = new ImageCirclePresenter(ActionProvider.provideSaveImageAction());
+            return imageCirclePresenter;
+        }
+        return imageCirclePresenter;
     }
 
     public static ColorGradientPresenter provideColorGradientPresenter() {

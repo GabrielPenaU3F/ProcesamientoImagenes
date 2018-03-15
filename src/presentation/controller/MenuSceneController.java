@@ -9,7 +9,9 @@ import javafx.scene.control.ComboBox;
 import presentation.presenter.MenuPresenter;
 import presentation.scenecreator.ColorGradientSceneCreator;
 import presentation.scenecreator.GreyGradientSceneCreator;
+import presentation.scenecreator.ImageCircleSceneCreator;
 import presentation.scenecreator.ImageViewSceneCreator;
+import presentation.scenecreator.ImageQuadrateSceneCreator;
 import presentation.util.InsertValuePopup;
 
 public class MenuSceneController {
@@ -63,4 +65,13 @@ public class MenuSceneController {
         new ColorGradientSceneCreator().createScene();
     }
 
+    @FXML
+    public void showImageWithRectangle(ActionEvent actionEvent) {
+        new ImageQuadrateSceneCreator().createScene();
+    }
+
+    @FXML
+    public void showImageWithCircle(ActionEvent actionEvent) {
+        new ImageCircleSceneCreator().createScene();
+    }
 }
