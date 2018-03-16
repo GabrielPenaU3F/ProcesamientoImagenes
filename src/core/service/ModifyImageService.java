@@ -11,6 +11,7 @@ public class ModifyImageService {
 
     public CustomImage modify(CustomImage image, Integer pixelX, Integer pixelY, Integer value) {
 
+        //Por que aparece aca esta WritableImageAux? Si no se usa mas que para conocer las dimensiones, no es necesaria
         WritableImage writableImageAux = SwingFXUtils.toFXImage(image.getBufferedImage(), null);
 
         int width = (int) writableImageAux.getWidth();
@@ -29,7 +30,6 @@ public class ModifyImageService {
         }
 
         Color modifiedColor = Color.rgb(value,value,value); //For gray images
-        //pixelWriter.setArgb(pixelX, pixelY, value);
         pixelWriter.setColor(pixelX,pixelY,modifiedColor);
         return new CustomImage(SwingFXUtils.fromFXImage(writableImage, null), image.getFormatString());
     }

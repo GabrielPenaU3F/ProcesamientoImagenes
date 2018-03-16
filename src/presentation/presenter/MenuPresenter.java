@@ -1,12 +1,15 @@
 package presentation.presenter;
 
 import core.action.GetImageListAction;
+import core.action.channels.ObtainRGBChannelAction;
 import core.action.currentimage.GetCurrentImagePathAction;
 import core.action.currentimage.SetCurrentImagePathAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
 import domain.CustomImage;
+import domain.RGBChannel;
+import javafx.scene.image.Image;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +25,11 @@ public class MenuPresenter {
     private GetImageListAction getImageListAction;
 
     public MenuPresenter(LoadImageAction loadImageAction,
-                         SetCurrentImagePathAction setCurrentImagePathAction,
-                         GetCurrentImagePathAction getCurrentImagePathAction,
-                         GetImageAction getImageAction,
-                         SaveImageAction saveImageAction,
-                         GetImageListAction getImageListAction) {
+                                   SetCurrentImagePathAction setCurrentImagePathAction,
+                                   GetCurrentImagePathAction getCurrentImagePathAction,
+                                   GetImageAction getImageAction,
+                                   SaveImageAction saveImageAction,
+                                   GetImageListAction getImageListAction) {
 
         this.loadImageAction = loadImageAction;
         this.setCurrentImagePathAction = setCurrentImagePathAction;
@@ -60,4 +63,5 @@ public class MenuPresenter {
     public List<String> getImages() {
         return getImageListAction.execute();
     }
+
 }

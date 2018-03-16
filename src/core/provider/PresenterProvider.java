@@ -11,6 +11,7 @@ public class PresenterProvider {
     private static ImageQuadratePresenter imageQuadratePresenter;
     private static ImageCirclePresenter imageCirclePresenter;
     private static ColorGradientPresenter colorGradientPresenter;
+    private static ChannelScenePresenter channelScenePresenter;
 
     public static MenuPresenter provideImageSelectionPresenter() {
         if (menuPresenter == null) {
@@ -20,8 +21,8 @@ public class PresenterProvider {
                     ActionProvider.provideGetCurrentImagePathAction(),
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.provideSaveImageAction(),
-                    ActionProvider.provideGetImageListAction()
-            );
+                    ActionProvider.provideGetImageListAction());
+            return menuPresenter;
         }
         return menuPresenter;
     }
@@ -78,5 +79,13 @@ public class PresenterProvider {
             return colorGradientPresenter;
         }
         return colorGradientPresenter;
+    }
+
+    public static ChannelScenePresenter provideChannelScenePresenter() {
+        if (channelScenePresenter == null) {
+            channelScenePresenter = new ChannelScenePresenter(ActionProvider.provideObtainRGBChannelAction());
+            return channelScenePresenter;
+        }
+        return channelScenePresenter;
     }
 }

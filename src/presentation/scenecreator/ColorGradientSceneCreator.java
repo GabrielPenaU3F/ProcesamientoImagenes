@@ -13,11 +13,11 @@ public class ColorGradientSceneCreator implements SceneCreator {
 
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/color_gradient_scene_view.fxml"));
-            Scene greyGradientScene = new Scene(root);
-            Stage greyGradientStage = new Stage(StageStyle.DECORATED);
-            greyGradientStage.setTitle("Degradé de colores");
-            greyGradientStage.setScene(greyGradientScene);
-            greyGradientStage.show();
+            Scene colorGradientScene = new Scene(root);
+            Stage colorGradientStage = new Stage(StageStyle.DECORATED);
+            colorGradientStage.setTitle("Degradé de colores");
+            colorGradientStage.setScene(colorGradientScene);
+            colorGradientStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
