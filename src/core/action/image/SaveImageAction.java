@@ -1,6 +1,6 @@
 package core.action.image;
 
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 

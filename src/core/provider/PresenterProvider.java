@@ -67,7 +67,7 @@ public class PresenterProvider {
 
     public static ChannelScenePresenter provideChannelScenePresenter() {
         if (channelScenePresenter == null) {
-            channelScenePresenter = new ChannelScenePresenter(ActionProvider.provideObtainRGBChannelAction());
+            channelScenePresenter = new ChannelScenePresenter(ActionProvider.provideObtainRGBChannelAction(), ActionProvider.provideObtainHSVChannelAction());
             return channelScenePresenter;
         }
         return channelScenePresenter;

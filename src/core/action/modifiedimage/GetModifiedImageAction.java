@@ -1,10 +1,8 @@
 package core.action.modifiedimage;
 
 import core.repository.ImageRepository;
-import domain.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 
 import java.util.Optional;
 

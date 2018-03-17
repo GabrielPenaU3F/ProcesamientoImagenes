@@ -2,7 +2,7 @@ package core.action.edit;
 
 import core.repository.ImageRepository;
 import core.service.ModifyImageService;
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 

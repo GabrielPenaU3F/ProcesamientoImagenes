@@ -1,15 +1,12 @@
 package presentation.presenter;
 
 import core.action.GetImageListAction;
-import core.action.channels.ObtainRGBChannelAction;
 import core.action.currentimage.GetCurrentImagePathAction;
 import core.action.currentimage.SetCurrentImagePathAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
-import domain.CustomImage;
-import domain.RGBChannel;
-import javafx.scene.image.Image;
+import domain.customimage.CustomImage;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,4 +61,23 @@ public class MenuPresenter {
         return getImageListAction.execute();
     }
 
+    /*
+    public void showHSVValues() {
+
+        CustomImage image = this.getImage().get();
+        HSVImage hsvImage = this.transformRGBtoHSVImageAction.execute(image);
+
+
+        for (int i=0; i < image.getWidth(); i++) {
+            for (int j=0; j < image.getHeight(); j++) {
+
+                String hsvValues = String.format("Hue: %f - Saturation: %f - Value: %f", hsvImage.getHue(i,j), hsvImage.getSaturation(i,j), hsvImage.getValue(i,j));
+                System.out.println(hsvValues);
+
+
+            }
+        }
+
+    }
+    */
 }

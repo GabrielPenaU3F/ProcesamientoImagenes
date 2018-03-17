@@ -1,6 +1,6 @@
 package core.service;
 
-import domain.Format;
+import domain.customimage.Format;
 import javafx.stage.FileChooser;
 
 import java.io.File;

@@ -1,8 +1,8 @@
 package core.action.channels;
 
 import core.repository.ImageRepository;
-import domain.CustomImage;
-import domain.RGBChannel;
+import domain.customimage.CustomImage;
+import domain.Channel;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -19,9 +19,8 @@ public class ObtainRGBChannelAction {
         this.repository = repository;
     }
 
-    public Image execute(RGBChannel channel) {
+    public Image execute(Channel channel) {
 
-        //Aca habria que usar el ifPresent, pero yo no se bien como se debe hacer, a corregir.
         Optional<String> currentImage = this.repository.getCurrentImage();
         if (!currentImage.isPresent()) {
             return new WritableImage(100, 100);
