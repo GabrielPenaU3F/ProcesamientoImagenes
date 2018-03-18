@@ -1,4 +1,4 @@
-package presentation.controller;
+package domain;
 
 public class ImageInform {
 

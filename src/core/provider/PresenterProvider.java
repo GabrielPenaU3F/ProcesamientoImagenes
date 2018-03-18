@@ -7,10 +7,8 @@ public class PresenterProvider {
     private static MenuPresenter menuPresenter;
     private static ImageViewPresenter imageViewPresenter;
     private static ImageInformPresenter imageInformPresenter;
-    private static GreyGradientPresenter greyGradientPresenter;
-    private static ImageQuadratePresenter imageQuadratePresenter;
-    private static ImageCirclePresenter imageCirclePresenter;
-    private static ColorGradientPresenter colorGradientPresenter;
+    private static ImageGradientPresenter imageGradientPresenter;
+    private static ImageFigurePresenter imageFigurePresenter;
     private static ChannelScenePresenter channelScenePresenter;
 
     public static MenuPresenter provideImageSelectionPresenter() {
@@ -49,36 +47,22 @@ public class PresenterProvider {
         return imageInformPresenter;
     }
 
-    public static GreyGradientPresenter provideGreyGradientPresenter() {
-        if (greyGradientPresenter == null) {
-            greyGradientPresenter = new GreyGradientPresenter();
-            return greyGradientPresenter;
+    public static ImageGradientPresenter provideImageGradientPresenter() {
+        if (imageGradientPresenter == null) {
+            imageGradientPresenter = new ImageGradientPresenter(ActionProvider.provideCreateGradientAction());
+            return imageGradientPresenter;
         }
-        return greyGradientPresenter;
+        return imageGradientPresenter;
     }
 
-    public static ImageQuadratePresenter provideImageQuadratePresenter() {
-        if (imageQuadratePresenter == null) {
-            imageQuadratePresenter = new ImageQuadratePresenter(ActionProvider.provideSaveImageAction());
-            return imageQuadratePresenter;
+    public static ImageFigurePresenter provideImageFigurePresenter() {
+        if (imageFigurePresenter == null) {
+            imageFigurePresenter = new ImageFigurePresenter(
+                    ActionProvider.provideSaveImageAction(),
+                    ActionProvider.provideCreateImageWithFigureAction());
+            return imageFigurePresenter;
         }
-        return imageQuadratePresenter;
-    }
-
-    public static ImageCirclePresenter provideImageCirclePresenter() {
-        if (imageCirclePresenter == null) {
-            imageCirclePresenter = new ImageCirclePresenter(ActionProvider.provideSaveImageAction());
-            return imageCirclePresenter;
-        }
-        return imageCirclePresenter;
-    }
-
-    public static ColorGradientPresenter provideColorGradientPresenter() {
-        if (colorGradientPresenter == null) {
-            colorGradientPresenter = new ColorGradientPresenter();
-            return colorGradientPresenter;
-        }
-        return colorGradientPresenter;
+        return imageFigurePresenter;
     }
 
     public static ChannelScenePresenter provideChannelScenePresenter() {

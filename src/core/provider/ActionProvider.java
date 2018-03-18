@@ -1,7 +1,9 @@
 package core.provider;
 
+import core.action.figure.CreateImageWithFigureAction;
 import core.action.GetImageListAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.CreateImageInformAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
@@ -27,6 +29,8 @@ public class ActionProvider {
     private static GetModifiedImageAction getModifiedImageAction;
     private static CreateImageInformAction createImageInformAction;
     private static ObtainRGBChannelAction obtainRGBChannelAction;
+    private static CreateImageWithFigureAction createImageWithFigureAction;
+    private static CreateImageWithGradientAction createImageWithGradientAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -118,5 +122,19 @@ public class ActionProvider {
             createImageInformAction = new CreateImageInformAction();
         }
         return createImageInformAction;
+    }
+
+    public static CreateImageWithFigureAction provideCreateImageWithFigureAction() {
+        if (createImageWithFigureAction == null) {
+            createImageWithFigureAction = new CreateImageWithFigureAction(ServiceProvider.provideImageFigureService());
+        }
+        return createImageWithFigureAction;
+    }
+
+    public static CreateImageWithGradientAction provideCreateGradientAction() {
+        if (createImageWithGradientAction == null) {
+            createImageWithGradientAction = new CreateImageWithGradientAction(ServiceProvider.provideGradientService());
+        }
+        return createImageWithGradientAction;
     }
 }

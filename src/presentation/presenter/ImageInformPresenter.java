@@ -1,8 +1,8 @@
 package presentation.presenter;
 
-import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.image.CreateImageInformAction;
-import presentation.controller.ImageInform;
+import core.action.modifiedimage.GetModifiedImageAction;
+import domain.ImageInform;
 
 import java.util.Optional;
 

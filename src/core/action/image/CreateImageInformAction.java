@@ -3,7 +3,7 @@ package core.action.image;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
-import presentation.controller.ImageInform;
+import domain.ImageInform;
 
 public class CreateImageInformAction {
 

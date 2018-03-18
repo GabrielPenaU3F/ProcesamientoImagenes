@@ -6,15 +6,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class GreyGradientSceneCreator implements SceneCreator {
+public class ImageGradientSceneCreator implements SceneCreator {
 
     @Override
     public void createScene() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/grey_gradient_scene_view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/image_gradient_scene_view.fxml"));
             Scene greyGradientScene = new Scene(root);
             Stage greyGradientStage = new Stage(StageStyle.DECORATED);
-            greyGradientStage.setTitle("Degrade de grises");
+            greyGradientStage.setTitle("Degrade");
             greyGradientStage.setScene(greyGradientScene);
             greyGradientStage.show();
 

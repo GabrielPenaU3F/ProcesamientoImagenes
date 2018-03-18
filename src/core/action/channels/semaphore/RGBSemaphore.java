@@ -1,4 +1,4 @@
-package aux_classes;
+package core.action.channels.semaphore;
 
 import domain.RGBChannel;
 
