@@ -53,7 +53,7 @@
                   <Button layoutX="282.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithCircle" text="Circulo blanco" />
                   <Button layoutX="154.0" layoutY="43.0" mnemonicParsing="false" onAction="#showColorGradient" text="Degradee colores" />
                   <Button layoutX="282.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithCircle" text="Circulo blanco" />
-                  <Button layoutX="393.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithRectangle" text="Cuadrado blanco" />
+                  <Button layoutX="393.0" layoutY="43.0" mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Cuadrado blanco" />
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">

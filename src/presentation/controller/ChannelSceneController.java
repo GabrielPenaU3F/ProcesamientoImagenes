@@ -1,9 +1,8 @@
 package presentation.controller;
 
-import aux_classes.RGBSemaphore;
+import core.action.channels.semaphore.RGBSemaphore;
 import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import presentation.presenter.ChannelScenePresenter;
 
@@ -20,7 +19,6 @@ public class ChannelSceneController {
 
     @FXML
     public void initialize() {
-
         imageView.setPickOnBounds(true);
         imageView.setImage(channelScenePresenter.obtainRGBChannel(RGBSemaphore.getValue()));
     }

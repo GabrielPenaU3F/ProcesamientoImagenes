@@ -1,20 +1,22 @@
 package presentation.controller;
 
-import aux_classes.RGBSemaphore;
+import core.action.channels.semaphore.RGBSemaphore;
+import core.action.figure.semaphore.FigureSemaphore;
+import core.action.gradient.semaphore.GradientSemaphore;
 import core.provider.PresenterProvider;
+import domain.Figure;
+import domain.Gradient;
 import domain.RGBChannel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import presentation.scenecreator.ChannelSceneCreator;
 import presentation.presenter.MenuPresenter;
-import presentation.scenecreator.ColorGradientSceneCreator;
-import presentation.scenecreator.GreyGradientSceneCreator;
-import presentation.scenecreator.ImageCircleSceneCreator;
+import presentation.scenecreator.ChannelSceneCreator;
+import presentation.scenecreator.ImageGradientSceneCreator;
 import presentation.scenecreator.ImageViewSceneCreator;
-import presentation.scenecreator.ImageQuadrateSceneCreator;
+import presentation.scenecreator.ImageFigureSceneCreator;
 import presentation.util.InsertValuePopup;
 
 public class MenuSceneController {
@@ -60,12 +62,14 @@ public class MenuSceneController {
 
     @FXML
     public void showGreyGradient(ActionEvent event) {
-        new GreyGradientSceneCreator().createScene();
+        GradientSemaphore.setValue(Gradient.GREY);
+        new ImageGradientSceneCreator().createScene();
     }
 
     @FXML
     public void showColorGradient(ActionEvent event) {
-        new ColorGradientSceneCreator().createScene();
+        GradientSemaphore.setValue(Gradient.COLOR);
+        new ImageGradientSceneCreator().createScene();
     }
 
     @FXML
@@ -93,12 +97,14 @@ public class MenuSceneController {
     }
 
     @FXML
-    public void showImageWithRectangle(ActionEvent actionEvent) {
-        new ImageQuadrateSceneCreator().createScene();
+    public void showImageWithQuadrate(ActionEvent actionEvent) {
+        FigureSemaphore.setValue(Figure.QUADRATE);
+        new ImageFigureSceneCreator().createScene();
     }
 
     @FXML
     public void showImageWithCircle(ActionEvent actionEvent) {
-        new ImageCircleSceneCreator().createScene();
+        FigureSemaphore.setValue(Figure.CIRCLE);
+        new ImageFigureSceneCreator().createScene();
     }
 }
