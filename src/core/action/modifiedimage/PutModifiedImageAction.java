@@ -1,7 +1,7 @@
 package core.action.modifiedimage;
 
 import core.repository.ImageRepository;
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 
 public class PutModifiedImageAction {
 

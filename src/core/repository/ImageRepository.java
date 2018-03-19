@@ -1,7 +1,7 @@
 package core.repository;
 
 
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 
 import java.util.*;
 

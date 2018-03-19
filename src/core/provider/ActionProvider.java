@@ -2,6 +2,7 @@ package core.provider;
 
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.GetImageListAction;
+import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.CreateImageInformAction;
@@ -14,6 +15,7 @@ import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
+import core.service.transformations.TransformRGBtoHSVImageService;
 
 public class ActionProvider {
 
@@ -29,6 +31,8 @@ public class ActionProvider {
     private static GetModifiedImageAction getModifiedImageAction;
     private static CreateImageInformAction createImageInformAction;
     private static ObtainRGBChannelAction obtainRGBChannelAction;
+    private static TransformRGBtoHSVImageService transformRGBtoHSVImageService;
+    private static ObtainHSVChannelAction obtainHSVChannelAction;
     private static CreateImageWithFigureAction createImageWithFigureAction;
     private static CreateImageWithGradientAction createImageWithGradientAction;
 
@@ -122,6 +126,14 @@ public class ActionProvider {
             createImageInformAction = new CreateImageInformAction();
         }
         return createImageInformAction;
+    }
+
+    public static ObtainHSVChannelAction provideObtainHSVChannelAction() {
+        if (obtainHSVChannelAction == null) {
+            obtainHSVChannelAction = new ObtainHSVChannelAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideTransformRGBtoHSVImageService());
+        }
+        return obtainHSVChannelAction;
     }
 
     public static CreateImageWithFigureAction provideCreateImageWithFigureAction() {

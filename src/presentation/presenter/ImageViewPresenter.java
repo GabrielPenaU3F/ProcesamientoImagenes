@@ -4,7 +4,7 @@ import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.edit.LoadModifiedImageAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.util.InsertValuePopup;

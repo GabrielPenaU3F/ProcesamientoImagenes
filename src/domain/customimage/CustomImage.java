@@ -1,4 +1,4 @@
-package domain;
+package domain.customimage;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.PixelReader;

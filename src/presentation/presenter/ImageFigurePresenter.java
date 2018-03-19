@@ -2,7 +2,7 @@ package presentation.presenter;
 
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.image.SaveImageAction;
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 

@@ -1,7 +1,7 @@
 package core.action.image;
 
 import core.repository.ImageRepository;
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 
 import java.util.Optional;
 

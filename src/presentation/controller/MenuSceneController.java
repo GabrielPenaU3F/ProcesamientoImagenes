@@ -1,12 +1,12 @@
 package presentation.controller;
 
-import core.action.channels.semaphore.RGBSemaphore;
+import aux_classes.ChannelSemaphore;
 import core.action.figure.semaphore.FigureSemaphore;
 import core.action.gradient.semaphore.GradientSemaphore;
 import core.provider.PresenterProvider;
+import domain.Channel;
 import domain.Figure;
 import domain.Gradient;
-import domain.RGBChannel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -76,7 +76,7 @@ public class MenuSceneController {
     public void showRGBImageRedChannel(ActionEvent event) {
         String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
         menuPresenter.setCurrentImagePath(selectedImage);
-        RGBSemaphore.setValue(RGBChannel.RED);
+        ChannelSemaphore.setValue(Channel.RED);
         new ChannelSceneCreator().createScene();
     }
 
@@ -84,7 +84,7 @@ public class MenuSceneController {
     public void showRGBImageGreenChannel(ActionEvent event) {
         String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
         menuPresenter.setCurrentImagePath(selectedImage);
-        RGBSemaphore.setValue(RGBChannel.GREEN);
+        ChannelSemaphore.setValue(Channel.GREEN);
         new ChannelSceneCreator().createScene();
     }
 
@@ -92,7 +92,7 @@ public class MenuSceneController {
     public void showRGBImageBlueChannel(ActionEvent event) {
         String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
         menuPresenter.setCurrentImagePath(selectedImage);
-        RGBSemaphore.setValue(RGBChannel.BLUE);
+        ChannelSemaphore.setValue(Channel.BLUE);
         new ChannelSceneCreator().createScene();
     }
 
@@ -106,5 +106,35 @@ public class MenuSceneController {
     public void showImageWithCircle(ActionEvent actionEvent) {
         FigureSemaphore.setValue(Figure.CIRCLE);
         new ImageFigureSceneCreator().createScene();
+    }
+
+    @FXML
+    public void showHueHSVChannel(ActionEvent event) {
+
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        ChannelSemaphore.setValue(Channel.HUE);
+        new ChannelSceneCreator().createScene();
+
+    }
+
+    @FXML
+    public void showSaturationHSVChannel(ActionEvent event) {
+
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        ChannelSemaphore.setValue(Channel.SATURATION);
+        new ChannelSceneCreator().createScene();
+
+    }
+
+    @FXML
+    public void showValueHSVChannel(ActionEvent event) {
+
+        String selectedImage = imageComboBox.getSelectionModel().getSelectedItem();
+        menuPresenter.setCurrentImagePath(selectedImage);
+        ChannelSemaphore.setValue(Channel.VALUE);
+        new ChannelSceneCreator().createScene();
+
     }
 }

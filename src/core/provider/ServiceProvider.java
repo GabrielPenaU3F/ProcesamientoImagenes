@@ -1,5 +1,9 @@
 package core.provider;
 
+import core.service.ModifyImageService;
+import core.service.ImageRawService;
+import core.service.OpenFileService;
+import core.service.transformations.TransformRGBtoHSVImageService;
 import core.service.*;
 import javafx.stage.FileChooser;
 
@@ -11,7 +15,7 @@ public class ServiceProvider {
 
     private static FileChooser createFileChooser() {
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open CustomImage");
+        fileChooser.setTitle("Open customimage");
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("All Images", "*.*"), new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                         new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("RAW", "*.raw"),
@@ -34,5 +38,9 @@ public class ServiceProvider {
 
     public static ImageGradientService provideGradientService() {
         return new ImageGradientService();
+    }
+
+    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() {
+        return new TransformRGBtoHSVImageService();
     }
 }

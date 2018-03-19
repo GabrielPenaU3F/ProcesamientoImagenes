@@ -3,7 +3,7 @@ package core.action.image;
 import core.repository.ImageRepository;
 import core.service.ImageRawService;
 import core.service.OpenFileService;
-import domain.CustomImage;
+import domain.customimage.CustomImage;
 import ij.io.Opener;
 import org.apache.commons.io.FilenameUtils;
 
