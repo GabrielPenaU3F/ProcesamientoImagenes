@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class GetModifiedImageAction {
 
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     public GetModifiedImageAction(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;

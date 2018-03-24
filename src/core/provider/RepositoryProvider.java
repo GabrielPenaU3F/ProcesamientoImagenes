@@ -2,7 +2,7 @@ package core.provider;
 
 import core.repository.ImageRepository;
 
-public class RepositoryProvider {
+class RepositoryProvider {
 
     private static ImageRepository imageRepository;
 

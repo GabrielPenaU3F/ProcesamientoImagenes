@@ -2,11 +2,11 @@ package domain;
 
 public class ImageInform {
 
-    private Double averageBandR;
-    private Double averageBandG;
-    private Double averageBandB;
-    private Double averageBandGray;
-    private Long totalPixel;
+    private final Double averageBandR;
+    private final Double averageBandG;
+    private final Double averageBandB;
+    private final Double averageBandGray;
+    private final Long totalPixel;
 
     public ImageInform(Double averageBandR, Double averageBandG, Double averageBandB, Double averageBandGray, Long totalPixel) {
         this.averageBandR = averageBandR;

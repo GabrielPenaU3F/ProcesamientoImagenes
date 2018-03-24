@@ -3,7 +3,7 @@ package domain.hsvimage;
 
 public class HSVImage {
 
-    private HSVPixel[][] hsvMatrix;
+    private final HSVPixel[][] hsvMatrix;
 
     public HSVImage(int width, int height) {
         this.hsvMatrix = new HSVPixel[width][height];

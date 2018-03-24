@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class MainSceneCreator implements SceneCreator{
 
-    private Stage stage;
+    private final Stage stage;
 
     public MainSceneCreator(Stage stage) {
         this.stage = stage;

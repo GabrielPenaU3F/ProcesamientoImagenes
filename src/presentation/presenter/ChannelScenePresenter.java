@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 
 public class ChannelScenePresenter {
 
-    private ObtainRGBChannelAction obtainRGBChannelAction;
-    private ObtainHSVChannelAction obtainHSVChannelAction;
+    private final ObtainRGBChannelAction obtainRGBChannelAction;
+    private final ObtainHSVChannelAction obtainHSVChannelAction;
 
     public ChannelScenePresenter(ObtainRGBChannelAction obtainRGBChannelAction, ObtainHSVChannelAction obtainHSVChannelAction) {
         this.obtainRGBChannelAction = obtainRGBChannelAction;

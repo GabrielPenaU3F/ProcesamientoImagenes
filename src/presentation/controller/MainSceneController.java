@@ -1,12 +1,10 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
-import io.reactivex.functions.Action;
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import presentation.presenter.MainPresenter;
 import presentation.view.CustomImageView;
@@ -41,62 +39,62 @@ public class MainSceneController {
     }
 
     @FXML
-    public void openImage(ActionEvent actionEvent) {
+    public void openImage() {
         this.mainPresenter.onOpenImage();
     }
 
     @FXML
-    public void saveModifiedImage(ActionEvent actionEvent) {
+    public void saveModifiedImage() {
         this.mainPresenter.onSaveImage();
     }
 
     @FXML
-    public void showGreyGradient(ActionEvent event) {
+    public void showGreyGradient() {
         this.mainPresenter.onShowGreyGradient();
     }
 
     @FXML
-    public void showColorGradient(ActionEvent event) {
+    public void showColorGradient() {
         this.mainPresenter.onShowColorGradient();
     }
 
     @FXML
-    public void showRGBImageRedChannel(ActionEvent event) {
+    public void showRGBImageRedChannel() {
         this.mainPresenter.onShowRGBImageRedChannel();
     }
 
     @FXML
-    public void showRGBImageGreenChannel(ActionEvent event) {
+    public void showRGBImageGreenChannel() {
         this.mainPresenter.onShowRGBImageGreenChannel();
     }
 
     @FXML
-    public void showRGBImageBlueChannel(ActionEvent event) {
+    public void showRGBImageBlueChannel() {
         this.mainPresenter.onShowRGBImageBlueChannel();
     }
 
     @FXML
-    public void showImageWithQuadrate(ActionEvent actionEvent) {
+    public void showImageWithQuadrate() {
         this.mainPresenter.onShowImageWithQuadrate();
     }
 
     @FXML
-    public void showImageWithCircle(ActionEvent actionEvent) {
+    public void showImageWithCircle() {
         this.mainPresenter.onShowImageWithCircle();
     }
 
     @FXML
-    public void showHueHSVChannel(ActionEvent event) {
+    public void showHueHSVChannel() {
         this.mainPresenter.onShowHueHSVChannel();
     }
 
     @FXML
-    public void showSaturationHSVChannel(ActionEvent event) {
+    public void showSaturationHSVChannel() {
         this.mainPresenter.onShowSaturationHSVChannel();
     }
 
     @FXML
-    public void showValueHSVChannel(ActionEvent event) {
+    public void showValueHSVChannel() {
         this.mainPresenter.onShowValueHSVChannel();
     }
 
@@ -106,22 +104,22 @@ public class MainSceneController {
     }
 
     @FXML
-    public void modifyPixelValue(ActionEvent actionEvent) {
+    public void modifyPixelValue() {
         this.mainPresenter.onModifyPixelValue();
     }
 
     @FXML
-    public void showReport(ActionEvent actionEvent) {
+    public void showReport() {
         this.mainPresenter.onShowReport();
     }
 
     @FXML
-    public void cutPartialImage(ActionEvent actionEvent) {
+    public void cutPartialImage() {
         this.mainPresenter.onCutPartialImage();
     }
 
     @FXML
-    public void close(ActionEvent actionEvent) {
-
+    public void close() {
+        Platform.exit();
     }
 }

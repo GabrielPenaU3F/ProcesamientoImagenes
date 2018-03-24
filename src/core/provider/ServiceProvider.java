@@ -1,13 +1,10 @@
 package core.provider;
 
-import core.service.ModifyImageService;
-import core.service.ImageRawService;
-import core.service.OpenFileService;
-import core.service.transformations.TransformRGBtoHSVImageService;
 import core.service.*;
+import core.service.transformations.TransformRGBtoHSVImageService;
 import javafx.stage.FileChooser;
 
-public class ServiceProvider {
+class ServiceProvider {
 
     public static OpenFileService provideOpenFileService() {
         return new OpenFileService(createFileChooser());
@@ -15,11 +12,14 @@ public class ServiceProvider {
 
     private static FileChooser createFileChooser() {
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open customimage");
+        fileChooser.setTitle("Open customImage");
         fileChooser.getExtensionFilters()
-                .addAll(new FileChooser.ExtensionFilter("All Images", "*.*"), new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                        new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("RAW", "*.raw"),
-                        new FileChooser.ExtensionFilter("PGM", "*.pgm"), new FileChooser.ExtensionFilter("PPM", "*.ppm"),
+                .addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
+                        new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                        new FileChooser.ExtensionFilter("PNG", "*.png"),
+                        new FileChooser.ExtensionFilter("RAW", "*.raw"),
+                        new FileChooser.ExtensionFilter("PGM", "*.pgm"),
+                        new FileChooser.ExtensionFilter("PPM", "*.ppm"),
                         new FileChooser.ExtensionFilter("BMP", "*.bmp"));
         return fileChooser;
     }

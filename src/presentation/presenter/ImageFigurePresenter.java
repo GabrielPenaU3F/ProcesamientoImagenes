@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 
 public class ImageFigurePresenter {
 
-    private SaveImageAction saveImageAction;
-    private CreateImageWithFigureAction createImageWithFigureAction;
+    private final SaveImageAction saveImageAction;
+    private final CreateImageWithFigureAction createImageWithFigureAction;
 
     public ImageFigurePresenter(SaveImageAction saveImageAction,
                                 CreateImageWithFigureAction createImageWithFigureAction) {

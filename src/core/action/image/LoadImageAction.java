@@ -13,11 +13,12 @@ import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 
 public class LoadImageAction {
 
-    private ImageRepository imageRepository;
-    private OpenFileService openFileService;
-    private Opener opener;
+    private final ImageRepository imageRepository;
+    private final OpenFileService openFileService;
+    private final Opener opener;
+    private final ImageRawService imageRawService;
+
     private String path = "";
-    private ImageRawService imageRawService;
     private CustomImage image;
 
     public LoadImageAction(ImageRepository imageRepository, OpenFileService openFileService, Opener opener,

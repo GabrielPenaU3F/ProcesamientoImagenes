@@ -29,14 +29,14 @@ import java.awt.image.BufferedImage;
 public class MainPresenter {
 
     private static final String EMPTY = "";
-    public static final int INDEX_OUT_OF_BOUND = -1;
+    private static final int INDEX_OUT_OF_BOUND = -1;
     private final MainSceneController view;
     private final LoadImageAction loadImageAction;
-    private GetImageAction getImageAction;
+    private final GetImageAction getImageAction;
     private final GetModifiedImageAction getModifiedImageAction;
-    private ModifyPixelAction modifyPixelAction;
+    private final ModifyPixelAction modifyPixelAction;
     private final SaveImageAction saveImageAction;
-    private PutModifiedImageAction putModifiedImageAction;
+    private final PutModifiedImageAction putModifiedImageAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -146,9 +146,7 @@ public class MainPresenter {
                             return INDEX_OUT_OF_BOUND;
                         }
                     })
-                    .ifPresent(rgb -> {
-                        view.pixelValue.setText(rgb.toString());
-                    });
+                    .ifPresent(rgb -> view.pixelValue.setText(rgb.toString()));
 
         } else {
             view.pixelValue.setText("Error");
@@ -165,7 +163,7 @@ public class MainPresenter {
             Integer pixelX = Integer.parseInt(view.pixelX.getText());
             Integer pixelY = Integer.parseInt(view.pixelY.getText());
 
-            String newValue = InsertValuePopup.show("Insertar valor", "0").get();
+            String newValue = InsertValuePopup.show("Insert value", "0").get();
 
             Image modifiedImage = modifyPixelAction.execute(pixelX, pixelY, newValue);
 

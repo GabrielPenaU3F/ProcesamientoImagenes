@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 
 public class CustomImage {
 
-    private PixelReader reader;
-    private BufferedImage bufferedImage;
+    private final PixelReader reader;
+    private final BufferedImage bufferedImage;
     private final Format format;
 
     public CustomImage(BufferedImage bufferedImage, String formatString) {
@@ -26,29 +26,35 @@ public class CustomImage {
     }
 
     public Integer getPixelValue(Integer x, Integer y) {
-        return (int) ((
-                this.getRChannelValue(x, y) +
+        return (int) averageValue(x, y);
+    }
+
+    private double averageValue(Integer x, Integer y) {
+        return (this.getRChannelValue(x, y) +
                 this.getGChannelValue(x, y) +
                 this.getBChannelValue(x, y))
-                / 3
-        );
+                / 3;
     }
 
     public Double getRChannelValue(int x, int y) {
-        return reader.getColor(x, y).getRed()*255;
+        return reader.getColor(x, y).getRed() * 255;
     }
 
     public Double getGChannelValue(int x, int y) {
-        return reader.getColor(x, y).getGreen()*255;
+        return reader.getColor(x, y).getGreen() * 255;
     }
 
     public Double getBChannelValue(int x, int y) {
-        return reader.getColor(x, y).getBlue()*255;
+        return reader.getColor(x, y).getBlue() * 255;
     }
 
-    public Integer getHeight() {return this.bufferedImage.getHeight();}
+    public Integer getHeight() {
+        return this.bufferedImage.getHeight();
+    }
 
-    public Integer getWidth() {return this.bufferedImage.getWidth();}
+    public Integer getWidth() {
+        return this.bufferedImage.getWidth();
+    }
 
     public PixelReader getPixelReader() {
         return reader;

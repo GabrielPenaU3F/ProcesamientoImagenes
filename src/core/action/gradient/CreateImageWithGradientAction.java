@@ -7,7 +7,7 @@ import javafx.scene.image.WritableImage;
 
 public class CreateImageWithGradientAction {
 
-    private ImageGradientService imageGradientService;
+    private final ImageGradientService imageGradientService;
 
     public CreateImageWithGradientAction(ImageGradientService imageGradientService) {
         this.imageGradientService = imageGradientService;

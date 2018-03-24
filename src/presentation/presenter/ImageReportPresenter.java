@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public class ImageReportPresenter {
 
-    private GetModifiedImageAction getModifiedImageAction;
-    private CreateImageInformAction createImageInformAction;
+    private final GetModifiedImageAction getModifiedImageAction;
+    private final CreateImageInformAction createImageInformAction;
 
     public ImageReportPresenter(GetModifiedImageAction getModifiedImageAction, CreateImageInformAction createImageInformAction) {
         this.getModifiedImageAction = getModifiedImageAction;

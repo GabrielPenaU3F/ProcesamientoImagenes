@@ -18,9 +18,8 @@ public class ImageRepository {
         return Optional.ofNullable(this.image);
     }
 
-    public CustomImage saveModifiedImage(CustomImage image) {
+    public void saveModifiedImage(CustomImage image) {
         this.modifiedImage = image;
-        return this.modifiedImage;
     }
 
     public Optional<CustomImage> getModifiedImage() {

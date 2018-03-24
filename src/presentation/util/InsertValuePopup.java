@@ -25,7 +25,7 @@ public class InsertValuePopup {
 
                 TextField nameTextField = new TextField(defaultValue);
                 nameTextField.setMaxWidth(100);
-                Button closeButton = new Button("Aceptar");
+                Button closeButton = new Button("Accept");
                 closeButton.setOnAction(e -> popupWindow.close());
 
                 VBox layout = new VBox(10);

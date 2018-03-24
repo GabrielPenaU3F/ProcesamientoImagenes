@@ -44,7 +44,7 @@ public class CustomImageView {
         return this;
     }
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
+    private final EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
 
@@ -71,7 +71,7 @@ public class CustomImageView {
         }
     };
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+    private final EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
 
@@ -97,7 +97,7 @@ public class CustomImageView {
         }
     };
 
-    private EventHandler<MouseEvent> onMouseReleasedEventHandler = new EventHandler<MouseEvent>() {
+    private final EventHandler<MouseEvent> onMouseReleasedEventHandler = new EventHandler<MouseEvent>() {
 
         public void handle(MouseEvent event) {
 
@@ -105,11 +105,6 @@ public class CustomImageView {
                 return;
         }
     };
-
-    public CustomImageView withImage(Image image) {
-        this.imageView.setImage(image);
-        return this;
-    }
 
     public CustomImageView withSetPickOnBounds(boolean b) {
         this.imageView.setPickOnBounds(b);

@@ -5,7 +5,7 @@ import domain.customimage.CustomImage;
 
 public class PutModifiedImageAction {
 
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     public PutModifiedImageAction(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;

@@ -1,19 +1,18 @@
 package core.provider;
 
-import core.action.figure.CreateImageWithFigureAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.edit.ModifyPixelAction;
+import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.CreateImageInformAction;
 import core.action.image.GetImageAction;
-import core.action.modifiedimage.GetModifiedImageAction;
-import core.action.modifiedimage.PutModifiedImageAction;
-import core.action.edit.ModifyPixelAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
-import core.service.transformations.TransformRGBtoHSVImageService;
+import core.action.modifiedimage.GetModifiedImageAction;
+import core.action.modifiedimage.PutModifiedImageAction;
 
-public class ActionProvider {
+class ActionProvider {
 
     private static LoadImageAction loadImageAction;
     private static GetImageAction getImageAction;
@@ -43,13 +42,6 @@ public class ActionProvider {
                     ServiceProvider.provideImageRawService());
         }
         return loadImageAction;
-    }
-
-    public static GetImageAction provideGetCurrentImagePathAction() {
-        if (getImageAction == null) {
-            getImageAction = new GetImageAction(RepositoryProvider.provideImageRepository());
-        }
-        return getImageAction;
     }
 
     public static SaveImageAction provideSaveImageAction() {

@@ -38,17 +38,17 @@ public class ObtainHSVChannelAction {
         WritableImage writableImage = new WritableImage(width, height);
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 
-        HSVImage hsVfromRGB = transformRGBtoHSVImageService.createHSVfromRGB(image);
+        HSVImage hsvfromRGB = transformRGBtoHSVImageService.createHSVfromRGB(image);
 
         switch (channel) {
             case HUE:
-                getChannel(width, height, pixelWriter, functionHue(hsVfromRGB));
+                getChannel(width, height, pixelWriter, functionHue(hsvfromRGB));
                 break;
             case SATURATION:
-                getChannel(width, height, pixelWriter, functionSaturation(hsVfromRGB));
+                getChannel(width, height, pixelWriter, functionSaturation(hsvfromRGB));
                 break;
             case VALUE:
-                getChannel(width, height, pixelWriter, functionValue(hsVfromRGB));
+                getChannel(width, height, pixelWriter, functionValue(hsvfromRGB));
                 break;
         }
 
@@ -73,14 +73,14 @@ public class ObtainHSVChannelAction {
     private BiFunction<Integer, Integer, Color> functionSaturation(HSVImage hsvImage) {
         return (x, y) -> {
             double saturation = hsvImage.getSaturation(x, y);
-            return Color.hsb(1, saturation, 1);
+            return Color.hsb(0, saturation, 1);
         };
     }
 
     private BiFunction<Integer, Integer, Color> functionValue(HSVImage hsvImage) {
         return (x, y) -> {
             double value = hsvImage.getValue(x, y);
-            return Color.hsb(1, 0, value);
+            return Color.hsb(0, 0, value);
         };
     }
 }
