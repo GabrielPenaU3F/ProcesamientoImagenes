@@ -5,11 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class MenuSceneCreator implements SceneCreator{
+public class MainSceneCreator implements SceneCreator{
 
     private Stage stage;
 
-    public MenuSceneCreator(Stage stage) {
+    public MainSceneCreator(Stage stage) {
         this.stage = stage;
     }
 
@@ -17,8 +17,8 @@ public class MenuSceneCreator implements SceneCreator{
     public void createScene() {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/menu_scene_view.fxml"));
-            this.stage.setTitle("Procesador de Imagenes - Untref 2018");
+            Parent root = FXMLLoader.load(getClass().getResource("/view/main_scene_view.fxml"));
+            this.stage.setTitle("Procesamiento de Imagenes - Untref 2018");
             this.stage.setScene(new Scene(root, 800, 600));
             this.stage.show();
 

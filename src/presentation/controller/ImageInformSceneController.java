@@ -3,7 +3,7 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import presentation.presenter.ImageInformPresenter;
+import presentation.presenter.ImageReportPresenter;
 
 import java.text.DecimalFormat;
 
@@ -20,16 +20,16 @@ public class ImageInformSceneController {
     @FXML
     private Label totalPixel;
 
-    private final ImageInformPresenter imageInformPresenter;
+    private final ImageReportPresenter imageReportPresenter;
 
     public ImageInformSceneController() {
-        this.imageInformPresenter = PresenterProvider.provideImageInformPresenter();
+        this.imageReportPresenter = PresenterProvider.provideImageInformPresenter();
     }
 
     @FXML
     //JavaFX invoke this method after constructor
     public void initialize() {
-        this.imageInformPresenter.createImageInform().ifPresent(imageInform -> {
+        this.imageReportPresenter.createImageInform().ifPresent(imageInform -> {
             avgBandR.setText(new DecimalFormat("#.####").format(imageInform.getAverageBandR()));
             avgBandG.setText(new DecimalFormat("#.####").format(imageInform.getAverageBandG()));
             avgBandB.setText(new DecimalFormat("#.####").format(imageInform.getAverageBandB()));

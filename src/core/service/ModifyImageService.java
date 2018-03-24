@@ -11,11 +11,8 @@ public class ModifyImageService {
 
     public CustomImage modify(CustomImage image, Integer pixelX, Integer pixelY, Integer value) {
 
-        //Por que aparece aca esta WritableImageAux? Si no se usa mas que para conocer las dimensiones, no es necesaria
-        WritableImage writableImageAux = SwingFXUtils.toFXImage(image.getBufferedImage(), null);
-
-        int width = (int) writableImageAux.getWidth();
-        int height = (int) writableImageAux.getHeight();
+        int width = image.getWidth();
+        int height = image.getHeight();
 
         PixelReader pixelReader = image.getPixelReader();
 

@@ -1,45 +1,29 @@
 package core.repository;
 
-
 import domain.customimage.CustomImage;
 
-import java.util.*;
+import java.util.Optional;
 
 public class ImageRepository {
 
-    private Map<String, CustomImage> images;
-    private String currentImage;
-    private CustomImage currentModifiedImage;
+    private CustomImage image;
+    private CustomImage modifiedImage;
 
-    public ImageRepository() {
-        this.images = new HashMap<>();
+    public CustomImage saveImage(CustomImage image) {
+        this.image = image;
+        return this.image;
     }
 
-    public void put(String path, CustomImage image) {
-        this.images.put(path, image);
+    public Optional<CustomImage> getImage() {
+        return Optional.ofNullable(this.image);
     }
 
-    public CustomImage get(String path) {
-        return this.images.get(path);
+    public CustomImage saveModifiedImage(CustomImage image) {
+        this.modifiedImage = image;
+        return this.modifiedImage;
     }
 
-    public void put(String currentImagePath) {
-        this.currentImage = currentImagePath;
-    }
-
-    public Optional<String> getCurrentImage() {
-        return Optional.ofNullable(currentImage);
-    }
-
-    public void putCurrentModifiedImage(CustomImage currentModifiedImage) {
-        this.currentModifiedImage = currentModifiedImage;
-    }
-
-    public Optional<CustomImage> getCurrentModifiedImage() {
-        return Optional.ofNullable(currentModifiedImage);
-    }
-
-    public List<String> getImages() {
-        return new ArrayList<>(images.keySet());
+    public Optional<CustomImage> getModifiedImage() {
+        return Optional.ofNullable(this.modifiedImage);
     }
 }

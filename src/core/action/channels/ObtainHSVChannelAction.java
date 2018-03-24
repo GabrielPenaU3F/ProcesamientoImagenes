@@ -26,12 +26,12 @@ public class ObtainHSVChannelAction {
 
     public Image execute(Channel channel) {
 
-        Optional<String> currentImage = this.repository.getCurrentImage();
+        Optional<CustomImage> currentImage = this.repository.getImage();
         if (!currentImage.isPresent()) {
             return new WritableImage(100, 100);
         }
 
-        CustomImage image = this.repository.get(currentImage.get());
+        CustomImage image = currentImage.get();
 
         int width = image.getWidth();
         int height = image.getHeight();

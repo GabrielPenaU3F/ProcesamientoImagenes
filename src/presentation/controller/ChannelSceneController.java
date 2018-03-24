@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import aux_classes.ChannelSemaphore;
+import core.action.channels.semaphore.ChannelSemaphore;
 import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;

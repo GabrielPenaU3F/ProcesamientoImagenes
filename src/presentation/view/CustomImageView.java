@@ -132,4 +132,8 @@ public class CustomImageView {
 
         return imageView.snapshot(parameters, new WritableImage(width, height));
     }
+
+    public void setImage(WritableImage writableImage) {
+        this.imageView.setImage(writableImage);
+    }
 }

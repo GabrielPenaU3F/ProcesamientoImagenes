@@ -9,6 +9,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.awt.image.BufferedImage;
 
+import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
+
 public class LoadImageAction {
 
     private ImageRepository imageRepository;
@@ -16,6 +18,7 @@ public class LoadImageAction {
     private Opener opener;
     private String path = "";
     private ImageRawService imageRawService;
+    private CustomImage image;
 
     public LoadImageAction(ImageRepository imageRepository, OpenFileService openFileService, Opener opener,
                            ImageRawService imageRawService) {
@@ -25,24 +28,24 @@ public class LoadImageAction {
         this.imageRawService = imageRawService;
     }
 
-    public String execute(String fileName) {
+    public CustomImage execute() {
+
+        image = new CustomImage(new BufferedImage(1,1, TYPE_INT_ARGB), "png");
 
         openFileService.open().ifPresent(file -> {
-
             path = file.toPath().toString();
             String extension = FilenameUtils.getExtension(path);
             if(extension.equalsIgnoreCase("raw")){
-                putOnRepository(fileName, extension, imageRawService.load(file, 256, 256));
+                image = putOnRepository(extension, imageRawService.load(file, 256, 256));
             } else {
-                putOnRepository(fileName, extension, opener.openImage(path).getBufferedImage());
+                image = putOnRepository(extension, opener.openImage(path).getBufferedImage());
             }
-
         });
 
-        return fileName;
+        return image;
     }
 
-    private void putOnRepository(String filePath, String extension, BufferedImage bufferedImage) {
-        imageRepository.put(filePath, new CustomImage(bufferedImage, extension));
+    private CustomImage putOnRepository(String extension, BufferedImage bufferedImage) {
+        return imageRepository.saveImage(new CustomImage(bufferedImage, extension));
     }
 }
