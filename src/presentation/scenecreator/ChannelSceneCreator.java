@@ -8,14 +8,13 @@ import javafx.stage.StageStyle;
 
 public class ChannelSceneCreator implements SceneCreator {
 
-
     @Override
     public void createScene() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/channel_scene_view.fxml"));
             Scene channelScene = new Scene(root);
             Stage channelStage = new Stage(StageStyle.DECORATED);
-            channelStage.setTitle("Separación de canales");
+            channelStage.setTitle("Channels");
             channelStage.setScene(channelScene);
             channelStage.show();
 

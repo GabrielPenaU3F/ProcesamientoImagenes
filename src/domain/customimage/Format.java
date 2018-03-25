@@ -6,7 +6,7 @@ import java.util.List;
 public class Format {
 
     private String formatString;
-    private static List<String> validFormats = validFormats();
+    private static final List<String> validFormats = validFormats();
 
     private static ArrayList<String> validFormats() {
         ArrayList<String> list = new ArrayList<>();

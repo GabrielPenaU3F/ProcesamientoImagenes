@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class ImageGradientPresenter {
 
-    private CreateImageWithGradientAction createImageWithGradientAction;
+    private final CreateImageWithGradientAction createImageWithGradientAction;
 
     public ImageGradientPresenter(CreateImageWithGradientAction createImageWithGradientAction) {
         this.createImageWithGradientAction = createImageWithGradientAction;

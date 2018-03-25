@@ -7,13 +7,13 @@ import java.util.Optional;
 
 public class GetImageAction {
 
-    ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     public GetImageAction(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 
     public Optional<CustomImage> execute() {
-        return imageRepository.getCurrentImage().map(path -> imageRepository.get(path));
+        return imageRepository.getImage();
     }
 }

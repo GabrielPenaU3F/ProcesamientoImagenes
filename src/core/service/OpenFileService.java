@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class OpenFileService {
 
-    private FileChooser fileChooser;
+    private final FileChooser fileChooser;
 
     public OpenFileService(FileChooser fileChooser) {
         this.fileChooser = fileChooser;

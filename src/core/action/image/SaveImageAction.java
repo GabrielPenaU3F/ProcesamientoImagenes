@@ -15,12 +15,13 @@ public class SaveImageAction {
 
         String fullFilename = filename + "." + image.getFormatString();
         try {
+
             BufferedImage bufferedImage = image.getBufferedImage();
             ImageIO.write(bufferedImage, image.getFormatString(), new File(fullFilename));
             return SwingFXUtils.toFXImage(bufferedImage, null);
+
         } catch (IOException e) {
             throw new RuntimeException("IOException");
         }
     }
-
 }

@@ -5,13 +5,13 @@ import domain.customimage.CustomImage;
 
 public class PutModifiedImageAction {
 
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
     public PutModifiedImageAction(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 
     public void execute(CustomImage customImage) {
-        imageRepository.putCurrentModifiedImage(customImage);
+        imageRepository.saveModifiedImage(customImage);
     }
 }

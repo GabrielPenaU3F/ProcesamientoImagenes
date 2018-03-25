@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImageInformSceneController">
    <top>
-      <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" text="Informe de Imagen" BorderPane.alignment="CENTER" />
+      <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" text="Image Report" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <Pane maxWidth="-Infinity" prefHeight="350.0" prefWidth="287.0" BorderPane.alignment="CENTER">
@@ -31,10 +31,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                         <Label text="Promedio Banda R" />
-                         <Label text="Promedio Banda G" GridPane.rowIndex="1" />
-                         <Label text="Promedio Banda B" GridPane.rowIndex="2" />
-                         <Label text="Promedio Banda Gris" GridPane.rowIndex="3" />
+                         <Label text="Average Band R" />
+                         <Label text="Average Band G" GridPane.rowIndex="1" />
+                         <Label text="Average Band B" GridPane.rowIndex="2" />
+                         <Label text="Average Band Gris" GridPane.rowIndex="3" />
                          <Label text="Total de Pixels" GridPane.rowIndex="4" />
                          <Label fx:id="avgBandR" text="Label" GridPane.columnIndex="1" />
                          <Label fx:id="avgBandG" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />

@@ -5,12 +5,14 @@ import core.service.ModifyImageService;
 import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+
+import java.util.Optional;
 
 public class ModifyPixelAction {
 
     private final ImageRepository imageRepository;
-    private ModifyImageService modifyImageService;
-    private String path;
+    private final ModifyImageService modifyImageService;
 
     public ModifyPixelAction(ImageRepository imageRepository, ModifyImageService modifyImageService) {
         this.imageRepository = imageRepository;
@@ -19,19 +21,14 @@ public class ModifyPixelAction {
 
     public Image execute(Integer pixelX, Integer pixelY, String value) {
 
-        CustomImage image;
+        Optional<CustomImage> image = this.imageRepository.getImage();
 
-        imageRepository.getCurrentImage().ifPresent(path -> this.path = path);
-
-        if (!imageRepository.getCurrentModifiedImage().isPresent()) {
-            image = imageRepository.get(path);
-        } else {
-            image = imageRepository.getCurrentModifiedImage().get();
+        if (!image.isPresent()) {
+            return new WritableImage(1, 1);
         }
 
-        CustomImage modifiedImage = modifyImageService.modify(image, pixelX, pixelY, Integer.parseInt(value));
-        imageRepository.putCurrentModifiedImage(modifiedImage);
-
+        CustomImage modifiedImage = modifyImageService.modify(image.get(), pixelX, pixelY, Integer.parseInt(value));
+        this.imageRepository.saveModifiedImage(modifiedImage);
         return SwingFXUtils.toFXImage(modifiedImage.getBufferedImage(), null);
     }
 

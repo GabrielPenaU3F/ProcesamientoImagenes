@@ -14,7 +14,7 @@ public class ImageFigureSceneCreator implements SceneCreator {
             Parent root = FXMLLoader.load(getClass().getResource("/view/image_figure_scene_view.fxml"));
             Scene imageScene = new Scene(root);
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Imagen");
+            stage.setTitle("Figure");
             stage.setScene(imageScene);
             stage.show();
         } catch (Exception e) {

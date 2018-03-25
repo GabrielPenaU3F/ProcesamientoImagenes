@@ -7,7 +7,7 @@ import javafx.scene.image.WritableImage;
 
 public class CreateImageWithFigureAction {
 
-    private ImageFigureService imageFigureService;
+    private final ImageFigureService imageFigureService;
 
     public CreateImageWithFigureAction(ImageFigureService imageFigureService) {
         this.imageFigureService = imageFigureService;

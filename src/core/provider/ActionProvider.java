@@ -1,37 +1,27 @@
 package core.provider;
 
-import core.action.figure.CreateImageWithFigureAction;
-import core.action.GetImageListAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.edit.ModifyPixelAction;
+import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.CreateImageInformAction;
-import core.action.modifiedimage.GetModifiedImageAction;
-import core.action.modifiedimage.PutModifiedImageAction;
-import core.action.currentimage.GetCurrentImagePathAction;
-import core.action.currentimage.SetCurrentImagePathAction;
-import core.action.edit.LoadModifiedImageAction;
-import core.action.edit.ModifyPixelAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
-import core.service.transformations.TransformRGBtoHSVImageService;
+import core.action.modifiedimage.GetModifiedImageAction;
+import core.action.modifiedimage.PutModifiedImageAction;
 
-public class ActionProvider {
+class ActionProvider {
 
-    private static GetImageAction getImageAction;
     private static LoadImageAction loadImageAction;
-    private static SetCurrentImagePathAction setCurrentImagePathAction;
-    private static GetCurrentImagePathAction getCurrentImagePathAction;
+    private static GetImageAction getImageAction;
     private static SaveImageAction saveImageAction;
     private static ModifyPixelAction modifyPixelAction;
-    private static GetImageListAction getImageListAction;
-    private static LoadModifiedImageAction loadModifiedImageAction;
     private static PutModifiedImageAction putModifiedImageAction;
     private static GetModifiedImageAction getModifiedImageAction;
     private static CreateImageInformAction createImageInformAction;
     private static ObtainRGBChannelAction obtainRGBChannelAction;
-    private static TransformRGBtoHSVImageService transformRGBtoHSVImageService;
     private static ObtainHSVChannelAction obtainHSVChannelAction;
     private static CreateImageWithFigureAction createImageWithFigureAction;
     private static CreateImageWithGradientAction createImageWithGradientAction;
@@ -54,20 +44,6 @@ public class ActionProvider {
         return loadImageAction;
     }
 
-    public static SetCurrentImagePathAction provideSetCurrentImagePathOnRepoAction() {
-        if (setCurrentImagePathAction == null) {
-            setCurrentImagePathAction = new SetCurrentImagePathAction(RepositoryProvider.provideImageRepository());
-        }
-        return setCurrentImagePathAction;
-    }
-
-    public static GetCurrentImagePathAction provideGetCurrentImagePathAction() {
-        if (getCurrentImagePathAction == null) {
-            getCurrentImagePathAction = new GetCurrentImagePathAction(RepositoryProvider.provideImageRepository());
-        }
-        return getCurrentImagePathAction;
-    }
-
     public static SaveImageAction provideSaveImageAction() {
         if (saveImageAction == null) {
             saveImageAction = new SaveImageAction();
@@ -83,20 +59,6 @@ public class ActionProvider {
             );
         }
         return modifyPixelAction;
-    }
-
-    public static GetImageListAction provideGetImageListAction() {
-        if (getImageListAction == null) {
-            getImageListAction = new GetImageListAction(RepositoryProvider.provideImageRepository());
-        }
-        return getImageListAction;
-    }
-
-    public static LoadModifiedImageAction provideLoadModifiedImageAction() {
-        if (loadModifiedImageAction == null) {
-            loadModifiedImageAction = new LoadModifiedImageAction(RepositoryProvider.provideImageRepository());
-        }
-        return loadModifiedImageAction;
     }
 
     public static PutModifiedImageAction providePutModifiedImageAction() {

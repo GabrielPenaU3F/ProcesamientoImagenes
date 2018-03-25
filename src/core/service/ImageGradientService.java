@@ -16,11 +16,11 @@ public class ImageGradientService {
         PixelWriter writer = fxImage.getPixelWriter();
 
         int greyValue = 255;
-        for (int i = 0; i < greyGradient.getWidth(); i += 2) {
+        for (int i = 0; i < greyGradient.getWidth(); i++) {
             for (int j = 0; j < greyGradient.getHeight(); j++) {
                 writer.setColor(i, j, Color.rgb(greyValue, greyValue, greyValue));
             }
-            greyValue--;
+            if (i%2 == 0) greyValue--; //When i is even, I decrement the greyValue; this way, every grey band has a 2-pixel width
         }
         return fxImage;
     }

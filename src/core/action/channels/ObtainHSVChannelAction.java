@@ -26,29 +26,29 @@ public class ObtainHSVChannelAction {
 
     public Image execute(Channel channel) {
 
-        Optional<String> currentImage = this.repository.getCurrentImage();
+        Optional<CustomImage> currentImage = this.repository.getImage();
         if (!currentImage.isPresent()) {
             return new WritableImage(100, 100);
         }
 
-        CustomImage image = this.repository.get(currentImage.get());
+        CustomImage image = currentImage.get();
 
         int width = image.getWidth();
         int height = image.getHeight();
         WritableImage writableImage = new WritableImage(width, height);
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 
-        HSVImage hsVfromRGB = transformRGBtoHSVImageService.createHSVfromRGB(image);
+        HSVImage hsvfromRGB = transformRGBtoHSVImageService.createHSVfromRGB(image);
 
         switch (channel) {
             case HUE:
-                getChannel(width, height, pixelWriter, functionHue(hsVfromRGB));
+                getChannel(width, height, pixelWriter, functionHue(hsvfromRGB));
                 break;
             case SATURATION:
-                getChannel(width, height, pixelWriter, functionSaturation(hsVfromRGB));
+                getChannel(width, height, pixelWriter, functionSaturation(hsvfromRGB));
                 break;
             case VALUE:
-                getChannel(width, height, pixelWriter, functionValue(hsVfromRGB));
+                getChannel(width, height, pixelWriter, functionValue(hsvfromRGB));
                 break;
         }
 
@@ -73,14 +73,14 @@ public class ObtainHSVChannelAction {
     private BiFunction<Integer, Integer, Color> functionSaturation(HSVImage hsvImage) {
         return (x, y) -> {
             double saturation = hsvImage.getSaturation(x, y);
-            return Color.hsb(1, saturation, 1);
+            return Color.hsb(0, saturation, 1);
         };
     }
 
     private BiFunction<Integer, Integer, Color> functionValue(HSVImage hsvImage) {
         return (x, y) -> {
             double value = hsvImage.getValue(x, y);
-            return Color.hsb(1, 0, value);
+            return Color.hsb(0, 0, value);
         };
     }
 }

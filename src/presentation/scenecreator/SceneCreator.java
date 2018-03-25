@@ -1,6 +1,6 @@
 package presentation.scenecreator;
 
-public interface SceneCreator {
+interface SceneCreator {
 
     void createScene();
 }

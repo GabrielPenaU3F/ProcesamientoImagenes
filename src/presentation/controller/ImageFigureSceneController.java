@@ -1,7 +1,6 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import presentation.presenter.ImageFigurePresenter;
@@ -25,8 +24,8 @@ public class ImageFigureSceneController {
     }
 
     @FXML
-    public void saveImageFigure(ActionEvent e) {
+    public void saveImageFigure() {
         imageFigurePresenter.saveImage(imageView.getImage(),
-                InsertValuePopup.show("Insertar nombre", "defaultName").get());
+                InsertValuePopup.show("Inserte name", "defaultName").get());
     }
 }
