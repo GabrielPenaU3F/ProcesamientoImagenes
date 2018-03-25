@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
     <children>
         <SplitPane dividerPositions="0.0829145728643216" orientation="VERTICAL" prefHeight="400.0" prefWidth="2000.0">
             <items>
@@ -44,22 +44,22 @@
                                         <MenuItem mnemonicParsing="false" onAction="#modifyPixelValue" text="Modify" />
                                     </items>
                                 </Menu>
-                                <Menu mnemonicParsing="false" text="Images">
+                                <Menu mnemonicParsing="false" text="Image Generation">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Degrade" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Colour Degrade" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient" />
                                         <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle" />
                                         <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate" />
                                     </items>
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Channels">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="Channel R" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageGreenChannel" text="Channel G" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageBlueChannel" text="Channel B" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showHueHSVChannel" text="Hue" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="Saturation" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="Value" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="RGB Red" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageGreenChannel" text="RGB Green" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageBlueChannel" text="RGB Blue" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showHueHSVChannel" text="HSV Hue" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="HSV Saturation" />
+                                        <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value" />
                                     </items>
                                 </Menu>
                             </menus>
