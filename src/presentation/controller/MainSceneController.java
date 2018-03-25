@@ -119,6 +119,9 @@ public class MainSceneController {
     }
 
     @FXML
+    public void calculateNegativeImage() {this.mainPresenter.onCalculateNegativeImage();}
+
+    @FXML
     public void close() {
         Platform.exit();
     }

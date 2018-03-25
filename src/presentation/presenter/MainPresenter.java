@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.channels.semaphore.ChannelSemaphore;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.semaphore.FigureSemaphore;
 import core.action.gradient.semaphore.GradientSemaphore;
 import core.action.image.GetImageAction;
@@ -34,6 +35,7 @@ public class MainPresenter {
     private final ModifyPixelAction modifyPixelAction;
     private final SaveImageAction saveImageAction;
     private final PutModifiedImageAction putModifiedImageAction;
+    private final CalculateNegativeImageAction calculateNegativeImageAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -41,7 +43,8 @@ public class MainPresenter {
                          GetModifiedImageAction getModifiedImageAction,
                          PutModifiedImageAction putModifiedImageAction,
                          ModifyPixelAction modifyPixelAction,
-                         SaveImageAction saveImageAction) {
+                         SaveImageAction saveImageAction,
+                         CalculateNegativeImageAction calculateNegativeImageAction) {
 
         this.view = view;
 
@@ -51,6 +54,7 @@ public class MainPresenter {
         this.modifyPixelAction = modifyPixelAction;
         this.saveImageAction = saveImageAction;
         this.putModifiedImageAction = putModifiedImageAction;
+        this.calculateNegativeImageAction = calculateNegativeImageAction;
     }
 
     public void initialize() {
@@ -177,5 +181,10 @@ public class MainPresenter {
         Image image = view.customImageView.cutPartialImage();
         view.modifiedImageView.setImage(image);
         this.putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), "png"));
+    }
+
+    public void onCalculateNegativeImage() {
+        Image image = this.calculateNegativeImageAction.execute();
+        view.modifiedImageView.setImage(image);
     }
 }
