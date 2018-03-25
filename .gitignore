@@ -19,12 +19,12 @@
 *.rar
 
 # Image Files #
-# *.png
-# *.jpg
-# *.raw
-# *.bmp
-# *.ppm
-# *.pgm
+*.png
+*.jpg
+*.raw
+*.bmp
+*.ppm
+*.pgm
 
 .DS_Store
 resources/.DS_Store
