@@ -34,6 +34,12 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Edit">
                                     <items>
+                              <Menu mnemonicParsing="false" text="Space Domain">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
+                                    <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                </items>
+                              </Menu>
                                         <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut" />
                                         <MenuItem mnemonicParsing="false" onAction="#showReport" text="Report" />
                                     </items>

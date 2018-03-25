@@ -20,7 +20,8 @@ public class PresenterProvider {
                     ActionProvider.provideGetModifiedImageAction(),
                     ActionProvider.providePutModifiedImageAction(),
                     ActionProvider.provideModifyPixelAction(),
-                    ActionProvider.provideSaveImageAction());
+                    ActionProvider.provideSaveImageAction(),
+                    ActionProvider.provideCalculateNegativeImageAction());
             return mainPresenter;
         }
         return mainPresenter;

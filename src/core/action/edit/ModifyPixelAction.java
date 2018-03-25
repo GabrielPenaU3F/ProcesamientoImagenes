@@ -27,7 +27,7 @@ public class ModifyPixelAction {
             return new WritableImage(1, 1);
         }
 
-        CustomImage modifiedImage = modifyImageService.modify(image.get(), pixelX, pixelY, Integer.parseInt(value));
+        CustomImage modifiedImage = modifyImageService.createModifiedImage(image.get(), pixelX, pixelY, Integer.parseInt(value));
         this.imageRepository.saveModifiedImage(modifiedImage);
         return SwingFXUtils.toFXImage(modifiedImage.getBufferedImage(), null);
     }

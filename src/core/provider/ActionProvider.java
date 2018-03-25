@@ -3,6 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.CreateImageInformAction;
@@ -25,6 +26,7 @@ class ActionProvider {
     private static ObtainHSVChannelAction obtainHSVChannelAction;
     private static CreateImageWithFigureAction createImageWithFigureAction;
     private static CreateImageWithGradientAction createImageWithGradientAction;
+    private static CalculateNegativeImageAction calculateNegativeImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -110,5 +112,13 @@ class ActionProvider {
             createImageWithGradientAction = new CreateImageWithGradientAction(ServiceProvider.provideGradientService());
         }
         return createImageWithGradientAction;
+    }
+
+    public static CalculateNegativeImageAction provideCalculateNegativeImageAction() {
+        if (calculateNegativeImageAction == null) {
+            calculateNegativeImageAction = new CalculateNegativeImageAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideModifyImageService());
+        }
+        return calculateNegativeImageAction;
     }
 }
