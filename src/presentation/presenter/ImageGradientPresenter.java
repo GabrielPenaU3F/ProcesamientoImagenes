@@ -12,6 +12,6 @@ public class ImageGradientPresenter {
     }
 
     public Image createGradient() {
-        return this.createImageWithGradientAction.execute();
+        return this.createImageWithGradientAction.execute(510, 510);
     }
 }

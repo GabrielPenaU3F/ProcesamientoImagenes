@@ -199,4 +199,8 @@ public class MainPresenter {
         view.modifiedImageView.setImage(binaryImage);
 
     }
+
+    public void onCreateImageHistogram() {
+        new ImageHistogramSceneCreator().createScene();
+    }
 }

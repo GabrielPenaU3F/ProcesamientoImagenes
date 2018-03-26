@@ -68,6 +68,11 @@
                                         <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value" />
                                     </items>
                                 </Menu>
+                                <Menu mnemonicParsing="false" text="Histogram">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create" />
+                                    </items>
+                                </Menu>
                             </menus>
                         </MenuBar>
                     </children>

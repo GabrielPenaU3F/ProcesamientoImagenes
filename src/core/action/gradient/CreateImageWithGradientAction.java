@@ -13,12 +13,12 @@ public class CreateImageWithGradientAction {
         this.imageGradientService = imageGradientService;
     }
 
-    public Image execute() {
+    public Image execute(int width, int height) {
         switch (GradientSemaphore.getValue()) {
             case GREY:
-                return this.imageGradientService.createGreyGradient();
+                return this.imageGradientService.createGreyGradient(width, height);
             case COLOR:
-                return this.imageGradientService.createColorGradient();
+                return this.imageGradientService.createColorGradient(width, height);
             default:
                 return new WritableImage(1, 1);
         }
