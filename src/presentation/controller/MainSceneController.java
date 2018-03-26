@@ -119,7 +119,10 @@ public class MainSceneController {
     }
 
     @FXML
-    public void calculateNegativeImage() {this.mainPresenter.onCalculateNegativeImage();}
+    public void calculateNegativeImage() { this.mainPresenter.onCalculateNegativeImage(); }
+
+    @FXML
+    public void threshold() { this.mainPresenter.onThreshold(); }
 
     @FXML
     public void close() {

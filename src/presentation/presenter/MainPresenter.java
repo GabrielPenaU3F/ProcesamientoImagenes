@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.channels.semaphore.ChannelSemaphore;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.semaphore.FigureSemaphore;
 import core.action.gradient.semaphore.GradientSemaphore;
@@ -36,6 +37,7 @@ public class MainPresenter {
     private final SaveImageAction saveImageAction;
     private final PutModifiedImageAction putModifiedImageAction;
     private final CalculateNegativeImageAction calculateNegativeImageAction;
+    private final ApplyThresholdAction applyThresholdAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -44,7 +46,8 @@ public class MainPresenter {
                          PutModifiedImageAction putModifiedImageAction,
                          ModifyPixelAction modifyPixelAction,
                          SaveImageAction saveImageAction,
-                         CalculateNegativeImageAction calculateNegativeImageAction) {
+                         CalculateNegativeImageAction calculateNegativeImageAction,
+                         ApplyThresholdAction applyThresholdAction) {
 
         this.view = view;
 
@@ -55,6 +58,7 @@ public class MainPresenter {
         this.saveImageAction = saveImageAction;
         this.putModifiedImageAction = putModifiedImageAction;
         this.calculateNegativeImageAction = calculateNegativeImageAction;
+        this.applyThresholdAction = applyThresholdAction;
     }
 
     public void initialize() {
@@ -186,5 +190,13 @@ public class MainPresenter {
     public void onCalculateNegativeImage() {
         Image image = this.calculateNegativeImageAction.execute();
         view.modifiedImageView.setImage(image);
+    }
+
+    public void onThreshold() {
+
+        String threshold = InsertValuePopup.show("Threshold", "0").get();
+        Image binaryImage = applyThresholdAction.execute(threshold);
+        view.modifiedImageView.setImage(binaryImage);
+
     }
 }

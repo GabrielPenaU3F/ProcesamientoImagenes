@@ -3,6 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
@@ -27,6 +28,7 @@ class ActionProvider {
     private static CreateImageWithFigureAction createImageWithFigureAction;
     private static CreateImageWithGradientAction createImageWithGradientAction;
     private static CalculateNegativeImageAction calculateNegativeImageAction;
+    private static ApplyThresholdAction applyThresholdAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -120,5 +122,13 @@ class ActionProvider {
                     ServiceProvider.provideModifyImageService());
         }
         return calculateNegativeImageAction;
+    }
+
+    public static ApplyThresholdAction provideApplyThresholdAction() {
+        if (applyThresholdAction == null) {
+            applyThresholdAction = new ApplyThresholdAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideModifyImageService());
+        }
+        return applyThresholdAction;
     }
 }
