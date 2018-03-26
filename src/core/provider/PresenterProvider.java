@@ -1,5 +1,6 @@
 package core.provider;
 
+import presentation.controller.ImageHistogramSceneController;
 import presentation.controller.MainSceneController;
 import presentation.presenter.*;
 
@@ -10,6 +11,7 @@ public class PresenterProvider {
     private static ImageGradientPresenter imageGradientPresenter;
     private static ImageFigurePresenter imageFigurePresenter;
     private static ChannelScenePresenter channelScenePresenter;
+    private static ImageHistogramPresenter imageHistogramPresenter;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -58,9 +60,22 @@ public class PresenterProvider {
 
     public static ChannelScenePresenter provideChannelScenePresenter() {
         if (channelScenePresenter == null) {
-            channelScenePresenter = new ChannelScenePresenter(ActionProvider.provideObtainRGBChannelAction(), ActionProvider.provideObtainHSVChannelAction());
+            channelScenePresenter = new ChannelScenePresenter(
+                    ActionProvider.provideObtainRGBChannelAction(),
+                    ActionProvider.provideObtainHSVChannelAction());
             return channelScenePresenter;
         }
         return channelScenePresenter;
+    }
+
+    public static ImageHistogramPresenter provideImageHistogramPresenter(ImageHistogramSceneController view) {
+        if (imageHistogramPresenter == null) {
+            imageHistogramPresenter = new ImageHistogramPresenter(view,
+                    ActionProvider.provideGetImageAction(),
+                    ActionProvider.provideCreateImageHistogram(),
+                    ActionProvider.provideCreateGradientAction());
+            return imageHistogramPresenter;
+        }
+        return imageHistogramPresenter;
     }
 }

@@ -128,4 +128,9 @@ public class MainSceneController {
     public void close() {
         Platform.exit();
     }
+
+    @FXML
+    public void createImageHistogram() {
+        this.mainPresenter.onCreateImageHistogram();
+    }
 }

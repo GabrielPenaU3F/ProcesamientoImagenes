@@ -1,5 +1,6 @@
 package core.provider;
 
+import core.action.histogram.CreateImageHistogramAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
@@ -29,6 +30,7 @@ class ActionProvider {
     private static CreateImageWithGradientAction createImageWithGradientAction;
     private static CalculateNegativeImageAction calculateNegativeImageAction;
     private static ApplyThresholdAction applyThresholdAction;
+    private static CreateImageHistogramAction createImageHistogramAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -130,5 +132,12 @@ class ActionProvider {
                     ServiceProvider.provideModifyImageService());
         }
         return applyThresholdAction;
+    }
+
+    public static CreateImageHistogramAction provideCreateImageHistogram() {
+        if (createImageHistogramAction == null) {
+            createImageHistogramAction = new CreateImageHistogramAction();
+        }
+        return createImageHistogramAction;
     }
 }
