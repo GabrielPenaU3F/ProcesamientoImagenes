@@ -21,7 +21,8 @@ public class PresenterProvider {
                     ActionProvider.providePutModifiedImageAction(),
                     ActionProvider.provideModifyPixelAction(),
                     ActionProvider.provideSaveImageAction(),
-                    ActionProvider.provideCalculateNegativeImageAction());
+                    ActionProvider.provideCalculateNegativeImageAction(),
+                    ActionProvider.provideApplyThresholdAction());
             return mainPresenter;
         }
         return mainPresenter;
