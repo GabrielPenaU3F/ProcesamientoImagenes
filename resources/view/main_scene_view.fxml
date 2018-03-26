@@ -36,8 +36,14 @@
                                     <items>
                               <Menu mnemonicParsing="false" text="Space Domain">
                                 <items>
-                                  <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
+                                    <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
                                     <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
+
+                                    <Menu mnemonicParsing="false" text="Image Operations">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#calculateImagesSum" text="Images Sum" />
+                                    </items>
+                                    </Menu>
                                 </items>
                               </Menu>
                                         <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut" />

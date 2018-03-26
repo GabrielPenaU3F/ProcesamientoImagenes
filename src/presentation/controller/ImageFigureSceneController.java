@@ -26,6 +26,6 @@ public class ImageFigureSceneController {
     @FXML
     public void saveImageFigure() {
         imageFigurePresenter.saveImage(imageView.getImage(),
-                InsertValuePopup.show("Inserte name", "defaultName").get());
+                InsertValuePopup.show("Insert name", "defaultName").get());
     }
 }

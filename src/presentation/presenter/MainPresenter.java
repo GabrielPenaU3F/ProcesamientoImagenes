@@ -19,10 +19,7 @@ import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.ChannelSceneCreator;
-import presentation.scenecreator.ImageFigureSceneCreator;
-import presentation.scenecreator.ImageGradientSceneCreator;
-import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
 
@@ -203,5 +200,9 @@ public class MainPresenter {
         Image binaryImage = applyThresholdAction.execute(threshold);
         view.modifiedImageView.setImage(binaryImage);
 
+    }
+
+    public void onCalculateImagesSum() {
+        new ImagesSumSceneCreator().createScene();
     }
 }

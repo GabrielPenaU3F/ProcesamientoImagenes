@@ -10,6 +10,7 @@ public class PresenterProvider {
     private static ImageGradientPresenter imageGradientPresenter;
     private static ImageFigurePresenter imageFigurePresenter;
     private static ChannelScenePresenter channelScenePresenter;
+    private static ImagesSumPresenter imagesSumPresenter;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -62,5 +63,13 @@ public class PresenterProvider {
             return channelScenePresenter;
         }
         return channelScenePresenter;
+    }
+
+    public static ImagesSumPresenter provideImagesSumPresenter() {
+        if (imagesSumPresenter == null) {
+            imagesSumPresenter = new ImagesSumPresenter(ActionProvider.provideLoadImageAction());
+            return imagesSumPresenter;
+        }
+        return imagesSumPresenter;
     }
 }

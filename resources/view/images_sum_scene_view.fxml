@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="390.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImagesSumSceneController">
+   <children>
+      <Button layoutX="112.0" layoutY="182.0" mnemonicParsing="false" onAction="#loadImage1" text="Select Image 1" />
+      <Button layoutX="353.0" layoutY="182.0" mnemonicParsing="false" onAction="#loadImage2" text="Select Image 2" />
+      <Button layoutX="81.0" layoutY="277.0" mnemonicParsing="false" onAction="#makeImagesSum" text="Sum" />
+   </children>
+</AnchorPane>
