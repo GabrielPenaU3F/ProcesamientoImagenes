@@ -2,6 +2,7 @@ package presentation.controller;
 
 import core.provider.PresenterProvider;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
@@ -136,5 +137,10 @@ public class MainSceneController {
     @FXML
     public void createImageHistogram() {
         this.mainPresenter.onCreateImageHistogram();
+    }
+
+    @FXML
+    public void createEqualizedImage() {
+        this.mainPresenter.onCreateEqualizedImage();
     }
 }
