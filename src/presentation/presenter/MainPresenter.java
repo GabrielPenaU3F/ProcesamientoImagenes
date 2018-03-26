@@ -231,7 +231,10 @@ public class MainPresenter {
     }
 
     public void onCreateEqualizedImage() {
-        Image binaryImage = equalizeGrayImageAction.execute();
-        view.modifiedImageView.setImage(binaryImage);
+        view.modifiedImageView.setImage(equalizeGrayImageAction.execute());
+    }
+
+    public void onCreateEqualizedImageTwice() {
+        view.modifiedImageView.setImage(equalizeGrayImageAction.executeTwice());
     }
 }

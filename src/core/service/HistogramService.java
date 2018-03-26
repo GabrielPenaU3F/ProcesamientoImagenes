@@ -1,25 +1,26 @@
 package core.service;
 
+import domain.Histogram;
 import domain.customimage.CustomImage;
+
+import java.util.Arrays;
 
 public class HistogramService {
 
-    public double[] create(CustomImage customImage) {
+    public Histogram create(CustomImage customImage) {
 
-        int totalPixels = 0;
-        double[] arrayHistogram = new double[257];
+        Integer total = 0;
+        double[] values = new double[257];
 
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                arrayHistogram[customImage.getAverageValue(i, j)] += 1;
-                totalPixels++;
+                values[customImage.getAverageValue(i, j)] += 1;
+                total++;
             }
         }
 
-        for (int i = 0; i < 256; i++) {
-            arrayHistogram[i] = arrayHistogram[i] / totalPixels;
-        }
+        Double minValue = Arrays.stream(values).min().orElse(0.0);
 
-        return arrayHistogram;
+        return new Histogram(values, total, minValue);
     }
 }

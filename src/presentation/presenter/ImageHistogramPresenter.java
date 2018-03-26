@@ -1,17 +1,11 @@
 package presentation.presenter;
 
-import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.GetImageAction;
-import domain.Gradient;
 import javafx.beans.value.ChangeListener;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.chart.XYChart;
-import javafx.scene.image.Image;
 import presentation.controller.ImageHistogramSceneController;
-
-import java.awt.image.BufferedImage;
 
 public class ImageHistogramPresenter {
 
@@ -30,7 +24,7 @@ public class ImageHistogramPresenter {
 
     public void initialize() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> this.setData(this.createImageHistogramAction.execute(customImage)));
+                .ifPresent(customImage -> this.setData(this.createImageHistogramAction.execute(customImage).getValues()));
     }
 
     private void setData(double[] value) {
@@ -40,7 +34,7 @@ public class ImageHistogramPresenter {
         view.barChart.getData().add(view.data);
     }
 
-    private XYChart.Data createNode(String x, double y) {
+    private XYChart.Data createNode(String x, Double y) {
         XYChart.Data chartData = new XYChart.Data(x, y);
         chartData.nodeProperty().addListener((ChangeListener<Node>) (ov, oldNode, newNode) -> newNode.setStyle("-fx-bar-fill: black;"));
         return chartData;

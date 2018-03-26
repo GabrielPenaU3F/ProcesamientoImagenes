@@ -2,6 +2,7 @@ package core.action.histogram;
 
 import core.repository.ImageRepository;
 import core.service.HistogramService;
+import domain.Histogram;
 import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -23,23 +24,50 @@ public class EqualizeGrayImageAction {
     }
 
     public Image execute() {
+        CustomImage customImage = getCustomImage();
+        Histogram histogram = this.histogramService.create(getCustomImage());
+        Image equalizedImage = equalizeImage(customImage, histogram);
 
+        CustomImage equalizedCustomImage = new CustomImage(SwingFXUtils.fromFXImage(equalizedImage, null), customImage.getFormatString());
+        imageRepository.saveModifiedImage(equalizedCustomImage);
+
+        return equalizedImage;
+    }
+
+    public Image executeTwice() {
+        CustomImage customImage = getCustomImage();
+        Histogram histogram = this.histogramService.create(customImage);
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(equalizeImage(customImage, histogram), null);
+
+        CustomImage equalizedImage = new CustomImage(bufferedImage, customImage.getFormatString());
+        Histogram histogramFromEqualizedImage = this.histogramService.create(equalizedImage);
+
+        Image equalizedImage2 = equalizeImage(equalizedImage, histogramFromEqualizedImage);
+        CustomImage equalizedCustomImage = new CustomImage(SwingFXUtils.fromFXImage(equalizedImage2, null), customImage.getFormatString());
+        imageRepository.saveModifiedImage(equalizedCustomImage);
+
+        return equalizedImage2;
+    }
+
+    private CustomImage getCustomImage() {
         Optional<CustomImage> imageOptional = this.imageRepository.getImage();
-        if (!imageOptional.isPresent())
-            return SwingFXUtils.toFXImage(new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB), null);
+        return imageOptional.orElse(CustomImage.EMPTY);
+    }
 
-        CustomImage customImage = imageOptional.get();
+    private Image equalizeImage(CustomImage customImage, Histogram histogram) {
         WritableImage image = new WritableImage(customImage.getWidth(), customImage.getHeight());
         PixelWriter pixelWriter = image.getPixelWriter();
 
-        double[] histogram = this.histogramService.create(customImage);
-
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                int equalizedValue = calculateCumulativeProbability(customImage, histogram, i, j);
-                Color colorRGB = Color.rgb(equalizedValue, equalizedValue, equalizedValue);
 
-                pixelWriter.setColor(i, j, colorRGB);
+                Double sK = cumulativeProbability(customImage, histogram, i, j);
+                Double sMin = histogram.getMinValue();
+                Integer sHat = applyTransform(sK, sMin);
+
+                Color greyValue = Color.rgb(sHat, sHat, sHat);
+
+                pixelWriter.setColor(i, j, greyValue);
             }
         }
 
@@ -49,14 +77,18 @@ public class EqualizeGrayImageAction {
         return image;
     }
 
-    private int calculateCumulativeProbability(CustomImage customImage, double[] histogram, int i, int j) {
-        double value = 0;
-        int limit = customImage.getAverageValue(i, j);
+    private Double cumulativeProbability(CustomImage customImage, Histogram histogram, int x, int y) {
+        Double value = 0.0;
+        Integer limit = customImage.getAverageValue(x, y);
         for (int i1 = 0; i1 <= limit; i1++) {
-            value += histogram[i1];
+            value += histogram.getValues()[i1];
         }
-        // It is already divided by the total of pixels
-        return (int) (255 * value);
+
+        return value / histogram.getTotalPixels();
+    }
+
+    private Integer applyTransform(Double s, Double smin) {
+        return (int) (255 * (((s - smin) / (1 - smin))));
     }
 
 }
