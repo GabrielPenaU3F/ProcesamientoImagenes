@@ -1,9 +1,12 @@
 package core.service;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class ImageRawService {
 
@@ -31,5 +34,21 @@ public class ImageRawService {
         }
 
         return image;
+    }
+
+    public void save(BufferedImage image, String path) {
+
+        ByteArrayOutputStream s = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(image, "png", s);
+            byte[] res = s.toByteArray();
+            s.close();
+
+            Files.write(Paths.get(path), res);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

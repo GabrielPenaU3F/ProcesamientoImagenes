@@ -1,5 +1,6 @@
 package core.action.image;
 
+import core.service.ImageRawService;
 import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -11,13 +12,26 @@ import java.io.IOException;
 
 public class SaveImageAction {
 
+    private ImageRawService imageRawService;
+
+    public SaveImageAction(ImageRawService imageRawService) {
+        this.imageRawService = imageRawService;
+    }
+
     public Image execute(CustomImage image, String filename) {
 
-        String fullFilename = filename + "." + image.getFormatString();
+        String ext = image.getFormatString();
+        String fullFilename = filename + "." + ext;
+        BufferedImage bufferedImage = image.getBufferedImage();
+
         try {
 
-            BufferedImage bufferedImage = image.getBufferedImage();
-            ImageIO.write(bufferedImage, image.getFormatString(), new File(fullFilename));
+            if(ext.equalsIgnoreCase("raw")) {
+                imageRawService.save(bufferedImage, fullFilename);
+            } else {
+                ImageIO.write(bufferedImage, ext, new File(fullFilename));
+            }
+
             return SwingFXUtils.toFXImage(bufferedImage, null);
 
         } catch (IOException e) {

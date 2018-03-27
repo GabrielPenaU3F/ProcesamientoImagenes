@@ -46,7 +46,7 @@ class ActionProvider {
 
     public static SaveImageAction provideSaveImageAction() {
         if (saveImageAction == null) {
-            saveImageAction = new SaveImageAction();
+            saveImageAction = new SaveImageAction(ServiceProvider.provideImageRawService());
         }
         return saveImageAction;
     }
