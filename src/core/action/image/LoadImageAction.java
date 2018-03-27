@@ -6,6 +6,7 @@ import core.service.OpenFileService;
 import domain.customimage.CustomImage;
 import ij.io.Opener;
 import org.apache.commons.io.FilenameUtils;
+import presentation.util.InsertValuePopup;
 
 import java.awt.image.BufferedImage;
 
@@ -36,8 +37,10 @@ public class LoadImageAction {
         openFileService.open().ifPresent(file -> {
             path = file.toPath().toString();
             String extension = FilenameUtils.getExtension(path);
-            if (extension.equalsIgnoreCase("raw")) {
-                image = putOnRepository(extension, imageRawService.load(file, 256, 256));
+            if(extension.equalsIgnoreCase("raw")){
+                int width = Integer.parseInt(InsertValuePopup.show("Insert width", "256").get());
+                int height = Integer.parseInt(InsertValuePopup.show("Insert height", "256").get());
+                image = putOnRepository(extension, imageRawService.load(file, width, height));
             } else {
                 image = putOnRepository(extension, opener.openImage(path).getBufferedImage());
             }
