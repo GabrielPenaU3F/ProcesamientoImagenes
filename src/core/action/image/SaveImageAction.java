@@ -18,18 +18,17 @@ public class SaveImageAction {
         this.imageRawService = imageRawService;
     }
 
-    public Image execute(CustomImage image, String filename) {
+    public Image execute(CustomImage image, String filename, String extension) {
 
-        String ext = image.getFormatString();
-        String fullFilename = filename + "." + ext;
+        String fullFilename = filename + "." + extension;
         BufferedImage bufferedImage = image.getBufferedImage();
 
         try {
 
-            if(ext.equalsIgnoreCase("raw")) {
-                imageRawService.save(bufferedImage, fullFilename);
+            if (extension.equalsIgnoreCase("raw")) {
+                this.imageRawService.save(bufferedImage, fullFilename);
             } else {
-                ImageIO.write(bufferedImage, ext, new File(fullFilename));
+                ImageIO.write(bufferedImage, extension, new File(fullFilename));
             }
 
             return SwingFXUtils.toFXImage(bufferedImage, null);

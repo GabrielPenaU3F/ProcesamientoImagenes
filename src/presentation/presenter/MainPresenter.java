@@ -17,10 +17,7 @@ import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.ChannelSceneCreator;
-import presentation.scenecreator.ImageFigureSceneCreator;
-import presentation.scenecreator.ImageGradientSceneCreator;
-import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
 
@@ -77,9 +74,7 @@ public class MainPresenter {
     }
 
     public void onSaveImage() {
-        String filename = InsertValuePopup.show("Insert name", "file").get();
-        this.getModifiedImageAction.execute()
-                .ifPresent(image -> saveImageAction.execute(image, filename));
+        new SaveImageSceneCreator().createScene();
     }
 
     public void onShowGreyGradient() {

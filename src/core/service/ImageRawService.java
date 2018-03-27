@@ -1,6 +1,12 @@
 package core.service;
 
-import javax.imageio.ImageIO;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,20 +18,20 @@ public class ImageRawService {
 
     public BufferedImage load(File file, int width, int height) {
 
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+
+        WritableImage image = new WritableImage(width, height);
+        PixelWriter writer = image.getPixelWriter();
         try {
             byte[] bytes = Files.readAllBytes(file.toPath());
             int counter = 0;
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    int argb = 0;
-                    argb += -16777216; // 255 alpha
-                    int blue = ((int) bytes[counter] & 0xff);
-                    int green = ((int) bytes[counter] & 0xff) << 8;
-                    int red = ((int) bytes[counter] & 0xff) << 16;
-                    int color = argb + red + green + blue;
-                    image.setRGB(j, i, color);
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+
+                    int grey = ((int) bytes[counter] & 0xff);
+                    Color color = Color.rgb(grey, grey, grey);
+                    writer.setColor(j, i, color);
                     counter++;
+
                 }
             }
 
@@ -33,19 +39,34 @@ public class ImageRawService {
             e.printStackTrace();
         }
 
-        return image;
+        return SwingFXUtils.fromFXImage(image, null);
     }
 
-    public void save(BufferedImage image, String path) {
+    public void save(BufferedImage bufferedImage, String stringPath) {
 
         ByteArrayOutputStream s = new ByteArrayOutputStream();
 
         try {
-            ImageIO.write(image, "png", s);
-            byte[] res = s.toByteArray();
-            s.close();
 
-            Files.write(Paths.get(path), res);
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            PixelReader reader = image.getPixelReader();
+            int width = (int) image.getWidth();
+            int height = (int) image.getHeight();
+            byte[] bytes = new byte[width * height];
+            int counter = 0;
+
+            for (int i = 0; i < image.getWidth(); i++) {
+                for (int j = 0; j < image.getHeight(); j++) {
+
+                    int gray = (int) (reader.getColor(j, i).getRed() * 255);
+                    byte byteGray = (byte) gray;
+                    bytes[counter] = byteGray; //Since the image is grey, every channel contains the same value
+                    counter++;
+
+                }
+            }
+
+            Files.write(Paths.get(stringPath), bytes);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package core.provider;
 
 import presentation.controller.MainSceneController;
+import presentation.controller.SaveImageController;
 import presentation.presenter.*;
 
 public class PresenterProvider {
@@ -10,6 +11,7 @@ public class PresenterProvider {
     private static ImageGradientPresenter imageGradientPresenter;
     private static ImageFigurePresenter imageFigurePresenter;
     private static ChannelScenePresenter channelScenePresenter;
+    private static SaveImagePresenter saveImagePresenter;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -60,5 +62,13 @@ public class PresenterProvider {
             return channelScenePresenter;
         }
         return channelScenePresenter;
+    }
+
+    public static SaveImagePresenter provideSaveImagePresenter(SaveImageController saveImageController) {
+        if (saveImagePresenter == null) {
+            saveImagePresenter = new SaveImagePresenter(saveImageController, ActionProvider.provideGetModifiedImageAction(), ActionProvider.provideSaveImageAction());
+            return saveImagePresenter;
+        }
+        return saveImagePresenter;
     }
 }

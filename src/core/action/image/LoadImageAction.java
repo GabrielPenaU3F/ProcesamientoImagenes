@@ -31,12 +31,12 @@ public class LoadImageAction {
 
     public CustomImage execute() {
 
-        image = new CustomImage(new BufferedImage(1,1, TYPE_INT_ARGB), "png");
+        image = new CustomImage(new BufferedImage(1, 1, TYPE_INT_ARGB), "png");
 
         openFileService.open().ifPresent(file -> {
             path = file.toPath().toString();
             String extension = FilenameUtils.getExtension(path);
-            if(extension.equalsIgnoreCase("raw")){
+            if (extension.equalsIgnoreCase("raw")) {
                 image = putOnRepository(extension, imageRawService.load(file, 256, 256));
             } else {
                 image = putOnRepository(extension, opener.openImage(path).getBufferedImage());
