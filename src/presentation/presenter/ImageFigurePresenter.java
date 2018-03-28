@@ -27,6 +27,6 @@ public class ImageFigurePresenter {
     public void saveImage(Image image, String fileName) {
         BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
         CustomImage customImage = new CustomImage(bufferedImage, "png");
-        saveImageAction.execute(customImage, fileName);
+        saveImageAction.execute(customImage, fileName, "png");
     }
 }
