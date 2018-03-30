@@ -20,28 +20,28 @@ public class ApplyThresholdAction {
         this.imageRepository = imageRepository;
         this.modifyImageService = modifyImageService;
     }
-    
+
     public Image execute(String thresholdString) {
 
         int threshold = Integer.parseInt(thresholdString);
         Optional<CustomImage> imageOptional = this.imageRepository.getImage();
-        if(!imageOptional.isPresent()) return SwingFXUtils.toFXImage(new BufferedImage(500,500, BufferedImage.TYPE_INT_RGB), null);
+        if (!imageOptional.isPresent())
+            return SwingFXUtils.toFXImage(new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB), null);
 
         CustomImage customImage = imageOptional.get();
         WritableImage image = new WritableImage(customImage.getWidth(), customImage.getHeight());
         PixelWriter pixelWriter = image.getPixelWriter();
 
-        for (int i=0; i < image.getWidth(); i++) {
-            for(int j=0; j < image.getHeight(); j++) {
-                if (customImage.getPixelValue(i,j) >= threshold) {
-                    this.modifyImageService.modifySinglePixel(i, j, 255, pixelWriter);
+        for (int i = 0; i < image.getWidth(); i++) {
+            for (int j = 0; j < image.getHeight(); j++) {
+                if (customImage.getAverageValue(i, j) >= threshold) {
+                    this.modifyImageService.modifySinglePixel(i, j, 255, 255, 255, pixelWriter);
                 } else {
-                    this.modifyImageService.modifySinglePixel(i, j, 0, pixelWriter);
+                    this.modifyImageService.modifySinglePixel(i, j, 0, 0, 0, pixelWriter);
                 }
             }
         }
 
         return image;
-        
     }
 }

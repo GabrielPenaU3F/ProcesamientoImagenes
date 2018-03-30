@@ -18,12 +18,12 @@ public class ImageHistogramSceneController {
     private final ImageHistogramPresenter imageHistogramPresenter;
 
     public ImageHistogramSceneController() {
-        data = new XYChart.Series();
         this.imageHistogramPresenter = PresenterProvider.provideImageHistogramPresenter(this);
     }
 
     @FXML
     public void initialize() {
+        data = new XYChart.Series();
         imageHistogramPresenter.initialize();
     }
 }

@@ -19,7 +19,7 @@ public class ModifyPixelAction {
         this.modifyImageService = modifyImageService;
     }
 
-    public Image execute(Integer pixelX, Integer pixelY, String value) {
+    public Image execute(Integer pixelX, Integer pixelY, String valueR, String valueG, String valueB) {
 
         Optional<CustomImage> image = this.imageRepository.getImage();
 
@@ -27,9 +27,8 @@ public class ModifyPixelAction {
             return new WritableImage(1, 1);
         }
 
-        CustomImage modifiedImage = modifyImageService.createModifiedImage(image.get(), pixelX, pixelY, Integer.parseInt(value));
+        CustomImage modifiedImage = modifyImageService.createModifiedImage(image.get(), pixelX, pixelY, Integer.parseInt(valueR), Integer.parseInt(valueG), Integer.parseInt(valueB));
         this.imageRepository.saveModifiedImage(modifiedImage);
         return SwingFXUtils.toFXImage(modifiedImage.getBufferedImage(), null);
     }
-
 }

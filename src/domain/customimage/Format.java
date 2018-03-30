@@ -5,17 +5,24 @@ import java.util.List;
 
 public class Format {
 
+    public static final String RAW = "raw";
+    public static final String PPM = "ppm";
+    public static final String PGM = "pgm";
+    public static final String BMP = "bmp";
+    public static final String JPG = "jpg";
+    public static final String PNG = "png";
+
     private String formatString;
     private static final List<String> validFormats = validFormats();
 
     private static ArrayList<String> validFormats() {
         ArrayList<String> list = new ArrayList<>();
-        list.add("raw");
-        list.add("ppm");
-        list.add("pgm");
-        list.add("bmp");
-        list.add("jpg");
-        list.add("png");
+        list.add(RAW);
+        list.add(PPM);
+        list.add(PGM);
+        list.add(BMP);
+        list.add(JPG);
+        list.add(PNG);
         return list;
     }
 

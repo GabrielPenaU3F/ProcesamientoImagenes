@@ -1,64 +1,72 @@
 package presentation.presenter;
 
-import core.action.channels.semaphore.ChannelSemaphore;
+import core.action.channels.ObtainHSVChannelAction;
+import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
-import core.action.figure.semaphore.FigureSemaphore;
-import core.action.gradient.semaphore.GradientSemaphore;
+import core.action.figure.CreateImageWithFigureAction;
+import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
-import core.action.image.SaveImageAction;
-import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 import domain.Channel;
 import domain.Figure;
 import domain.Gradient;
 import domain.customimage.CustomImage;
+import domain.customimage.Format;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.*;
+import presentation.scenecreator.ImageHistogramSceneCreator;
+import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.SaveImageSceneCreator;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
-
-import java.awt.image.BufferedImage;
 
 public class MainPresenter {
 
     private static final String EMPTY = "";
-    private static final int INDEX_OUT_OF_BOUND = -1;
+    private static final int DEFAULT_WIDTH = 510;
+    private static final int DEFAULT_HEIGHT = 510;
+
     private final MainSceneController view;
     private final LoadImageAction loadImageAction;
     private final GetImageAction getImageAction;
-    private final GetModifiedImageAction getModifiedImageAction;
     private final ModifyPixelAction modifyPixelAction;
-    private final SaveImageAction saveImageAction;
     private final PutModifiedImageAction putModifiedImageAction;
     private final CalculateNegativeImageAction calculateNegativeImageAction;
     private final ApplyThresholdAction applyThresholdAction;
+    private final CreateImageWithGradientAction createImageWithGradientAction;
+    private final ObtainRGBChannelAction obtainRGBChannelAction;
+    private final ObtainHSVChannelAction obtainHSVChannelAction;
+    private final CreateImageWithFigureAction createImageWithFigureAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
                          GetImageAction getImageAction,
-                         GetModifiedImageAction getModifiedImageAction,
                          PutModifiedImageAction putModifiedImageAction,
                          ModifyPixelAction modifyPixelAction,
-                         SaveImageAction saveImageAction,
                          CalculateNegativeImageAction calculateNegativeImageAction,
-                         ApplyThresholdAction applyThresholdAction) {
+                         ApplyThresholdAction applyThresholdAction,
+                         CreateImageWithGradientAction createImageWithGradientAction,
+                         ObtainRGBChannelAction obtainRGBChannelAction,
+                         ObtainHSVChannelAction obtainHSVChannelAction,
+                         CreateImageWithFigureAction createImageWithFigureAction) {
 
         this.view = view;
 
         this.loadImageAction = loadImageAction;
         this.getImageAction = getImageAction;
-        this.getModifiedImageAction = getModifiedImageAction;
         this.modifyPixelAction = modifyPixelAction;
-        this.saveImageAction = saveImageAction;
         this.putModifiedImageAction = putModifiedImageAction;
         this.calculateNegativeImageAction = calculateNegativeImageAction;
         this.applyThresholdAction = applyThresholdAction;
+        this.createImageWithGradientAction = createImageWithGradientAction;
+        this.obtainRGBChannelAction = obtainRGBChannelAction;
+        this.obtainHSVChannelAction = obtainHSVChannelAction;
+        this.createImageWithFigureAction = createImageWithFigureAction;
     }
 
     public void initialize() {
@@ -77,8 +85,11 @@ public class MainPresenter {
     }
 
     public void onOpenImage() {
-        BufferedImage bufferedImage = this.loadImageAction.execute().getBufferedImage();
-        view.customImageView.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+        setImageOnCustomImageView(this.loadImageAction.execute());
+    }
+
+    private void setImageOnCustomImageView(CustomImage customImage) {
+        view.customImageView.setImage(SwingFXUtils.toFXImage(customImage.getBufferedImage(), null));
     }
 
     public void onSaveImage() {
@@ -86,53 +97,47 @@ public class MainPresenter {
     }
 
     public void onShowGreyGradient() {
-        GradientSemaphore.setValue(Gradient.GREY);
-        new ImageGradientSceneCreator().createScene();
+        setImageOnCustomImageView(createImageWithGradientAction.execute(DEFAULT_WIDTH, DEFAULT_HEIGHT, Gradient.GREY));
     }
 
     public void onShowColorGradient() {
-        GradientSemaphore.setValue(Gradient.COLOR);
-        new ImageGradientSceneCreator().createScene();
+        setImageOnCustomImageView(createImageWithGradientAction.execute(DEFAULT_WIDTH, DEFAULT_HEIGHT, Gradient.COLOR));
     }
 
     public void onShowRGBImageRedChannel() {
-        ChannelSemaphore.setValue(Channel.RED);
-        new ChannelSceneCreator().createScene();
+        setImageOnModifiedImageView(obtainRGBChannelAction.execute(Channel.RED));
     }
 
     public void onShowRGBImageGreenChannel() {
-        ChannelSemaphore.setValue(Channel.GREEN);
-        new ChannelSceneCreator().createScene();
+        setImageOnModifiedImageView(obtainRGBChannelAction.execute(Channel.GREEN));
     }
 
     public void onShowRGBImageBlueChannel() {
-        ChannelSemaphore.setValue(Channel.BLUE);
-        new ChannelSceneCreator().createScene();
+        setImageOnModifiedImageView(obtainRGBChannelAction.execute(Channel.BLUE));
     }
 
     public void onShowImageWithQuadrate() {
-        FigureSemaphore.setValue(Figure.QUADRATE);
-        new ImageFigureSceneCreator().createScene();
+        setImageOnCustomImageView(createImageWithFigureAction.execute(200, 200, Figure.QUADRATE));
     }
 
     public void onShowImageWithCircle() {
-        FigureSemaphore.setValue(Figure.CIRCLE);
-        new ImageFigureSceneCreator().createScene();
+        setImageOnCustomImageView(createImageWithFigureAction.execute(200, 200, Figure.CIRCLE));
     }
 
     public void onShowHueHSVChannel() {
-        ChannelSemaphore.setValue(Channel.HUE);
-        new ChannelSceneCreator().createScene();
+        setImageOnModifiedImageView(obtainHSVChannelAction.execute(Channel.HUE));
     }
 
     public void onShowSaturationHSVChannel() {
-        ChannelSemaphore.setValue(Channel.SATURATION);
-        new ChannelSceneCreator().createScene();
+        setImageOnModifiedImageView(obtainHSVChannelAction.execute(Channel.SATURATION));
     }
 
     public void onShowValueHSVChannel() {
-        ChannelSemaphore.setValue(Channel.VALUE);
-        new ChannelSceneCreator().createScene();
+        setImageOnModifiedImageView(obtainHSVChannelAction.execute(Channel.VALUE));
+    }
+
+    private void setImageOnModifiedImageView(CustomImage customImage) {
+        view.modifiedImageView.setImage(SwingFXUtils.toFXImage(customImage.getBufferedImage(), null));
     }
 
     public void onCalculatePixelValue() {
@@ -142,22 +147,16 @@ public class MainPresenter {
             int pixelY = Integer.parseInt(view.pixelY.getText());
 
             this.getImageAction.execute()
-                    .map(customImage -> {
-                        try {
-                            return customImage.getPixelValue(pixelX, pixelY);
-                        } catch (IndexOutOfBoundsException e) {
-                            return INDEX_OUT_OF_BOUND;
-                        }
-                    })
-                    .ifPresent(rgb -> view.pixelValue.setText(rgb.toString()));
+                    .map(customImage -> customImage.getPixelValue(pixelX, pixelY))
+                    .ifPresent(rgb -> {
+                        view.valueR.setText(rgb.getR().toString());
+                        view.valueG.setText(rgb.getG().toString());
+                        view.valueB.setText(rgb.getB().toString());
+                    });
 
         } else {
-            view.pixelValue.setText("Error");
+            view.valueR.setText("Error");
         }
-    }
-
-    private boolean validatePixelCoordinates() {
-        return (!view.pixelX.getText().equals(EMPTY) && !view.pixelY.getText().equals(EMPTY));
     }
 
     public void onModifyPixelValue() {
@@ -166,15 +165,23 @@ public class MainPresenter {
             Integer pixelX = Integer.parseInt(view.pixelX.getText());
             Integer pixelY = Integer.parseInt(view.pixelY.getText());
 
-            String newValue = InsertValuePopup.show("Insert value", "0").get();
+            String valueR = InsertValuePopup.show("Insert value R", "0").get();
+            String valueG = InsertValuePopup.show("Insert value G", "0").get();
+            String valueB = InsertValuePopup.show("Insert value B", "0").get();
 
-            Image modifiedImage = modifyPixelAction.execute(pixelX, pixelY, newValue);
+            Image modifiedImage = modifyPixelAction.execute(pixelX, pixelY, valueR, valueG, valueB);
 
             view.modifiedImageView.setImage(modifiedImage);
 
         } else {
-            view.pixelValue.setText("Seleccione pixel");
+            view.valueR.setText("Select pixel");
+            view.valueG.setText("Select pixel");
+            view.valueB.setText("Select pixel");
         }
+    }
+
+    private boolean validatePixelCoordinates() {
+        return (!view.pixelX.getText().equals(EMPTY) && !view.pixelY.getText().equals(EMPTY));
     }
 
     public void onShowReport() {
@@ -184,7 +191,7 @@ public class MainPresenter {
     public void onCutPartialImage() {
         Image image = view.customImageView.cutPartialImage();
         view.modifiedImageView.setImage(image);
-        this.putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), "png"));
+        this.putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), Format.PNG));
     }
 
     public void onCalculateNegativeImage() {
@@ -193,11 +200,7 @@ public class MainPresenter {
     }
 
     public void onThreshold() {
-
-        String threshold = InsertValuePopup.show("Threshold", "0").get();
-        Image binaryImage = applyThresholdAction.execute(threshold);
-        view.modifiedImageView.setImage(binaryImage);
-
+        view.modifiedImageView.setImage(applyThresholdAction.execute(InsertValuePopup.show("Threshold", "0").get()));
     }
 
     public void onCreateImageHistogram() {
