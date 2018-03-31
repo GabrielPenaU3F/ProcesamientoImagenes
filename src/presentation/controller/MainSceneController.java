@@ -1,6 +1,7 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
+import core.provider.ViewProvider;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +35,9 @@ public class MainSceneController {
     private final MainPresenter mainPresenter;
 
     public MainSceneController() {
+
         this.mainPresenter = PresenterProvider.provideImageSelectionPresenter(this);
+        ViewProvider.setMainView(this);
     }
 
     @FXML
@@ -128,6 +131,9 @@ public class MainSceneController {
 
     @FXML
     public void threshold() { this.mainPresenter.onThreshold(); }
+
+    @FXML
+    public void contrast() { this.mainPresenter.onContrast(); }
 
     @FXML
     public void close() {

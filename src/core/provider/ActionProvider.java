@@ -1,15 +1,16 @@
 package core.provider;
 
+import core.action.UpdateMainViewAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.CreateImageInformAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
@@ -33,6 +34,8 @@ class ActionProvider {
     private static CalculateNegativeImageAction calculateNegativeImageAction;
     private static ApplyThresholdAction applyThresholdAction;
     private static CreateImageHistogramAction createImageHistogramAction;
+    private static ApplyContrastAction applyContrastAction;
+    private static UpdateMainViewAction updateMainViewAction;
     private static EqualizeGrayImageAction createEqualizeGrayImageAction;
 
     public static GetImageAction provideGetImageAction() {
@@ -148,6 +151,21 @@ class ActionProvider {
             createImageHistogramAction = new CreateImageHistogramAction(ServiceProvider.provideHistogramService());
         }
         return createImageHistogramAction;
+    }
+
+    public static ApplyContrastAction provideApplyContrastAction() {
+        if (applyContrastAction == null) {
+            applyContrastAction = new ApplyContrastAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideModifyImageService());
+        }
+        return applyContrastAction;
+    }
+
+    public static UpdateMainViewAction provideUpdateMainViewAction() {
+        if (updateMainViewAction == null) {
+            updateMainViewAction = new UpdateMainViewAction(PresenterProvider.provideImageSelectionPresenter(ViewProvider.provideMainView()));
+        }
+        return updateMainViewAction;
     }
 
     public static EqualizeGrayImageAction provideCreateEqualizedGrayImageAction() {

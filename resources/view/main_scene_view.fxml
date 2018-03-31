@@ -81,6 +81,7 @@
             <Menu mnemonicParsing="false" text="Space Domain">
                 <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
                 <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
+                <MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast" />
                 <Menu mnemonicParsing="false" text="Histogram">
                     <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create" />
                     <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Equalize Image" />

@@ -1,16 +1,15 @@
 package core.provider;
 
 import presentation.controller.ImageHistogramSceneController;
+import presentation.controller.ContrastSceneController;
 import presentation.controller.MainSceneController;
 import presentation.controller.SaveImageController;
-import presentation.presenter.ImageHistogramPresenter;
-import presentation.presenter.ImageReportPresenter;
-import presentation.presenter.MainPresenter;
-import presentation.presenter.SaveImagePresenter;
+import presentation.presenter.*;
 
 public class PresenterProvider {
 
     private static MainPresenter mainPresenter;
+    private static ContrastScenePresenter contrastScenePresenter;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -49,4 +48,17 @@ public class PresenterProvider {
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideCreateImageHistogram());
     }
+
+    public static ContrastScenePresenter provideContrastScenePresenter(ContrastSceneController contrastSceneController) {
+        if (contrastScenePresenter == null) {
+            contrastScenePresenter = new ContrastScenePresenter(contrastSceneController,
+                    ActionProvider.provideApplyContrastAction(),
+                    ActionProvider.provideGetImageAction(),
+                    ActionProvider.provideUpdateMainViewAction(),
+                    ServiceProvider.provideGrayLevelStatisticsService());
+            return contrastScenePresenter;
+        }
+        return contrastScenePresenter;
+    }
+
 }
