@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.SplitPane?>
 <AnchorPane prefHeight="390.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImagesSumSceneController">
-   <children>
-      <Button layoutX="112.0" layoutY="182.0" mnemonicParsing="false" onAction="#loadImage1" text="Select Image 1" />
-      <Button layoutX="353.0" layoutY="182.0" mnemonicParsing="false" onAction="#loadImage2" text="Select Image 2" />
-      <Button layoutX="81.0" layoutY="277.0" mnemonicParsing="false" onAction="#makeImagesSum" text="Sum" />
-   </children>
+   <SplitPane dividerPositions="0.0829145728643216" orientation="VERTICAL" prefHeight="400.0" prefWidth="2000.0">
+      <items>
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="47.0" prefWidth="2000.0">
+            <children>
+               <MenuBar>
+                   <menus>
+                     <Menu mnemonicParsing="false" text="Select Images">
+                        <items>
+                           <MenuItem mnemonicParsing="false" onAction="#loadImage1" text="Select Image 1" />
+                           <MenuItem mnemonicParsing="false" onAction="#loadImage2" text="Select Image 2" />
+                        </items>
+                     </Menu>
+                        <Menu mnemonicParsing="false" text="Operations">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#makeImagesSum" text="Sum" />
+                           </items>
+                        </Menu>
+                   </menus>
+               </MenuBar>
+            </children>
+         </AnchorPane>
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="2000.0">
+            <children>
+               <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <center>
+                     <Group fx:id="groupImageView" autoSizeChildren="true" BorderPane.alignment="CENTER">
+                        <children>
+                           <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
+                        </children>
+                     </Group>
+                  </center>
+               </BorderPane>
+            </children>
+         </AnchorPane>
+      </items>
+   </SplitPane>
 </AnchorPane>
