@@ -59,4 +59,5 @@ public class CustomImage {
     public PixelReader getPixelReader() {
         return reader;
     }
+
 }

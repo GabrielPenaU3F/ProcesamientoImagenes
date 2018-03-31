@@ -18,12 +18,14 @@ import domain.customimage.CustomImage;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import presentation.controller.MainSceneController;
 import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class MainPresenter {
 
@@ -202,5 +204,13 @@ public class MainPresenter {
 
     public void onCreateImageHistogram() {
         new ImageHistogramSceneCreator().createScene();
+    }
+
+    public void onContrast() {
+        new ContrastSceneCreator().createScene();
+    }
+
+    public MainSceneController getView() {
+        return this.view;
     }
 }

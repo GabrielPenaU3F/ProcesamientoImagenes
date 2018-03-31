@@ -40,7 +40,7 @@ class ServiceProvider {
         return new ImageGradientService();
     }
 
-    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() {
-        return new TransformRGBtoHSVImageService();
-    }
+    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() { return new TransformRGBtoHSVImageService(); }
+
+    public static GrayLevelStatisticsService provideGrayLevelStatisticsService() { return new GrayLevelStatisticsService(); }
 }

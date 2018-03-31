@@ -37,6 +37,7 @@
                               <Menu mnemonicParsing="false" text="Space Domain">
                                 <items>
                                   <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
+                                    <MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast" />
                                     <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
                                 </items>
                               </Menu>
