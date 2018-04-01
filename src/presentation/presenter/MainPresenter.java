@@ -15,17 +15,16 @@ import domain.Channel;
 import domain.Figure;
 import domain.Gradient;
 import domain.customimage.CustomImage;
+import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import presentation.controller.MainSceneController;
 import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
 
 import java.awt.image.BufferedImage;
-import java.util.Optional;
 
 public class MainPresenter {
 
@@ -40,6 +39,7 @@ public class MainPresenter {
     private final PutModifiedImageAction putModifiedImageAction;
     private final CalculateNegativeImageAction calculateNegativeImageAction;
     private final ApplyThresholdAction applyThresholdAction;
+    private final Observable<Image> onModifiedImage;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -49,7 +49,8 @@ public class MainPresenter {
                          ModifyPixelAction modifyPixelAction,
                          SaveImageAction saveImageAction,
                          CalculateNegativeImageAction calculateNegativeImageAction,
-                         ApplyThresholdAction applyThresholdAction) {
+                         ApplyThresholdAction applyThresholdAction,
+                         Observable<Image> onModifiedImage) {
 
         this.view = view;
 
@@ -61,6 +62,7 @@ public class MainPresenter {
         this.putModifiedImageAction = putModifiedImageAction;
         this.calculateNegativeImageAction = calculateNegativeImageAction;
         this.applyThresholdAction = applyThresholdAction;
+        this.onModifiedImage = onModifiedImage;
     }
 
     public void initialize() {
@@ -68,6 +70,8 @@ public class MainPresenter {
                 .withSetPickOnBounds(true)
                 .withOnPixelClick(this::onPixelClick)
                 .withSelectionMode();
+
+        awaitingForNewModifiedImages();
     }
 
     private Action onPixelClick(Integer x, Integer y) {
@@ -76,6 +80,10 @@ public class MainPresenter {
             view.pixelY.setText(y.toString());
             onCalculatePixelValue();
         };
+    }
+
+    private void awaitingForNewModifiedImages() {
+        onModifiedImage.subscribe(image -> view.modifiedImageView.setImage(image));
     }
 
     public void onOpenImage() {
@@ -208,9 +216,5 @@ public class MainPresenter {
 
     public void onContrast() {
         new ContrastSceneCreator().createScene();
-    }
-
-    public MainSceneController getView() {
-        return this.view;
     }
 }

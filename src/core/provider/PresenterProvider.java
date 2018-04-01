@@ -1,7 +1,9 @@
 package core.provider;
 
-import presentation.controller.ImageHistogramSceneController;
+import io.reactivex.subjects.PublishSubject;
+import javafx.scene.image.Image;
 import presentation.controller.ContrastSceneController;
+import presentation.controller.ImageHistogramSceneController;
 import presentation.controller.MainSceneController;
 import presentation.controller.SaveImageController;
 import presentation.presenter.*;
@@ -15,7 +17,7 @@ public class PresenterProvider {
     private static ChannelScenePresenter channelScenePresenter;
     private static SaveImagePresenter saveImagePresenter;
     private static ImageHistogramPresenter imageHistogramPresenter;
-    private static ContrastScenePresenter contrastScenePresenter;
+    private static PublishSubject<Image> onModifiedImagePublishSubject;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -28,7 +30,8 @@ public class PresenterProvider {
                     ActionProvider.provideModifyPixelAction(),
                     ActionProvider.provideSaveImageAction(),
                     ActionProvider.provideCalculateNegativeImageAction(),
-                    ActionProvider.provideApplyThresholdAction());
+                    ActionProvider.provideApplyThresholdAction(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
             return mainPresenter;
         }
         return mainPresenter;
@@ -92,22 +95,10 @@ public class PresenterProvider {
     }
 
     public static ContrastScenePresenter provideContrastScenePresenter(ContrastSceneController contrastSceneController) {
-        if (contrastScenePresenter == null) {
-            contrastScenePresenter = new ContrastScenePresenter(contrastSceneController,
-                    ActionProvider.provideApplyContrastAction(),
-                    ActionProvider.provideGetImageAction(),
-                    ActionProvider.provideUpdateMainViewAction(),
-                    ServiceProvider.provideGrayLevelStatisticsService());
-            return contrastScenePresenter;
-        }
-        return contrastScenePresenter;
-    }
-
-    public static void resetContrastScenePresenter() {
-        contrastScenePresenter = null;
-    }
-
-    public static void resetSaveImagePresenter() {
-        saveImagePresenter = null;
+        return new ContrastScenePresenter(contrastSceneController,
+                ActionProvider.provideApplyContrastAction(),
+                ActionProvider.provideGetImageAction(),
+                ServiceProvider.provideGrayLevelStatisticsService(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 }
