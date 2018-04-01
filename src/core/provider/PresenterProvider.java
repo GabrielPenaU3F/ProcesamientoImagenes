@@ -103,4 +103,11 @@ public class PresenterProvider {
         return contrastScenePresenter;
     }
 
+    public static void resetContrastScenePresenter() {
+        contrastScenePresenter = null;
+    }
+
+    public static void resetSaveImagePresenter() {
+        saveImagePresenter = null;
+    }
 }

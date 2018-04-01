@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.image.SaveImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
+import core.provider.PresenterProvider;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import presentation.controller.SaveImageController;
@@ -25,8 +26,7 @@ public class SaveImagePresenter {
         this.getModifiedImageAction.execute()
                 .ifPresent(image -> saveImageAction.execute(image, filename, extension));
 
-        Stage stage = (Stage) this.view.outputName.getScene().getWindow();
-        stage.close();
+        this.closeWindow();
     }
 
     public void fillFormatList() {
@@ -40,5 +40,12 @@ public class SaveImagePresenter {
 
     public void initialize() {
         this.fillFormatList();
+    }
+
+    //TODO: Same as on the "Contrast" window
+    private void closeWindow() {
+        PresenterProvider.resetSaveImagePresenter();
+        Stage stage = (Stage) this.view.outputName.getScene().getWindow();
+        stage.close();
     }
 }
