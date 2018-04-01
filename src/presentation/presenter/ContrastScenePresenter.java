@@ -3,6 +3,7 @@ package presentation.presenter;
 import core.action.UpdateMainViewAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.image.GetImageAction;
+import core.provider.PresenterProvider;
 import core.service.GrayLevelStatisticsService;
 import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;
@@ -51,13 +52,17 @@ public class ContrastScenePresenter {
                 if (s1 < r1) {
                     image = this.applyContrastAction.execute(s1, s2, r1, r2);
                     this.updateMainViewAction.execute(image);
-                    Stage stage = (Stage) this.view.s1Field.getScene().getWindow();
-                    stage.close();
+                    this.closeWindow();
                 } else {
                     this.view.s1ValidationLabel.setText(String.format("Must be lesser than %d", r1));
                 }
             }
         }
 
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) this.view.s1Field.getScene().getWindow();
+        stage.close();
     }
 }

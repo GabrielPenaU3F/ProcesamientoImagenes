@@ -1,7 +1,7 @@
 package core.provider;
 
-import presentation.controller.ImageHistogramSceneController;
 import presentation.controller.ContrastSceneController;
+import presentation.controller.ImageHistogramSceneController;
 import presentation.controller.MainSceneController;
 import presentation.controller.SaveImageController;
 import presentation.presenter.*;
@@ -39,7 +39,9 @@ public class PresenterProvider {
     }
 
     public static SaveImagePresenter provideSaveImagePresenter(SaveImageController saveImageController) {
-        return new SaveImagePresenter(saveImageController, ActionProvider.provideGetModifiedImageAction(), ActionProvider.provideSaveImageAction());
+        return new SaveImagePresenter(saveImageController,
+                ActionProvider.provideGetModifiedImageAction(),
+                ActionProvider.provideSaveImageAction());
 
     }
 
@@ -50,15 +52,10 @@ public class PresenterProvider {
     }
 
     public static ContrastScenePresenter provideContrastScenePresenter(ContrastSceneController contrastSceneController) {
-        if (contrastScenePresenter == null) {
-            contrastScenePresenter = new ContrastScenePresenter(contrastSceneController,
-                    ActionProvider.provideApplyContrastAction(),
-                    ActionProvider.provideGetImageAction(),
-                    ActionProvider.provideUpdateMainViewAction(),
-                    ServiceProvider.provideGrayLevelStatisticsService());
-            return contrastScenePresenter;
-        }
-        return contrastScenePresenter;
+        return new ContrastScenePresenter(contrastSceneController,
+                ActionProvider.provideApplyContrastAction(),
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideUpdateMainViewAction(),
+                ServiceProvider.provideGrayLevelStatisticsService());
     }
-
 }
