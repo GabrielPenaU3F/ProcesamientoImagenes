@@ -4,6 +4,7 @@ import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import presentation.presenter.ContrastScenePresenter;
 
 public class ContrastSceneController {
@@ -25,7 +26,7 @@ public class ContrastSceneController {
 
     @FXML
     public void initialize() {
-
+        this.contrastScenePresenter.onInitializeView();
     }
 
     @FXML
@@ -33,5 +34,8 @@ public class ContrastSceneController {
         this.contrastScenePresenter.onApplyContrast();
     }
 
-
+    public void closeWindow() {
+        Stage stage = (Stage) this.s1Field.getScene().getWindow();
+        stage.close();
+    }
 }

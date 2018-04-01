@@ -9,7 +9,6 @@ import presentation.presenter.*;
 public class PresenterProvider {
 
     private static MainPresenter mainPresenter;
-    private static ContrastScenePresenter contrastScenePresenter;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -25,7 +24,8 @@ public class PresenterProvider {
                     ActionProvider.provideObtainRGBChannelAction(),
                     ActionProvider.provideObtainHSVChannelAction(),
                     ActionProvider.provideCreateImageWithFigureAction(),
-                    ActionProvider.provideCreateEqualizedGrayImageAction());
+                    ActionProvider.provideCreateEqualizedGrayImageAction(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
 
             return mainPresenter;
         }
@@ -55,7 +55,7 @@ public class PresenterProvider {
         return new ContrastScenePresenter(contrastSceneController,
                 ActionProvider.provideApplyContrastAction(),
                 ActionProvider.provideGetImageAction(),
-                ActionProvider.provideUpdateMainViewAction(),
-                ServiceProvider.provideGrayLevelStatisticsService());
+                ServiceProvider.provideGrayLevelStatisticsService(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 }

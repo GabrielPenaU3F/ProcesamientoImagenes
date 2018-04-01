@@ -3,7 +3,6 @@ package presentation.presenter;
 import core.action.image.SaveImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import domain.customimage.Format;
-import javafx.stage.Stage;
 import presentation.controller.SaveImageController;
 
 public class SaveImagePresenter {
@@ -24,11 +23,9 @@ public class SaveImagePresenter {
         String extension = this.view.formatList.getSelectionModel().getSelectedItems().get(0);
         this.getModifiedImageAction.execute()
                 .ifPresent(image -> saveImageAction.execute(image, filename, extension));
-
-        this.closeWindow();
     }
 
-    public void fillFormatList() {
+    private void fillFormatList() {
         //For some weird reason, if I close the Save Image window, and then I load it again, these items on the list dissappear.
         this.view.formatList.getItems().add(Format.RAW);
         this.view.formatList.getItems().add(Format.PPM);
@@ -39,10 +36,5 @@ public class SaveImagePresenter {
 
     public void initialize() {
         this.fillFormatList();
-    }
-
-    private void closeWindow() {
-        Stage stage = (Stage) this.view.outputName.getScene().getWindow();
-        stage.close();
     }
 }

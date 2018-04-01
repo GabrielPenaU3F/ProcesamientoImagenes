@@ -6,8 +6,8 @@ import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
-import core.action.histogram.EqualizeGrayImageAction;
 import core.action.gradient.CreateImageWithGradientAction;
+import core.action.histogram.EqualizeGrayImageAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
@@ -16,10 +16,10 @@ import domain.Figure;
 import domain.Gradient;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
+import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import presentation.controller.MainSceneController;
 import presentation.scenecreator.ContrastSceneCreator;
 import presentation.scenecreator.ImageHistogramSceneCreator;
@@ -27,9 +27,6 @@ import presentation.scenecreator.ImageInformSceneCreator;
 import presentation.scenecreator.SaveImageSceneCreator;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
-
-import java.awt.image.BufferedImage;
-import java.util.Optional;
 
 public class MainPresenter {
 
@@ -49,6 +46,7 @@ public class MainPresenter {
     private final ObtainHSVChannelAction obtainHSVChannelAction;
     private final CreateImageWithFigureAction createImageWithFigureAction;
     private final EqualizeGrayImageAction equalizeGrayImageAction;
+    private final Observable<Image> onModifiedImage;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -61,7 +59,8 @@ public class MainPresenter {
                          ObtainRGBChannelAction obtainRGBChannelAction,
                          ObtainHSVChannelAction obtainHSVChannelAction,
                          CreateImageWithFigureAction createImageWithFigureAction,
-                         EqualizeGrayImageAction equalizeGrayImageAction) {
+                         EqualizeGrayImageAction equalizeGrayImageAction,
+                         Observable<Image> onModifiedImage) {
 
         this.view = view;
 
@@ -71,6 +70,7 @@ public class MainPresenter {
         this.putModifiedImageAction = putModifiedImageAction;
         this.calculateNegativeImageAction = calculateNegativeImageAction;
         this.applyThresholdAction = applyThresholdAction;
+        this.onModifiedImage = onModifiedImage;
         this.createImageWithGradientAction = createImageWithGradientAction;
         this.obtainRGBChannelAction = obtainRGBChannelAction;
         this.obtainHSVChannelAction = obtainHSVChannelAction;
@@ -83,6 +83,8 @@ public class MainPresenter {
                 .withSetPickOnBounds(true)
                 .withOnPixelClick(this::onPixelClick)
                 .withSelectionMode();
+
+        awaitingForNewModifiedImages();
     }
 
     private Action onPixelClick(Integer x, Integer y) {
@@ -91,6 +93,10 @@ public class MainPresenter {
             view.pixelY.setText(y.toString());
             onCalculatePixelValue();
         };
+    }
+
+    private void awaitingForNewModifiedImages() {
+        onModifiedImage.subscribe(image -> view.modifiedImageView.setImage(image));
     }
 
     public void onOpenImage() {
