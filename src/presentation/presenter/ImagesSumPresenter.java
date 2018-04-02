@@ -3,7 +3,6 @@ package presentation.presenter;
 import core.action.image.LoadImageAction;
 import domain.customimage.CustomImage;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -20,19 +19,17 @@ public class ImagesSumPresenter {
 
     public void onloadImage1() {
         this.image1 = this.loadImageAction.execute();
-        //System.out.println("a");//para prueba
     }
 
     public void onloadImage2() {
         this.image2 = this.loadImageAction.execute();
-        //System.out.println("b");//para prueba
     }
 
     public Image onMakeImagesSum() {
         int resultantImageHeight = 1;
         int resultantImageWidth = 1;
-        int[][][] auxImage1R; //es para almacenar los valores de la imagen mas chica. Completo con 0 los espacios faltantes
-        int[][][] auxImage2R; //es para almacenar los valores de la imagen mas chica. Completo con 0 los espacios faltantes
+        int[][][] auxImage1; //es para almacenar los valores de la imagen mas chica. Completo con 0 los espacios faltantes
+        int[][][] auxImage2; //es para almacenar los valores de la imagen mas chica. Completo con 0 los espacios faltantes
         if (this.image1.getHeight() > this.image2.getHeight()) {
             resultantImageHeight = this.image1.getHeight();
         } else if (this.image2.getHeight() > this.image1.getHeight()) {
@@ -43,20 +40,19 @@ public class ImagesSumPresenter {
         } else if (this.image2.getWidth() > this.image1.getWidth()) {
             resultantImageWidth = this.image2.getWidth();
         }
-        auxImage1R = new int[resultantImageWidth][resultantImageHeight][3];
-        auxImage2R = new int[resultantImageWidth][resultantImageHeight][3];
-        this.completeWithZero(auxImage1R);
-        this.completeWithZero(auxImage2R);
-        this.addImageToMatrix(auxImage1R,this.image1);
-        this.addImageToMatrix(auxImage2R,this.image2);
-        int[][][] resultantMatrix = this.sumMatrix(auxImage1R, auxImage2R, resultantImageWidth, resultantImageHeight);
+        auxImage1 = new int[resultantImageWidth][resultantImageHeight][3];
+        auxImage2 = new int[resultantImageWidth][resultantImageHeight][3];
+        this.completeWithZero(auxImage1);
+        this.completeWithZero(auxImage2);
+        this.addImageToMatrix(auxImage1,this.image1);
+        this.addImageToMatrix(auxImage2,this.image2);
+        int[][][] resultantMatrix = this.sumMatrix(auxImage1, auxImage2, resultantImageWidth, resultantImageHeight);
         int resultantRedImageR = this.calculateR(resultantMatrix, 0);//Red
         int resultantGreenImageR = this.calculateR(resultantMatrix, 1);//Green
         int resultantBlueImageR = this.calculateR(resultantMatrix, 2);//Blue
         WritableImage resultantImage = new WritableImage(resultantImageWidth, resultantImageHeight);
         this.writeNewPixelsValuesInImage(resultantMatrix, resultantRedImageR, resultantGreenImageR, resultantBlueImageR, resultantImage);
         return resultantImage;
-        //System.out.println("c");//para prueba
     }
 
     private void completeWithZero(int[][][] matrix){
@@ -83,9 +79,6 @@ public class ImagesSumPresenter {
                         matrix[i][j][k] += image.getBChannelValue(i,j);
                     }
                 }
-
-                //System.out.println(image.getPixelValue(i,j));
-                //System.out.println(matrix[i][j]);
             }
         }
     }
@@ -116,7 +109,6 @@ public class ImagesSumPresenter {
 
     private void writeNewPixelsValuesInImage(int[][][] matrix, int imageRedR, int imageGreenR, int imageBlueR, WritableImage image){
         PixelWriter pixelWriter = image.getPixelWriter();
-        PixelReader pixelReader = image.getPixelReader(); //solo para prueba
         for (int i = 0; i < matrix.length; i++){
             for (int j = 0; j < matrix[i].length; j++){
                 int redPixelValue = 0;
@@ -135,16 +127,9 @@ public class ImagesSumPresenter {
                         double result = matrix[i][j][k] * ((double) 255/imageBlueR);
                         bluePixelValue = (int) result;
                     }
-
                 }
                 Color color = Color.rgb(redPixelValue,greenPixelValue,bluePixelValue);
                 pixelWriter.setColor(i,j,color);
-
-                //pixelWriter.setArgb(i,j,newPixelValue);
-                //System.out.println(matrix[i][j]);
-               // System.out.println(imageR);
-                //pixelWriter.setArgb(i,j,matrix[i][j] * (255/imageR));
-                //System.out.println(pixelReader.getArgb(i,j));
             }
         }
     }
