@@ -125,7 +125,7 @@ public class MainSceneController {
     public void threshold() { this.mainPresenter.onThreshold(); }
 
     @FXML
-    public void calculateImagesSum(){ this.mainPresenter.onCalculateImagesSum();}
+    public void calculateImagesOperations(){ this.mainPresenter.onCalculateImagesOperations();}
 
     @FXML
     public void close() {
