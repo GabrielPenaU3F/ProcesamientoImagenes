@@ -30,8 +30,8 @@ public class ImagesOperationsPresenter {
         int resultantImageHeight = this.calculateHeight();
         int [][][] auxImage1 = new int[resultantImageWidth][resultantImageHeight][3];
         int [][][] auxImage2 = new int[resultantImageWidth][resultantImageHeight][3];
-        this.fillMatrix(auxImage1, auxImage2);
-        int[][][] resultantMatrix = this.sumMatrix(auxImage1, auxImage2, resultantImageWidth, resultantImageHeight);
+        this.fillAuxImages(auxImage1, auxImage2);
+        int[][][] resultantMatrix = this.sumAuxImages(auxImage1, auxImage2, resultantImageWidth, resultantImageHeight);
         int resultantRedImageR = this.calculateR(resultantMatrix, 0);//Red
         int resultantGreenImageR = this.calculateR(resultantMatrix, 1);//Green
         int resultantBlueImageR = this.calculateR(resultantMatrix, 2);//Blue
@@ -45,33 +45,33 @@ public class ImagesOperationsPresenter {
         int resultantImageHeight = this.calculateHeight();
         int [][][] auxImage1 = new int[resultantImageWidth][resultantImageHeight][3];
         int [][][] auxImage2 = new int[resultantImageWidth][resultantImageHeight][3];
-        this.fillMatrix(auxImage1, auxImage2);
-        int[][][] resultantMatrix = this.multiplicateMatrix(auxImage1, auxImage2, resultantImageWidth, resultantImageHeight);
-        int resultantRedImageR = this.calculateR(resultantMatrix, 0);//Red
-        int resultantGreenImageR = this.calculateR(resultantMatrix, 1);//Green
-        int resultantBlueImageR = this.calculateR(resultantMatrix, 2);//Blue
+        this.fillAuxImages(auxImage1, auxImage2);
+        int[][][] resultantImageRepresentation = this.multiplicateAuxImages(auxImage1, auxImage2, resultantImageWidth, resultantImageHeight);
+        int resultantRedImageR = this.calculateR(resultantImageRepresentation, 0);//Red
+        int resultantGreenImageR = this.calculateR(resultantImageRepresentation, 1);//Green
+        int resultantBlueImageR = this.calculateR(resultantImageRepresentation, 2);//Blue
         WritableImage resultantImage = new WritableImage(resultantImageWidth, resultantImageHeight);
-        this.writeNewPixelsValuesInImage(resultantMatrix, resultantRedImageR, resultantGreenImageR, resultantBlueImageR, resultantImage);
+        this.writeNewPixelsValuesInImage(resultantImageRepresentation, resultantRedImageR, resultantGreenImageR, resultantBlueImageR, resultantImage);
         return resultantImage;
     }
 
-    private int[][][] multiplicateMatrix(int[][][] matrix1, int[][][] matrix2, int width, int height){
-        int[][][] resultant_matrix = new int[width][height][3];
-        for (int i = 0; i < matrix1.length; i++){
-            for (int j = 0; j < matrix1[i].length; j++){
-                for (int k = 0; k < matrix1[i][j].length; k++){
-                    resultant_matrix[i][j][k] = matrix1[i][j][k] * matrix2[i][j][k];
+    private int[][][] multiplicateAuxImages(int[][][] auxImage1, int[][][] auxImage2, int width, int height){
+        int[][][] resultant_image = new int[width][height][3];
+        for (int i = 0; i < auxImage1.length; i++){
+            for (int j = 0; j < auxImage1[i].length; j++){
+                for (int k = 0; k < auxImage1[i][j].length; k++){
+                    resultant_image[i][j][k] = auxImage1[i][j][k] * auxImage2[i][j][k];
                 }
             }
         }
-        return resultant_matrix;
+        return resultant_image;
     }
 
-    private void fillMatrix(int[][][] auxImage1, int[][][] auxImage2) {
+    private void fillAuxImages(int[][][] auxImage1, int[][][] auxImage2) {
         this.completeWithZero(auxImage1);
         this.completeWithZero(auxImage2);
-        this.addImageToMatrix(auxImage1,this.image1);
-        this.addImageToMatrix(auxImage2,this.image2);
+        this.setChannelsPixelsValuesInAuxImage(auxImage1,this.image1);
+        this.setChannelsPixelsValuesInAuxImage(auxImage2,this.image2);
     }
 
     private int calculateWidth(){
@@ -94,76 +94,76 @@ public class ImagesOperationsPresenter {
         return resultantImageHeight;
     }
 
-    private void completeWithZero(int[][][] matrix){
-        for (int i = 0; i < matrix.length; i++){
-            for (int j = 0; j < matrix[i].length; j++){
-                for (int k = 0; k < matrix[i][j].length; k++){
-                    matrix[i][j][k] = 0;
+    private void completeWithZero(int[][][] auxImage){
+        for (int i = 0; i < auxImage.length; i++){
+            for (int j = 0; j < auxImage[i].length; j++){
+                for (int k = 0; k < auxImage[i][j].length; k++){
+                    auxImage[i][j][k] = 0;
                 }
             }
         }
     }
 
-    private void addImageToMatrix(int[][][] matrix, CustomImage image){
+    private void setChannelsPixelsValuesInAuxImage(int[][][] auxImage, CustomImage image){
         for (int i = 0; i < image.getWidth(); i++){
             for (int j = 0; j < image.getHeight(); j++){
-                for (int k = 0; k < matrix[i][j].length; k++){
+                for (int k = 0; k < auxImage[i][j].length; k++){
                     if(k == 0){
-                        matrix[i][j][k] += image.getRChannelValue(i,j);
+                        auxImage[i][j][k] += image.getRChannelValue(i,j);
                     }
                     else if(k == 1){
-                        matrix[i][j][k] += image.getGChannelValue(i,j);
+                        auxImage[i][j][k] += image.getGChannelValue(i,j);
                     }
                     else if(k == 2){
-                        matrix[i][j][k] += image.getBChannelValue(i,j);
+                        auxImage[i][j][k] += image.getBChannelValue(i,j);
                     }
                 }
             }
         }
     }
 
-    private int[][][] sumMatrix(int[][][] matrix1, int[][][] matrix2, int width, int height){ //ambas matrices tienen el mismo tamanio
-        int[][][] resultant_matrix = new int[width][height][3];
-        for (int i = 0; i < matrix1.length; i++){
-            for (int j = 0; j < matrix1[i].length; j++){
-                for (int k = 0; k < matrix1[i][j].length; k++){
-                    resultant_matrix[i][j][k] = matrix1[i][j][k] + matrix2[i][j][k];
+    private int[][][] sumAuxImages(int[][][] auxImage1, int[][][] auxImage2, int width, int height){ //ambas matrices tienen el mismo tamanio
+        int[][][] resultant_image = new int[width][height][3];
+        for (int i = 0; i < auxImage1.length; i++){
+            for (int j = 0; j < auxImage1[i].length; j++){
+                for (int k = 0; k < auxImage1[i][j].length; k++){
+                    resultant_image[i][j][k] = auxImage1[i][j][k] + auxImage2[i][j][k];
                 }
             }
         }
-        return resultant_matrix;
+        return resultant_image;
     }
 
-    private int calculateR(int[][][] matrix, int channel){
+    private int calculateR(int[][][] auxImage, int channel){
         int actualR = 0;
-        for (int i = 0; i < matrix.length; i++){
-            for (int j = 0; j < matrix[i].length; j++){
-                if(matrix[i][j][channel] > actualR){
-                    actualR = matrix[i][j][channel];
+        for (int i = 0; i < auxImage.length; i++){
+            for (int j = 0; j < auxImage[i].length; j++){
+                if(auxImage[i][j][channel] > actualR){
+                    actualR = auxImage[i][j][channel];
                 }
             }
         }
         return actualR;
     }
 
-    private void writeNewPixelsValuesInImage(int[][][] matrix, int imageRedR, int imageGreenR, int imageBlueR, WritableImage image){
+    private void writeNewPixelsValuesInImage(int[][][] resultantImageRepresentation, int imageRedR, int imageGreenR, int imageBlueR, WritableImage image){
         PixelWriter pixelWriter = image.getPixelWriter();
-        for (int i = 0; i < matrix.length; i++){
-            for (int j = 0; j < matrix[i].length; j++){
+        for (int i = 0; i < resultantImageRepresentation.length; i++){
+            for (int j = 0; j < resultantImageRepresentation[i].length; j++){
                 int redPixelValue = 0;
                 int greenPixelValue = 0;
                 int bluePixelValue = 0;
-                for (int k = 0; k < matrix[i][j].length; k++){
+                for (int k = 0; k < resultantImageRepresentation[i][j].length; k++){
                     if(k == 0){
-                        double result = matrix[i][j][k] * ((double) 255/imageRedR);
+                        double result = resultantImageRepresentation[i][j][k] * ((double) 255/imageRedR);
                         redPixelValue = (int) result;
                     }
                     else if(k == 1){
-                        double result = matrix[i][j][k] * ((double) 255/imageGreenR);
+                        double result = resultantImageRepresentation[i][j][k] * ((double) 255/imageGreenR);
                         greenPixelValue = (int) result;
                     }
                     else if(k == 2){
-                        double result = matrix[i][j][k] * ((double) 255/imageBlueR);
+                        double result = resultantImageRepresentation[i][j][k] * ((double) 255/imageBlueR);
                         bluePixelValue = (int) result;
                     }
                 }
