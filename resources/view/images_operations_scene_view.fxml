@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.SplitPane?>
-<AnchorPane prefHeight="390.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImagesSumSceneController">
+<AnchorPane prefHeight="390.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImagesOperationsSceneController">
    <SplitPane dividerPositions="0.0829145728643216" orientation="VERTICAL" prefHeight="750.0" prefWidth="2000.0">
       <items>
          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="47.0" prefWidth="2000.0">
@@ -25,6 +25,7 @@
                         <Menu mnemonicParsing="false" text="Operations">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#makeImagesSum" text="Sum" />
+                              <MenuItem mnemonicParsing="false" onAction="#makeImagesMultiplication" text="Multiplication" />
                            </items>
                         </Menu>
                    </menus>

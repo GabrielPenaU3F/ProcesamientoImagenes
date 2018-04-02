@@ -6,12 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ImagesSumSceneCreator implements SceneCreator {
+public class ImagesOperationsSceneCreator implements SceneCreator {
 
     @Override
     public void createScene() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/images_sum_scene_view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/images_operations_scene_view.fxml"));
             Scene imageScene = new Scene(root);
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Images Sum");

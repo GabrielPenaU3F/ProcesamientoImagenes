@@ -203,6 +203,6 @@ public class MainPresenter {
     }
 
     public void onCalculateImagesSum() {
-        new ImagesSumSceneCreator().createScene();
+        new ImagesOperationsSceneCreator().createScene();
     }
 }
