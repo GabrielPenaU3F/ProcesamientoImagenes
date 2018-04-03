@@ -6,6 +6,7 @@ import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
+import core.action.histogram.EqualizeGrayImageAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
@@ -42,6 +43,7 @@ public class MainPresenter {
     private final ObtainRGBChannelAction obtainRGBChannelAction;
     private final ObtainHSVChannelAction obtainHSVChannelAction;
     private final CreateImageWithFigureAction createImageWithFigureAction;
+    private final EqualizeGrayImageAction equalizeGrayImageAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -53,7 +55,8 @@ public class MainPresenter {
                          CreateImageWithGradientAction createImageWithGradientAction,
                          ObtainRGBChannelAction obtainRGBChannelAction,
                          ObtainHSVChannelAction obtainHSVChannelAction,
-                         CreateImageWithFigureAction createImageWithFigureAction) {
+                         CreateImageWithFigureAction createImageWithFigureAction,
+                         EqualizeGrayImageAction equalizeGrayImageAction) {
 
         this.view = view;
 
@@ -67,6 +70,7 @@ public class MainPresenter {
         this.obtainRGBChannelAction = obtainRGBChannelAction;
         this.obtainHSVChannelAction = obtainHSVChannelAction;
         this.createImageWithFigureAction = createImageWithFigureAction;
+        this.equalizeGrayImageAction = equalizeGrayImageAction;
     }
 
     public void initialize() {
@@ -205,5 +209,10 @@ public class MainPresenter {
 
     public void onCreateImageHistogram() {
         new ImageHistogramSceneCreator().createScene();
+    }
+
+    public void onCreateEqualizedImage() {
+        Image binaryImage = equalizeGrayImageAction.execute();
+        view.modifiedImageView.setImage(binaryImage);
     }
 }

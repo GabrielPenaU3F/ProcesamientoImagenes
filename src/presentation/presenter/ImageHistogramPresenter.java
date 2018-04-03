@@ -18,23 +18,19 @@ public class ImageHistogramPresenter {
     private final ImageHistogramSceneController view;
     private final GetImageAction getImageAction;
     private final CreateImageHistogramAction createImageHistogramAction;
-    private final CreateImageWithGradientAction createImageWithGradient;
 
     public ImageHistogramPresenter(ImageHistogramSceneController view,
                                    GetImageAction getImageAction,
-                                   CreateImageHistogramAction createImageHistogramAction,
-                                   CreateImageWithGradientAction createImageWithGradient) {
+                                   CreateImageHistogramAction createImageHistogramAction) {
 
         this.view = view;
         this.getImageAction = getImageAction;
         this.createImageHistogramAction = createImageHistogramAction;
-        this.createImageWithGradient = createImageWithGradient;
     }
 
     public void initialize() {
         this.getImageAction.execute()
                 .ifPresent(customImage -> this.setData(this.createImageHistogramAction.execute(customImage)));
-        this.view.imageView.setImage(createImageWithGrayGradient());
     }
 
     private void setData(double[] value) {
@@ -48,13 +44,5 @@ public class ImageHistogramPresenter {
         XYChart.Data chartData = new XYChart.Data(x, y);
         chartData.nodeProperty().addListener((ChangeListener<Node>) (ov, oldNode, newNode) -> newNode.setStyle("-fx-bar-fill: black;"));
         return chartData;
-    }
-
-    private Image createImageWithGrayGradient() {
-        int fitWidth = (int) view.imageView.getFitWidth();
-        int fitHeight = (int) view.imageView.getFitHeight();
-        Gradient grey = Gradient.GREY;
-        BufferedImage bufferedImage = createImageWithGradient.execute(fitWidth, fitHeight, grey).getBufferedImage();
-        return SwingFXUtils.toFXImage(bufferedImage, null);
     }
 }

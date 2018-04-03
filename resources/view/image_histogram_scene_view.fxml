@@ -3,8 +3,11 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
 <BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="presentation.controller.ImageHistogramSceneController">
     <center>
@@ -27,10 +30,4 @@
             </Pane>
         </AnchorPane>
     </center>
-    <top>
-        <Pane prefHeight="65.0" prefWidth="959.0" BorderPane.alignment="CENTER">
-            <ImageView fx:id="imageView" fitHeight="39.0" fitWidth="765.0" layoutX="136.0" layoutY="13.0"
-                       pickOnBounds="true" preserveRatio="true"/>
-        </Pane>
-    </top>
 </BorderPane>

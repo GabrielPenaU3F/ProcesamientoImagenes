@@ -1,5 +1,6 @@
 package core.provider;
 
+import core.action.histogram.CreateImageHistogramAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
@@ -7,6 +8,7 @@ import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
+import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.CreateImageInformAction;
 import core.action.image.GetImageAction;
@@ -31,6 +33,7 @@ class ActionProvider {
     private static CalculateNegativeImageAction calculateNegativeImageAction;
     private static ApplyThresholdAction applyThresholdAction;
     private static CreateImageHistogramAction createImageHistogramAction;
+    private static EqualizeGrayImageAction createEqualizeGrayImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -142,8 +145,17 @@ class ActionProvider {
 
     public static CreateImageHistogramAction provideCreateImageHistogram() {
         if (createImageHistogramAction == null) {
-            createImageHistogramAction = new CreateImageHistogramAction();
+            createImageHistogramAction = new CreateImageHistogramAction(ServiceProvider.provideHistogramService());
         }
         return createImageHistogramAction;
+    }
+
+    public static EqualizeGrayImageAction provideCreateEqualizedGrayImageAction() {
+        if (createEqualizeGrayImageAction == null) {
+            createEqualizeGrayImageAction = new EqualizeGrayImageAction(
+                    ServiceProvider.provideHistogramService(),
+                    RepositoryProvider.provideImageRepository());
+        }
+        return createEqualizeGrayImageAction;
     }
 }

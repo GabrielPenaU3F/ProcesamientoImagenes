@@ -10,8 +10,6 @@ import presentation.presenter.ImageHistogramPresenter;
 public class ImageHistogramSceneController {
 
     @FXML
-    public ImageView imageView;
-    @FXML
     public BarChart barChart;
     public XYChart.Series data;
 
