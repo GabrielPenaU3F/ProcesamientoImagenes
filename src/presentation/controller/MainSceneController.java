@@ -22,7 +22,11 @@ public class MainSceneController {
     @FXML
     public TextField pixelY;
     @FXML
-    public TextField pixelValue;
+    public TextField valueR;
+    @FXML
+    public TextField valueG;
+    @FXML
+    public TextField valueB;
 
     public CustomImageView customImageView;
 

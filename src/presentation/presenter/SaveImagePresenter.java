@@ -2,7 +2,6 @@ package presentation.presenter;
 
 import core.action.image.SaveImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import presentation.controller.SaveImageController;
 

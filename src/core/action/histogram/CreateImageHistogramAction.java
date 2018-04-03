@@ -10,7 +10,7 @@ public class CreateImageHistogramAction {
 
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                arrayHistogram[customImage.getPixelValue(i, j)] += 1;
+                arrayHistogram[customImage.getAverageValue(i, j)] += 1;
                 totalPixels++;
             }
         }

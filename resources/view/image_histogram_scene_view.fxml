@@ -4,41 +4,33 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImageHistogramSceneController">
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="presentation.controller.ImageHistogramSceneController">
     <center>
         <AnchorPane prefHeight="321.0" prefWidth="959.0">
-
-            <children>
-                <Pane layoutX="59.0" layoutY="19.0" prefHeight="316.0" prefWidth="875.0">
-                    <children>
-                        <VBox>
-                            <children>
-                                <BarChart fx:id="barChart" barGap="2.0" layoutY="8.0" prefHeight="313.0" prefWidth="858.0">
-                                    <xAxis>
-                                        <CategoryAxis endMargin="0.0" label="GrayScale" prefHeight="56.0" prefWidth="762.0" side="BOTTOM" startMargin="0.0" fx:id="xAxis"/>
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis fx:id="yAxis" label="Pixel Quantity" prefHeight="218.0" prefWidth="64.0" side="LEFT" upperBound="0.0" />
-                                    </yAxis>
-                                </BarChart>
-                            </children>
-                        </VBox>
-
-                    </children>
-                </Pane>
-            </children>
+            <Pane layoutX="59.0" layoutY="19.0" prefHeight="316.0" prefWidth="875.0">
+                <VBox>
+                    <BarChart fx:id="barChart" layoutY="8.0" prefHeight="313.0" prefWidth="858.0"
+                              barGap="0.0"
+                              horizontalGridLinesVisible="false"
+                              verticalGridLinesVisible="false"
+                              legendVisible="false">
+                        <xAxis>
+                            <CategoryAxis label="GrayScale" endMargin="0.0" side="BOTTOM" startMargin="0.0"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Pixel Occurrency" side="LEFT" upperBound="0.0"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+            </Pane>
         </AnchorPane>
     </center>
-   <top>
-      <Pane prefHeight="65.0" prefWidth="959.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="imageView" fitHeight="39.0" fitWidth="765.0" layoutX="136.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
-   </top>
+    <top>
+        <Pane prefHeight="65.0" prefWidth="959.0" BorderPane.alignment="CENTER">
+            <ImageView fx:id="imageView" fitHeight="39.0" fitWidth="765.0" layoutX="136.0" layoutY="13.0"
+                       pickOnBounds="true" preserveRatio="true"/>
+        </Pane>
+    </top>
 </BorderPane>

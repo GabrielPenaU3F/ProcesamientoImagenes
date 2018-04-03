@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class SaveImageAction {
 
-    private ImageRawService imageRawService;
+    private final ImageRawService imageRawService;
 
     public SaveImageAction(ImageRawService imageRawService) {
         this.imageRawService = imageRawService;

@@ -1,6 +1,5 @@
 package core.provider;
 
-import core.action.histogram.CreateImageHistogramAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
@@ -8,6 +7,7 @@ import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
+import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.CreateImageInformAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
@@ -106,21 +106,26 @@ class ActionProvider {
 
     public static CreateImageWithFigureAction provideCreateImageWithFigureAction() {
         if (createImageWithFigureAction == null) {
-            createImageWithFigureAction = new CreateImageWithFigureAction(ServiceProvider.provideImageFigureService());
+            createImageWithFigureAction = new CreateImageWithFigureAction(
+                    ServiceProvider.provideImageFigureService(),
+                    RepositoryProvider.provideImageRepository());
         }
         return createImageWithFigureAction;
     }
 
     public static CreateImageWithGradientAction provideCreateGradientAction() {
         if (createImageWithGradientAction == null) {
-            createImageWithGradientAction = new CreateImageWithGradientAction(ServiceProvider.provideGradientService());
+            createImageWithGradientAction = new CreateImageWithGradientAction(
+                    ServiceProvider.provideGradientService(),
+                    RepositoryProvider.provideImageRepository());
         }
         return createImageWithGradientAction;
     }
 
     public static CalculateNegativeImageAction provideCalculateNegativeImageAction() {
         if (calculateNegativeImageAction == null) {
-            calculateNegativeImageAction = new CalculateNegativeImageAction(RepositoryProvider.provideImageRepository(),
+            calculateNegativeImageAction = new CalculateNegativeImageAction(
+                    RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideModifyImageService());
         }
         return calculateNegativeImageAction;
@@ -128,7 +133,8 @@ class ActionProvider {
 
     public static ApplyThresholdAction provideApplyThresholdAction() {
         if (applyThresholdAction == null) {
-            applyThresholdAction = new ApplyThresholdAction(RepositoryProvider.provideImageRepository(),
+            applyThresholdAction = new ApplyThresholdAction(
+                    RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideModifyImageService());
         }
         return applyThresholdAction;
