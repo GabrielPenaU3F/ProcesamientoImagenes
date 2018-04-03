@@ -1,12 +1,10 @@
 package core.provider;
 
+import presentation.controller.ContrastSceneController;
 import presentation.controller.ImageHistogramSceneController;
 import presentation.controller.MainSceneController;
 import presentation.controller.SaveImageController;
-import presentation.presenter.ImageHistogramPresenter;
-import presentation.presenter.ImageReportPresenter;
-import presentation.presenter.MainPresenter;
-import presentation.presenter.SaveImagePresenter;
+import presentation.presenter.*;
 
 public class PresenterProvider {
 
@@ -26,7 +24,8 @@ public class PresenterProvider {
                     ActionProvider.provideObtainRGBChannelAction(),
                     ActionProvider.provideObtainHSVChannelAction(),
                     ActionProvider.provideCreateImageWithFigureAction(),
-                    ActionProvider.provideCreateEqualizedGrayImageAction());
+                    ActionProvider.provideCreateEqualizedGrayImageAction(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
 
             return mainPresenter;
         }
@@ -40,7 +39,9 @@ public class PresenterProvider {
     }
 
     public static SaveImagePresenter provideSaveImagePresenter(SaveImageController saveImageController) {
-        return new SaveImagePresenter(saveImageController, ActionProvider.provideGetModifiedImageAction(), ActionProvider.provideSaveImageAction());
+        return new SaveImagePresenter(saveImageController,
+                ActionProvider.provideGetModifiedImageAction(),
+                ActionProvider.provideSaveImageAction());
 
     }
 
@@ -48,5 +49,13 @@ public class PresenterProvider {
         return new ImageHistogramPresenter(view,
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideCreateImageHistogram());
+    }
+
+    public static ContrastScenePresenter provideContrastScenePresenter(ContrastSceneController contrastSceneController) {
+        return new ContrastScenePresenter(contrastSceneController,
+                ActionProvider.provideApplyContrastAction(),
+                ActionProvider.provideGetImageAction(),
+                ServiceProvider.provideGrayLevelStatisticsService(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 }

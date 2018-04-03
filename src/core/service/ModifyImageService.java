@@ -34,4 +34,8 @@ public class ModifyImageService {
         Color modifiedColor = Color.rgb(valueR, valueG, valueB);
         pixelWriter.setColor(pixelX, pixelY, modifiedColor);
     }
+
+    public void modifySingleGrayPixel(Integer pixelX, Integer pixelY, Integer valueGray, PixelWriter pixelWriter) {
+        modifySinglePixel(pixelX, pixelY, valueGray, valueGray, valueGray, pixelWriter);
+    }
 }
