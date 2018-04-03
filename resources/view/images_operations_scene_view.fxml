@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
 <AnchorPane prefHeight="390.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImagesOperationsSceneController">
    <SplitPane dividerPositions="0.0829145728643216" orientation="VERTICAL" prefHeight="750.0" prefWidth="2000.0">
       <items>
@@ -34,15 +37,40 @@
          </AnchorPane>
          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="2000.0">
             <children>
-               <BorderPane prefHeight="200.0" prefWidth="000.0">
-                  <center>
-                     <Group fx:id="groupImageView" autoSizeChildren="true" BorderPane.alignment="CENTER">
-                        <children>
-                           <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
-                        </children>
-                     </Group>
-                  </center>
-               </BorderPane>
+               <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="2000.0">
+                  <BorderPane prefHeight="200.0" prefWidth="000.0">
+                     <center>
+                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
+                     </center>
+                     <bottom>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resultant Image" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <center>
+                        <ImageView fx:id="image1" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image 1" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <center>
+                        <ImageView fx:id="image2" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image 2" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                  </rowConstraints>
+               </GridPane>
             </children>
          </AnchorPane>
       </items>

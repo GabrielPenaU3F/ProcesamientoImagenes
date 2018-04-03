@@ -175,7 +175,7 @@ public class MainPresenter {
             view.modifiedImageView.setImage(modifiedImage);
 
         } else {
-            view.pixelValue.setText("Seleccione pixel");
+            view.pixelValue.setText("Select pixel");
         }
     }
 

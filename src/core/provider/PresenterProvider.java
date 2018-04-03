@@ -65,7 +65,7 @@ public class PresenterProvider {
         return channelScenePresenter;
     }
 
-    public static ImagesOperationsPresenter provideImagesSumPresenter() {
+    public static ImagesOperationsPresenter provideImagesOperationPresenter() {
         if (imagesOperationsPresenter == null) {
             imagesOperationsPresenter = new ImagesOperationsPresenter(ActionProvider.provideLoadImageAction());
             return imagesOperationsPresenter;

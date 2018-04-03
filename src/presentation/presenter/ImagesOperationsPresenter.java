@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.image.LoadImageAction;
 import domain.customimage.CustomImage;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -17,12 +18,14 @@ public class ImagesOperationsPresenter {
         this.loadImageAction = loadImageAction;
     }
 
-    public void onloadImage1() {
+    public Image onloadImage1() {
         this.image1 = this.loadImageAction.execute();
+        return SwingFXUtils.toFXImage(this.image1.getBufferedImage(), null );
     }
 
-    public void onloadImage2() {
+    public Image onloadImage2() {
         this.image2 = this.loadImageAction.execute();
+        return SwingFXUtils.toFXImage(this.image2.getBufferedImage(), null );
     }
 
     public Image onMakeImagesSum() {

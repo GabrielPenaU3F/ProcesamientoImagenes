@@ -14,10 +14,14 @@ public class ImagesOperationsSceneController {
     public ImageView imageView;
 
     @FXML
-    public Group groupImageView;
+    public ImageView image1;
+
+    @FXML
+    public ImageView image2;
+
 
     public ImagesOperationsSceneController(){
-        this.imagesOperationsPresenter = PresenterProvider.provideImagesSumPresenter();
+        this.imagesOperationsPresenter = PresenterProvider.provideImagesOperationPresenter();
     }
 
     public void makeImagesSum(){
@@ -31,10 +35,12 @@ public class ImagesOperationsSceneController {
     }
 
     public void loadImage1(){
-        this.imagesOperationsPresenter.onloadImage1();
+        //this.imagesOperationsPresenter.onloadImage1();
+        image1.setImage(this.imagesOperationsPresenter.onloadImage1());
     }
 
     public void loadImage2(){
-        this.imagesOperationsPresenter.onloadImage2();
+        //this.imagesOperationsPresenter.onloadImage2();
+        image2.setImage(this.imagesOperationsPresenter.onloadImage2());
     }
 }
