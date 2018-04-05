@@ -5,6 +5,8 @@ import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.operations.MultiplyImagesAction;
+import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.image.CreateImageInformAction;
@@ -29,6 +31,8 @@ class ActionProvider {
     private static CreateImageWithGradientAction createImageWithGradientAction;
     private static CalculateNegativeImageAction calculateNegativeImageAction;
     private static ApplyThresholdAction applyThresholdAction;
+    private static MultiplyImagesAction multiplyImagesAction;
+    private static SumImagesAction sumImagesAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -130,5 +134,19 @@ class ActionProvider {
                     ServiceProvider.provideModifyImageService());
         }
         return applyThresholdAction;
+    }
+
+    public static SumImagesAction provideSumImagesAction() {
+        if (sumImagesAction == null) {
+            sumImagesAction = new SumImagesAction(ServiceProvider.provideImageOperationsService());
+        }
+        return sumImagesAction;
+    }
+
+    public static MultiplyImagesAction provideMultiplyImagesAction() {
+        if (multiplyImagesAction == null) {
+            multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService());
+        }
+        return multiplyImagesAction;
     }
 }

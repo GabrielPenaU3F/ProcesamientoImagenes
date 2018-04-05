@@ -40,6 +40,10 @@ class ServiceProvider {
         return new ImageGradientService();
     }
 
+    public static ImageOperationsService provideImageOperationsService() {
+        return new ImageOperationsService();
+    }
+
     public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() {
         return new TransformRGBtoHSVImageService();
     }
