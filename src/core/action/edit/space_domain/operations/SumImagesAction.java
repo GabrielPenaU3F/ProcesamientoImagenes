@@ -1,53 +1,38 @@
 package core.action.edit.space_domain.operations;
 
+import core.action.edit.space_domain.NormalizeImageAction;
 import core.service.ImageOperationsService;
 import domain.customimage.CustomImage;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+
 
 public class SumImagesAction {
 
-    CustomImage image1;
-    CustomImage image2;
-    ImageOperationsService imageOperationsService;
+    private CustomImage image1;
+    private CustomImage image2;
+    private ImageOperationsService imageOperationsService;
+    private NormalizeImageAction normalizeImageAction;
 
-    public SumImagesAction(ImageOperationsService imageOperationsService){
+    public SumImagesAction(ImageOperationsService imageOperationsService, NormalizeImageAction normalizeImageAction){
         this.imageOperationsService = imageOperationsService;
+        this.normalizeImageAction = normalizeImageAction;
     }
 
     public Image execute(CustomImage image1, CustomImage image2) {
         this.image1 = image1;
         this.image2 = image2;
-        int resultantImageWidth = this.imageOperationsService.calculateResultantWidth(this.image1, this.image2);
-        int resultantImageHeight = this.imageOperationsService.calculateResultantHeight(this.image1, this.image2);
-        int [][][] auxImage1 = new int[resultantImageWidth][resultantImageHeight][3];
-        int [][][] auxImage2 = new int[resultantImageWidth][resultantImageHeight][3];
-        this.imageOperationsService.fillAuxImages(auxImage1, auxImage2, this.image1, this.image2);
-        int[][][] resultantImageRepresentation = this.sumAuxImages(auxImage1, auxImage2, resultantImageWidth, resultantImageHeight);
-        int resultantRedImageR = this.imageOperationsService.calculateR(resultantImageRepresentation, 0);//Red
-        int resultantGreenImageR = this.imageOperationsService.calculateR(resultantImageRepresentation, 1);//Green
-        int resultantBlueImageR = this.imageOperationsService.calculateR(resultantImageRepresentation, 2);//Blue
-        WritableImage resultantImage = new WritableImage(resultantImageWidth, resultantImageHeight);
-        this.imageOperationsService.writeNewPixelsValuesInImage(resultantImageRepresentation, resultantRedImageR, resultantGreenImageR, resultantBlueImageR, resultantImage);
+        Image normalizedImage1 = this.normalizeImageAction.execute(this.image1, this.image2);
+        Image normalizedImage2 = this.normalizeImageAction.execute(this.image2, this.image1);
+        int[][] redChannelResultantValues = this.imageOperationsService.sumRedPixelsValues(normalizedImage1, normalizedImage2);
+        int[][] greenChannelResultantValues = this.imageOperationsService.sumGreenPixelsValues(normalizedImage1, normalizedImage2);
+        int[][] blueChannelResultantValues = this.imageOperationsService.sumBluePixelsValues(normalizedImage1, normalizedImage2);
+        int resultantRedImageR = this.imageOperationsService.calculateR(redChannelResultantValues);
+        int resultantGreenImageR = this.imageOperationsService.calculateR(greenChannelResultantValues);
+        int resultantBlueImageR = this.imageOperationsService.calculateR(blueChannelResultantValues);
+        WritableImage resultantImage = new WritableImage((int) normalizedImage1.getWidth(), (int) normalizedImage2.getHeight());
+        this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues, greenChannelResultantValues, blueChannelResultantValues, resultantRedImageR, resultantGreenImageR, resultantBlueImageR, resultantImage);
         return resultantImage;
     }
-
-
-
-
-    private int[][][] sumAuxImages(int[][][] auxImage1, int[][][] auxImage2, int width, int height){ //ambas matrices tienen el mismo tamanio
-        int[][][] resultant_image = new int[width][height][3];
-        for (int i = 0; i < auxImage1.length; i++){
-            for (int j = 0; j < auxImage1[i].length; j++){
-                for (int k = 0; k < auxImage1[i][j].length; k++){
-                    resultant_image[i][j][k] = auxImage1[i][j][k] + auxImage2[i][j][k];
-                }
-            }
-        }
-        return resultant_image;
-    }
-
 
 }

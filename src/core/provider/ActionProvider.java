@@ -5,6 +5,7 @@ import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.NormalizeImageAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
@@ -33,6 +34,7 @@ class ActionProvider {
     private static ApplyThresholdAction applyThresholdAction;
     private static MultiplyImagesAction multiplyImagesAction;
     private static SumImagesAction sumImagesAction;
+    private static NormalizeImageAction normalizeImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -138,15 +140,24 @@ class ActionProvider {
 
     public static SumImagesAction provideSumImagesAction() {
         if (sumImagesAction == null) {
-            sumImagesAction = new SumImagesAction(ServiceProvider.provideImageOperationsService());
+            sumImagesAction = new SumImagesAction(ServiceProvider.provideImageOperationsService(),
+                    ActionProvider.provideNormalizeImageAction());
         }
         return sumImagesAction;
     }
 
     public static MultiplyImagesAction provideMultiplyImagesAction() {
         if (multiplyImagesAction == null) {
-            multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService());
+            multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService(),
+                    ActionProvider.provideNormalizeImageAction());
         }
         return multiplyImagesAction;
+    }
+
+    public static NormalizeImageAction provideNormalizeImageAction() {
+        if (normalizeImageAction == null) {
+            normalizeImageAction = new NormalizeImageAction(ServiceProvider.provideImageOperationsService());
+        }
+        return normalizeImageAction;
     }
 }

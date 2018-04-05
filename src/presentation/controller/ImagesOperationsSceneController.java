@@ -35,12 +35,10 @@ public class ImagesOperationsSceneController {
     }
 
     public void loadImage1(){
-        //this.imagesOperationsPresenter.onloadImage1();
         image1.setImage(this.imagesOperationsPresenter.onloadImage1());
     }
 
     public void loadImage2(){
-        //this.imagesOperationsPresenter.onloadImage2();
         image2.setImage(this.imagesOperationsPresenter.onloadImage2());
     }
 }

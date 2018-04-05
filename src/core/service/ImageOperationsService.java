@@ -1,17 +1,17 @@
 package core.service;
 
 import domain.customimage.CustomImage;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class ImageOperationsService {
 
-    public void fillAuxImages(int[][][] auxImage1, int[][][] auxImage2, CustomImage image1, CustomImage image2) {
+    public void fillAuxImages(WritableImage auxImage1, CustomImage image1) {
         this.completeWithZero(auxImage1);
-        this.completeWithZero(auxImage2);
         this.setChannelsPixelsValuesInAuxImage(auxImage1,image1);
-        this.setChannelsPixelsValuesInAuxImage(auxImage2,image2);
     }
 
     public int calculateResultantWidth(CustomImage image1, CustomImage image2){
@@ -34,70 +34,139 @@ public class ImageOperationsService {
         return resultantImageHeight;
     }
 
-    public void completeWithZero(int[][][] auxImage){
-        for (int i = 0; i < auxImage.length; i++){
-            for (int j = 0; j < auxImage[i].length; j++){
-                for (int k = 0; k < auxImage[i][j].length; k++){
-                    auxImage[i][j][k] = 0;
-                }
+    public void completeWithZero(WritableImage imageToNormalize){
+        PixelWriter pixelWriter = imageToNormalize.getPixelWriter();
+        for (int i = 0; i < imageToNormalize.getWidth(); i++){
+            for (int j = 0; j < imageToNormalize.getHeight(); j++){
+                Color color = Color.rgb(0,0,0);
+                pixelWriter.setColor(i,j,color);
             }
         }
     }
 
-    public void setChannelsPixelsValuesInAuxImage(int[][][] auxImage, CustomImage image){
+    public void setChannelsPixelsValuesInAuxImage(WritableImage imageToNormalize, CustomImage image){
+        int redChannelValue = 0;
+        int greenChannelValue = 0;
+        int blueChannelValue = 0;
+        PixelWriter pixelWriter = imageToNormalize.getPixelWriter();
         for (int i = 0; i < image.getWidth(); i++){
             for (int j = 0; j < image.getHeight(); j++){
-                for (int k = 0; k < auxImage[i][j].length; k++){
-                    if(k == 0){
-                        auxImage[i][j][k] += image.getRChannelValue(i,j);
-                    }
-                    else if(k == 1){
-                        auxImage[i][j][k] += image.getGChannelValue(i,j);
-                    }
-                    else if(k == 2){
-                        auxImage[i][j][k] += image.getBChannelValue(i,j);
-                    }
-                }
+                redChannelValue = image.getRChannelValue(i,j).intValue();
+                greenChannelValue = image.getGChannelValue(i,j).intValue();
+                blueChannelValue = image.getBChannelValue(i,j).intValue();
+                Color color = Color.rgb(redChannelValue,greenChannelValue,blueChannelValue);
+                pixelWriter.setColor(i,j,color);
             }
         }
     }
 
-    public int calculateR(int[][][] auxImage, int channel){
+    public int calculateR(int[][] channelValues){
         int actualR = 0;
-        for (int i = 0; i < auxImage.length; i++){
-            for (int j = 0; j < auxImage[i].length; j++){
-                if(auxImage[i][j][channel] > actualR){
-                    actualR = auxImage[i][j][channel];
+        for (int i = 0; i < channelValues.length; i++){
+            for (int j = 0; j < channelValues[i].length; j++){
+                if(channelValues[i][j] > actualR){
+                    actualR = channelValues[i][j];
                 }
             }
         }
         return actualR;
     }
 
-    public void writeNewPixelsValuesInImage(int[][][] resultantImageRepresentation, int imageRedR, int imageGreenR, int imageBlueR, WritableImage image){
+    public void writeNewPixelsValuesInImage(int[][] redChannelValues, int[][] greenChannelValues, int[][] blueChannelValues, int imageRedR, int imageGreenR, int imageBlueR, WritableImage image){
         PixelWriter pixelWriter = image.getPixelWriter();
-        for (int i = 0; i < resultantImageRepresentation.length; i++){
-            for (int j = 0; j < resultantImageRepresentation[i].length; j++){
-                int redPixelValue = 0;
-                int greenPixelValue = 0;
-                int bluePixelValue = 0;
-                for (int k = 0; k < resultantImageRepresentation[i][j].length; k++){
-                    if(k == 0){
-                        double result = resultantImageRepresentation[i][j][k] * ((double) 255/imageRedR);
-                        redPixelValue = (int) result;
-                    }
-                    else if(k == 1){
-                        double result = resultantImageRepresentation[i][j][k] * ((double) 255/imageGreenR);
-                        greenPixelValue = (int) result;
-                    }
-                    else if(k == 2){
-                        double result = resultantImageRepresentation[i][j][k] * ((double) 255/imageBlueR);
-                        bluePixelValue = (int) result;
-                    }
-                }
+        int redPixelValue = 0;
+        int greenPixelValue = 0;
+        int bluePixelValue = 0;
+        for (int i = 0; i < (int)image.getWidth(); i++){
+            for (int j = 0; j < (int)image.getHeight(); j++){
+                double auxRedPixelValue = redChannelValues[i][j] * ((double) 255/imageRedR);
+                redPixelValue = (int) auxRedPixelValue;
+                double auxGreenPixelValue = greenChannelValues[i][j] * ((double) 255/imageGreenR);
+                greenPixelValue = (int) auxGreenPixelValue;
+                double auxBluePixelValue = blueChannelValues[i][j] * ((double) 255/imageBlueR);
+                bluePixelValue = (int) auxBluePixelValue;
                 Color color = Color.rgb(redPixelValue,greenPixelValue,bluePixelValue);
                 pixelWriter.setColor(i,j,color);
             }
         }
     }
+
+    public int[][] sumRedPixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getRed() * 255) + (pixelReaderImage2.getColor(i, j).getRed() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] sumGreenPixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getGreen() * 255) + (pixelReaderImage2.getColor(i, j).getGreen() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] sumBluePixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getBlue() * 255) + (pixelReaderImage2.getColor(i, j).getBlue() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] multiplyRedPixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getRed() * 255) * (pixelReaderImage2.getColor(i, j).getRed() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] multiplyGreenPixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getGreen() * 255) * (pixelReaderImage2.getColor(i, j).getGreen() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] multiplyBluePixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getBlue() * 255) * (pixelReaderImage2.getColor(i, j).getBlue() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
 }
