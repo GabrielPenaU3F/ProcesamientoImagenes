@@ -67,7 +67,7 @@ public class PresenterProvider {
 
     public static ImagesOperationsPresenter provideImagesOperationPresenter() {
         if (imagesOperationsPresenter == null) {
-            imagesOperationsPresenter = new ImagesOperationsPresenter(ActionProvider.provideLoadImageAction(), ActionProvider.provideSumImagesAction(), ActionProvider.provideMultiplyImagesAction());
+            imagesOperationsPresenter = new ImagesOperationsPresenter(ActionProvider.provideLoadImageAction(), ActionProvider.provideNormalizeImageAction(), ActionProvider.provideSumImagesAction(), ActionProvider.provideMultiplyImagesAction());
             return imagesOperationsPresenter;
         }
         return imagesOperationsPresenter;

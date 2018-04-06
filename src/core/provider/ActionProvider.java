@@ -140,16 +140,14 @@ class ActionProvider {
 
     public static SumImagesAction provideSumImagesAction() {
         if (sumImagesAction == null) {
-            sumImagesAction = new SumImagesAction(ServiceProvider.provideImageOperationsService(),
-                    ActionProvider.provideNormalizeImageAction());
+            sumImagesAction = new SumImagesAction(ServiceProvider.provideImageOperationsService());
         }
         return sumImagesAction;
     }
 
     public static MultiplyImagesAction provideMultiplyImagesAction() {
         if (multiplyImagesAction == null) {
-            multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService(),
-                    ActionProvider.provideNormalizeImageAction());
+            multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService());
         }
         return multiplyImagesAction;
     }
