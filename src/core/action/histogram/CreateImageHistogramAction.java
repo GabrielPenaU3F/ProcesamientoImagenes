@@ -1,6 +1,7 @@
 package core.action.histogram;
 
 import core.service.HistogramService;
+import domain.Histogram;
 import domain.customimage.CustomImage;
 
 public class CreateImageHistogramAction {
@@ -11,7 +12,7 @@ public class CreateImageHistogramAction {
         this.histogramService = histogramService;
     }
 
-    public double[] execute(CustomImage customImage) {
+    public Histogram execute(CustomImage customImage) {
         return histogramService.create(customImage);
     }
 }

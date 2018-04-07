@@ -85,6 +85,7 @@
                 <Menu mnemonicParsing="false" text="Histogram">
                     <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create" />
                     <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Equalize Image" />
+                    <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Equalize Image Twice" />
                 </Menu>
             </Menu>
             <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut" />

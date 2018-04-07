@@ -27,20 +27,20 @@ public class CustomImage {
         return bufferedImage;
     }
 
-    public RGB getPixelValue(Integer x, Integer y) {
-        try {
-            return new RGB(this.getRChannelValue(x, y), this.getGChannelValue(x, y), this.getBChannelValue(x, y));
-        } catch (IndexOutOfBoundsException e) {
-            return new RGB(INDEX_OUT_OF_BOUND, INDEX_OUT_OF_BOUND, INDEX_OUT_OF_BOUND);
-        }
-    }
-
     public int getAverageValue(Integer x, Integer y) {
         RGB pixelValue = getPixelValue(x, y);
         return (int) (pixelValue.getR() +
                 pixelValue.getG() +
                 pixelValue.getB())
                 / 3;
+    }
+
+    public RGB getPixelValue(Integer x, Integer y) {
+        try {
+            return new RGB(this.getRChannelValue(x, y), this.getGChannelValue(x, y), this.getBChannelValue(x, y));
+        } catch (IndexOutOfBoundsException e) {
+            return new RGB(INDEX_OUT_OF_BOUND, INDEX_OUT_OF_BOUND, INDEX_OUT_OF_BOUND);
+        }
     }
 
     public Double getRChannelValue(int x, int y) {

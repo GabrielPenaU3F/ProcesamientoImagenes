@@ -149,4 +149,9 @@ public class MainSceneController {
     public void createEqualizedImage() {
         this.mainPresenter.onCreateEqualizedImage();
     }
+
+    @FXML
+    public void createImageEqualizedTwice() {
+        this.mainPresenter.onCreateEqualizedImageTwice();
+    }
 }
