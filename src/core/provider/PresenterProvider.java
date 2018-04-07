@@ -1,9 +1,7 @@
 package core.provider;
 
-import presentation.controller.ContrastSceneController;
-import presentation.controller.ImageHistogramSceneController;
-import presentation.controller.MainSceneController;
-import presentation.controller.SaveImageController;
+import core.action.edit.space_domain.GammaFunctionAction;
+import presentation.controller.*;
 import presentation.presenter.*;
 
 public class PresenterProvider {
@@ -59,4 +57,11 @@ public class PresenterProvider {
                 ServiceProvider.provideGrayLevelStatisticsService(),
                 PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
+
+    public static GammaScenePresenter provideGammaScenePresenter(GammaSceneController gammaSceneController) {
+            return new GammaScenePresenter(gammaSceneController,
+                    ActionProvider.provideGammaFunctionAction(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+    }
+
 }

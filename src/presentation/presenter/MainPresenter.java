@@ -22,10 +22,7 @@ import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.ContrastSceneCreator;
-import presentation.scenecreator.ImageHistogramSceneCreator;
-import presentation.scenecreator.ImageInformSceneCreator;
-import presentation.scenecreator.SaveImageSceneCreator;
+import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
 
@@ -245,5 +242,9 @@ public class MainPresenter {
     public void onCompressDynamicRange() {
         Image image = compressDynamicRangeAction.execute();
         view.modifiedImageView.setImage(image);
+    }
+
+    public void onGammaPowerFunction() {
+        new GammaSceneCreator().createScene();
     }
 }

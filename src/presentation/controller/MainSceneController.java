@@ -139,6 +139,9 @@ public class MainSceneController {
     public void compressDynamicRange() {this.mainPresenter.onCompressDynamicRange();}
 
     @FXML
+    public void gammaPowerFunction() {this.mainPresenter.onGammaPowerFunction();}
+
+    @FXML
     public void close() {
         Platform.exit();
     }
