@@ -12,7 +12,7 @@ public class ImageOperationsService {
     //completa la writableImage recibida, con el valor de cierta imagen (completando con 0 las posiciones en la cual la imagen no tiene valores)
     public void fillImage(WritableImage writableImage, CustomImage image) {
         this.completeWithZero(writableImage);
-        this.setChannelsPixelsValuesInAuxImage(writableImage,image);
+        this.setChannelsPixelsValuesInImage(writableImage,image);
     }
 
     public int calculateResultantWidth(CustomImage image1, CustomImage image2){
@@ -45,7 +45,7 @@ public class ImageOperationsService {
         }
     }
 
-    public void setChannelsPixelsValuesInAuxImage(WritableImage imageToNormalize, CustomImage image){
+    public void setChannelsPixelsValuesInImage(WritableImage imageToNormalize, CustomImage image){
         int redChannelValue = 0;
         int greenChannelValue = 0;
         int blueChannelValue = 0;
@@ -167,6 +167,39 @@ public class ImageOperationsService {
         for(int i = 0; i < (int) image1.getWidth(); i++) {
             for (int j = 0; j < (int) image1.getHeight(); j++) {
                 double sumResult = ((pixelReaderImage1.getColor(i, j).getBlue() * 255) * (pixelReaderImage2.getColor(i, j).getBlue() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] multiplyRedPixelsValuesWithScalarNumber(CustomImage customImage, int scalarNumber){
+        int[][] result = new int[(int) customImage.getWidth()][(int) customImage.getHeight()];
+        for(int i = 0; i < (int) customImage.getWidth(); i++) {
+            for (int j = 0; j < (int) customImage.getHeight(); j++) {
+                double sumResult = (customImage.getRChannelValue(i,j)) * (scalarNumber);
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] multiplyGreenPixelsValuesWithScalarNumber(CustomImage customImage, int scalarNumber){
+        int[][] result = new int[(int) customImage.getWidth()][(int) customImage.getHeight()];
+        for(int i = 0; i < (int) customImage.getWidth(); i++) {
+            for (int j = 0; j < (int) customImage.getHeight(); j++) {
+                double sumResult = (customImage.getGChannelValue(i,j)) * (scalarNumber);
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] multiplyBluePixelsValuesWithScalarNumber(CustomImage customImage, int scalarNumber){
+        int[][] result = new int[(int) customImage.getWidth()][(int) customImage.getHeight()];
+        for(int i = 0; i < (int) customImage.getWidth(); i++) {
+            for (int j = 0; j < (int) customImage.getHeight(); j++) {
+                double sumResult = (customImage.getBChannelValue(i,j)) * (scalarNumber);
                 result[i][j] = (int) Math.round(sumResult);
             }
         }

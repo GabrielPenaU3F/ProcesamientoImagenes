@@ -59,7 +59,8 @@ public class PresenterProvider {
 
     public static ChannelScenePresenter provideChannelScenePresenter() {
         if (channelScenePresenter == null) {
-            channelScenePresenter = new ChannelScenePresenter(ActionProvider.provideObtainRGBChannelAction(), ActionProvider.provideObtainHSVChannelAction());
+            channelScenePresenter = new ChannelScenePresenter(ActionProvider.provideObtainRGBChannelAction(),
+                    ActionProvider.provideObtainHSVChannelAction());
             return channelScenePresenter;
         }
         return channelScenePresenter;
@@ -67,7 +68,9 @@ public class PresenterProvider {
 
     public static ImagesOperationsPresenter provideImagesOperationPresenter() {
         if (imagesOperationsPresenter == null) {
-            imagesOperationsPresenter = new ImagesOperationsPresenter(ActionProvider.provideLoadImageAction(), ActionProvider.provideNormalizeImageAction(), ActionProvider.provideSumImagesAction(), ActionProvider.provideMultiplyImagesAction());
+            imagesOperationsPresenter = new ImagesOperationsPresenter(ActionProvider.provideLoadImageAction(),
+                    ActionProvider.provideNormalizeImageAction(), ActionProvider.provideSumImagesAction(),
+                    ActionProvider.provideMultiplyImagesAction(), ActionProvider.provideMultiplyImageWithScalarNumberAction());
             return imagesOperationsPresenter;
         }
         return imagesOperationsPresenter;

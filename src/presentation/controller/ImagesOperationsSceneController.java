@@ -34,6 +34,11 @@ public class ImagesOperationsSceneController {
         imageView.setImage(this.imagesOperationsPresenter.onMakeImagesMultiplication());
     }
 
+    public void makeImageMultiplicationWithScalarNumber(){
+        imageView.setPickOnBounds(true);
+        imageView.setImage(this.imagesOperationsPresenter.onMakeImageMultiplicationWithScalarNumber());
+    }
+
     public void loadImage1(){
         image1.setImage(this.imagesOperationsPresenter.onloadImage1());
     }
