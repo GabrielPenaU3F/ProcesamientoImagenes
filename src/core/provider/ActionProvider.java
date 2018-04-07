@@ -6,6 +6,7 @@ import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
@@ -35,6 +36,7 @@ class ActionProvider {
     private static CreateImageHistogramAction createImageHistogramAction;
     private static ApplyContrastAction applyContrastAction;
     private static EqualizeGrayImageAction createEqualizeGrayImageAction;
+    private static CompressDynamicRangeAction compressDynamicRangeAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -166,5 +168,14 @@ class ActionProvider {
                     RepositoryProvider.provideImageRepository());
         }
         return createEqualizeGrayImageAction;
+    }
+    
+    public static CompressDynamicRangeAction provideCompressDynamicRangeAction() {
+        if (compressDynamicRangeAction == null) {
+            compressDynamicRangeAction = new CompressDynamicRangeAction(
+                    ServiceProvider.provideGrayLevelStatisticsService(),
+                    RepositoryProvider.provideImageRepository());
+        }
+        return compressDynamicRangeAction;
     }
 }

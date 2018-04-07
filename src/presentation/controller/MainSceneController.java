@@ -136,6 +136,9 @@ public class MainSceneController {
     public void contrast() { this.mainPresenter.onContrast(); }
 
     @FXML
+    public void compressDynamicRange() {this.mainPresenter.onCompressDynamicRange();}
+
+    @FXML
     public void close() {
         Platform.exit();
     }

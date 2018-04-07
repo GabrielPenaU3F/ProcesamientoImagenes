@@ -5,6 +5,7 @@ import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
@@ -47,6 +48,7 @@ public class MainPresenter {
     private final CreateImageWithFigureAction createImageWithFigureAction;
     private final EqualizeGrayImageAction equalizeGrayImageAction;
     private final Observable<Image> onModifiedImage;
+    private final CompressDynamicRangeAction compressDynamicRangeAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -60,7 +62,8 @@ public class MainPresenter {
                          ObtainHSVChannelAction obtainHSVChannelAction,
                          CreateImageWithFigureAction createImageWithFigureAction,
                          EqualizeGrayImageAction equalizeGrayImageAction,
-                         Observable<Image> onModifiedImage) {
+                         Observable<Image> onModifiedImage,
+                         CompressDynamicRangeAction compressDynamicRangeAction) {
 
         this.view = view;
 
@@ -76,6 +79,7 @@ public class MainPresenter {
         this.obtainHSVChannelAction = obtainHSVChannelAction;
         this.createImageWithFigureAction = createImageWithFigureAction;
         this.equalizeGrayImageAction = equalizeGrayImageAction;
+        this.compressDynamicRangeAction = compressDynamicRangeAction;
     }
 
     public void initialize() {
@@ -236,5 +240,10 @@ public class MainPresenter {
 
     public void onCreateEqualizedImageTwice() {
         view.modifiedImageView.setImage(equalizeGrayImageAction.executeTwice());
+    }
+
+    public void onCompressDynamicRange() {
+        Image image = compressDynamicRangeAction.execute();
+        view.modifiedImageView.setImage(image);
     }
 }

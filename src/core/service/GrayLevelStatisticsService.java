@@ -54,4 +54,40 @@ public class GrayLevelStatisticsService {
 
     }
 
+    public int calculateMaxGrayLevel(Image image) {
+
+        PixelReader reader = image.getPixelReader();
+        int max = 0;
+        for (int i=0; i < image.getWidth(); i++) {
+            for (int j=0; j < image.getHeight(); j++) {
+
+                int grayLevel = (int)(reader.getColor(i,j).getRed()*255);
+                if (grayLevel > max) {
+                    max = grayLevel;
+                }
+
+            }
+        }
+        return max;
+
+    }
+
+    public int calculateMinGrayLevel(Image image) {
+
+        PixelReader reader = image.getPixelReader();
+        int min = 255;
+        for (int i=0; i < image.getWidth(); i++) {
+            for (int j=0; j < image.getHeight(); j++) {
+
+                int grayLevel = (int)(reader.getColor(i,j).getRed()*255);
+                if (grayLevel < min) {
+                    min = grayLevel;
+                }
+
+            }
+        }
+        return min;
+
+    }
+
 }

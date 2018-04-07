@@ -25,7 +25,8 @@ public class PresenterProvider {
                     ActionProvider.provideObtainHSVChannelAction(),
                     ActionProvider.provideCreateImageWithFigureAction(),
                     ActionProvider.provideCreateEqualizedGrayImageAction(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                    ActionProvider.provideCompressDynamicRangeAction());
 
             return mainPresenter;
         }
