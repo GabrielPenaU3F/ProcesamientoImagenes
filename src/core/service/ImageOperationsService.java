@@ -9,9 +9,10 @@ import javafx.scene.paint.Color;
 
 public class ImageOperationsService {
 
-    public void fillAuxImages(WritableImage auxImage1, CustomImage image1) {
-        this.completeWithZero(auxImage1);
-        this.setChannelsPixelsValuesInAuxImage(auxImage1,image1);
+    //completa la writableImage recibida, con el valor de cierta imagen (completando con 0 las posiciones en la cual la imagen no tiene valores)
+    public void fillImage(WritableImage writableImage, CustomImage image) {
+        this.completeWithZero(writableImage);
+        this.setChannelsPixelsValuesInAuxImage(writableImage,image);
     }
 
     public int calculateResultantWidth(CustomImage image1, CustomImage image2){
@@ -72,11 +73,14 @@ public class ImageOperationsService {
         return actualR;
     }
 
-    public void writeNewPixelsValuesInImage(int[][] redChannelValues, int[][] greenChannelValues, int[][] blueChannelValues, int imageRedR, int imageGreenR, int imageBlueR, WritableImage image){
+    public void writeNewPixelsValuesInImage(int[][] redChannelValues, int[][] greenChannelValues, int[][] blueChannelValues, WritableImage image){
         PixelWriter pixelWriter = image.getPixelWriter();
         int redPixelValue = 0;
         int greenPixelValue = 0;
         int bluePixelValue = 0;
+        int imageRedR = this.calculateR(redChannelValues);
+        int imageGreenR = this.calculateR(greenChannelValues);
+        int imageBlueR = this.calculateR(blueChannelValues);
         for (int i = 0; i < (int)image.getWidth(); i++){
             for (int j = 0; j < (int)image.getHeight(); j++){
                 double auxRedPixelValue = redChannelValues[i][j] * ((double) 255/imageRedR);

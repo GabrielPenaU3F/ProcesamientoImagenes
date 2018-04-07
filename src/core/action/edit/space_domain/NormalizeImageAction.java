@@ -13,11 +13,12 @@ public class NormalizeImageAction {
         this.imageOperationsService = imageOperationsService;
     }
 
+    //la primer imagen es la que se normaliza
     public Image execute(CustomImage image1, CustomImage image2){
         int resultantImageWidth = this.imageOperationsService.calculateResultantWidth(image1, image2);
         int resultantImageHeight = this.imageOperationsService.calculateResultantHeight(image1, image2);
         WritableImage imageToNormalize = new WritableImage(resultantImageWidth, resultantImageHeight);
-        this.imageOperationsService.fillAuxImages(imageToNormalize, image1);
+        this.imageOperationsService.fillImage(imageToNormalize, image1);
         return imageToNormalize;
     }
 }

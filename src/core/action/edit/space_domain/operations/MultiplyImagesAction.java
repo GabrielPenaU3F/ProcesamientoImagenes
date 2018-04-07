@@ -17,11 +17,8 @@ public class MultiplyImagesAction {
         int[][] redChannelResultantValues = this.imageOperationsService.multiplyRedPixelsValues(image1, image2);
         int[][] greenChannelResultantValues = this.imageOperationsService.multiplyGreenPixelsValues(image1, image2);
         int[][] blueChannelResultantValues = this.imageOperationsService.multiplyBluePixelsValues(image1, image2);
-        int resultantRedImageR = this.imageOperationsService.calculateR(redChannelResultantValues);
-        int resultantGreenImageR = this.imageOperationsService.calculateR(greenChannelResultantValues);
-        int resultantBlueImageR = this.imageOperationsService.calculateR(blueChannelResultantValues);
         WritableImage resultantImage = new WritableImage((int) image1.getWidth(), (int) image2.getHeight());
-        this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues, greenChannelResultantValues, blueChannelResultantValues, resultantRedImageR, resultantGreenImageR, resultantBlueImageR, resultantImage);
+        this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues, greenChannelResultantValues, blueChannelResultantValues, resultantImage);
         return resultantImage;
     }
 
