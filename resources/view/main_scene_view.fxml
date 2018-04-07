@@ -93,6 +93,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
                 <MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast" />
             <MenuItem mnemonicParsing="false" onAction="#compressDynamicRange" text="Dynamic Range Compression" />
+            <MenuItem mnemonicParsing="false" onAction="#gammaPowerFunction" text="Gamma Power Function" />
                 <Menu mnemonicParsing="false" text="Histogram">
                     <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create" />
                     <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Equalize Image" />
