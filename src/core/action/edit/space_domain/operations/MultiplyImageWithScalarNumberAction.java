@@ -13,6 +13,7 @@ public class MultiplyImageWithScalarNumberAction {
         this.imageOperationsService = imageOperationsService;
     }
 
+    //modificar: Aplicar transformacion del rango dinamico
     public Image execute(CustomImage image, int scalarNumber){
         WritableImage resultantImage = new WritableImage(image.getWidth(),image.getHeight());
         int[][] redChannelResultantValues = this.imageOperationsService.multiplyRedPixelsValuesWithScalarNumber(image, scalarNumber);

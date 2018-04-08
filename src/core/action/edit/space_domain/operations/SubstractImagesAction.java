@@ -1,22 +1,20 @@
-
 package core.action.edit.space_domain.operations;
 
 import core.service.ImageOperationsService;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 
-public class MultiplyImagesAction {
-
+public class SubstractImagesAction {
     private ImageOperationsService imageOperationsService;
 
-    public MultiplyImagesAction(ImageOperationsService imageOperationsService){
+    public SubstractImagesAction(ImageOperationsService imageOperationsService){
         this.imageOperationsService = imageOperationsService;
     }
 
     public Image execute(Image image1, Image image2) {
-        int[][] redChannelResultantValues = this.imageOperationsService.multiplyRedPixelsValues(image1, image2);
-        int[][] greenChannelResultantValues = this.imageOperationsService.multiplyGreenPixelsValues(image1, image2);
-        int[][] blueChannelResultantValues = this.imageOperationsService.multiplyBluePixelsValues(image1, image2);
+        int[][] redChannelResultantValues = this.imageOperationsService.substractRedPixelsValues(image1, image2);
+        int[][] greenChannelResultantValues = this.imageOperationsService.substractGreenPixelsValues(image1, image2);
+        int[][] blueChannelResultantValues = this.imageOperationsService.substractBluePixelsValues(image1, image2);
         //desplazo los valores para que el minimo sea cero
         this.imageOperationsService.displacePixelsValues(redChannelResultantValues);
         this.imageOperationsService.displacePixelsValues(greenChannelResultantValues);
@@ -25,6 +23,4 @@ public class MultiplyImagesAction {
         this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues, greenChannelResultantValues, blueChannelResultantValues, resultantImage);
         return resultantImage;
     }
-
 }
-

@@ -61,6 +61,7 @@ public class ImageOperationsService {
         }
     }
 
+    //calcula el maximo valor existente
     public int calculateR(int[][] channelValues){
         int actualR = 0;
         for (int i = 0; i < channelValues.length; i++){
@@ -71,6 +72,19 @@ public class ImageOperationsService {
             }
         }
         return actualR;
+    }
+
+    //calcula el minimo valor existente
+    public int calculateMinValue(int[][] channelValues){
+        int actualMin = 0;
+        for (int i = 0; i < channelValues.length; i++){
+            for (int j = 0; j < channelValues[i].length; j++){
+                if(channelValues[i][j] < actualMin){
+                    actualMin = channelValues[i][j];
+                }
+            }
+        }
+        return actualMin;
     }
 
     public void writeNewPixelsValuesInImage(int[][] redChannelValues, int[][] greenChannelValues, int[][] blueChannelValues, WritableImage image){
@@ -204,6 +218,54 @@ public class ImageOperationsService {
             }
         }
         return result;
+    }
+
+    public int[][] substractRedPixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getRed() * 255) - (pixelReaderImage2.getColor(i, j).getRed() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] substractGreenPixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getGreen() * 255) - (pixelReaderImage2.getColor(i, j).getGreen() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public int[][] substractBluePixelsValues(Image image1, Image image2) {
+        int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
+        PixelReader pixelReaderImage1 = image1.getPixelReader();
+        PixelReader pixelReaderImage2 = image2.getPixelReader();
+        for(int i = 0; i < (int) image1.getWidth(); i++) {
+            for (int j = 0; j < (int) image1.getHeight(); j++) {
+                double sumResult = ((pixelReaderImage1.getColor(i, j).getBlue() * 255) - (pixelReaderImage2.getColor(i, j).getBlue() * 255));
+                result[i][j] = (int) Math.round(sumResult);
+            }
+        }
+        return result;
+    }
+
+    public void displacePixelsValues(int[][] pixelsValues){
+        int minPixelValue = this.calculateMinValue(pixelsValues);
+        for (int i = 0; i < pixelsValues.length; i++){
+            for (int j = 0; j < pixelsValues[i].length; j++){
+                pixelsValues[i][j] -= minPixelValue;
+            }
+        }
     }
 
 }

@@ -28,6 +28,7 @@
                         <Menu mnemonicParsing="false" text="Operations">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#makeImagesSum" text="Sum" />
+                              <MenuItem mnemonicParsing="false" onAction="#makeImagesSubstraction" text="Substract" />
                               <MenuItem mnemonicParsing="false" onAction="#makeImagesMultiplication" text="Multiplication" />
                               <MenuItem mnemonicParsing="false" onAction="#makeImageMultiplicationWithScalarNumber" text="Multiplication (with scalar number)" />
                            </items>

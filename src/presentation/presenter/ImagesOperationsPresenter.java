@@ -3,6 +3,7 @@ package presentation.presenter;
 import core.action.edit.space_domain.NormalizeImageAction;
 import core.action.edit.space_domain.operations.MultiplyImageWithScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
+import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.image.LoadImageAction;
 import domain.customimage.CustomImage;
@@ -17,23 +18,32 @@ public class ImagesOperationsPresenter {
     private final SumImagesAction sumImagesAction;
     private final MultiplyImagesAction multiplyImagesAction;
     private final MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction;
+    private final SubstractImagesAction substractImagesAction;
     private CustomImage image1;
     private CustomImage image2;
 
     public ImagesOperationsPresenter(LoadImageAction loadImageAction, NormalizeImageAction normalizeImageAction,
                                      SumImagesAction sumImagesAction, MultiplyImagesAction multiplyImagesAction,
-                                     MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction) {
+                                     MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction,
+                                     SubstractImagesAction substractImagesAction) {
         this.loadImageAction = loadImageAction;
         this.normalizeImageAction = normalizeImageAction;
         this.sumImagesAction = sumImagesAction;
         this.multiplyImagesAction = multiplyImagesAction;
         this.multiplyImageWithScalarNumberAction = multiplyImageWithScalarNumberAction;
+        this.substractImagesAction = substractImagesAction;
     }
 
     public Image onMakeImagesSum() {
         Image normalizedImage1 = this.normalizeImageAction.execute(image1,image2);
         Image normalizedImage2 = this.normalizeImageAction.execute(image2,image1);
         return this.sumImagesAction.execute(normalizedImage1,normalizedImage2);
+    }
+
+    public Image onMakeImagesSubstraction() {
+        Image normalizedImage1 = this.normalizeImageAction.execute(image1,image2);
+        Image normalizedImage2 = this.normalizeImageAction.execute(image2,image1);
+        return this.substractImagesAction.execute(normalizedImage1,normalizedImage2);
     }
 
     public Image onMakeImagesMultiplication() {
