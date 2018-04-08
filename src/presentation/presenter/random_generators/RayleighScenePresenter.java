@@ -1,7 +1,6 @@
 package presentation.presenter.random_generators;
 
-import core.service.RandomNumberGenerationService;
-import javafx.scene.control.Alert;
+import core.action.noise.generator.RandomNumberGenerationService;
 import presentation.controller.RayleighSceneController;
 import presentation.util.ShowResultPopup;
 

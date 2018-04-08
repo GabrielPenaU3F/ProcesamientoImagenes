@@ -1,7 +1,6 @@
 package presentation.presenter.random_generators;
 
-import core.service.RandomNumberGenerationService;
-import javafx.scene.control.Alert;
+import core.action.noise.generator.RandomNumberGenerationService;
 import presentation.controller.ExponentialSceneController;
 import presentation.util.ShowResultPopup;
 
@@ -18,6 +17,7 @@ public class ExponentialScenePresenter {
     public void onGenerate() {
         
         double lambda = Double.parseDouble(this.view.lambdaTextField.getText());
+
         if (isLambdaValid(lambda)) {
             double number = this.randomNumberGenerationService.generateExponentialNumber(lambda);
             this.showNumber(number);

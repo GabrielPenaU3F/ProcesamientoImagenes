@@ -32,7 +32,7 @@ public class InsertValuePopup {
                 layout.getChildren().addAll(nameTextField, closeButton);
                 layout.setAlignment(Pos.CENTER);
 
-                Scene popupScene = new Scene(layout, 200, 100);
+                Scene popupScene = new Scene(layout, 250, 100);
                 popupWindow.setScene(popupScene);
                 popupWindow.showAndWait();
 

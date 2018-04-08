@@ -1,8 +1,11 @@
 package core.provider;
 
+import core.action.noise.generator.RandomNumberGenerationService;
 import core.service.*;
 import core.service.transformations.TransformRGBtoHSVImageService;
 import javafx.stage.FileChooser;
+
+import java.util.Random;
 
 class ServiceProvider {
 
@@ -53,6 +56,6 @@ class ServiceProvider {
     }
 
     public static RandomNumberGenerationService provideRandomNumberGenerationService() {
-        return new RandomNumberGenerationService();
+        return new RandomNumberGenerationService(new Random());
     }
 }

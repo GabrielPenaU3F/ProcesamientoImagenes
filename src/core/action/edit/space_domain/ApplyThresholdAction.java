@@ -21,9 +21,8 @@ public class ApplyThresholdAction {
         this.modifyImageService = modifyImageService;
     }
 
-    public Image execute(String thresholdString) {
+    public Image execute(int threshold) {
 
-        int threshold = Integer.parseInt(thresholdString);
         Optional<CustomImage> imageOptional = this.imageRepository.getImage();
         if(!imageOptional.isPresent()) return SwingFXUtils.toFXImage(new BufferedImage(500,500, BufferedImage.TYPE_INT_RGB), null);
 

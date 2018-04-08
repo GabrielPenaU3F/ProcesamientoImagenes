@@ -172,4 +172,9 @@ public class MainSceneController {
     public void createImageEqualizedTwice() {
         this.mainPresenter.onCreateEqualizedImageTwice();
     }
+
+    @FXML
+    public void applySaltAndPepperNoise() {
+        this.mainPresenter.onApplySaltAndPepperNoise();
+    }
 }
