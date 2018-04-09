@@ -1,27 +1,40 @@
 package core.action.figure;
 
-import core.action.figure.semaphore.FigureSemaphore;
+import core.repository.ImageRepository;
 import core.service.ImageFigureService;
+import domain.Figure;
+import domain.customimage.CustomImage;
+import domain.customimage.Format;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
+
+import java.awt.image.BufferedImage;
 
 public class CreateImageWithFigureAction {
 
     private final ImageFigureService imageFigureService;
+    private final ImageRepository imageRepository;
 
-    public CreateImageWithFigureAction(ImageFigureService imageFigureService) {
+    public CreateImageWithFigureAction(ImageFigureService imageFigureService, ImageRepository imageRepository) {
         this.imageFigureService = imageFigureService;
+        this.imageRepository = imageRepository;
     }
 
-    public Image execute(int width, int height) {
+    public CustomImage execute(int width, int height, Figure value) {
 
-        switch (FigureSemaphore.getValue()) {
+        switch (value) {
             case CIRCLE:
-                return imageFigureService.createImageWithCircle(width, height);
+                Image imageWithCircle = imageFigureService.createImageWithCircle(width, height);
+                return putOnRepository(SwingFXUtils.fromFXImage(imageWithCircle, null));
             case QUADRATE:
-                return imageFigureService.createImageWithQuadrate(width, height);
+                Image imageWithQuadrate = imageFigureService.createImageWithQuadrate(width, height);
+                return putOnRepository(SwingFXUtils.fromFXImage(imageWithQuadrate, null));
             default:
-                return new WritableImage(width, height);
+                return CustomImage.EMPTY;
         }
+    }
+
+    private CustomImage putOnRepository(BufferedImage bufferedImage) {
+        return imageRepository.saveImage(new CustomImage(bufferedImage, Format.PNG));
     }
 }

@@ -3,27 +3,29 @@ package core.action.channels;
 import core.repository.ImageRepository;
 import domain.customimage.CustomImage;
 import domain.Channel;
-import javafx.scene.image.Image;
+import domain.customimage.Format;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
 public class ObtainRGBChannelAction {
 
-    private final ImageRepository repository;
+    private final ImageRepository imageRepository;
 
-    public ObtainRGBChannelAction(ImageRepository repository) {
-        this.repository = repository;
+    public ObtainRGBChannelAction(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
     }
 
-    public Image execute(Channel channel) {
+    public CustomImage execute(Channel channel) {
 
-        Optional<CustomImage> currentImage = this.repository.getImage();
+        Optional<CustomImage> currentImage = this.imageRepository.getImage();
         if (!currentImage.isPresent()) {
-            return new WritableImage(100, 100);
+            return new CustomImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), Format.PNG);
         }
 
         CustomImage image = currentImage.get();
@@ -45,7 +47,11 @@ public class ObtainRGBChannelAction {
                 break;
         }
 
-        return writableImage;
+        return putOnRepository(SwingFXUtils.fromFXImage(writableImage, null));
+    }
+
+    private CustomImage putOnRepository(BufferedImage bufferedImage) {
+        return imageRepository.saveModifiedImage(new CustomImage(bufferedImage, Format.PNG));
     }
 
     private void getChannel(int width, int height, PixelWriter pixelWriter, BiFunction<Integer, Integer, Color> channel) {

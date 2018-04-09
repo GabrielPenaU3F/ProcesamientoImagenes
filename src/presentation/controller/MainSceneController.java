@@ -1,7 +1,9 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
+import core.provider.ViewProvider;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
@@ -22,14 +24,20 @@ public class MainSceneController {
     @FXML
     public TextField pixelY;
     @FXML
-    public TextField pixelValue;
+    public TextField valueR;
+    @FXML
+    public TextField valueG;
+    @FXML
+    public TextField valueB;
 
     public CustomImageView customImageView;
 
     private final MainPresenter mainPresenter;
 
     public MainSceneController() {
+
         this.mainPresenter = PresenterProvider.provideImageSelectionPresenter(this);
+        ViewProvider.setMainView(this);
     }
 
     @FXML
@@ -119,17 +127,40 @@ public class MainSceneController {
     }
 
     @FXML
+    public void calculateImagesOperations(){ this.mainPresenter.onCalculateImagesOperations();}
+
+    @FXML
     public void calculateNegativeImage() { this.mainPresenter.onCalculateNegativeImage(); }
 
     @FXML
     public void threshold() { this.mainPresenter.onThreshold(); }
 
     @FXML
-    public void calculateImagesOperations(){ this.mainPresenter.onCalculateImagesOperations();}
+    public void contrast() { this.mainPresenter.onContrast(); }
+
+    @FXML
+    public void compressDynamicRange() {this.mainPresenter.onCompressDynamicRange();}
+
+    @FXML
+    public void gammaPowerFunction() {this.mainPresenter.onGammaPowerFunction();}
 
     @FXML
     public void close() {
         Platform.exit();
     }
 
+    @FXML
+    public void createImageHistogram() {
+        this.mainPresenter.onCreateImageHistogram();
+    }
+
+    @FXML
+    public void createEqualizedImage() {
+        this.mainPresenter.onCreateEqualizedImage();
+    }
+
+    @FXML
+    public void createImageEqualizedTwice() {
+        this.mainPresenter.onCreateEqualizedImageTwice();
+    }
 }

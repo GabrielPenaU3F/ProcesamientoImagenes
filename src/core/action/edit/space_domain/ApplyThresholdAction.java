@@ -20,7 +20,7 @@ public class ApplyThresholdAction {
         this.imageRepository = imageRepository;
         this.modifyImageService = modifyImageService;
     }
-    
+
     public Image execute(String thresholdString) {
 
         int threshold = Integer.parseInt(thresholdString);
@@ -33,7 +33,7 @@ public class ApplyThresholdAction {
 
         for (int i=0; i < image.getWidth(); i++) {
             for(int j=0; j < image.getHeight(); j++) {
-                if (customImage.getPixelValue(i,j) >= threshold) {
+                if (customImage.getAverageValue(i,j) >= threshold) {
                     this.modifyImageService.modifySinglePixel(i, j, 255, pixelWriter);
                 } else {
                     this.modifyImageService.modifySinglePixel(i, j, 0, pixelWriter);
@@ -42,6 +42,6 @@ public class ApplyThresholdAction {
         }
 
         return image;
-        
+
     }
 }

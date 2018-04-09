@@ -44,7 +44,11 @@ class ServiceProvider {
         return new ImageOperationsService();
     }
 
-    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() {
-        return new TransformRGBtoHSVImageService();
+    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() { return new TransformRGBtoHSVImageService(); }
+
+    public static GrayLevelStatisticsService provideGrayLevelStatisticsService() { return new GrayLevelStatisticsService(); }
+
+    public static HistogramService provideHistogramService() {
+        return new HistogramService();
     }
 }

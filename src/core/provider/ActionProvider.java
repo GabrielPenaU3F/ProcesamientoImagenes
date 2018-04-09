@@ -9,12 +9,15 @@ import core.action.edit.space_domain.NormalizeImageAction;
 import core.action.edit.space_domain.operations.MultiplyImageWithScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
+import core.action.edit.space_domain.*;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
+import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.CreateImageInformAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
+import core.action.histogram.EqualizeGrayImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 
@@ -33,6 +36,11 @@ class ActionProvider {
     private static CreateImageWithGradientAction createImageWithGradientAction;
     private static CalculateNegativeImageAction calculateNegativeImageAction;
     private static ApplyThresholdAction applyThresholdAction;
+    private static CreateImageHistogramAction createImageHistogramAction;
+    private static ApplyContrastAction applyContrastAction;
+    private static EqualizeGrayImageAction createEqualizeGrayImageAction;
+    private static CompressDynamicRangeAction compressDynamicRangeAction;
+    private static GammaFunctionAction gammaFunctionAction;
     private static MultiplyImagesAction multiplyImagesAction;
     private static SumImagesAction sumImagesAction;
     private static NormalizeImageAction normalizeImageAction;
@@ -58,7 +66,7 @@ class ActionProvider {
 
     public static SaveImageAction provideSaveImageAction() {
         if (saveImageAction == null) {
-            saveImageAction = new SaveImageAction();
+            saveImageAction = new SaveImageAction(ServiceProvider.provideImageRawService());
         }
         return saveImageAction;
     }
@@ -112,21 +120,26 @@ class ActionProvider {
 
     public static CreateImageWithFigureAction provideCreateImageWithFigureAction() {
         if (createImageWithFigureAction == null) {
-            createImageWithFigureAction = new CreateImageWithFigureAction(ServiceProvider.provideImageFigureService());
+            createImageWithFigureAction = new CreateImageWithFigureAction(
+                    ServiceProvider.provideImageFigureService(),
+                    RepositoryProvider.provideImageRepository());
         }
         return createImageWithFigureAction;
     }
 
     public static CreateImageWithGradientAction provideCreateGradientAction() {
         if (createImageWithGradientAction == null) {
-            createImageWithGradientAction = new CreateImageWithGradientAction(ServiceProvider.provideGradientService());
+            createImageWithGradientAction = new CreateImageWithGradientAction(
+                    ServiceProvider.provideGradientService(),
+                    RepositoryProvider.provideImageRepository());
         }
         return createImageWithGradientAction;
     }
 
     public static CalculateNegativeImageAction provideCalculateNegativeImageAction() {
         if (calculateNegativeImageAction == null) {
-            calculateNegativeImageAction = new CalculateNegativeImageAction(RepositoryProvider.provideImageRepository(),
+            calculateNegativeImageAction = new CalculateNegativeImageAction(
+                    RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideModifyImageService());
         }
         return calculateNegativeImageAction;
@@ -134,10 +147,51 @@ class ActionProvider {
 
     public static ApplyThresholdAction provideApplyThresholdAction() {
         if (applyThresholdAction == null) {
-            applyThresholdAction = new ApplyThresholdAction(RepositoryProvider.provideImageRepository(),
+            applyThresholdAction = new ApplyThresholdAction(
+                    RepositoryProvider.provideImageRepository(),
                     ServiceProvider.provideModifyImageService());
         }
         return applyThresholdAction;
+    }
+
+    public static CreateImageHistogramAction provideCreateImageHistogram() {
+        if (createImageHistogramAction == null) {
+            createImageHistogramAction = new CreateImageHistogramAction(ServiceProvider.provideHistogramService());
+        }
+        return createImageHistogramAction;
+    }
+
+    public static ApplyContrastAction provideApplyContrastAction() {
+        if (applyContrastAction == null) {
+            applyContrastAction = new ApplyContrastAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideModifyImageService());
+        }
+        return applyContrastAction;
+    }
+
+    public static EqualizeGrayImageAction provideCreateEqualizedGrayImageAction() {
+        if (createEqualizeGrayImageAction == null) {
+            createEqualizeGrayImageAction = new EqualizeGrayImageAction(
+                    ServiceProvider.provideHistogramService(),
+                    RepositoryProvider.provideImageRepository());
+        }
+        return createEqualizeGrayImageAction;
+    }
+
+    public static CompressDynamicRangeAction provideCompressDynamicRangeAction() {
+        if (compressDynamicRangeAction == null) {
+            compressDynamicRangeAction = new CompressDynamicRangeAction(
+                    ServiceProvider.provideGrayLevelStatisticsService(),
+                    RepositoryProvider.provideImageRepository());
+        }
+        return compressDynamicRangeAction;
+    }
+
+    public static GammaFunctionAction provideGammaFunctionAction() {
+        if (gammaFunctionAction == null) {
+            gammaFunctionAction = new GammaFunctionAction(RepositoryProvider.provideImageRepository());
+        }
+        return gammaFunctionAction;
     }
 
     public static SumImagesAction provideSumImagesAction() {

@@ -10,23 +10,24 @@ import java.awt.image.BufferedImage;
 
 public class ImageGradientService {
 
-    public Image createGreyGradient() {
-        BufferedImage greyGradient = new BufferedImage(510, 510, BufferedImage.TYPE_INT_RGB);
+    public Image createGreyGradient(int width, int height) {
+        BufferedImage greyGradient = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         WritableImage fxImage = SwingFXUtils.toFXImage(greyGradient, null);
         PixelWriter writer = fxImage.getPixelWriter();
 
-        int greyValue = 255;
+        int eq = width / 255;
+        int greyValue = 0;
         for (int i = 0; i < greyGradient.getWidth(); i++) {
             for (int j = 0; j < greyGradient.getHeight(); j++) {
                 writer.setColor(i, j, Color.rgb(greyValue, greyValue, greyValue));
             }
-            if (i%2 == 0) greyValue--; //When i is even, I decrement the greyValue; this way, every grey band has a 2-pixel width
+            if (i % eq == 0) greyValue++; // This way, every grey band has a eq-pixel width
         }
         return fxImage;
     }
 
-    public Image createColorGradient() {
-        BufferedImage colorGradient = new BufferedImage(510, 510, BufferedImage.TYPE_INT_RGB);
+    public Image createColorGradient(int width, int height) {
+        BufferedImage colorGradient = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         WritableImage fxImage = SwingFXUtils.toFXImage(colorGradient, null);
         PixelWriter writer = fxImage.getPixelWriter();
 

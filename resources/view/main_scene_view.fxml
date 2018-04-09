@@ -1,156 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
-    <children>
-        <SplitPane dividerPositions="0.0829145728643216" orientation="VERTICAL" prefHeight="400.0" prefWidth="2000.0">
-            <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="47.0" prefWidth="2000.0">
-                    <children>
-                        <MenuBar>
-                            <menus>
-                                <Menu mnemonicParsing="false" text="File">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#openImage" text="Open" />
-                                        <MenuItem mnemonicParsing="false" onAction="#saveModifiedImage" text="Save" />
-                                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Edit">
-                                    <items>
-                              <Menu mnemonicParsing="false" text="Space Domain">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
-                                    <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
-                                    <MenuItem mnemonicParsing="false" onAction="#calculateImagesOperations" text="Image Operations" />
-                                </items>
-                              </Menu>
-                                        <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showReport" text="Report" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Pixel">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#calculatePixelValue" text="Calculate" />
-                                        <MenuItem mnemonicParsing="false" onAction="#modifyPixelValue" text="Modify" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Image Generation">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate" />
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Channels">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="RGB Red" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageGreenChannel" text="RGB Green" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showRGBImageBlueChannel" text="RGB Blue" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showHueHSVChannel" text="HSV Hue" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="HSV Saturation" />
-                                        <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value" />
-                                    </items>
-                                </Menu>
-                            </menus>
-                        </MenuBar>
-                    </children>
-                </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="2000.0">
-                    <children>
-                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="2000.0">
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
+    <AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="441.0" prefWidth="1106.0"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                  prefHeight="400.0" prefWidth="1104.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="510.0" minWidth="10.0" prefWidth="488.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="431.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="132.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+                <center>
+                    <Group fx:id="groupImageView" BorderPane.alignment="CENTER">
+                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true"/>
+                    </Group>
+                </center>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                <center>
+                    <ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true"
+                               BorderPane.alignment="CENTER"/>
+                </center>
+            </BorderPane>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="215.0" GridPane.columnIndex="2">
+                <Pane prefHeight="153.0" prefWidth="125.0">
+                    <Label alignment="CENTER" layoutX="52.0" layoutY="6.0" text="Pixel" textAlignment="CENTER"/>
+                    <Pane layoutY="17.0" prefHeight="67.0" prefWidth="132.0">
+                        <GridPane alignment="CENTER" prefHeight="66.0" prefWidth="132.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="510.0" minWidth="10.0" prefWidth="488.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="431.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="132.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.0" minWidth="10.0"/>
+                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="45.0" minHeight="10.0" vgrow="ALWAYS"/>
+                                <RowConstraints maxHeight="31.0" minHeight="10.0" vgrow="ALWAYS"/>
                             </rowConstraints>
-                            <children>
-                                <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                    <center>
-                                        <Group fx:id="groupImageView" autoSizeChildren="true" BorderPane.alignment="CENTER">
-                                            <children>
-                                                <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
-                                            </children>
-                                        </Group>
-                                    </center>
-                                </BorderPane>
-                                <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                    <center>
-                                        <ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                    </center>
-                                </BorderPane>
-                                <VBox alignment="CENTER" GridPane.columnIndex="2">
-                                    <children>
-                                        <Pane prefHeight="153.0" prefWidth="132.0">
-                                            <children>
-                                                <Label alignment="CENTER" layoutX="48.0" text="Pixeles" textAlignment="CENTER" />
-                                                <Pane layoutY="17.0" prefHeight="67.0" prefWidth="132.0">
-                                                    <children>
-                                                        <GridPane alignment="CENTER" prefHeight="66.0" prefWidth="132.0">
-                                                            <columnConstraints>
-                                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.0" minWidth="10.0" />
-                                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" />
-                                                            </columnConstraints>
-                                                            <rowConstraints>
-                                                                <RowConstraints maxHeight="45.0" minHeight="10.0" vgrow="ALWAYS" />
-                                                                <RowConstraints maxHeight="31.0" minHeight="10.0" vgrow="ALWAYS" />
-                                                            </rowConstraints>
-                                                            <children>
-                                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="24.0" text="X" textAlignment="CENTER" />
-                                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="30.0" text="Y" GridPane.columnIndex="1" />
-                                                                <TextField fx:id="pixelX" alignment="CENTER" prefHeight="27.0" prefWidth="17.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                                                    <GridPane.margin>
-                                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                                    </GridPane.margin>
-                                                                </TextField>
-                                                                <TextField fx:id="pixelY" alignment="CENTER" prefHeight="27.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                                    <GridPane.margin>
-                                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                                    </GridPane.margin>
-                                                                </TextField>
-                                                            </children>
-                                                        </GridPane>
-                                                    </children>
-                                                </Pane>
-                                            </children>
-                                        </Pane>
-                                        <Pane prefHeight="209.0" prefWidth="132.0">
-                                            <children>
-                                                <Pane layoutX="14.0" layoutY="14.0" prefHeight="66.0" prefWidth="112.0">
-                                                    <children>
-                                                        <TextField fx:id="pixelValue" editable="false" layoutX="23.0" layoutY="33.0" prefHeight="27.0" prefWidth="67.0" />
-                                                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="6.0" text="Valor" textAlignment="CENTER" />
-                                                    </children>
-                                                </Pane>
-                                            </children>
-                                        </Pane>
-                                    </children>
-                                </VBox>
-                            </children>
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="24.0"
+                                   text="X" textAlignment="CENTER"/>
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="30.0"
+                                   text="Y" GridPane.columnIndex="1"/>
+                            <TextField fx:id="pixelX" alignment="CENTER" prefHeight="27.0" prefWidth="17.0"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                </GridPane.margin>
+                            </TextField>
+                            <TextField fx:id="pixelY" alignment="CENTER" prefHeight="27.0" prefWidth="0.0"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                </GridPane.margin>
+                            </TextField>
                         </GridPane>
-                    </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
-    </children>
+                    </Pane>
+                </Pane>
+                <Pane prefHeight="257.0" prefWidth="149.0">
+                    <Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value"
+                               textAlignment="CENTER"/>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="34.0" text="R"
+                               textAlignment="CENTER"/>
+                        <TextField fx:id="valueR" editable="false" layoutX="22.0" layoutY="58.0" prefHeight="27.0"
+                                   prefWidth="67.0"/>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="96.0" text="G"
+                               textAlignment="CENTER"/>
+                        <TextField fx:id="valueG" editable="false" layoutX="23.0" layoutY="120.0" prefHeight="27.0"
+                                   prefWidth="67.0"/>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="161.0" text="B"
+                               textAlignment="CENTER"/>
+                        <TextField fx:id="valueB" editable="false" layoutX="22.0" layoutY="184.0" prefHeight="27.0"
+                                   prefWidth="67.0"/>
+                    </Pane>
+                </Pane>
+            </VBox>
+        </GridPane>
+    </AnchorPane>
+    <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#openImage" text="Open"/>
+            <MenuItem mnemonicParsing="false" onAction="#saveModifiedImage" text="Save"/>
+            <MenuItem mnemonicParsing="false" onAction="#close" text="Close"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+            <Menu mnemonicParsing="false" text="Space Domain">
+                <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative"/>
+                <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold"/>
+                <MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast"/>
+                <MenuItem mnemonicParsing="false" onAction="#compressDynamicRange" text="Dynamic Range Compression"/>
+                <MenuItem mnemonicParsing="false" onAction="#gammaPowerFunction" text="Gamma Power Function"/>
+                <MenuItem mnemonicParsing="false" onAction="#calculateImagesOperations" text="Image Operations"/>
+                <Menu mnemonicParsing="false" text="Histogram">
+                    <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create"/>
+                    <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Equalize Image"/>
+                    <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Equalize Image Twice"/>
+                </Menu>
+            </Menu>
+            <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut"/>
+            <MenuItem mnemonicParsing="false" onAction="#showReport" text="Report"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Pixel">
+            <MenuItem mnemonicParsing="false" onAction="#calculatePixelValue" text="Calculate"/>
+            <MenuItem mnemonicParsing="false" onAction="#modifyPixelValue" text="Modify"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Image Generation">
+            <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient"/>
+            <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient"/>
+            <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle"/>
+            <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Channels">
+            <MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="RGB Red"/>
+            <MenuItem mnemonicParsing="false" onAction="#showRGBImageGreenChannel" text="RGB Green"/>
+            <MenuItem mnemonicParsing="false" onAction="#showRGBImageBlueChannel" text="RGB Blue"/>
+            <MenuItem mnemonicParsing="false" onAction="#showHueHSVChannel" text="HSV Hue"/>
+            <MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="HSV Saturation"/>
+            <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value"/>
+        </Menu>
+    </MenuBar>
 </AnchorPane>
