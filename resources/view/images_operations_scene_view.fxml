@@ -50,6 +50,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Operations">
             <MenuItem mnemonicParsing="false" onAction="#makeImagesSum" text="Sum"/>
+            <MenuItem mnemonicParsing="false" onAction="#makeImagesSubstraction" text="Substraction" />
             <MenuItem mnemonicParsing="false" onAction="#makeImagesMultiplication" text="Multiplication"/>
             <MenuItem mnemonicParsing="false" onAction="#makeImageMultiplicationWithScalarNumber"
                       text="Multiplication with scalar number"/>

@@ -3,7 +3,6 @@ package core.action.edit.space_domain.operations;
 
 import core.service.ImageOperationsService;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 
 public class MultiplyImagesAction {
 
@@ -17,8 +16,8 @@ public class MultiplyImagesAction {
         int[][] redChannelResultantValues = this.imageOperationsService.multiplyRedPixelsValues(image1, image2);
         int[][] greenChannelResultantValues = this.imageOperationsService.multiplyGreenPixelsValues(image1, image2);
         int[][] blueChannelResultantValues = this.imageOperationsService.multiplyBluePixelsValues(image1, image2);
-        WritableImage resultantImage = new WritableImage((int) image1.getWidth(), (int) image2.getHeight());
-        this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues, greenChannelResultantValues, blueChannelResultantValues, resultantImage);
+        Image resultantImage = this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues,
+                greenChannelResultantValues, blueChannelResultantValues, (int) image1.getWidth(), (int) image2.getHeight());
         return resultantImage;
     }
 

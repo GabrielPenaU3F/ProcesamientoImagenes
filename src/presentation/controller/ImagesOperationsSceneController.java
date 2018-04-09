@@ -29,6 +29,11 @@ public class ImagesOperationsSceneController {
         imageView.setImage(this.imagesOperationsPresenter.onMakeImagesSum());
     }
 
+    public void makeImagesSubstraction(){
+        imageView.setPickOnBounds(true);
+        imageView.setImage(this.imagesOperationsPresenter.onMakeImagesSubstraction());
+    }
+
     public void makeImagesMultiplication(){
         imageView.setPickOnBounds(true);
         imageView.setImage(this.imagesOperationsPresenter.onMakeImagesMultiplication());

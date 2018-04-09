@@ -18,7 +18,7 @@ public class NormalizeImageAction {
         int resultantImageWidth = this.imageOperationsService.calculateResultantWidth(image1, image2);
         int resultantImageHeight = this.imageOperationsService.calculateResultantHeight(image1, image2);
         WritableImage imageToNormalize = new WritableImage(resultantImageWidth, resultantImageHeight);
-        this.imageOperationsService.fillImage(imageToNormalize, image1);
+        imageToNormalize = this.imageOperationsService.fillImage(imageToNormalize, image1);
         return imageToNormalize;
     }
 }

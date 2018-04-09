@@ -8,6 +8,7 @@ import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.NormalizeImageAction;
 import core.action.edit.space_domain.operations.MultiplyImageWithScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
+import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.edit.space_domain.*;
 import core.action.figure.CreateImageWithFigureAction;
@@ -45,6 +46,7 @@ class ActionProvider {
     private static SumImagesAction sumImagesAction;
     private static NormalizeImageAction normalizeImageAction;
     private static MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction;
+    private static SubstractImagesAction substractImagesAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -206,6 +208,13 @@ class ActionProvider {
             multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService());
         }
         return multiplyImagesAction;
+    }
+
+    public static SubstractImagesAction provideSubstractImagesAction() {
+        if (substractImagesAction == null) {
+            substractImagesAction = new SubstractImagesAction(ServiceProvider.provideImageOperationsService());
+        }
+        return substractImagesAction;
     }
 
     public static NormalizeImageAction provideNormalizeImageAction() {
