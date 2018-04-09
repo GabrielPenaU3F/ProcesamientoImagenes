@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,68 +11,48 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="390.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.ImagesOperationsSceneController">
-   <SplitPane dividerPositions="0.0829145728643216" orientation="VERTICAL" prefHeight="750.0" prefWidth="2000.0">
-      <items>
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="47.0" prefWidth="2000.0">
-            <children>
-               <MenuBar>
-                   <menus>
-                     <Menu mnemonicParsing="false" text="Select Images">
-                        <items>
-                           <MenuItem mnemonicParsing="false" onAction="#loadImage1" text="Select Image 1" />
-                           <MenuItem mnemonicParsing="false" onAction="#loadImage2" text="Select Image 2" />
-                        </items>
-                     </Menu>
-                        <Menu mnemonicParsing="false" text="Operations">
-                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#makeImagesSum" text="Sum" />
-                              <MenuItem mnemonicParsing="false" onAction="#makeImagesMultiplication" text="Multiplication" />
-                              <MenuItem mnemonicParsing="false" onAction="#makeImageMultiplicationWithScalarNumber" text="Multiplication (with scalar number)" />
-                           </items>
-                        </Menu>
-                   </menus>
-               </MenuBar>
-            </children>
-         </AnchorPane>
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="2000.0">
-            <children>
-               <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="2000.0">
-                  <BorderPane prefHeight="200.0" prefWidth="000.0">
-                     <center>
-                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
-                     </center>
-                     <bottom>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resultant Image" BorderPane.alignment="CENTER" />
-                     </bottom>
-                  </BorderPane>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                     <center>
-                        <ImageView fx:id="image1" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                     </center>
-                     <bottom>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image 1" BorderPane.alignment="CENTER" />
-                     </bottom>
-                  </BorderPane>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
-                     <center>
-                        <ImageView fx:id="image2" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                     </center>
-                     <bottom>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image 2" BorderPane.alignment="CENTER" />
-                     </bottom>
-                  </BorderPane>
-                  <columnConstraints>
-                     <ColumnConstraints />
-                     <ColumnConstraints />
-                     <ColumnConstraints />
-                  </columnConstraints>
-                  <rowConstraints>
-                     <RowConstraints />
-                  </rowConstraints>
-               </GridPane>
-            </children>
-         </AnchorPane>
-      </items>
-   </SplitPane>
+<AnchorPane prefHeight="390.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="presentation.controller.ImagesOperationsSceneController">
+    <AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="986.0"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                  prefHeight="361.0" prefWidth="987.0">
+            <BorderPane prefHeight="335.0" prefWidth="367.0">
+                <center>
+                    <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true"/>
+                </center>
+                <bottom>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resultant Image" BorderPane.alignment="CENTER"/>
+                </bottom>
+            </BorderPane>
+            <BorderPane prefHeight="328.0" prefWidth="311.0" GridPane.columnIndex="1">
+                <center>
+                    <ImageView fx:id="image1" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER"/>
+                </center>
+                <bottom>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image 1" BorderPane.alignment="CENTER"/>
+                </bottom>
+            </BorderPane>
+            <BorderPane prefHeight="335.0" prefWidth="300.0" GridPane.columnIndex="2">
+                <center>
+                    <ImageView fx:id="image2" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER"/>
+                </center>
+                <bottom>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Image 2" BorderPane.alignment="CENTER"/>
+                </bottom>
+            </BorderPane>
+        </GridPane>
+    </AnchorPane>
+    <MenuBar>
+        <Menu mnemonicParsing="false" text="Select Images">
+            <MenuItem mnemonicParsing="false" onAction="#loadImage1" text="Select Image 1"/>
+            <MenuItem mnemonicParsing="false" onAction="#loadImage2" text="Select Image 2"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Operations">
+            <MenuItem mnemonicParsing="false" onAction="#makeImagesSum" text="Sum"/>
+            <MenuItem mnemonicParsing="false" onAction="#makeImagesMultiplication" text="Multiplication"/>
+            <MenuItem mnemonicParsing="false" onAction="#makeImageMultiplicationWithScalarNumber"
+                      text="Multiplication with scalar number"/>
+        </Menu>
+    </MenuBar>
 </AnchorPane>
