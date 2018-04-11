@@ -102,7 +102,8 @@
                 <Menu mnemonicParsing="false" text="Histogram">
                     <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create"/>
                     <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Equalize Image"/>
-                    <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Equalize Image Twice"/>
+                    <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice"
+                              text="Equalize Image Twice"/>
                 </Menu>
             </Menu>
             <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut"/>
@@ -112,11 +113,26 @@
             <MenuItem mnemonicParsing="false" onAction="#calculatePixelValue" text="Calculate"/>
             <MenuItem mnemonicParsing="false" onAction="#modifyPixelValue" text="Modify"/>
         </Menu>
-        <Menu mnemonicParsing="false" text="Image Generation">
-            <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient"/>
-            <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient"/>
-            <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle"/>
-            <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate"/>
+        <Menu mnemonicParsing="false" text="Generation">
+            <Menu mnemonicParsing="false" text="Gradients">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient"/>
+                    <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient"/>
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Images">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle"/>
+                    <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate"/>
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Random Numbers">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#generateExponentialRandomNumber" text="Exponential"/>
+                    <MenuItem mnemonicParsing="false" onAction="#generateRayleighRandomNumber" text="Rayleigh"/>
+                    <MenuItem mnemonicParsing="false" onAction="#generateGaussianRandomNumber" text="Gaussian"/>
+                </items>
+            </Menu>
         </Menu>
         <Menu mnemonicParsing="false" text="Channels">
             <MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="RGB Red"/>

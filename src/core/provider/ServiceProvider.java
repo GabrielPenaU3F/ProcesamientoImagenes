@@ -51,4 +51,8 @@ class ServiceProvider {
     public static HistogramService provideHistogramService() {
         return new HistogramService();
     }
+
+    public static RandomNumberGenerationService provideRandomNumberGenerationService() {
+        return new RandomNumberGenerationService();
+    }
 }
