@@ -90,4 +90,17 @@ public class GrayLevelStatisticsService {
 
     }
 
+    public int calculateChannelMatrixialRepresentationMaxGrayLevel(int[][] channel) {
+        int max = 0;
+        for (int i=0; i < channel.length; i++) {
+            for (int j=0; j < channel[i].length; j++) {
+                int grayLevel = channel[i][j];
+                if (grayLevel > max) {
+                    max = grayLevel;
+                }
+            }
+        }
+        return max;
+    }
+
 }

@@ -51,6 +51,19 @@ public class CompressDynamicRangeAction {
 
     }
 
+    public int[][] executeForImageChannelMatrixialRepresentation(int[][] channel) {
+        int max = this.grayLevelStatisticsService.calculateChannelMatrixialRepresentationMaxGrayLevel(channel);
+        double c = this.calculateC(max);
+        for (int i=0; i < channel.length; i++) {
+            for (int j=0; j < channel[i].length; j++) {
+                int oldGrayLevel = channel[i][j];
+                int newGrayLevel = (int)(c * Math.log(1 + oldGrayLevel));
+                channel[i][j] = newGrayLevel;
+            }
+        }
+        return channel;
+    }
+
     private double calculateC(int maxGrayLevel) {
         return (255 / (Math.log(1 + maxGrayLevel)));
     }

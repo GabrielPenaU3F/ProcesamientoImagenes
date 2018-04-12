@@ -48,6 +48,7 @@ class ActionProvider {
     private static MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction;
     private static SubstractImagesAction substractImagesAction;
 
+
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
             getImageAction = new GetImageAction(RepositoryProvider.provideImageRepository());
@@ -226,7 +227,8 @@ class ActionProvider {
 
     public static MultiplyImageWithScalarNumberAction provideMultiplyImageWithScalarNumberAction() {
         if (multiplyImageWithScalarNumberAction == null) {
-            multiplyImageWithScalarNumberAction = new MultiplyImageWithScalarNumberAction(ServiceProvider.provideImageOperationsService());
+            multiplyImageWithScalarNumberAction = new MultiplyImageWithScalarNumberAction(ServiceProvider.provideImageOperationsService(),
+                    ActionProvider.provideCompressDynamicRangeAction());
         }
         return multiplyImageWithScalarNumberAction;
     }
