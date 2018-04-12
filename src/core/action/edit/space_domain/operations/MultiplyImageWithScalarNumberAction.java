@@ -20,7 +20,7 @@ public class MultiplyImageWithScalarNumberAction {
         int[][] redChannelResultantValues = this.imageOperationsService.multiplyRedPixelsValuesWithScalarNumber(image, scalarNumber);
         int[][] greenChannelResultantValues = this.imageOperationsService.multiplyGreenPixelsValuesWithScalarNumber(image, scalarNumber);
         int[][] blueChannelResultantValues = this.imageOperationsService.multiplyBluePixelsValuesWithScalarNumber(image, scalarNumber);
-        //Aplico transformacion de rango dinamico a cada canal
+        //Aplico transformacion de compresion del rango dinamico a cada canal
         redChannelResultantValues = this.compressDynamicRangeAction.executeForImageChannelMatrixialRepresentation(redChannelResultantValues);
         greenChannelResultantValues = this.compressDynamicRangeAction.executeForImageChannelMatrixialRepresentation(greenChannelResultantValues);
         blueChannelResultantValues = this.compressDynamicRangeAction.executeForImageChannelMatrixialRepresentation(blueChannelResultantValues);

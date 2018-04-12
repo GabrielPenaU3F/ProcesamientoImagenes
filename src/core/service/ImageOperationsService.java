@@ -88,6 +88,18 @@ public class ImageOperationsService {
         return actualMin;
     }
 
+    public int[][] transformValuesUsingR(int[][] channelValues){
+        int imageR = this.calculateR(channelValues);
+        for (int i = 0; i < channelValues.length; i++){
+            for (int j = 0; j < channelValues[i].length; j++){
+                double auxPixelValue = channelValues[i][j] * ((double) 255/imageR);
+                int newPixelValue = (int) auxPixelValue;
+                channelValues[i][j] = newPixelValue;
+            }
+        }
+        return channelValues;
+    }
+
     public Image writeNewPixelsValuesInImage(int[][] redChannelValues, int[][] greenChannelValues,
                                             int[][] blueChannelValues, int width, int height){
         WritableImage image = new WritableImage(width, height);
@@ -95,17 +107,11 @@ public class ImageOperationsService {
         int redPixelValue = 0;
         int greenPixelValue = 0;
         int bluePixelValue = 0;
-        int imageRedR = this.calculateR(redChannelValues);
-        int imageGreenR = this.calculateR(greenChannelValues);
-        int imageBlueR = this.calculateR(blueChannelValues);
         for (int i = 0; i < (int)image.getWidth(); i++){
             for (int j = 0; j < (int)image.getHeight(); j++){
-                double auxRedPixelValue = redChannelValues[i][j] * ((double) 255/imageRedR);
-                redPixelValue = (int) auxRedPixelValue;
-                double auxGreenPixelValue = greenChannelValues[i][j] * ((double) 255/imageGreenR);
-                greenPixelValue = (int) auxGreenPixelValue;
-                double auxBluePixelValue = blueChannelValues[i][j] * ((double) 255/imageBlueR);
-                bluePixelValue = (int) auxBluePixelValue;
+                redPixelValue = redChannelValues[i][j];
+                greenPixelValue = greenChannelValues[i][j];
+                bluePixelValue = blueChannelValues[i][j];
                 Color color = Color.rgb(redPixelValue,greenPixelValue,bluePixelValue);
                 pixelWriter.setColor(i,j,color);
             }
@@ -123,7 +129,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] sumGreenPixelsValues(Image image1, Image image2) {
@@ -136,7 +142,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] sumBluePixelsValues(Image image1, Image image2) {
@@ -149,7 +155,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] multiplyRedPixelsValues(Image image1, Image image2) {
@@ -162,7 +168,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] multiplyGreenPixelsValues(Image image1, Image image2) {
@@ -175,7 +181,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] multiplyBluePixelsValues(Image image1, Image image2) {
@@ -188,7 +194,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] multiplyRedPixelsValuesWithScalarNumber(CustomImage customImage, int scalarNumber){
@@ -199,7 +205,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return result;
     }
 
     public int[][] multiplyGreenPixelsValuesWithScalarNumber(CustomImage customImage, int scalarNumber){
@@ -210,7 +216,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return result;
     }
 
     public int[][] multiplyBluePixelsValuesWithScalarNumber(CustomImage customImage, int scalarNumber){
@@ -221,7 +227,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return result;
     }
 
     public int[][] substractRedPixelsValues(Image image1, Image image2) {
@@ -234,7 +240,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] substractGreenPixelsValues(Image image1, Image image2) {
@@ -247,7 +253,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     public int[][] substractBluePixelsValues(Image image1, Image image2) {
@@ -260,7 +266,7 @@ public class ImageOperationsService {
                 result[i][j] = (int) Math.round(sumResult);
             }
         }
-        return this.displacePixelsValues(result);
+        return this.transformValuesUsingR(this.displacePixelsValues(result));
     }
 
     //desplazo los valores para que el minimo sea cero
