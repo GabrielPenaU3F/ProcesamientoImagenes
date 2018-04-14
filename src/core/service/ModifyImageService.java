@@ -30,6 +30,11 @@ public class ModifyImageService {
         return new CustomImage(SwingFXUtils.fromFXImage(writableImage, null), image.getFormatString());
     }
 
+    public void modifySinglePixel(Integer pixelX, Integer pixelY, Integer value, PixelWriter pixelWriter) {
+        Color modifiedColor = Color.rgb(value,value,value); //For gray images
+        pixelWriter.setColor(pixelX,pixelY,modifiedColor);
+    }
+
     public void modifySinglePixel(Integer pixelX, Integer pixelY, Integer valueR, Integer valueG, Integer valueB, PixelWriter pixelWriter) {
         Color modifiedColor = Color.rgb(valueR, valueG, valueB);
         pixelWriter.setColor(pixelX, pixelY, modifiedColor);

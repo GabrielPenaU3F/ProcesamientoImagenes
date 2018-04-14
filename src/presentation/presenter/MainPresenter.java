@@ -9,6 +9,8 @@ import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
+import core.action.edit.space_domain.ApplyThresholdAction;
+import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
@@ -246,5 +248,9 @@ public class MainPresenter {
 
     public void onGammaPowerFunction() {
         new GammaSceneCreator().createScene();
+    }
+
+    public void onCalculateImagesOperations() {
+        new ImagesOperationsSceneCreator().createScene();
     }
 }

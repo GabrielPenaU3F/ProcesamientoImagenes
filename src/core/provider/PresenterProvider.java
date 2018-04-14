@@ -7,6 +7,7 @@ import presentation.presenter.*;
 public class PresenterProvider {
 
     private static MainPresenter mainPresenter;
+    private static ImagesOperationsPresenter imagesOperationsPresenter;
 
     public static MainPresenter provideImageSelectionPresenter(MainSceneController mainSceneController) {
         if (mainPresenter == null) {
@@ -64,4 +65,14 @@ public class PresenterProvider {
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 
+    public static ImagesOperationsPresenter provideImagesOperationPresenter() {
+        if (imagesOperationsPresenter == null) {
+            imagesOperationsPresenter = new ImagesOperationsPresenter(ActionProvider.provideLoadImageAction(),
+                    ActionProvider.provideNormalizeImageAction(), ActionProvider.provideSumImagesAction(),
+                    ActionProvider.provideMultiplyImagesAction(), ActionProvider.provideMultiplyImageWithScalarNumberAction(),
+                    ActionProvider.provideSubstractImagesAction());
+            return imagesOperationsPresenter;
+        }
+        return imagesOperationsPresenter;
+    }
 }

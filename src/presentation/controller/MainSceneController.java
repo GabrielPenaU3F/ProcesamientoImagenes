@@ -127,6 +127,9 @@ public class MainSceneController {
     }
 
     @FXML
+    public void calculateImagesOperations(){ this.mainPresenter.onCalculateImagesOperations();}
+
+    @FXML
     public void calculateNegativeImage() { this.mainPresenter.onCalculateNegativeImage(); }
 
     @FXML

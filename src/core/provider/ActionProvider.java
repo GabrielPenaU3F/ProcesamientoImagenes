@@ -3,6 +3,13 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.ApplyThresholdAction;
+import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.NormalizeImageAction;
+import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
+import core.action.edit.space_domain.operations.MultiplyImagesAction;
+import core.action.edit.space_domain.operations.SubstractImagesAction;
+import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.edit.space_domain.*;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
@@ -35,6 +42,12 @@ class ActionProvider {
     private static EqualizeGrayImageAction createEqualizeGrayImageAction;
     private static CompressDynamicRangeAction compressDynamicRangeAction;
     private static GammaFunctionAction gammaFunctionAction;
+    private static MultiplyImagesAction multiplyImagesAction;
+    private static SumImagesAction sumImagesAction;
+    private static NormalizeImageAction normalizeImageAction;
+    private static MultiplyImageByScalarNumberAction multiplyImageByScalarNumberAction;
+    private static SubstractImagesAction substractImagesAction;
+
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -167,7 +180,7 @@ class ActionProvider {
         }
         return createEqualizeGrayImageAction;
     }
-    
+
     public static CompressDynamicRangeAction provideCompressDynamicRangeAction() {
         if (compressDynamicRangeAction == null) {
             compressDynamicRangeAction = new CompressDynamicRangeAction(
@@ -182,5 +195,41 @@ class ActionProvider {
             gammaFunctionAction = new GammaFunctionAction(RepositoryProvider.provideImageRepository());
         }
         return gammaFunctionAction;
+    }
+
+    public static SumImagesAction provideSumImagesAction() {
+        if (sumImagesAction == null) {
+            sumImagesAction = new SumImagesAction(ServiceProvider.provideImageOperationsService());
+        }
+        return sumImagesAction;
+    }
+
+    public static MultiplyImagesAction provideMultiplyImagesAction() {
+        if (multiplyImagesAction == null) {
+            multiplyImagesAction = new MultiplyImagesAction(ServiceProvider.provideImageOperationsService());
+        }
+        return multiplyImagesAction;
+    }
+
+    public static SubstractImagesAction provideSubstractImagesAction() {
+        if (substractImagesAction == null) {
+            substractImagesAction = new SubstractImagesAction(ServiceProvider.provideImageOperationsService());
+        }
+        return substractImagesAction;
+    }
+
+    public static NormalizeImageAction provideNormalizeImageAction() {
+        if (normalizeImageAction == null) {
+            normalizeImageAction = new NormalizeImageAction(ServiceProvider.provideImageOperationsService());
+        }
+        return normalizeImageAction;
+    }
+
+    public static MultiplyImageByScalarNumberAction provideMultiplyImageWithScalarNumberAction() {
+        if (multiplyImageByScalarNumberAction == null) {
+            multiplyImageByScalarNumberAction = new MultiplyImageByScalarNumberAction(ServiceProvider.provideImageOperationsService(),
+                    ActionProvider.provideCompressDynamicRangeAction());
+        }
+        return multiplyImageByScalarNumberAction;
     }
 }
