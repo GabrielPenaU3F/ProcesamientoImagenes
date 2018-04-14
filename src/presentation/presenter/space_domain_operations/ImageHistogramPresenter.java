@@ -1,4 +1,4 @@
-package presentation.presenter;
+package presentation.presenter.space_domain_operations;
 
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.GetImageAction;

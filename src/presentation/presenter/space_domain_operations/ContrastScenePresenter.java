@@ -1,4 +1,4 @@
-package presentation.presenter;
+package presentation.presenter.space_domain_operations;
 
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.image.GetImageAction;

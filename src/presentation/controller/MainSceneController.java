@@ -145,6 +145,15 @@ public class MainSceneController {
     public void gammaPowerFunction() {this.mainPresenter.onGammaPowerFunction();}
 
     @FXML
+    public void generateExponentialRandomNumber() {this.mainPresenter.onGenerateExponentialRandomNumber();}
+
+    @FXML
+    public void generateRayleighRandomNumber() {this.mainPresenter.onGenerateRayleighRandomNumber();}
+
+    @FXML
+    public void generateGaussianRandomNumber() {this.mainPresenter.onGenerateGaussianRandomNumber();}
+
+    @FXML
     public void close() {
         Platform.exit();
     }

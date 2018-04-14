@@ -1,8 +1,13 @@
 package core.provider;
 
-import core.action.edit.space_domain.GammaFunctionAction;
 import presentation.controller.*;
 import presentation.presenter.*;
+import presentation.presenter.random_generators.ExponentialScenePresenter;
+import presentation.presenter.random_generators.GaussianScenePresenter;
+import presentation.presenter.random_generators.RayleighScenePresenter;
+import presentation.presenter.space_domain_operations.ContrastScenePresenter;
+import presentation.presenter.space_domain_operations.GammaScenePresenter;
+import presentation.presenter.space_domain_operations.ImageHistogramPresenter;
 
 public class PresenterProvider {
 
@@ -74,5 +79,20 @@ public class PresenterProvider {
             return imagesOperationsPresenter;
         }
         return imagesOperationsPresenter;
+    }
+
+    public static ExponentialScenePresenter provideExponentialScenePresenter(ExponentialSceneController exponentialSceneController) {
+        return new ExponentialScenePresenter(exponentialSceneController,
+                ServiceProvider.provideRandomNumberGenerationService());
+    }
+
+    public static RayleighScenePresenter provideRayleighScenePresenter(RayleighSceneController rayleighSceneController) {
+        return new RayleighScenePresenter(rayleighSceneController,
+                ServiceProvider.provideRandomNumberGenerationService());
+    }
+
+    public static GaussianScenePresenter provideGaussianScenePresenter(GaussianSceneController gaussianSceneController) {
+        return new GaussianScenePresenter(gaussianSceneController,
+                ServiceProvider.provideRandomNumberGenerationService());
     }
 }

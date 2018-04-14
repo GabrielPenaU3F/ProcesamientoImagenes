@@ -4,8 +4,7 @@ import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.image.ImageView;
-import presentation.presenter.ImageHistogramPresenter;
+import presentation.presenter.space_domain_operations.ImageHistogramPresenter;
 
 public class ImageHistogramSceneController {
 

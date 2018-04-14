@@ -247,10 +247,16 @@ public class MainPresenter {
     }
 
     public void onGammaPowerFunction() {
-        new GammaSceneCreator().createScene();
+        new GammaPowerFunctionSceneCreator().createScene();
     }
 
     public void onCalculateImagesOperations() {
         new ImagesOperationsSceneCreator().createScene();
     }
+
+    public void onGenerateExponentialRandomNumber() { new ExponentialSceneCreator().createScene(); }
+
+    public void onGenerateRayleighRandomNumber() { new RayleighSceneCreator().createScene(); }
+
+    public void onGenerateGaussianRandomNumber() { new GaussianSceneCreator().createScene(); }
 }
