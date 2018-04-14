@@ -1,4 +1,4 @@
-package core.service;
+package core.service.generation;
 
 import domain.Histogram;
 import domain.customimage.CustomImage;

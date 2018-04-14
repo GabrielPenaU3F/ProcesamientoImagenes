@@ -1,13 +1,17 @@
 package core.provider;
 
+import core.action.filter.service.MaskService;
 import core.action.noise.generator.RandomNumberGenerationService;
 import core.service.*;
+import core.service.generation.HistogramService;
+import core.service.generation.ImageFigureService;
+import core.service.generation.ImageGradientService;
 import core.service.transformations.TransformRGBtoHSVImageService;
 import javafx.stage.FileChooser;
 
 import java.util.Random;
 
-class ServiceProvider {
+public class ServiceProvider {
 
     public static OpenFileService provideOpenFileService() {
         return new OpenFileService(createFileChooser());
@@ -47,9 +51,13 @@ class ServiceProvider {
         return new ImageOperationsService(provideGrayLevelStatisticsService());
     }
 
-    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() { return new TransformRGBtoHSVImageService(); }
+    public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() {
+        return new TransformRGBtoHSVImageService();
+    }
 
-    public static GrayLevelStatisticsService provideGrayLevelStatisticsService() { return new GrayLevelStatisticsService(); }
+    public static GrayLevelStatisticsService provideGrayLevelStatisticsService() {
+        return new GrayLevelStatisticsService();
+    }
 
     public static HistogramService provideHistogramService() {
         return new HistogramService();
@@ -57,5 +65,9 @@ class ServiceProvider {
 
     public static RandomNumberGenerationService provideRandomNumberGenerationService() {
         return new RandomNumberGenerationService(new Random());
+    }
+
+    public static MaskService provideMaskService() {
+        return new MaskService();
     }
 }

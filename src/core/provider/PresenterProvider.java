@@ -66,9 +66,9 @@ public class PresenterProvider {
     }
 
     public static GammaScenePresenter provideGammaScenePresenter(GammaSceneController gammaSceneController) {
-            return new GammaScenePresenter(gammaSceneController,
-                    ActionProvider.provideGammaFunctionAction(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+        return new GammaScenePresenter(gammaSceneController,
+                ActionProvider.provideGammaFunctionAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 
     public static ImagesOperationsPresenter provideImagesOperationPresenter() {
@@ -101,5 +101,11 @@ public class PresenterProvider {
         return new SaltAndPepperNoisePresenter(saltAndPepperNoiseController,
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplySaltAndPepperNoiseAction());
+    }
+
+    public static MediaFilterPresenter provideMediaFilterPresenter(MediaFilterSceneController mediaFilterSceneController) {
+        return new MediaFilterPresenter(mediaFilterSceneController,
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyFilterAction());
     }
 }

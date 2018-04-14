@@ -1,7 +1,7 @@
 package core.action.histogram;
 
 import core.repository.ImageRepository;
-import core.service.HistogramService;
+import core.service.generation.HistogramService;
 import domain.Histogram;
 import domain.customimage.CustomImage;
 import javafx.embed.swing.SwingFXUtils;

@@ -1,8 +1,8 @@
 package core.action.gradient;
 
 import core.repository.ImageRepository;
-import core.service.ImageGradientService;
-import domain.Gradient;
+import core.service.generation.ImageGradientService;
+import domain.generation.Gradient;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import javafx.embed.swing.SwingFXUtils;

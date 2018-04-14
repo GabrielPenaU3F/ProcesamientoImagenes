@@ -1,4 +1,4 @@
-package domain;
+package domain.generation;
 
 public enum Gradient {
     GREY, COLOR

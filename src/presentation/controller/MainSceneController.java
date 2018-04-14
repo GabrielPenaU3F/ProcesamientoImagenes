@@ -177,4 +177,9 @@ public class MainSceneController {
     public void applySaltAndPepperNoise() {
         this.mainPresenter.onApplySaltAndPepperNoise();
     }
+
+    @FXML
+    public void onApplyMediaFilter() {
+        this.mainPresenter.onApplyMediaFilter();
+    }
 }

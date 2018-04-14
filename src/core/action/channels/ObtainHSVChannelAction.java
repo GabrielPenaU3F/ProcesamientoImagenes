@@ -2,7 +2,7 @@ package core.action.channels;
 
 import core.repository.ImageRepository;
 import core.service.transformations.TransformRGBtoHSVImageService;
-import domain.Channel;
+import domain.generation.Channel;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.hsvimage.HSVImage;

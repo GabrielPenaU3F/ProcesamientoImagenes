@@ -9,15 +9,13 @@ import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.edit.space_domain.ApplyThresholdAction;
-import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
-import domain.Channel;
-import domain.Figure;
-import domain.Gradient;
+import domain.generation.Channel;
+import domain.generation.Figure;
+import domain.generation.Gradient;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import io.reactivex.Observable;
@@ -269,5 +267,9 @@ public class MainPresenter {
 
     public void onApplySaltAndPepperNoise() {
         new SaltAndPepperNoiseSceneCreator().createScene();
+    }
+
+    public void onApplyMediaFilter() {
+        new MediaFilterSceneCreator().createScene();
     }
 }

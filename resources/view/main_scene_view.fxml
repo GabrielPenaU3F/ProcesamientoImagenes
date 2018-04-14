@@ -145,5 +145,8 @@
         <Menu mnemonicParsing="false" text="Noise">
             <MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper" />
         </Menu>
+        <Menu mnemonicParsing="false" text="Filter">
+            <MenuItem mnemonicParsing="false" onAction="#onApplyMediaFilter" text="Media" />
+        </Menu>
     </MenuBar>
 </AnchorPane>

@@ -12,6 +12,7 @@ import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.edit.space_domain.*;
 import core.action.figure.CreateImageWithFigureAction;
+import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.image.CreateImageInformAction;
@@ -49,6 +50,7 @@ class ActionProvider {
     private static MultiplyImageByScalarNumberAction multiplyImageByScalarNumberAction;
     private static SubstractImagesAction substractImagesAction;
     private static ApplySaltAndPepperNoiseAction applySaltAndPepperAction;
+    private static ApplyFilterAction applyFilterAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -241,5 +243,14 @@ class ActionProvider {
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject());
         }
         return applySaltAndPepperAction;
+    }
+
+    public static ApplyFilterAction provideApplyFilterAction() {
+        if (applyFilterAction == null) {
+            applyFilterAction = new ApplyFilterAction(
+                    ServiceProvider.provideMaskService(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+        }
+        return applyFilterAction;
     }
 }

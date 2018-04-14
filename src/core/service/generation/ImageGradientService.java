@@ -1,4 +1,4 @@
-package core.service;
+package core.service.generation;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;

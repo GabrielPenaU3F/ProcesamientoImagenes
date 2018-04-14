@@ -1,4 +1,4 @@
-package core.service;
+package core.service.generation;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
