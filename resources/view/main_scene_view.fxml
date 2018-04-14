@@ -142,5 +142,8 @@
             <MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="HSV Saturation"/>
             <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value"/>
         </Menu>
+        <Menu mnemonicParsing="false" text="Noise">
+            <MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper" />
+        </Menu>
     </MenuBar>
 </AnchorPane>

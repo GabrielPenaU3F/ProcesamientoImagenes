@@ -19,10 +19,11 @@ public class ContrastScenePresenter {
     private final ApplyContrastAction applyContrastAction;
     private final GetImageAction getImageAction;
     private final GrayLevelStatisticsService grayLevelStatisticsService;
-    private PublishSubject<Image> modifiedImagePublishSubject;
+    private final PublishSubject<Image> modifiedImagePublishSubject;
 
     private int r1;
     private int r2;
+    private CustomImage customImage;
 
     public ContrastScenePresenter(ContrastSceneController contrastSceneController,
                                   ApplyContrastAction applyContrastAction,
@@ -44,7 +45,7 @@ public class ContrastScenePresenter {
             return;
         }
 
-        CustomImage customImage = customImageOptional.get();
+        customImage = customImageOptional.get();
         Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
         double mean = this.grayLevelStatisticsService.calculateGrayLevelMean(image);
         double standardDeviation = this.grayLevelStatisticsService.calculateGrayLevelStantardDeviation(image);
@@ -61,7 +62,7 @@ public class ContrastScenePresenter {
             int s2 = Integer.parseInt(this.view.s2Field.getText());
 
             if (s1 < r1) {
-                sendModifiedImageToMainView(this.applyContrastAction.execute(s1, s2, r1, r2));
+                sendModifiedImageToMainView(this.applyContrastAction.execute(customImage, s1, s2, r1, r2));
                 this.view.closeWindow();
             } else {
                 this.view.s1ValidationLabel.setText("Must be lesser than " + r1);

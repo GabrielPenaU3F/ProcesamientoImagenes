@@ -30,7 +30,8 @@ public class PresenterProvider {
                     ActionProvider.provideCreateImageWithFigureAction(),
                     ActionProvider.provideCreateEqualizedGrayImageAction(),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
-                    ActionProvider.provideCompressDynamicRangeAction());
+                    ActionProvider.provideCompressDynamicRangeAction(),
+                    ActionProvider.provideApplySaltAndPepperNoiseAction());
 
             return mainPresenter;
         }
@@ -94,5 +95,11 @@ public class PresenterProvider {
     public static GaussianScenePresenter provideGaussianScenePresenter(GaussianSceneController gaussianSceneController) {
         return new GaussianScenePresenter(gaussianSceneController,
                 ServiceProvider.provideRandomNumberGenerationService());
+    }
+
+    public static SaltAndPepperNoisePresenter provideSaltAndPepperNoisePresenter(SaltAndPepperNoiseController saltAndPepperNoiseController) {
+        return new SaltAndPepperNoisePresenter(saltAndPepperNoiseController,
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplySaltAndPepperNoiseAction());
     }
 }

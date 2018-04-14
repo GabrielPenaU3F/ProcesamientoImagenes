@@ -21,6 +21,7 @@ import core.action.image.SaveImageAction;
 import core.action.histogram.EqualizeGrayImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
+import core.action.noise.ApplySaltAndPepperNoiseAction;
 
 class ActionProvider {
 
@@ -47,7 +48,7 @@ class ActionProvider {
     private static NormalizeImageAction normalizeImageAction;
     private static MultiplyImageByScalarNumberAction multiplyImageByScalarNumberAction;
     private static SubstractImagesAction substractImagesAction;
-
+    private static ApplySaltAndPepperNoiseAction applySaltAndPepperAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -166,7 +167,7 @@ class ActionProvider {
 
     public static ApplyContrastAction provideApplyContrastAction() {
         if (applyContrastAction == null) {
-            applyContrastAction = new ApplyContrastAction(RepositoryProvider.provideImageRepository(),
+            applyContrastAction = new ApplyContrastAction(
                     ServiceProvider.provideModifyImageService());
         }
         return applyContrastAction;
@@ -231,5 +232,14 @@ class ActionProvider {
                     ActionProvider.provideCompressDynamicRangeAction());
         }
         return multiplyImageByScalarNumberAction;
+    }
+
+    public static ApplySaltAndPepperNoiseAction provideApplySaltAndPepperNoiseAction() {
+        if (applySaltAndPepperAction == null) {
+            applySaltAndPepperAction = new ApplySaltAndPepperNoiseAction(
+                    ServiceProvider.provideRandomNumberGenerationService(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+        }
+        return applySaltAndPepperAction;
     }
 }

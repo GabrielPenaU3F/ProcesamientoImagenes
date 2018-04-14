@@ -4,6 +4,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.PixelReader;
 
 import java.awt.image.BufferedImage;
+import java.util.*;
 
 public class CustomImage {
 
@@ -12,11 +13,31 @@ public class CustomImage {
     private final PixelReader reader;
     private final BufferedImage bufferedImage;
     private final Format format;
+    private List<Pixel> totalPixels;
 
     public CustomImage(BufferedImage bufferedImage, String formatString) {
         this.bufferedImage = bufferedImage;
         this.format = new Format(formatString);
         this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
+        this.totalPixels = getTotalPixels();
+    }
+
+    private List<Pixel> getTotalPixels() {
+        List<Pixel> total = new ArrayList<>();
+
+        for (int column = 0; column < getWidth(); column++) {
+            for (int row = 0; row < getHeight(); row++) {
+                total.add(new Pixel(column, row, getPixelReader().getColor(column, row)));
+            }
+        }
+
+        return total;
+    }
+
+    public List<Pixel> pickNRandomPixels(int n) {
+        List<Pixel> copy = new LinkedList<>(totalPixels);
+        Collections.shuffle(copy);
+        return copy.subList(0, n);
     }
 
     public String getFormatString() {
@@ -65,6 +86,10 @@ public class CustomImage {
 
     public PixelReader getPixelReader() {
         return reader;
+    }
+
+    public List<Pixel> getPixels() {
+        return totalPixels;
     }
 
     public class RGB {

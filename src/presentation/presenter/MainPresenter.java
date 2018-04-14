@@ -14,6 +14,7 @@ import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
+import core.action.noise.ApplySaltAndPepperNoiseAction;
 import domain.Channel;
 import domain.Figure;
 import domain.Gradient;
@@ -48,6 +49,7 @@ public class MainPresenter {
     private final EqualizeGrayImageAction equalizeGrayImageAction;
     private final Observable<Image> onModifiedImage;
     private final CompressDynamicRangeAction compressDynamicRangeAction;
+    private final ApplySaltAndPepperNoiseAction applySaltAndPepperNoiseAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -62,7 +64,8 @@ public class MainPresenter {
                          CreateImageWithFigureAction createImageWithFigureAction,
                          EqualizeGrayImageAction equalizeGrayImageAction,
                          Observable<Image> onModifiedImage,
-                         CompressDynamicRangeAction compressDynamicRangeAction) {
+                         CompressDynamicRangeAction compressDynamicRangeAction,
+                         ApplySaltAndPepperNoiseAction applySaltAndPepperNoiseAction) {
 
         this.view = view;
 
@@ -79,6 +82,7 @@ public class MainPresenter {
         this.createImageWithFigureAction = createImageWithFigureAction;
         this.equalizeGrayImageAction = equalizeGrayImageAction;
         this.compressDynamicRangeAction = compressDynamicRangeAction;
+        this.applySaltAndPepperNoiseAction = applySaltAndPepperNoiseAction;
     }
 
     public void initialize() {
@@ -99,7 +103,10 @@ public class MainPresenter {
     }
 
     private void awaitingForNewModifiedImages() {
-        onModifiedImage.subscribe(image -> view.modifiedImageView.setImage(image));
+        onModifiedImage.subscribe(image -> {
+            putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), Format.PNG));
+            view.modifiedImageView.setImage(image);
+        });
     }
 
     public void onOpenImage() {
@@ -218,7 +225,7 @@ public class MainPresenter {
     }
 
     public void onThreshold() {
-        view.modifiedImageView.setImage(applyThresholdAction.execute(InsertValuePopup.show("Threshold", "0").get()));
+        view.modifiedImageView.setImage(applyThresholdAction.execute(Integer.parseInt(InsertValuePopup.show("Threshold", "0").get())));
     }
 
     public void onCreateImageHistogram() {
@@ -259,4 +266,8 @@ public class MainPresenter {
     public void onGenerateRayleighRandomNumber() { new RayleighSceneCreator().createScene(); }
 
     public void onGenerateGaussianRandomNumber() { new GaussianSceneCreator().createScene(); }
+
+    public void onApplySaltAndPepperNoise() {
+        new SaltAndPepperNoiseSceneCreator().createScene();
+    }
 }
