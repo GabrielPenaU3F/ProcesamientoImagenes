@@ -19,10 +19,14 @@ import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
+import core.action.noise.ApplyExponentialNoiseToImageAction;
+import core.action.noise.ApplyGaussianNoiseToImageAction;
+import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
+import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 
 class ActionProvider {
 
@@ -52,6 +56,9 @@ class ActionProvider {
     private static ApplySaltAndPepperNoiseAction applySaltAndPepperAction;
     private static ApplyFilterAction applyFilterAction;
     private static GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction;
+    private static ApplyGaussianNoiseToImageAction applyGaussianNoiseToImageAction;
+    private static ApplyRayleighNoiseToImageAction applyRayleighNoiseToImageAction;
+    private static ApplyExponentialNoiseToImageAction applyExponentialNoiseToImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -259,5 +266,32 @@ class ActionProvider {
                     ServiceProvider.provideImageOperationsService());
         }
         return generateSyntheticNoiseImageAction;
+    }
+
+    public static ApplyGaussianNoiseToImageAction provideApplyGaussianNoiseToImageAction() {
+        if (applyGaussianNoiseToImageAction == null) {
+            applyGaussianNoiseToImageAction = new ApplyGaussianNoiseToImageAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideImageOperationsService(),
+                    ServiceProvider.provideRandomNumberGenerationService());
+        }
+        return applyGaussianNoiseToImageAction;
+    }
+
+    public static ApplyRayleighNoiseToImageAction provideApplyRayleighNoiseToImageAction() {
+        if (applyRayleighNoiseToImageAction == null) {
+            applyRayleighNoiseToImageAction = new ApplyRayleighNoiseToImageAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideImageOperationsService(),
+                    ServiceProvider.provideRandomNumberGenerationService());
+        }
+        return applyRayleighNoiseToImageAction;
+    }
+
+    public static ApplyExponentialNoiseToImageAction provideApplyExponentialNoiseToImageAction() {
+        if (applyExponentialNoiseToImageAction == null) {
+            applyExponentialNoiseToImageAction = new ApplyExponentialNoiseToImageAction(RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideImageOperationsService(),
+                    ServiceProvider.provideRandomNumberGenerationService());
+        }
+        return applyExponentialNoiseToImageAction;
     }
 }

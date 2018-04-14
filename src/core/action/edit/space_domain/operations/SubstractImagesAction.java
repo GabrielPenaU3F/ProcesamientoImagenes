@@ -14,7 +14,7 @@ public class SubstractImagesAction {
         int[][] redChannelResultantValues = this.imageOperationsService.substractRedPixelsValues(image1, image2);
         int[][] greenChannelResultantValues = this.imageOperationsService.substractGreenPixelsValues(image1, image2);
         int[][] blueChannelResultantValues = this.imageOperationsService.substractBluePixelsValues(image1, image2);
-        return this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues,
+        return this.imageOperationsService.writeNewPixelsValuesToImage(redChannelResultantValues,
                 greenChannelResultantValues, blueChannelResultantValues);
     }
 }

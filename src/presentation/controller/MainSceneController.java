@@ -191,9 +191,7 @@ public class MainSceneController {
     }
 
     @FXML
-    public void applySaltAndPepperNoise() {
-        this.mainPresenter.onApplySaltAndPepperNoise();
-    }
+    public void applySaltAndPepperNoise() { this.mainPresenter.onApplySaltAndPepperNoise(); }
 
     @FXML
     public void onApplyMediaFilter() {
@@ -224,4 +222,13 @@ public class MainSceneController {
     public void createImageEqualizedTwiceByHistogram() {
         this.mainPresenter.onCreateEqualizedImageTwiceByHistogram();
     }
+
+    @FXML
+    public void applyAdditiveGaussianNoise() { this.mainPresenter.onApplyAdditiveGaussianNoise(); }
+
+    @FXML
+    public void applyMultiplicativeRayleighNoise() { this.mainPresenter.onApplyMultiplicativeRayleighNoise(); }
+
+    @FXML
+    public void applyMultiplicativeExponentialNoise() { this.mainPresenter.onApplyMultiplicativeExponentialNoise(); }
 }

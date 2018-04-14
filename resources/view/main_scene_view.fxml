@@ -151,6 +151,9 @@
             <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value" />
         </Menu>
         <Menu mnemonicParsing="false" text="Noise">
+         <MenuItem mnemonicParsing="false" onAction="#applyAdditiveGaussianNoise" text="Additive Gaussian" />
+         <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeRayleighNoise" text="Multiplicative Rayleigh" />
+         <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeExponentialNoise" text="Multiplicative Exponential" />
             <MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper" />
         </Menu>
         <Menu mnemonicParsing="false" text="Filter">

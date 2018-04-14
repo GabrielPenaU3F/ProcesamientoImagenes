@@ -2,11 +2,14 @@ package core.service;
 
 import core.service.statistics.GrayLevelStatisticsService;
 import domain.customimage.CustomImage;
+import domain.customimage.Pixel;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+
+import java.util.List;
 
 public class ImageOperationsService {
 
@@ -81,8 +84,18 @@ public class ImageOperationsService {
         return channelValues;
     }
 
-    public Image writeNewPixelsValuesInImage(int[][] redChannelValues, int[][] greenChannelValues,
-                                             int[][] blueChannelValues) {
+    public int[][] adjustScale(int[][] channelValues, List<Pixel> contaminatedPixels){
+        int imageR = this.grayLevelStatisticsService.calculateMaxGrayLevel(channelValues);
+        for (Pixel pixel : contaminatedPixels){
+            int oldPixelValue = channelValues[pixel.getX()][pixel.getY()];
+            int newPixelValue = (int) (oldPixelValue * ((double) 255/imageR));
+            channelValues[pixel.getX()][pixel.getY()] = newPixelValue;
+        }
+        return channelValues;
+    }
+
+    public Image writeNewPixelsValuesToImage(int[][] redChannelValues, int[][] greenChannelValues,
+                                             int[][] blueChannelValues){
         int width = redChannelValues.length;
         int height = redChannelValues[0].length;
         WritableImage image = new WritableImage(width, height);
@@ -147,8 +160,8 @@ public class ImageOperationsService {
         PixelReader pixelReaderImage2 = image2.getPixelReader();
         for (int i = 0; i < (int) image1.getWidth(); i++) {
             for (int j = 0; j < (int) image1.getHeight(); j++) {
-                double sumResult = ((pixelReaderImage1.getColor(i, j).getRed() * 255) * (pixelReaderImage2.getColor(i, j).getRed() * 255));
-                result[i][j] = (int) Math.round(sumResult);
+                double productResult = ((pixelReaderImage1.getColor(i, j).getRed() * 255) * (pixelReaderImage2.getColor(i, j).getRed() * 255));
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return this.adjustScale(this.displacePixelsValues(result));
@@ -160,8 +173,8 @@ public class ImageOperationsService {
         PixelReader pixelReaderImage2 = image2.getPixelReader();
         for (int i = 0; i < (int) image1.getWidth(); i++) {
             for (int j = 0; j < (int) image1.getHeight(); j++) {
-                double sumResult = ((pixelReaderImage1.getColor(i, j).getGreen() * 255) * (pixelReaderImage2.getColor(i, j).getGreen() * 255));
-                result[i][j] = (int) Math.round(sumResult);
+                double productResult = ((pixelReaderImage1.getColor(i, j).getGreen() * 255) * (pixelReaderImage2.getColor(i, j).getGreen() * 255));
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return this.adjustScale(this.displacePixelsValues(result));
@@ -173,8 +186,8 @@ public class ImageOperationsService {
         PixelReader pixelReaderImage2 = image2.getPixelReader();
         for (int i = 0; i < (int) image1.getWidth(); i++) {
             for (int j = 0; j < (int) image1.getHeight(); j++) {
-                double sumResult = ((pixelReaderImage1.getColor(i, j).getBlue() * 255) * (pixelReaderImage2.getColor(i, j).getBlue() * 255));
-                result[i][j] = (int) Math.round(sumResult);
+                double productResult = ((pixelReaderImage1.getColor(i, j).getBlue() * 255) * (pixelReaderImage2.getColor(i, j).getBlue() * 255));
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return this.adjustScale(this.displacePixelsValues(result));
@@ -184,8 +197,8 @@ public class ImageOperationsService {
         int[][] result = new int[(customImage.getWidth())][customImage.getHeight()];
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                double sumResult = customImage.getRChannelValue(i, j) * scalarNumber;
-                result[i][j] = (int) Math.round(sumResult);
+                double productResult = customImage.getRChannelValue(i,j) * scalarNumber;
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return result;
@@ -195,8 +208,8 @@ public class ImageOperationsService {
         int[][] result = new int[(customImage.getWidth())][customImage.getHeight()];
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                double sumResult = customImage.getGChannelValue(i, j) * scalarNumber;
-                result[i][j] = (int) Math.round(sumResult);
+                double productResult = customImage.getGChannelValue(i,j) * scalarNumber;
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return result;
@@ -206,8 +219,8 @@ public class ImageOperationsService {
         int[][] result = new int[customImage.getWidth()][customImage.getHeight()];
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                double sumResult = customImage.getBChannelValue(i, j) * scalarNumber;
-                result[i][j] = (int) Math.round(sumResult);
+                double productResult = customImage.getBChannelValue(i,j) * scalarNumber;
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return result;

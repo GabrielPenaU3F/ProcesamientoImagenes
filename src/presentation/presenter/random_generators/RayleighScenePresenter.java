@@ -1,5 +1,6 @@
 package presentation.presenter.random_generators;
 
+import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 import core.provider.PublishSubjectProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
@@ -9,6 +10,7 @@ import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 import presentation.controller.RayleighSceneController;
 import presentation.scenecreator.NoiseImageSceneCreator;
+import presentation.util.InsertValuePopup;
 import presentation.util.ShowResultPopup;
 
 public class RayleighScenePresenter {
@@ -18,12 +20,16 @@ public class RayleighScenePresenter {
     private final RandomNumberGenerationService randomNumberGenerationService;
     private final GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction;
     private final PublishSubject<Image> onNoiseImage;
+    private final ApplyRayleighNoiseToImageAction applyRayleighNoiseToImageAction;
+    private final PublishSubject<Image> onModifiedImage;
 
-    public RayleighScenePresenter(RayleighSceneController rayleighSceneController, RandomNumberGenerationService randomNumberGenerationService, GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction, PublishSubject<Image> imagePublishSubject) {
+    public RayleighScenePresenter(RayleighSceneController rayleighSceneController, RandomNumberGenerationService randomNumberGenerationService, GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction, PublishSubject<Image> imagePublishSubject, ApplyRayleighNoiseToImageAction applyRayleighNoiseToImageAction, PublishSubject<Image> onModifiedImage) {
         this.view = rayleighSceneController;
         this.randomNumberGenerationService = randomNumberGenerationService;
         this.generateSyntheticNoiseImageAction = generateSyntheticNoiseImageAction;
         this.onNoiseImage = imagePublishSubject;
+        this.applyRayleighNoiseToImageAction = applyRayleighNoiseToImageAction;
+        this.onModifiedImage = onModifiedImage;
     }
 
     public void onGenerate() {
@@ -38,21 +44,15 @@ public class RayleighScenePresenter {
 
         } else if (RandomGeneratorsSemaphore.getValue() == RandomElement.SYNTHETIC_NOISE_IMAGE){
 
-            int randomNumberMatrix[][] = new int[100][100];
-            for(int i=0; i < randomNumberMatrix.length; i++) {
-                for (int j=0; j < randomNumberMatrix[i].length; j++) {
-
-                    double number = this.randomNumberGenerationService.generateRayleighNumber(psi);
-                    randomNumberMatrix[i][j] = (int) (number*100); //This is a scale adjustment, just to avoid getting all zeros, in case the random number generated is < 1
-
-                }
-            }
+            int randomNumberMatrix[][] = this.randomNumberGenerationService.generateRandomRayleighMatrix(100,100, psi);
             Image image = this.generateSyntheticNoiseImageAction.execute(randomNumberMatrix);
             this.sendNoiseImageToNewWindow(image);
             this.view.closeWindow();
 
         } else { //Noise generator to apply to an existing image
-            //TODO
+            double percent = (Double.parseDouble(InsertValuePopup.show("Percent of noise", "0").get()))/100.00;
+            Image image = this.applyRayleighNoiseToImageAction.execute(percent, psi);
+            this.onModifiedImage.onNext(image);
             this.view.closeWindow();
         }
     }

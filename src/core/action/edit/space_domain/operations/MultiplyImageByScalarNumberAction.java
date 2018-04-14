@@ -26,7 +26,7 @@ public class MultiplyImageByScalarNumberAction {
         greenChannelResultantValues = this.compressDynamicRangeAction.execute(greenChannelResultantValues);
         blueChannelResultantValues = this.compressDynamicRangeAction.execute(blueChannelResultantValues);
 
-        return this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues,
+        return this.imageOperationsService.writeNewPixelsValuesToImage(redChannelResultantValues,
                 greenChannelResultantValues, blueChannelResultantValues);
     }
 }

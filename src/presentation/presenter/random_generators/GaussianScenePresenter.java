@@ -1,5 +1,6 @@
 package presentation.presenter.random_generators;
 
+import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 import core.semaphore.RandomGeneratorsSemaphore;
 import core.service.statistics.RandomNumberGenerationService;
@@ -8,6 +9,7 @@ import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 import presentation.controller.GaussianSceneController;
 import presentation.scenecreator.NoiseImageSceneCreator;
+import presentation.util.InsertValuePopup;
 import presentation.util.ShowResultPopup;
 
 public class GaussianScenePresenter {
@@ -16,12 +18,17 @@ public class GaussianScenePresenter {
     private final RandomNumberGenerationService randomNumberGenerationService;
     private final GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction;
     private final PublishSubject<Image> onNoiseImage;
+    private final ApplyGaussianNoiseToImageAction applyGaussianNoiseToImageAction;
+    private final PublishSubject<Image> onModifiedImage;
 
-    public GaussianScenePresenter(GaussianSceneController gaussianSceneController, RandomNumberGenerationService randomNumberGenerationService, GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction, PublishSubject<Image> imagePublishSubject) {
+    public GaussianScenePresenter(GaussianSceneController gaussianSceneController, RandomNumberGenerationService randomNumberGenerationService, GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction, PublishSubject<Image> imagePublishSubject, ApplyGaussianNoiseToImageAction applyGaussianNoiseToImageAction, PublishSubject<Image> onModifiedImage) {
         this.view = gaussianSceneController;
         this.randomNumberGenerationService = randomNumberGenerationService;
         this.generateSyntheticNoiseImageAction = generateSyntheticNoiseImageAction;
         this.onNoiseImage = imagePublishSubject;
+        this.applyGaussianNoiseToImageAction = applyGaussianNoiseToImageAction;
+        this.onModifiedImage = onModifiedImage;
+
     }
 
     public void onGenerate() {
@@ -39,21 +46,15 @@ public class GaussianScenePresenter {
 
             } else if (RandomGeneratorsSemaphore.getValue() == RandomElement.SYNTHETIC_NOISE_IMAGE){
 
-                int randomNumberMatrix[][] = new int[100][100];
-                for(int i=0; i < randomNumberMatrix.length; i++) {
-                    for (int j=0; j < randomNumberMatrix[i].length; j++) {
-
-                        double number = this.randomNumberGenerationService.generateGaussianNumber(mu, sigma);
-                        randomNumberMatrix[i][j] = (int) (number*100); //This is a scale adjustment, just to avoid getting all zeros, in case the random number generated is < 1
-
-                    }
-                }
+                int randomNumberMatrix[][] = this.randomNumberGenerationService.generateRandomGaussianMatrix(100, 100, mu, sigma);
                 Image image = this.generateSyntheticNoiseImageAction.execute(randomNumberMatrix);
                 this.sendNoiseImageToNewWindow(image);
                 this.view.closeWindow();
 
             } else { //Noise generator to apply to an existing image
-                //TODO
+                double percent = (Double.parseDouble(InsertValuePopup.show("Percent of noise", "0").get()))/100.00;
+                Image image = this.applyGaussianNoiseToImageAction.execute(percent, mu, sigma);
+                this.onModifiedImage.onNext(image);
                 this.view.closeWindow();
             }
         }

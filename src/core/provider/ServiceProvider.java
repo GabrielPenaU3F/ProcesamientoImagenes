@@ -10,6 +10,9 @@ import core.service.generation.ImageFigureService;
 import core.service.generation.ImageGradientService;
 import core.service.statistics.GrayLevelStatisticsService;
 import core.service.statistics.RandomNumberGenerationService;
+import core.service.statistics.RandomNumberGenerationService;
+import core.service.*;
+import core.service.statistics.GrayLevelStatisticsService;
 import core.service.transformations.TransformRGBtoHSVImageService;
 import javafx.stage.FileChooser;
 

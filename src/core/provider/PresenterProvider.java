@@ -86,21 +86,27 @@ public class PresenterProvider {
         return new ExponentialScenePresenter(exponentialSceneController,
                 ServiceProvider.provideRandomNumberGenerationService(),
                 ActionProvider.provideGenerateSyntheticNoiseImageAction(),
-                PublishSubjectProvider.provideOnNoiseImagePublishSubject());
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject(),
+                ActionProvider.provideApplyExponentialNoiseToImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 
     public static RayleighScenePresenter provideRayleighScenePresenter(RayleighSceneController rayleighSceneController) {
         return new RayleighScenePresenter(rayleighSceneController,
                 ServiceProvider.provideRandomNumberGenerationService(),
                 ActionProvider.provideGenerateSyntheticNoiseImageAction(),
-                PublishSubjectProvider.provideOnNoiseImagePublishSubject());
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject(),
+                ActionProvider.provideApplyRayleighNoiseToImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 
     public static GaussianScenePresenter provideGaussianScenePresenter(GaussianSceneController gaussianSceneController) {
         return new GaussianScenePresenter(gaussianSceneController,
                 ServiceProvider.provideRandomNumberGenerationService(),
                 ActionProvider.provideGenerateSyntheticNoiseImageAction(),
-                PublishSubjectProvider.provideOnNoiseImagePublishSubject());
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject(),
+                ActionProvider.provideApplyGaussianNoiseToImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 
     public static SaltAndPepperNoisePresenter provideSaltAndPepperNoisePresenter(SaltAndPepperNoiseController saltAndPepperNoiseController) {

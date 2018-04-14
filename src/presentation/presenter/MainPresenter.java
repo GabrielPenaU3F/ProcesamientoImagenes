@@ -308,4 +308,19 @@ public class MainPresenter {
         EqualizedTimes.twice();
         new EqualizeImageByHistogramSceneCreator().createScene();
     }
+
+    public void onApplyAdditiveGaussianNoise() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
+        new GaussianSceneCreator().createScene();
+    }
+
+    public void onApplyMultiplicativeRayleighNoise() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
+        new RayleighSceneCreator().createScene();
+    }
+
+    public void onApplyMultiplicativeExponentialNoise() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
+        new ExponentialSceneCreator().createScene();
+    }
 }

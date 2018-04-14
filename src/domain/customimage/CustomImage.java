@@ -15,7 +15,7 @@ public class CustomImage {
     private final PixelReader reader;
     private final BufferedImage bufferedImage;
     private final Format format;
-    private List<Pixel> totalPixels;
+    private List<Pixel> pixelList;
 
     public CustomImage(Image image, String formatString){
         this(SwingFXUtils.fromFXImage(image, null), formatString);
@@ -25,10 +25,12 @@ public class CustomImage {
         this.bufferedImage = bufferedImage;
         this.format = new Format(formatString);
         this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
-        this.totalPixels = getTotalPixels();
+        this.pixelList = getListOfPixels();
     }
 
-    private List<Pixel> getTotalPixels() {
+    public int getPixelQuantity() { return this.pixelList.size(); }
+
+    private List<Pixel> getListOfPixels() {
         List<Pixel> total = new ArrayList<>();
 
         for (int column = 0; column < getWidth(); column++) {
@@ -41,7 +43,7 @@ public class CustomImage {
     }
 
     public List<Pixel> pickNRandomPixels(int n) {
-        List<Pixel> copy = new LinkedList<>(totalPixels);
+        List<Pixel> copy = new LinkedList<>(pixelList);
         Collections.shuffle(copy);
         return copy.subList(0, n);
     }
@@ -95,7 +97,7 @@ public class CustomImage {
     }
 
     public List<Pixel> getPixels() {
-        return totalPixels;
+        return pixelList;
     }
 
     public class RGB {

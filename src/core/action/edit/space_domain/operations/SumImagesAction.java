@@ -15,7 +15,7 @@ public class SumImagesAction {
         int[][] redChannelResultantValues = this.imageOperationsService.sumRedPixelsValues(image1, image2);
         int[][] greenChannelResultantValues = this.imageOperationsService.sumGreenPixelsValues(image1, image2);
         int[][] blueChannelResultantValues = this.imageOperationsService.sumBluePixelsValues(image1, image2);
-        return this.imageOperationsService.writeNewPixelsValuesInImage(redChannelResultantValues,
+        return this.imageOperationsService.writeNewPixelsValuesToImage(redChannelResultantValues,
                 greenChannelResultantValues, blueChannelResultantValues);
     }
 
