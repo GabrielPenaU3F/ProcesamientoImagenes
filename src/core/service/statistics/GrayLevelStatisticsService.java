@@ -1,4 +1,4 @@
-package core.service;
+package core.service.statistics;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

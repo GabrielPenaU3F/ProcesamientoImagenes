@@ -16,6 +16,8 @@ import core.action.noise.ApplySaltAndPepperNoiseAction;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
+import core.semaphore.RandomGeneratorsSemaphore;
+import domain.RandomElement;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import io.reactivex.Observable;
@@ -259,11 +261,20 @@ public class MainPresenter {
         new ImagesOperationsSceneCreator().createScene();
     }
 
-    public void onGenerateExponentialRandomNumber() { new ExponentialSceneCreator().createScene(); }
+    public void onGenerateExponentialRandomNumber() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.NUMBER);
+        new ExponentialSceneCreator().createScene();
+    }
 
-    public void onGenerateRayleighRandomNumber() { new RayleighSceneCreator().createScene(); }
+    public void onGenerateRayleighRandomNumber() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.NUMBER);
+        new RayleighSceneCreator().createScene();
+    }
 
-    public void onGenerateGaussianRandomNumber() { new GaussianSceneCreator().createScene(); }
+    public void onGenerateGaussianRandomNumber() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.NUMBER);
+        new GaussianSceneCreator().createScene();
+    }
 
     public void onApplySaltAndPepperNoise() {
         new SaltAndPepperNoiseSceneCreator().createScene();
@@ -272,4 +283,20 @@ public class MainPresenter {
     public void onApplyMediaFilter() {
         new MediaFilterSceneCreator().createScene();
     }
+
+    public void onGenerateExponentialNoiseSyntheticImage() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.SYNTHETIC_NOISE_IMAGE);
+        new ExponentialSceneCreator().createScene();
+    }
+
+    public void onGenerateRayleighNoiseSyntheticImage() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.SYNTHETIC_NOISE_IMAGE);
+        new RayleighSceneCreator().createScene();
+    }
+
+    public void onGenerateGaussianNoiseSyntheticImage() {
+        RandomGeneratorsSemaphore.setValue(RandomElement.SYNTHETIC_NOISE_IMAGE);
+        new GaussianSceneCreator().createScene();
+    }
+
 }

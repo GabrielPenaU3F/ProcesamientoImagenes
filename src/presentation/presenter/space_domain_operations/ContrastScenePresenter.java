@@ -2,7 +2,7 @@ package presentation.presenter.space_domain_operations;
 
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.image.GetImageAction;
-import core.service.GrayLevelStatisticsService;
+import core.service.statistics.GrayLevelStatisticsService;
 import domain.customimage.CustomImage;
 import io.reactivex.subjects.PublishSubject;
 import javafx.embed.swing.SwingFXUtils;

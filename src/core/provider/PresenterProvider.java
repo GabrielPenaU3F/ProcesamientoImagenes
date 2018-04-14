@@ -84,17 +84,23 @@ public class PresenterProvider {
 
     public static ExponentialScenePresenter provideExponentialScenePresenter(ExponentialSceneController exponentialSceneController) {
         return new ExponentialScenePresenter(exponentialSceneController,
-                ServiceProvider.provideRandomNumberGenerationService());
+                ServiceProvider.provideRandomNumberGenerationService(),
+                ActionProvider.provideGenerateSyntheticNoiseImageAction(),
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject());
     }
 
     public static RayleighScenePresenter provideRayleighScenePresenter(RayleighSceneController rayleighSceneController) {
         return new RayleighScenePresenter(rayleighSceneController,
-                ServiceProvider.provideRandomNumberGenerationService());
+                ServiceProvider.provideRandomNumberGenerationService(),
+                ActionProvider.provideGenerateSyntheticNoiseImageAction(),
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject());
     }
 
     public static GaussianScenePresenter provideGaussianScenePresenter(GaussianSceneController gaussianSceneController) {
         return new GaussianScenePresenter(gaussianSceneController,
-                ServiceProvider.provideRandomNumberGenerationService());
+                ServiceProvider.provideRandomNumberGenerationService(),
+                ActionProvider.provideGenerateSyntheticNoiseImageAction(),
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject());
     }
 
     public static SaltAndPepperNoisePresenter provideSaltAndPepperNoisePresenter(SaltAndPepperNoiseController saltAndPepperNoiseController) {
@@ -107,5 +113,11 @@ public class PresenterProvider {
         return new MediaFilterPresenter(mediaFilterSceneController,
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplyFilterAction());
+    }
+
+    public static NoiseImagePresenter provideNoiseImagePresenter(NoiseImageSceneController noiseImageSceneController) {
+        return new NoiseImagePresenter(noiseImageSceneController,
+                PublishSubjectProvider.provideOnNoiseImagePublishSubject(),
+                ActionProvider.provideCreateImageHistogram());
     }
 }

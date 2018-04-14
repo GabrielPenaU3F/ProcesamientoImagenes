@@ -1,6 +1,6 @@
 package core.action.noise;
 
-import core.action.noise.generator.RandomNumberGenerationService;
+import core.service.statistics.RandomNumberGenerationService;
 import domain.customimage.CustomImage;
 import io.reactivex.subjects.PublishSubject;
 import javafx.embed.swing.SwingFXUtils;

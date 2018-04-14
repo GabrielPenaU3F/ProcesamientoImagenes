@@ -1,11 +1,15 @@
 package core.provider;
 
 import core.action.filter.service.MaskService;
-import core.action.noise.generator.RandomNumberGenerationService;
-import core.service.*;
+import core.service.ImageOperationsService;
+import core.service.ImageRawService;
+import core.service.ModifyImageService;
+import core.service.OpenFileService;
 import core.service.generation.HistogramService;
 import core.service.generation.ImageFigureService;
 import core.service.generation.ImageGradientService;
+import core.service.statistics.GrayLevelStatisticsService;
+import core.service.statistics.RandomNumberGenerationService;
 import core.service.transformations.TransformRGBtoHSVImageService;
 import javafx.stage.FileChooser;
 

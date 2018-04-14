@@ -3,7 +3,6 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import core.provider.ViewProvider;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
@@ -127,31 +126,49 @@ public class MainSceneController {
     }
 
     @FXML
-    public void calculateImagesOperations(){ this.mainPresenter.onCalculateImagesOperations();}
+    public void calculateImagesOperations() {
+        this.mainPresenter.onCalculateImagesOperations();
+    }
 
     @FXML
-    public void calculateNegativeImage() { this.mainPresenter.onCalculateNegativeImage(); }
+    public void calculateNegativeImage() {
+        this.mainPresenter.onCalculateNegativeImage();
+    }
 
     @FXML
-    public void threshold() { this.mainPresenter.onThreshold(); }
+    public void threshold() {
+        this.mainPresenter.onThreshold();
+    }
 
     @FXML
-    public void contrast() { this.mainPresenter.onContrast(); }
+    public void contrast() {
+        this.mainPresenter.onContrast();
+    }
 
     @FXML
-    public void compressDynamicRange() {this.mainPresenter.onCompressDynamicRange();}
+    public void compressDynamicRange() {
+        this.mainPresenter.onCompressDynamicRange();
+    }
 
     @FXML
-    public void gammaPowerFunction() {this.mainPresenter.onGammaPowerFunction();}
+    public void gammaPowerFunction() {
+        this.mainPresenter.onGammaPowerFunction();
+    }
 
     @FXML
-    public void generateExponentialRandomNumber() {this.mainPresenter.onGenerateExponentialRandomNumber();}
+    public void generateExponentialRandomNumber() {
+        this.mainPresenter.onGenerateExponentialRandomNumber();
+    }
 
     @FXML
-    public void generateRayleighRandomNumber() {this.mainPresenter.onGenerateRayleighRandomNumber();}
+    public void generateRayleighRandomNumber() {
+        this.mainPresenter.onGenerateRayleighRandomNumber();
+    }
 
     @FXML
-    public void generateGaussianRandomNumber() {this.mainPresenter.onGenerateGaussianRandomNumber();}
+    public void generateGaussianRandomNumber() {
+        this.mainPresenter.onGenerateGaussianRandomNumber();
+    }
 
     @FXML
     public void close() {
@@ -181,5 +198,20 @@ public class MainSceneController {
     @FXML
     public void onApplyMediaFilter() {
         this.mainPresenter.onApplyMediaFilter();
+    }
+
+    @FXML
+    public void generateExponentialNoiseSyntheticImage() {
+        this.mainPresenter.onGenerateExponentialNoiseSyntheticImage();
+    }
+
+    @FXML
+    public void generateRayleighNoiseSyntheticImage() {
+        this.mainPresenter.onGenerateRayleighNoiseSyntheticImage();
+    }
+
+    @FXML
+    public void generateGaussianNoiseSyntheticImage() {
+        this.mainPresenter.onGenerateGaussianNoiseSyntheticImage();
     }
 }

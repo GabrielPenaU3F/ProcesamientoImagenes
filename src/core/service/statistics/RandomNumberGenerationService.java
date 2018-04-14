@@ -1,4 +1,4 @@
-package core.action.noise.generator;
+package core.service.statistics;
 
 import java.util.Random;
 

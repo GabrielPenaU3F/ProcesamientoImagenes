@@ -3,26 +3,24 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
-import core.action.edit.space_domain.ApplyThresholdAction;
-import core.action.edit.space_domain.CalculateNegativeImageAction;
-import core.action.edit.space_domain.NormalizeImageAction;
+import core.action.edit.space_domain.*;
 import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
 import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
-import core.action.edit.space_domain.*;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
+import core.action.histogram.EqualizeGrayImageAction;
 import core.action.image.CreateImageInformAction;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.SaveImageAction;
-import core.action.histogram.EqualizeGrayImageAction;
 import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
+import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 
 class ActionProvider {
 
@@ -51,6 +49,7 @@ class ActionProvider {
     private static SubstractImagesAction substractImagesAction;
     private static ApplySaltAndPepperNoiseAction applySaltAndPepperAction;
     private static ApplyFilterAction applyFilterAction;
+    private static GenerateSyntheticNoiseImageAction generateSyntheticNoiseImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -252,5 +251,13 @@ class ActionProvider {
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject());
         }
         return applyFilterAction;
+    }
+
+    public static GenerateSyntheticNoiseImageAction provideGenerateSyntheticNoiseImageAction() {
+        if (generateSyntheticNoiseImageAction == null) {
+            generateSyntheticNoiseImageAction = new GenerateSyntheticNoiseImageAction(
+                    ServiceProvider.provideImageOperationsService());
+        }
+        return generateSyntheticNoiseImageAction;
     }
 }
