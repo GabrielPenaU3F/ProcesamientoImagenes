@@ -87,10 +87,21 @@ public class GrayLevelStatisticsService {
             }
         }
         return min;
-
     }
 
-    public int calculateChannelMatrixialRepresentationMaxGrayLevel(int[][] channel) {
+    public int calculateMinGrayLevel(int[][] channelValues){
+        int actualMin = 0;
+        for (int i = 0; i < channelValues.length; i++){
+            for (int j = 0; j < channelValues[i].length; j++){
+                if(channelValues[i][j] < actualMin){
+                    actualMin = channelValues[i][j];
+                }
+            }
+        }
+        return actualMin;
+    }
+
+    public int calculateMaxGrayLevel(int[][] channel) {
         int max = 0;
         for (int i=0; i < channel.length; i++) {
             for (int j=0; j < channel[i].length; j++) {

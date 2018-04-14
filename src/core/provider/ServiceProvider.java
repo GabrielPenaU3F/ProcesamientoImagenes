@@ -41,7 +41,7 @@ class ServiceProvider {
     }
 
     public static ImageOperationsService provideImageOperationsService() {
-        return new ImageOperationsService();
+        return new ImageOperationsService(provideGrayLevelStatisticsService());
     }
 
     public static TransformRGBtoHSVImageService provideTransformRGBtoHSVImageService() { return new TransformRGBtoHSVImageService(); }

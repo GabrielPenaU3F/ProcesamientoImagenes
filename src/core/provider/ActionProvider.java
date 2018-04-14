@@ -6,7 +6,7 @@ import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.NormalizeImageAction;
-import core.action.edit.space_domain.operations.MultiplyImageWithScalarNumberAction;
+import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
 import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
@@ -45,7 +45,7 @@ class ActionProvider {
     private static MultiplyImagesAction multiplyImagesAction;
     private static SumImagesAction sumImagesAction;
     private static NormalizeImageAction normalizeImageAction;
-    private static MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction;
+    private static MultiplyImageByScalarNumberAction multiplyImageByScalarNumberAction;
     private static SubstractImagesAction substractImagesAction;
 
 
@@ -225,11 +225,11 @@ class ActionProvider {
         return normalizeImageAction;
     }
 
-    public static MultiplyImageWithScalarNumberAction provideMultiplyImageWithScalarNumberAction() {
-        if (multiplyImageWithScalarNumberAction == null) {
-            multiplyImageWithScalarNumberAction = new MultiplyImageWithScalarNumberAction(ServiceProvider.provideImageOperationsService(),
+    public static MultiplyImageByScalarNumberAction provideMultiplyImageWithScalarNumberAction() {
+        if (multiplyImageByScalarNumberAction == null) {
+            multiplyImageByScalarNumberAction = new MultiplyImageByScalarNumberAction(ServiceProvider.provideImageOperationsService(),
                     ActionProvider.provideCompressDynamicRangeAction());
         }
-        return multiplyImageWithScalarNumberAction;
+        return multiplyImageByScalarNumberAction;
     }
 }

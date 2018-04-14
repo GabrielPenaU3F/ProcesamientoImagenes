@@ -1,7 +1,7 @@
 package presentation.presenter;
 
 import core.action.edit.space_domain.NormalizeImageAction;
-import core.action.edit.space_domain.operations.MultiplyImageWithScalarNumberAction;
+import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
 import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
@@ -17,21 +17,22 @@ public class ImagesOperationsPresenter {
     private final NormalizeImageAction normalizeImageAction;
     private final SumImagesAction sumImagesAction;
     private final MultiplyImagesAction multiplyImagesAction;
-    private final MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction;
+    private final MultiplyImageByScalarNumberAction multiplyImageByScalarNumberAction;
     private final SubstractImagesAction substractImagesAction;
     private CustomImage image1;
     private CustomImage image2;
 
     public ImagesOperationsPresenter(LoadImageAction loadImageAction, NormalizeImageAction normalizeImageAction,
                                      SumImagesAction sumImagesAction, MultiplyImagesAction multiplyImagesAction,
-                                     MultiplyImageWithScalarNumberAction multiplyImageWithScalarNumberAction,
+                                     MultiplyImageByScalarNumberAction multiplyImageByScalarNumberAction,
                                      SubstractImagesAction substractImagesAction) {
         this.loadImageAction = loadImageAction;
         this.normalizeImageAction = normalizeImageAction;
         this.sumImagesAction = sumImagesAction;
         this.multiplyImagesAction = multiplyImagesAction;
-        this.multiplyImageWithScalarNumberAction = multiplyImageWithScalarNumberAction;
+        this.multiplyImageByScalarNumberAction = multiplyImageByScalarNumberAction;
         this.substractImagesAction = substractImagesAction;
+
     }
 
     public Image onMakeImagesSum() {
@@ -56,7 +57,7 @@ public class ImagesOperationsPresenter {
         String receivedValue = InsertValuePopup.show("Insert scalar number (Remember that the image #1 will " +
                 "participate in the multiplication)" , "0").get();
         int scalarNumber = Integer.parseInt(receivedValue);
-        return this.multiplyImageWithScalarNumberAction.execute(image1, scalarNumber);
+        return this.multiplyImageByScalarNumberAction.execute(image1, scalarNumber);
     }
 
     public Image onloadImage1() {
