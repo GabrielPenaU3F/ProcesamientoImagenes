@@ -16,7 +16,7 @@ public class ExponentialScenePresenter {
     }
 
     public void onGenerate() {
-
+        
         double lambda = Double.parseDouble(this.view.lambdaTextField.getText());
         if (isLambdaValid(lambda)) {
             double number = this.randomNumberGenerationService.generateExponentialNumber(lambda);
