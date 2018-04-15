@@ -9,6 +9,7 @@ import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
+import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
@@ -49,7 +50,6 @@ public class MainPresenter {
     private final EqualizeGrayImageAction equalizeGrayImageAction;
     private final Observable<Image> onModifiedImage;
     private final CompressDynamicRangeAction compressDynamicRangeAction;
-    private final ApplySaltAndPepperNoiseAction applySaltAndPepperNoiseAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -64,8 +64,7 @@ public class MainPresenter {
                          CreateImageWithFigureAction createImageWithFigureAction,
                          EqualizeGrayImageAction equalizeGrayImageAction,
                          Observable<Image> onModifiedImage,
-                         CompressDynamicRangeAction compressDynamicRangeAction,
-                         ApplySaltAndPepperNoiseAction applySaltAndPepperNoiseAction) {
+                         CompressDynamicRangeAction compressDynamicRangeAction) {
 
         this.view = view;
 
@@ -82,7 +81,6 @@ public class MainPresenter {
         this.createImageWithFigureAction = createImageWithFigureAction;
         this.equalizeGrayImageAction = equalizeGrayImageAction;
         this.compressDynamicRangeAction = compressDynamicRangeAction;
-        this.applySaltAndPepperNoiseAction = applySaltAndPepperNoiseAction;
     }
 
     public void initialize() {
@@ -240,12 +238,14 @@ public class MainPresenter {
         return this.view;
     }
 
-    public void onCreateEqualizedImage() {
-        view.modifiedImageView.setImage(equalizeGrayImageAction.execute());
+    public void onCreateEqualizedImageOnce() {
+        this.getImageAction.execute()
+                .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 1));
     }
 
     public void onCreateEqualizedImageTwice() {
-        view.modifiedImageView.setImage(equalizeGrayImageAction.executeTwice());
+        this.getImageAction.execute()
+                .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 2));
     }
 
     public void onCompressDynamicRange() {
@@ -299,4 +299,13 @@ public class MainPresenter {
         new GaussianSceneCreator().createScene();
     }
 
+    public void onCreateEqualizedImageByHistogram() {
+        EqualizedTimes.once();
+        new EqualizeImageByHistogramSceneCreator().createScene();
+    }
+
+    public void onCreateEqualizedImageTwiceByHistogram() {
+        EqualizedTimes.twice();
+        new EqualizeImageByHistogramSceneCreator().createScene();
+    }
 }

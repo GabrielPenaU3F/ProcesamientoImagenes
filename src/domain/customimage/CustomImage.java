@@ -1,7 +1,9 @@
 package domain.customimage;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -14,6 +16,10 @@ public class CustomImage {
     private final BufferedImage bufferedImage;
     private final Format format;
     private List<Pixel> totalPixels;
+
+    public CustomImage(Image image, String formatString){
+        this(SwingFXUtils.fromFXImage(image, null), formatString);
+    }
 
     public CustomImage(BufferedImage bufferedImage, String formatString) {
         this.bufferedImage = bufferedImage;

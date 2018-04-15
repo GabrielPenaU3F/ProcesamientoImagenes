@@ -4,54 +4,46 @@ import core.repository.ImageRepository;
 import core.service.generation.HistogramService;
 import domain.Histogram;
 import domain.customimage.CustomImage;
+import io.reactivex.subjects.PublishSubject;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-import java.awt.image.BufferedImage;
-import java.util.Optional;
-
 public class EqualizeGrayImageAction {
 
-    private HistogramService histogramService;
+    private final HistogramService histogramService;
     private final ImageRepository imageRepository;
+    private final PublishSubject<Image> imagePublishSubject;
 
-    public EqualizeGrayImageAction(HistogramService histogramService, ImageRepository imageRepository) {
+    public EqualizeGrayImageAction(HistogramService histogramService,
+                                   ImageRepository imageRepository,
+                                   PublishSubject<Image> imagePublishSubject) {
         this.histogramService = histogramService;
         this.imageRepository = imageRepository;
+        this.imagePublishSubject = imagePublishSubject;
     }
 
-    public Image execute() {
-        CustomImage customImage = getCustomImage();
-        Histogram histogram = this.histogramService.create(getCustomImage());
-        Image equalizedImage = equalizeImage(customImage, histogram);
+    public Image execute(CustomImage customImage, int times) {
 
-        CustomImage equalizedCustomImage = new CustomImage(SwingFXUtils.fromFXImage(equalizedImage, null), customImage.getFormatString());
-        imageRepository.saveModifiedImage(equalizedCustomImage);
+        Image equalizedImage = recursive(customImage, times);
+
+        this.imagePublishSubject.onNext(equalizedImage);
 
         return equalizedImage;
     }
 
-    public Image executeTwice() {
-        CustomImage customImage = getCustomImage();
+    private Image recursive(CustomImage customImage, int times) {
+
         Histogram histogram = this.histogramService.create(customImage);
-        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(equalizeImage(customImage, histogram), null);
+        Image equalizedImage = equalizeImage(customImage, histogram);
 
-        CustomImage equalizedImage = new CustomImage(bufferedImage, customImage.getFormatString());
-        Histogram histogramFromEqualizedImage = this.histogramService.create(equalizedImage);
+        times--;
 
-        Image equalizedImage2 = equalizeImage(equalizedImage, histogramFromEqualizedImage);
-        CustomImage equalizedCustomImage = new CustomImage(SwingFXUtils.fromFXImage(equalizedImage2, null), customImage.getFormatString());
-        imageRepository.saveModifiedImage(equalizedCustomImage);
+        if (times == 0) return equalizedImage;
 
-        return equalizedImage2;
-    }
-
-    private CustomImage getCustomImage() {
-        Optional<CustomImage> imageOptional = this.imageRepository.getImage();
-        return imageOptional.orElse(CustomImage.EMPTY);
+        return recursive(new CustomImage(equalizedImage, customImage.getFormatString()), times);
     }
 
     private Image equalizeImage(CustomImage customImage, Histogram histogram) {

@@ -182,7 +182,7 @@ public class MainSceneController {
 
     @FXML
     public void createEqualizedImage() {
-        this.mainPresenter.onCreateEqualizedImage();
+        this.mainPresenter.onCreateEqualizedImageOnce();
     }
 
     @FXML
@@ -213,5 +213,15 @@ public class MainSceneController {
     @FXML
     public void generateGaussianNoiseSyntheticImage() {
         this.mainPresenter.onGenerateGaussianNoiseSyntheticImage();
+    }
+
+    @FXML
+    public void createEqualizedImageByHistogram() {
+        this.mainPresenter.onCreateEqualizedImageByHistogram();
+    }
+
+    @FXML
+    public void createImageEqualizedTwiceByHistogram() {
+        this.mainPresenter.onCreateEqualizedImageTwiceByHistogram();
     }
 }

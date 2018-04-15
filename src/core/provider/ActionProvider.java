@@ -21,6 +21,8 @@ import core.action.modifiedimage.GetModifiedImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
+import io.reactivex.subjects.PublishSubject;
+import javafx.scene.image.Image;
 
 class ActionProvider {
 
@@ -174,13 +176,11 @@ class ActionProvider {
         return applyContrastAction;
     }
 
-    public static EqualizeGrayImageAction provideCreateEqualizedGrayImageAction() {
-        if (createEqualizeGrayImageAction == null) {
-            createEqualizeGrayImageAction = new EqualizeGrayImageAction(
+    public static EqualizeGrayImageAction provideCreateEqualizedGrayImageAction(PublishSubject<Image> imagePublishSubject) {
+        return new EqualizeGrayImageAction(
                     ServiceProvider.provideHistogramService(),
-                    RepositoryProvider.provideImageRepository());
-        }
-        return createEqualizeGrayImageAction;
+                    RepositoryProvider.provideImageRepository(),
+                    imagePublishSubject);
     }
 
     public static CompressDynamicRangeAction provideCompressDynamicRangeAction() {

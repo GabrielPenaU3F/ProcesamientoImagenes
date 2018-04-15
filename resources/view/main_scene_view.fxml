@@ -96,9 +96,15 @@
                 <MenuItem mnemonicParsing="false" onAction="#gammaPowerFunction" text="Gamma Power Function" />
                 <MenuItem mnemonicParsing="false" onAction="#calculateImagesOperations" text="Image Operations" />
                 <Menu mnemonicParsing="false" text="Histogram">
-                    <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create" />
-                    <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Equalize Image" />
-                    <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Equalize Image Twice" />
+                    <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create"/>
+                    <Menu mnemonicParsing="false" text="Equalize Image">
+                        <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Image"/>
+                        <MenuItem mnemonicParsing="false" onAction="#createEqualizedImageByHistogram" text="Image with Histogram"/>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Equalize Image Twice">
+                        <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Image"/>
+                        <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwiceByHistogram" text="Image with Histogram"/>
+                    </Menu>
                 </Menu>
             </Menu>
             <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut" />

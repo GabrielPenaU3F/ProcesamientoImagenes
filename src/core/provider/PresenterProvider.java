@@ -28,10 +28,10 @@ public class PresenterProvider {
                     ActionProvider.provideObtainRGBChannelAction(),
                     ActionProvider.provideObtainHSVChannelAction(),
                     ActionProvider.provideCreateImageWithFigureAction(),
-                    ActionProvider.provideCreateEqualizedGrayImageAction(),
+                    ActionProvider.provideCreateEqualizedGrayImageAction(
+                            PublishSubjectProvider.provideOnModifiedImagePublishSubject()),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
-                    ActionProvider.provideCompressDynamicRangeAction(),
-                    ActionProvider.provideApplySaltAndPepperNoiseAction());
+                    ActionProvider.provideCompressDynamicRangeAction());
 
             return mainPresenter;
         }
@@ -119,5 +119,14 @@ public class PresenterProvider {
         return new NoiseImagePresenter(noiseImageSceneController,
                 PublishSubjectProvider.provideOnNoiseImagePublishSubject(),
                 ActionProvider.provideCreateImageHistogram());
+    }
+
+    public static EqualizedImagePresenter provideEqualizedImagePresenter(EqualizedImageSceneController equalizedImageSceneController) {
+        return new EqualizedImagePresenter(equalizedImageSceneController,
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideCreateEqualizedGrayImageAction(
+                        PublishSubjectProvider.provideOnEqualizeImagePublishSubject()),
+                ActionProvider.provideCreateImageHistogram(),
+                PublishSubjectProvider.provideOnEqualizeImagePublishSubject());
     }
 }

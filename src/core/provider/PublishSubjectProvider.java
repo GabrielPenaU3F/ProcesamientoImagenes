@@ -7,6 +7,7 @@ public class PublishSubjectProvider {
 
     private static PublishSubject<Image> onModifiedImagePublishSubject;
     private static PublishSubject<Image> onNoiseImagePublishSubject;
+    private static PublishSubject<Image> onEqualizeImagePublishSubject;
 
     public static PublishSubject<Image> provideOnModifiedImagePublishSubject() {
         if (onModifiedImagePublishSubject == null) {
@@ -20,5 +21,12 @@ public class PublishSubjectProvider {
             onNoiseImagePublishSubject = PublishSubject.create();
         }
         return onNoiseImagePublishSubject;
+    }
+
+    public static PublishSubject<Image> provideOnEqualizeImagePublishSubject() {
+        if (onEqualizeImagePublishSubject == null) {
+            onEqualizeImagePublishSubject = PublishSubject.create();
+        }
+        return onEqualizeImagePublishSubject;
     }
 }
