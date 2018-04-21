@@ -161,7 +161,8 @@
             <MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper" />
         </Menu>
         <Menu mnemonicParsing="false" text="Filter">
-            <MenuItem mnemonicParsing="false" onAction="#onApplyMediaFilter" text="Media" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyMeanFilter" text="Mean" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyMedianFilter" text="Median" />
         </Menu>
     </MenuBar>
 </AnchorPane>

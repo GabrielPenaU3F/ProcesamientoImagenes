@@ -5,10 +5,14 @@ import domain.filter.Mask;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MaskService {
 
     //Here, x and y are the coordinates of the point where the mask's center is currently standing
-    public void applyMediaMask(CustomImage image, WritableImage filteredImage, Mask mask, int x, int y) {
+    public void applyMeanMask(CustomImage image, WritableImage filteredImage, Mask mask, int x, int y) {
 
         double red = 0;
         double green = 0;
@@ -38,9 +42,39 @@ public class MaskService {
         filteredImage.getPixelWriter().setColor(x, y, color);
     }
 
+    public void applyMedianMask(CustomImage image, WritableImage filteredImage, Mask mask, int x, int y) {
+
+        int maskSize = mask.getSize();
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        List<Double> pixelsInMask = new ArrayList<>();
+
+        for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
+            for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
+
+                if (isPositionValid(width, height, i, j)) {
+                    Color color = image.getPixelReader().getColor(i, j);
+                    pixelsInMask.add(255 * color.getRed());
+                }
+            }
+        }
+
+        pixelsInMask.sort(Double::compareTo);
+
+        int medianSize = pixelsInMask.size() / 2;
+        double value = pixelsInMask.get(medianSize);
+
+        if (medianSize % 2 == 0) {
+            value = (pixelsInMask.get(medianSize - 1) + pixelsInMask.get(medianSize)) / 2;
+        }
+
+        Color color = Color.rgb((int) value, (int) value, (int) value);
+        filteredImage.getPixelWriter().setColor(x, y, color);
+    }
+
     private boolean isPositionValid(int width, int height, int i, int j) {
         // Ignore the portion of the mask outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;
     }
-
 }

@@ -21,6 +21,12 @@ public abstract class Mask {
     public abstract double getValue(int x, int y);
 
     public enum Type {
-        MEDIA
+        MEAN, MEDIAN
+    }
+
+    public class ActionNotAvailable extends RuntimeException {
+        public ActionNotAvailable(Type type) {
+            super("Action Not Available by Type " + type);
+        }
     }
 }

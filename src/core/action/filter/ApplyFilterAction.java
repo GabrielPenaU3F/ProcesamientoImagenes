@@ -32,10 +32,12 @@ public class ApplyFilterAction {
     }
 
     private void applyMask(Mask mask, CustomImage customImage, WritableImage filteredImage, int x, int y) {
+        if (Mask.Type.MEAN.equals(mask.getType())) {
+            maskService.applyMeanMask(customImage, filteredImage, mask, x, y);
+        }
 
-        switch (mask.getType()) {
-            case MEDIA:
-                maskService.applyMediaMask(customImage, filteredImage, mask, x, y);
+        if (Mask.Type.MEDIAN.equals(mask.getType())) {
+            maskService.applyMedianMask(customImage, filteredImage, mask, x, y);
         }
     }
 }

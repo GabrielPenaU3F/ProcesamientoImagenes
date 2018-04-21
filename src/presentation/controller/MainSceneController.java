@@ -202,11 +202,6 @@ public class MainSceneController {
     public void applySaltAndPepperNoise() { this.mainPresenter.onApplySaltAndPepperNoise(); }
 
     @FXML
-    public void onApplyMediaFilter() {
-        this.mainPresenter.onApplyMediaFilter();
-    }
-
-    @FXML
     public void generateExponentialNoiseSyntheticImage() {
         this.mainPresenter.onGenerateExponentialNoiseSyntheticImage();
     }
@@ -239,4 +234,14 @@ public class MainSceneController {
 
     @FXML
     public void applyMultiplicativeExponentialNoise() { this.mainPresenter.onApplyMultiplicativeExponentialNoise(); }
+
+    @FXML
+    public void onApplyMeanFilter() {
+        this.mainPresenter.onApplyMeanFilter();
+    }
+
+    @FXML
+    public void onApplyMedianFilter() {
+        this.mainPresenter.onApplyMedianFilter();
+    }
 }

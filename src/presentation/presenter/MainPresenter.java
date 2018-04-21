@@ -14,6 +14,8 @@ import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 import core.repository.ImageRepository;
+import domain.filter.FilterSemaphore;
+import domain.filter.Mask;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
@@ -300,11 +302,6 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyMediaFilter() {
-        new MediaFilterSceneCreator().createScene();
-        view.applyChangesButton.setVisible(true);
-    }
-
     public void onGenerateExponentialNoiseSyntheticImage() {
         RandomGeneratorsSemaphore.setValue(RandomElement.SYNTHETIC_NOISE_IMAGE);
         new ExponentialSceneCreator().createScene();
@@ -346,5 +343,15 @@ public class MainPresenter {
         RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
         new ExponentialSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyMeanFilter() {
+        FilterSemaphore.setValue(Mask.Type.MEAN);
+        new FilterSceneCreator().createScene();
+    }
+
+    public void onApplyMedianFilter() {
+        FilterSemaphore.setValue(Mask.Type.MEDIAN);
+        new FilterSceneCreator().createScene();
     }
 }

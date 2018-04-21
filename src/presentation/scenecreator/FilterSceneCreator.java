@@ -6,16 +6,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class MediaFilterSceneCreator implements SceneCreator {
+public class FilterSceneCreator implements SceneCreator {
 
     @Override
     public void createScene() {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/media_filter_scene_view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/filter_scene_view.fxml"));
             Scene channelScene = new Scene(root);
             Stage channelStage = new Stage(StageStyle.DECORATED);
-            channelStage.setTitle("Media filter parameters");
+            channelStage.setTitle("Filter parameters");
             channelStage.setScene(channelScene);
             channelStage.show();
 

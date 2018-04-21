@@ -1,12 +1,12 @@
 package domain.filter;
 
-public class MediaMask extends Mask {
+public class MeanMask extends Mask {
 
     private final double[][] matrix;
     private final double coefficient;
 
-    public MediaMask(int size) {
-        super(Type.MEDIA, size);
+    public MeanMask(int size) {
+        super(Type.MEAN, size);
 
         coefficient = 1 / Math.pow(size, 2);
 

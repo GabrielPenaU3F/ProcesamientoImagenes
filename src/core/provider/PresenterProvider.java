@@ -116,8 +116,8 @@ public class PresenterProvider {
                 ActionProvider.provideApplySaltAndPepperNoiseAction());
     }
 
-    public static MediaFilterPresenter provideMediaFilterPresenter(MediaFilterSceneController mediaFilterSceneController) {
-        return new MediaFilterPresenter(mediaFilterSceneController,
+    public static FilterPresenter provideFilterPresenter(FilterSceneController filterSceneController) {
+        return new FilterPresenter(filterSceneController,
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplyFilterAction());
     }
