@@ -18,21 +18,21 @@ public class MaskService {
         double green = 0;
         double blue = 0;
 
-        int maskSize = mask.getSize();
+        int sizeMask = mask.getSize();
         int width = image.getWidth();
         int height = image.getHeight();
 
-        double maskValue = mask.getValue(0);
+        double value = mask.getValue(0, 0);
 
-        for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
-            for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
+        for (int j = y - (sizeMask / 2); j <= y + (sizeMask / 2); j++) {
+            for (int i = x - (sizeMask / 2); i <= x + (sizeMask / 2); i++) {
 
                 if (isPositionValid(width, height, i, j)) {
                     Color color = image.getPixelReader().getColor(i, j);
 
-                    red += 255 * color.getRed() * maskValue;
-                    green += 255 * color.getGreen() * maskValue;
-                    blue += 255 * color.getBlue() * maskValue;
+                    red += 255 * color.getRed() * value;
+                    green += 255 * color.getGreen() * value;
+                    blue += 255 * color.getBlue() * value;
                 }
                 //Ignoring the invalid positions, is equal to do a zero-padding. We're averaging zeros
             }
@@ -44,19 +44,22 @@ public class MaskService {
 
     public void applyMedianMask(CustomImage image, WritableImage filteredImage, Mask mask, int x, int y) {
 
-        int maskSize = mask.getSize();
+        int sizeMask = mask.getSize();
         int width = image.getWidth();
         int height = image.getHeight();
 
         List<Double> pixelsInMask = new ArrayList<>();
 
         int index = 0;
-        for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
-            for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
+        for (int j = y - (sizeMask / 2); j <= y + (sizeMask / 2); j++) {
+            for (int i = x - (sizeMask / 2); i <= x + (sizeMask / 2); i++) {
 
                 if (isPositionValid(width, height, i, j)) {
                     Color color = image.getPixelReader().getColor(i, j);
-                    applyWeights(mask, pixelsInMask, color, index);
+                    // apply weights
+                    for (int n = 0; n < mask.getValue(index); n++) {
+                        pixelsInMask.add(255 * color.getRed());
+                    }
                 }
                 index++;
             }
@@ -75,14 +78,46 @@ public class MaskService {
         filteredImage.getPixelWriter().setColor(x, y, color);
     }
 
+    public void applyGaussianMask(CustomImage image, WritableImage filteredImage, Mask mask, int x, int y) {
+
+        int sizeMask = mask.getSize();
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        double red = 0;
+        double green = 0;
+        double blue = 0;
+
+        double divider = 0;
+        for (int i = 0; i < sizeMask; i++) {
+            for (int j = 0; j < sizeMask; j++) {
+                divider += mask.getValue(i, j);
+            }
+        }
+
+        for (int j = y - (sizeMask / 2); j <= y + (sizeMask / 2); j++) {
+            for (int i = x - (sizeMask / 2); i <= x + (sizeMask / 2); i++) {
+
+                int column = j + (sizeMask / 2) - y;
+                int row = i + (sizeMask / 2) - x;
+                double value = mask.getValue(column, row);
+
+                if (isPositionValid(width, height, i, j)) {
+                    Color color = image.getPixelReader().getColor(i, j);
+
+                    red += 255 * color.getRed() * value / divider;
+                    green += 255 * color.getGreen() * value / divider;
+                    blue += 255 * color.getBlue() * value / divider;
+                }
+            }
+        }
+
+        Color color = Color.rgb((int) red, (int) green, (int) blue);
+        filteredImage.getPixelWriter().setColor(x, y, color);
+    }
+
     private boolean isPositionValid(int width, int height, int i, int j) {
         // Ignore the portion of the mask outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;
-    }
-
-    private void applyWeights(Mask mask, List<Double> pixelsInMask, Color color, int index) {
-        for (int n = 0; n < mask.getValue(index); n++) {
-            pixelsInMask.add(255 * color.getRed());
-        }
     }
 }

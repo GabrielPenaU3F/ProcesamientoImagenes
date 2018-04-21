@@ -39,5 +39,9 @@ public class ApplyFilterAction {
         if (Mask.Type.MEDIAN.equals(mask.getType())) {
             maskService.applyMedianMask(customImage, filteredImage, mask, x, y);
         }
+
+        if(Mask.Type.GAUSSIAN.equals(mask.getType())) {
+            maskService.applyGaussianMask(customImage, filteredImage, mask, x, y);
+        }
     }
 }

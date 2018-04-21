@@ -249,4 +249,9 @@ public class MainSceneController {
     public void onApplyWeightedMedianFilter() {
         this.mainPresenter.onApplyWeightedMedianFilter();
     }
+
+    @FXML
+    public void onApplyGaussianFilter() {
+        this.mainPresenter.onApplyGaussianFilter();
+    }
 }

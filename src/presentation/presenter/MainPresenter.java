@@ -359,4 +359,9 @@ public class MainPresenter {
         FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEAN);
         new FilterSceneCreator().createScene();
     }
+
+    public void onApplyGaussianFilter() {
+        FilterSemaphore.setValue(Mask.Type.GAUSSIAN);
+        new FilterSceneCreator().createScene();
+    }
 }

@@ -14,9 +14,9 @@ public class FilterSceneController {
     private final FilterPresenter filterPresenter;
 
     @FXML
-    public TextField sizeTextField;
+    public TextField textField;
     @FXML
-    public Label labelSize;
+    public Label label;
 
     public FilterSceneController() {
         this.filterPresenter = PresenterProvider.provideFilterPresenter(this);
@@ -29,16 +29,20 @@ public class FilterSceneController {
 
     public void update() {
         if(FilterSemaphore.is(Mask.Type.MEAN)) {
-            labelSize.setText("Enter size mask | Must be an odd integer");
+            label.setText("Enter size mask | Must be an odd integer");
         }
 
         if(FilterSemaphore.is(Mask.Type.MEDIAN)) {
-            labelSize.setText("Enter size mask");
+            label.setText("Enter size mask");
         }
 
         if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEAN)) {
-            labelSize.setText("Only 3x3 mask is available");
-            sizeTextField.setDisable(true);
+            label.setText("Only 3x3 mask is available");
+            textField.setDisable(true);
+        }
+
+        if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
+            label.setText("Enter standard desviation");
         }
     }
 
@@ -55,10 +59,14 @@ public class FilterSceneController {
         if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEAN)) {
             this.filterPresenter.onApplyWeightedMedianFilter();
         }
+
+        if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
+            this.filterPresenter.onApplyGaussianFilter();
+        }
     }
 
     public void closeWindow() {
-        Stage stage = (Stage) this.sizeTextField.getScene().getWindow();
+        Stage stage = (Stage) this.textField.getScene().getWindow();
         stage.close();
     }
 }
