@@ -1,13 +1,11 @@
-package core.action.filter.service;
+package core.service;
 
 import domain.customimage.CustomImage;
 import domain.filter.Mask;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MaskService {
 

@@ -1,6 +1,6 @@
 package core.provider;
 
-import core.action.filter.service.MaskService;
+import core.service.MaskService;
 import core.service.ImageOperationsService;
 import core.service.ImageRawService;
 import core.service.ModifyImageService;
@@ -10,9 +10,7 @@ import core.service.generation.ImageFigureService;
 import core.service.generation.ImageGradientService;
 import core.service.statistics.GrayLevelStatisticsService;
 import core.service.statistics.RandomNumberGenerationService;
-import core.service.statistics.RandomNumberGenerationService;
 import core.service.*;
-import core.service.statistics.GrayLevelStatisticsService;
 import core.service.transformations.TransformRGBtoHSVImageService;
 import javafx.stage.FileChooser;
 
@@ -76,5 +74,9 @@ public class ServiceProvider {
 
     public static MaskService provideMaskService() {
         return new MaskService();
+    }
+
+    public static MatrixService provideMatrixService() {
+        return new MatrixService();
     }
 }

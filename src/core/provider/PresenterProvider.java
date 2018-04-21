@@ -119,7 +119,8 @@ public class PresenterProvider {
     public static FilterPresenter provideFilterPresenter(FilterSceneController filterSceneController) {
         return new FilterPresenter(filterSceneController,
                 ActionProvider.provideGetImageAction(),
-                ActionProvider.provideApplyFilterAction());
+                ActionProvider.provideApplyFilterAction(),
+                ActionProvider.provideApplyPrewittFilterAction());
     }
 
     public static NoiseImagePresenter provideNoiseImagePresenter(NoiseImageSceneController noiseImageSceneController) {

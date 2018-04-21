@@ -1,6 +1,6 @@
 package core.action.filter;
 
-import core.action.filter.service.MaskService;
+import core.service.MaskService;
 import domain.customimage.CustomImage;
 import domain.filter.Mask;
 import io.reactivex.subjects.PublishSubject;

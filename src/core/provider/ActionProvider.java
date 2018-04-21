@@ -1,5 +1,6 @@
 package core.provider;
 
+import core.action.filter.ApplyPrewittFilterAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
@@ -26,7 +27,6 @@ import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
-import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
 
 class ActionProvider {
 
@@ -59,6 +59,7 @@ class ActionProvider {
     private static ApplyGaussianNoiseToImageAction applyGaussianNoiseToImageAction;
     private static ApplyRayleighNoiseToImageAction applyRayleighNoiseToImageAction;
     private static ApplyExponentialNoiseToImageAction applyExponentialNoiseToImageAction;
+    private static ApplyPrewittFilterAction applyPrewittFilterAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -185,9 +186,9 @@ class ActionProvider {
 
     public static EqualizeGrayImageAction provideCreateEqualizedGrayImageAction(PublishSubject<Image> imagePublishSubject) {
         return new EqualizeGrayImageAction(
-                    ServiceProvider.provideHistogramService(),
-                    RepositoryProvider.provideImageRepository(),
-                    imagePublishSubject);
+                ServiceProvider.provideHistogramService(),
+                RepositoryProvider.provideImageRepository(),
+                imagePublishSubject);
     }
 
     public static CompressDynamicRangeAction provideCompressDynamicRangeAction() {
@@ -293,5 +294,17 @@ class ActionProvider {
                     ServiceProvider.provideRandomNumberGenerationService());
         }
         return applyExponentialNoiseToImageAction;
+    }
+
+    public static ApplyPrewittFilterAction provideApplyPrewittFilterAction() {
+        if (applyPrewittFilterAction == null) {
+            applyPrewittFilterAction = new ApplyPrewittFilterAction(
+                    ServiceProvider.provideMaskService(),
+                    ServiceProvider.provideImageOperationsService(),
+                    ServiceProvider.provideMatrixService(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject()
+            );
+        }
+        return applyPrewittFilterAction;
     }
 }
