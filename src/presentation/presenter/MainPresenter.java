@@ -14,15 +14,15 @@ import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
 import core.repository.ImageRepository;
+import core.semaphore.RandomGeneratorsSemaphore;
+import domain.RandomElement;
+import domain.customimage.CustomImage;
+import domain.customimage.Format;
 import domain.filter.FilterSemaphore;
 import domain.filter.Mask;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
-import core.semaphore.RandomGeneratorsSemaphore;
-import domain.RandomElement;
-import domain.customimage.CustomImage;
-import domain.customimage.Format;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
@@ -352,6 +352,11 @@ public class MainPresenter {
 
     public void onApplyMedianFilter() {
         FilterSemaphore.setValue(Mask.Type.MEDIAN);
+        new FilterSceneCreator().createScene();
+    }
+
+    public void onApplyWeightedMedianFilter() {
+        FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEAN);
         new FilterSceneCreator().createScene();
     }
 }

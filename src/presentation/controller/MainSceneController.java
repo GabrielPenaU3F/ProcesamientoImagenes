@@ -244,4 +244,9 @@ public class MainSceneController {
     public void onApplyMedianFilter() {
         this.mainPresenter.onApplyMedianFilter();
     }
+
+    @FXML
+    public void onApplyWeightedMedianFilter() {
+        this.mainPresenter.onApplyWeightedMedianFilter();
+    }
 }

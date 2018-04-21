@@ -6,6 +6,9 @@ import domain.filter.Mask;
 import domain.filter.MeanMask;
 import domain.filter.MedianMask;
 import presentation.controller.FilterSceneController;
+import presentation.util.InsertSquareMatrixPopup;
+
+import java.util.List;
 
 public class FilterPresenter {
 
@@ -25,11 +28,20 @@ public class FilterPresenter {
         int size = Integer.parseInt(view.sizeTextField.getText());
         if (sizeMaskMustBeAnOddInteger(size)) return;
         applyWithMask(new MeanMask(size));
+        view.closeWindow();
     }
 
     public void onApplyMedianFilter() {
         int size = Integer.parseInt(view.sizeTextField.getText());
         applyWithMask(new MedianMask(size));
+        view.closeWindow();
+    }
+
+    public void onApplyWeightedMedianFilter() {
+        int size = 3;
+        List<Integer> weights = InsertSquareMatrixPopup.show("Insert weighted matrix", 3).get();
+        applyWithMask(new MedianMask(size, weights));
+        view.closeWindow();
     }
 
     private void applyWithMask(Mask mask) {
