@@ -19,7 +19,7 @@ public class GrayLevelStatisticsService {
             }
         }
 
-        sampleMean = grayLevelsSum / totalPixels;
+        sampleMean = (double)grayLevelsSum / totalPixels;
         return sampleMean;
     }
 
@@ -29,10 +29,10 @@ public class GrayLevelStatisticsService {
         double sampleMean = this.calculateGrayLevelMean(image);
         PixelReader reader = image.getPixelReader();
         double squareDistanceSum = 0;
-        double totalPixels = 0;
+        int totalPixels = 0;
 
         for (int i=0; i < image.getWidth(); i++) {
-            for (int j=0; j < image.getWidth(); j++) {
+            for (int j=0; j < image.getHeight(); j++) {
 
                 double distanceToMean = ((reader.getColor(i,j).getRed()*255) - sampleMean);
                 double squareDistance = Math.pow(distanceToMean, 2.0);

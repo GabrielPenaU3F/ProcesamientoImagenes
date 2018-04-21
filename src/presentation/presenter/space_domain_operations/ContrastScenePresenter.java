@@ -53,7 +53,10 @@ public class ContrastScenePresenter {
         r1 = ((int) mean) - ((int) standardDeviation);
         r2 = ((int) mean) + ((int) standardDeviation);
 
+        if (r2 > 255) r2 = 255; //This is to prevent cases where r2 exceeds the gray value limit. See for instance the Cameraman image mean + sd.
+
         view.s1ValidationLabel.setText("S1 must be lesser than R1: " + r1);
+        view.s2ValidationLabel.setText("S2 must be greater than R2: " + r2);
     }
 
     public void onApplyContrast() {
@@ -61,11 +64,13 @@ public class ContrastScenePresenter {
             int s1 = Integer.parseInt(this.view.s1Field.getText());
             int s2 = Integer.parseInt(this.view.s2Field.getText());
 
-            if (s1 < r1) {
+            if ((s1 < r1) && (s2 > r2) && (s1 < s2)) {
                 sendModifiedImageToMainView(this.applyContrastAction.execute(customImage, s1, s2, r1, r2));
                 this.view.closeWindow();
-            } else {
-                this.view.s1ValidationLabel.setText("Must be lesser than " + r1);
+            } else if (s1 > r1){
+                this.view.s1ValidationLabel.setText("S1 must be lesser than " + r1);
+            } else if (s2 < r2) {
+                this.view.s2ValidationLabel.setText("S2 must be greater than " + r2);
             }
         }
     }

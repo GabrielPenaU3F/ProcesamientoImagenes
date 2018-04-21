@@ -20,10 +20,11 @@ public class ApplyContrastAction {
         PixelWriter writer = image.getPixelWriter();
 
         //Linear transformation parameters: s = m1*r ; s = m2*r + b
-        double m1 = (s1 / r1);
-        double m2 = ((255 - s2) / (255 - r2));
+        double m1 = ((double)s1 / r1);
+        double m2 = ((double)(255 - s2) / (255 - r2));
         double b = 255 - (m2 * 255);
 
+        //In the case of the Lena image, 151 -> 121. WTF?
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
 
