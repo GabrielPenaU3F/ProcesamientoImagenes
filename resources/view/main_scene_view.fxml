@@ -167,6 +167,7 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edges">
+            <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittFilter" text="Prewitt" />
         </Menu>
     </MenuBar>

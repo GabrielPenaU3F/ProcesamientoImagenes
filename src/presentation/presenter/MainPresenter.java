@@ -7,13 +7,19 @@ import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
+import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
+import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.repository.ImageRepository;
+import domain.filter.HighPassMask;
+import domain.generation.Channel;
+import domain.generation.Figure;
+import domain.generation.Gradient;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.RandomElement;
 import domain.customimage.CustomImage;
@@ -31,6 +37,8 @@ import presentation.controller.MainSceneController;
 import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
+
+import java.awt.image.BufferedImage;
 
 public class MainPresenter {
 
@@ -52,6 +60,7 @@ public class MainPresenter {
     private final EqualizeGrayImageAction equalizeGrayImageAction;
     private final Observable<Image> onModifiedImage;
     private final CompressDynamicRangeAction compressDynamicRangeAction;
+    private final ApplyFilterAction applyFilterAction;
     private final ImageRepository imageRepository;
 
     public MainPresenter(MainSceneController view,
@@ -68,6 +77,7 @@ public class MainPresenter {
                          EqualizeGrayImageAction equalizeGrayImageAction,
                          Observable<Image> onModifiedImage,
                          CompressDynamicRangeAction compressDynamicRangeAction,
+                         ApplyFilterAction applyFilterAction,
                          ImageRepository imageRepository) {
 
         this.view = view;
@@ -85,6 +95,7 @@ public class MainPresenter {
         this.createImageWithFigureAction = createImageWithFigureAction;
         this.equalizeGrayImageAction = equalizeGrayImageAction;
         this.compressDynamicRangeAction = compressDynamicRangeAction;
+        this.applyFilterAction = applyFilterAction;
         this.imageRepository = imageRepository;
     }
 
@@ -300,6 +311,17 @@ public class MainPresenter {
     public void onApplySaltAndPepperNoise() {
         new SaltAndPepperNoiseSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyEdgeEnhancement(){
+        int size = 3;//por defecto la hago de 3x3
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+                    BufferedImage bufferedFilteredImage = applyFilterAction.executeHighPass(customImage, new HighPassMask(size)).getBufferedImage();
+                    view.customImageView.setImage(SwingFXUtils.toFXImage(bufferedFilteredImage, null));
+                    imageRepository.saveImage(new CustomImage(bufferedFilteredImage, "png"));
+                    this.onThreshold();
+                });
     }
 
     public void onGenerateExponentialNoiseSyntheticImage() {

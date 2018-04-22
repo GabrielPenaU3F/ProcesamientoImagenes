@@ -201,6 +201,8 @@ public class MainSceneController {
     @FXML
     public void applySaltAndPepperNoise() { this.mainPresenter.onApplySaltAndPepperNoise(); }
 
+    public void onApplyEdgeEnhancement(){this.mainPresenter.onApplyEdgeEnhancement();}
+
     @FXML
     public void generateExponentialNoiseSyntheticImage() {
         this.mainPresenter.onGenerateExponentialNoiseSyntheticImage();

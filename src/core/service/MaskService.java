@@ -114,6 +114,31 @@ public class MaskService {
         filteredImage.getPixelWriter().setColor(x, y, color);
     }
 
+    public void applyHighPassMask(CustomImage image, int[][] filteredImageMatrix, Mask mask, int x, int y) {
+
+        int newGray = 0;
+
+        int maskSize = mask.getSize();
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        double maskValue = mask.getValue(0, 0);
+
+        for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
+            for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
+
+                if (isPositionValid(width, height, i, j)) {
+                    int column = j + (maskSize/2) - y;
+                    int row = i + (maskSize/2) - x;
+                    maskValue = mask.getValue(row,column);
+                    int gray = image.getAverageValue(i,j);
+                    newGray += gray * maskValue;
+                }
+            }
+        }
+        filteredImageMatrix[x][y] = newGray;
+    }
+
     private boolean isPositionValid(int width, int height, int i, int j) {
         // Ignore the portion of the mask outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;

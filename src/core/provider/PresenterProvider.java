@@ -32,6 +32,7 @@ public class PresenterProvider {
                             PublishSubjectProvider.provideOnModifiedImagePublishSubject()),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ActionProvider.provideCompressDynamicRangeAction(),
+                    ActionProvider.provideApplyFilterAction(),
                     RepositoryProvider.provideImageRepository());
 
             return mainPresenter;

@@ -256,7 +256,9 @@ class ActionProvider {
         if (applyFilterAction == null) {
             applyFilterAction = new ApplyFilterAction(
                     ServiceProvider.provideMaskService(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                    ServiceProvider.provideImageOperationsService()
+            );
         }
         return applyFilterAction;
     }
