@@ -31,7 +31,8 @@ public class PresenterProvider {
                     ActionProvider.provideCreateEqualizedGrayImageAction(
                             PublishSubjectProvider.provideOnModifiedImagePublishSubject()),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
-                    ActionProvider.provideCompressDynamicRangeAction());
+                    ActionProvider.provideCompressDynamicRangeAction(),
+                    RepositoryProvider.provideImageRepository());
 
             return mainPresenter;
         }

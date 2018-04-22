@@ -13,7 +13,7 @@ import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
-import core.action.noise.ApplySaltAndPepperNoiseAction;
+import core.repository.ImageRepository;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
@@ -50,6 +50,7 @@ public class MainPresenter {
     private final EqualizeGrayImageAction equalizeGrayImageAction;
     private final Observable<Image> onModifiedImage;
     private final CompressDynamicRangeAction compressDynamicRangeAction;
+    private final ImageRepository imageRepository;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -64,7 +65,8 @@ public class MainPresenter {
                          CreateImageWithFigureAction createImageWithFigureAction,
                          EqualizeGrayImageAction equalizeGrayImageAction,
                          Observable<Image> onModifiedImage,
-                         CompressDynamicRangeAction compressDynamicRangeAction) {
+                         CompressDynamicRangeAction compressDynamicRangeAction,
+                         ImageRepository imageRepository) {
 
         this.view = view;
 
@@ -81,6 +83,7 @@ public class MainPresenter {
         this.createImageWithFigureAction = createImageWithFigureAction;
         this.equalizeGrayImageAction = equalizeGrayImageAction;
         this.compressDynamicRangeAction = compressDynamicRangeAction;
+        this.imageRepository = imageRepository;
     }
 
     public void initialize() {
@@ -117,6 +120,14 @@ public class MainPresenter {
 
     public void onSaveImage() {
         new SaveImageSceneCreator().createScene();
+    }
+
+    public void onApplyChanges() {
+        CustomImage modifiedCustomImage = new CustomImage(view.modifiedImageView.getImage(), "png");
+        view.customImageView.setImage(view.modifiedImageView.getImage());
+        imageRepository.saveImage(modifiedCustomImage);
+        view.modifiedImageView.setImage(null);
+        view.applyChangesButton.setVisible(false);
     }
 
     public void onShowGreyGradient() {
@@ -161,6 +172,7 @@ public class MainPresenter {
 
     private void setImageOnModifiedImageView(CustomImage customImage) {
         view.modifiedImageView.setImage(SwingFXUtils.toFXImage(customImage.getBufferedImage(), null));
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCalculatePixelValue() {
@@ -220,10 +232,12 @@ public class MainPresenter {
     public void onCalculateNegativeImage() {
         Image image = this.calculateNegativeImageAction.execute();
         view.modifiedImageView.setImage(image);
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onThreshold() {
         view.modifiedImageView.setImage(applyThresholdAction.execute(Integer.parseInt(InsertValuePopup.show("Threshold", "0").get())));
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCreateImageHistogram() {
@@ -232,6 +246,7 @@ public class MainPresenter {
 
     public void onContrast() {
         new ContrastSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public MainSceneController getView() {
@@ -241,20 +256,24 @@ public class MainPresenter {
     public void onCreateEqualizedImageOnce() {
         this.getImageAction.execute()
                 .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 1));
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCreateEqualizedImageTwice() {
         this.getImageAction.execute()
                 .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 2));
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCompressDynamicRange() {
         Image image = compressDynamicRangeAction.execute();
         view.modifiedImageView.setImage(image);
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onGammaPowerFunction() {
         new GammaPowerFunctionSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCalculateImagesOperations() {
@@ -278,10 +297,12 @@ public class MainPresenter {
 
     public void onApplySaltAndPepperNoise() {
         new SaltAndPepperNoiseSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyMediaFilter() {
         new MediaFilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onGenerateExponentialNoiseSyntheticImage() {
@@ -312,15 +333,18 @@ public class MainPresenter {
     public void onApplyAdditiveGaussianNoise() {
         RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
         new GaussianSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyMultiplicativeRayleighNoise() {
         RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
         new RayleighSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyMultiplicativeExponentialNoise() {
         RandomGeneratorsSemaphore.setValue(RandomElement.NOISE);
         new ExponentialSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 }

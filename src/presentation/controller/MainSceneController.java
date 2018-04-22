@@ -5,6 +5,7 @@ import core.provider.ViewProvider;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import presentation.presenter.MainPresenter;
@@ -18,6 +19,8 @@ public class MainSceneController {
     public ImageView imageView;
     @FXML
     public ImageView modifiedImageView;
+    @FXML
+    public Button applyChangesButton;
     @FXML
     public TextField pixelX;
     @FXML
@@ -53,6 +56,11 @@ public class MainSceneController {
     @FXML
     public void saveModifiedImage() {
         this.mainPresenter.onSaveImage();
+    }
+
+    @FXML
+    public void applyChanges() {
+        this.mainPresenter.onApplyChanges();
     }
 
     @FXML
