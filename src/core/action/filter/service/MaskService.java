@@ -22,7 +22,7 @@ public class MaskService {
         for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
             for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
 
-                if (isValidPosition(width, height, i, j)) {
+                if (isPositionValid(width, height, i, j)) {
                     Color color = image.getPixelReader().getColor(i, j);
 
                     red += 255 * color.getRed() * maskValue;
@@ -36,7 +36,7 @@ public class MaskService {
         filteredImage.getPixelWriter().setColor(x, y, color);
     }
 
-    private boolean isValidPosition(int width, int height, int i, int j) {
+    private boolean isPositionValid(int width, int height, int i, int j) {
         // Ignore portion of the mask is outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;
     }
