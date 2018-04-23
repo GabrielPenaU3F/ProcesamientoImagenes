@@ -72,7 +72,6 @@ public class ImageOperationsService {
         }
     }
 
-
     public int[][] adjustScale(int[][] channelValues) {
         int imageR = this.grayLevelStatisticsService.calculateMaxGrayLevel(channelValues);
         for (int i = 0; i < channelValues.length; i++) {
@@ -84,18 +83,18 @@ public class ImageOperationsService {
         return channelValues;
     }
 
-    public int[][] adjustScale(int[][] channelValues, List<Pixel> contaminatedPixels){
+    public int[][] adjustScale(int[][] channelValues, List<Pixel> contaminatedPixels) {
         int imageR = this.grayLevelStatisticsService.calculateMaxGrayLevel(channelValues);
-        for (Pixel pixel : contaminatedPixels){
+        for (Pixel pixel : contaminatedPixels) {
             int oldPixelValue = channelValues[pixel.getX()][pixel.getY()];
-            int newPixelValue = (int) (oldPixelValue * ((double) 255/imageR));
+            int newPixelValue = (int) (oldPixelValue * ((double) 255 / imageR));
             channelValues[pixel.getX()][pixel.getY()] = newPixelValue;
         }
         return channelValues;
     }
 
     public Image writeNewPixelsValuesToImage(int[][] redChannelValues, int[][] greenChannelValues,
-                                             int[][] blueChannelValues){
+                                             int[][] blueChannelValues) {
         int width = redChannelValues.length;
         int height = redChannelValues[0].length;
         WritableImage image = new WritableImage(width, height);
@@ -180,7 +179,7 @@ public class ImageOperationsService {
         return this.adjustScale(this.displacePixelsValues(result));
     }
 
-    public int[][] multiplyBluePixelsValues(Image image1, Image image2) {
+    public int[][] multiplyGrayPixelsValues(Image image1, Image image2) {
         int[][] result = new int[(int) image1.getWidth()][(int) image1.getHeight()];
         PixelReader pixelReaderImage1 = image1.getPixelReader();
         PixelReader pixelReaderImage2 = image2.getPixelReader();
@@ -197,7 +196,7 @@ public class ImageOperationsService {
         int[][] result = new int[(customImage.getWidth())][customImage.getHeight()];
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                double productResult = customImage.getRChannelValue(i,j) * scalarNumber;
+                double productResult = customImage.getRChannelValue(i, j) * scalarNumber;
                 result[i][j] = (int) Math.round(productResult);
             }
         }
@@ -208,7 +207,7 @@ public class ImageOperationsService {
         int[][] result = new int[(customImage.getWidth())][customImage.getHeight()];
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                double productResult = customImage.getGChannelValue(i,j) * scalarNumber;
+                double productResult = customImage.getGChannelValue(i, j) * scalarNumber;
                 result[i][j] = (int) Math.round(productResult);
             }
         }
@@ -219,7 +218,7 @@ public class ImageOperationsService {
         int[][] result = new int[customImage.getWidth()][customImage.getHeight()];
         for (int i = 0; i < customImage.getWidth(); i++) {
             for (int j = 0; j < customImage.getHeight(); j++) {
-                double productResult = customImage.getBChannelValue(i,j) * scalarNumber;
+                double productResult = customImage.getBChannelValue(i, j) * scalarNumber;
                 result[i][j] = (int) Math.round(productResult);
             }
         }
@@ -276,4 +275,49 @@ public class ImageOperationsService {
         return pixelsValues;
     }
 
+    public int[][] toMatrixedImage(int[][] pixels) {
+        return this.displacePixelsValues(this.adjustScale(pixels));
+    }
+
+    public int[][] multiplyGrayPixelsValues(int[][] matrix1, int[][] matrix2) {
+        int width = matrix1.length;
+        int height = matrix1[0].length;
+
+        int[][] result = new int[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int value = matrix1[i][j] * matrix2[i][j];
+                result[i][j] = Math.round(value);
+            }
+        }
+        return result;
+    }
+
+    public int[][] sumGrayPixelsValues(int[][] matrix1, int[][] matrix2) {
+        int width = matrix1.length;
+        int height = matrix1[0].length;
+
+        int[][] result = new int[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int value = matrix1[i][j] + matrix2[i][j];
+                result[i][j] = Math.round(value);
+            }
+        }
+        return result;
+    }
+
+    public int[][] sqrtGrayPixelsValues(int[][] matrix) {
+        int width = matrix.length;
+        int height = matrix[0].length;
+
+        int[][] result = new int[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                double value = Math.sqrt(matrix[i][j]);
+                result[i][j] = (int) Math.round(value);
+            }
+        }
+        return result;
+    }
 }

@@ -44,6 +44,11 @@ public class FilterSceneController {
         if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
             label.setText("Enter standard desviation");
         }
+
+        if(FilterSemaphore.is(Mask.Type.PREWITT)) {
+            label.setText("Only 3x3 mask is available");
+            textField.setDisable(true);
+        }
     }
 
     @FXML
@@ -62,6 +67,10 @@ public class FilterSceneController {
 
         if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
             this.filterPresenter.onApplyGaussianFilter();
+        }
+
+        if(FilterSemaphore.is(Mask.Type.PREWITT)) {
+            this.filterPresenter.onApplyPrewittFilter();
         }
     }
 

@@ -254,4 +254,9 @@ public class MainSceneController {
     public void onApplyGaussianFilter() {
         this.mainPresenter.onApplyGaussianFilter();
     }
+
+    @FXML
+    public void onApplyPrewittFilter() {
+        this.mainPresenter.onApplyPrewittFilter();
+    }
 }

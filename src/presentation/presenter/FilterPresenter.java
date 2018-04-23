@@ -1,8 +1,9 @@
 package presentation.presenter;
 
+import core.action.filter.ApplyPrewittFilterAction;
 import core.action.filter.ApplyFilterAction;
 import core.action.image.GetImageAction;
-import domain.filter.GuassianMask;
+import domain.filter.GaussianMask;
 import domain.filter.Mask;
 import domain.filter.MeanMask;
 import domain.filter.MedianMask;
@@ -16,13 +17,16 @@ public class FilterPresenter {
     private final FilterSceneController view;
     private final GetImageAction getImageAction;
     private final ApplyFilterAction applyFilterAction;
+    private final ApplyPrewittFilterAction applyPrewittFilterAction;
 
     public FilterPresenter(FilterSceneController view,
                            GetImageAction getImageAction,
-                           ApplyFilterAction applyFilterAction) {
+                           ApplyFilterAction applyFilterAction,
+                           ApplyPrewittFilterAction applyPrewittFilterAction) {
         this.view = view;
         this.getImageAction = getImageAction;
         this.applyFilterAction = applyFilterAction;
+        this.applyPrewittFilterAction = applyPrewittFilterAction;
     }
 
     public void onApplyMeanFilter() {
@@ -46,8 +50,17 @@ public class FilterPresenter {
     }
 
     public void onApplyGaussianFilter() {
-        int standardDesviation = Integer.parseInt(view.textField.getText());
-        applyWithMask(new GuassianMask(standardDesviation));
+        int detour = Integer.parseInt(view.textField.getText());
+        applyWithMask(new GaussianMask(detour));
+        view.closeWindow();
+    }
+
+    public void onApplyPrewittFilter() {
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+                    applyPrewittFilterAction.execute(customImage);
+                    view.closeWindow();
+                });
         view.closeWindow();
     }
 

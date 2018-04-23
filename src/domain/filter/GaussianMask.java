@@ -1,11 +1,11 @@
 package domain.filter;
 
-public class GuassianMask extends Mask {
+public class GaussianMask extends Mask {
 
     private final double standardDesviation;
     private final double[][] matrix;
 
-    public GuassianMask(double standardDesviation) {
+    public GaussianMask(double standardDesviation) {
         super(Type.GAUSSIAN, createSize(standardDesviation));
 
         this.standardDesviation = standardDesviation;

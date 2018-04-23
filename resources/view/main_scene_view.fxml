@@ -166,5 +166,8 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyWeightedMedianFilter" text="Weighted Median" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian" />
         </Menu>
+        <Menu mnemonicParsing="false" text="Edges">
+            <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittFilter" text="Prewitt" />
+        </Menu>
     </MenuBar>
 </AnchorPane>

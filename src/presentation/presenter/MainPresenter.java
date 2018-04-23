@@ -364,4 +364,9 @@ public class MainPresenter {
         FilterSemaphore.setValue(Mask.Type.GAUSSIAN);
         new FilterSceneCreator().createScene();
     }
+
+    public void onApplyPrewittFilter() {
+        FilterSemaphore.setValue(Mask.Type.PREWITT);
+        new FilterSceneCreator().createScene();
+    }
 }
