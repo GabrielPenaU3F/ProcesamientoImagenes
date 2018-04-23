@@ -10,6 +10,12 @@ public class MeanMask extends Mask {
         coefficient = 1 / Math.pow(size, 2);
     }
 
+    @Override
+    public double getValue(int x, int y) {
+        return coefficient;
+    }
+
+    @Override
     public double getValue(int index) {
         return coefficient;
     }

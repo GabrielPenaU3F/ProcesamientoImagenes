@@ -164,6 +164,7 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyMeanFilter" text="Mean" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyMedianFilter" text="Median" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyWeightedMedianFilter" text="Weighted Median" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian" />
         </Menu>
     </MenuBar>
 </AnchorPane>

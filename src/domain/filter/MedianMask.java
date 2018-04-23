@@ -27,6 +27,11 @@ public class MedianMask extends Mask {
         return normalWeights;
     }
 
+    @Override
+    public double getValue(int x, int y) {
+        throw new ActionNotAvailableException(getType());
+    }
+
     public double getValue(int index) {
         return weights.get(index);
     }

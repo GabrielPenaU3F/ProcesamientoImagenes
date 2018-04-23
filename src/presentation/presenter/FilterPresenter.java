@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.filter.ApplyFilterAction;
 import core.action.image.GetImageAction;
+import domain.filter.GuassianMask;
 import domain.filter.Mask;
 import domain.filter.MeanMask;
 import domain.filter.MedianMask;
@@ -25,14 +26,14 @@ public class FilterPresenter {
     }
 
     public void onApplyMeanFilter() {
-        int size = Integer.parseInt(view.sizeTextField.getText());
+        int size = Integer.parseInt(view.textField.getText());
         if (sizeMaskMustBeAnOddInteger(size)) return;
         applyWithMask(new MeanMask(size));
         view.closeWindow();
     }
 
     public void onApplyMedianFilter() {
-        int size = Integer.parseInt(view.sizeTextField.getText());
+        int size = Integer.parseInt(view.textField.getText());
         applyWithMask(new MedianMask(size));
         view.closeWindow();
     }
@@ -41,6 +42,12 @@ public class FilterPresenter {
         int size = 3;
         List<Integer> weights = InsertSquareMatrixPopup.show("Insert weighted matrix", 3).get();
         applyWithMask(new MedianMask(size, weights));
+        view.closeWindow();
+    }
+
+    public void onApplyGaussianFilter() {
+        int standardDesviation = Integer.parseInt(view.textField.getText());
+        applyWithMask(new GuassianMask(standardDesviation));
         view.closeWindow();
     }
 
