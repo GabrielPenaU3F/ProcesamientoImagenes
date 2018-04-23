@@ -53,6 +53,7 @@ public class SaltAndPepperNoisePresenter {
                     if (p1 > p0) {
 
                         applySaltAndPepperNoiseAction.execute(customImage, percentToContaminate, p0, p1);
+                        view.closeWindow();
 
                     } else {
                         view.p0ValidationLabel.setText("Validation error: p1 > p0");

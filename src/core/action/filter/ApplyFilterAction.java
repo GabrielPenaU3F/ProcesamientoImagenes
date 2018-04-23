@@ -10,11 +10,11 @@ import javafx.scene.image.WritableImage;
 public class ApplyFilterAction {
 
     private final MaskService maskService;
-    private final PublishSubject<Image> imagePublishSubject;
+    private final PublishSubject<Image> onModifiedImagePublishSubject; //Let's put it this name, so we can tell between this and the other ones (I've already created two or three publish subjects)
 
     public ApplyFilterAction(MaskService maskService, PublishSubject<Image> imagePublishSubject) {
         this.maskService = maskService;
-        this.imagePublishSubject = imagePublishSubject;
+        this.onModifiedImagePublishSubject = imagePublishSubject;
     }
 
     public void execute(CustomImage customImage, Mask mask) {
@@ -28,7 +28,7 @@ public class ApplyFilterAction {
                 applyMask(mask, customImage, filtered, x, y);
             }
         }
-        imagePublishSubject.onNext(filtered);
+        onModifiedImagePublishSubject.onNext(filtered);
     }
 
     private void applyMask(Mask mask, CustomImage customImage, WritableImage filteredImage, int x, int y) {
