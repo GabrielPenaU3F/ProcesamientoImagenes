@@ -23,7 +23,7 @@ public abstract class Mask {
     public abstract double getValue(int index);
 
     public enum Type {
-        MEAN, WEIGHTED_MEAN, GAUSSIAN, PREWITT, MEDIAN
+        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN
     }
 
     public class ActionNotAvailableException extends RuntimeException {

@@ -13,16 +13,13 @@ import javafx.scene.paint.Color;
 
 public class ApplyPrewittFilterAction {
 
-    private final MaskService maskService;
     private final ImageOperationsService imageOperationsService;
     private final MatrixService matrixService;
     private final PublishSubject<Image> imagePublishSubject;
 
-    public ApplyPrewittFilterAction(MaskService maskService,
-                                    ImageOperationsService imageOperationsService,
+    public ApplyPrewittFilterAction(ImageOperationsService imageOperationsService,
                                     MatrixService matrixService,
                                     PublishSubject<Image> imagePublishSubject) {
-        this.maskService = maskService;
         this.matrixService = matrixService;
         this.imagePublishSubject = imagePublishSubject;
         this.imageOperationsService = imageOperationsService;

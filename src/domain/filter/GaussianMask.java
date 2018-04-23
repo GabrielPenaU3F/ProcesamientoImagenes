@@ -14,23 +14,23 @@ public class GaussianMask extends Mask {
 
     private double[][] createMatrix() {
 
-        int sizeMask = getSize();
-        double[][] matrizMask = new double[sizeMask][sizeMask];
+        int maskSize = getSize();
+        double[][] maskMatrix = new double[maskSize][maskSize];
 
-        for (int i = 0; i < sizeMask; i++) {
-            for (int j = 0; j < sizeMask; j++) {
+        for (int i = 0; i < maskSize; i++) {
+            for (int j = 0; j < maskSize; j++) {
 
-                double xSquare = Math.pow(i - sizeMask / 2, 2);
-                double ySquare = Math.pow(j - sizeMask / 2, 2);
+                double xSquare = Math.pow(i - maskSize / 2, 2);
+                double ySquare = Math.pow(j - maskSize / 2, 2);
                 double standardDesviationSquare = Math.pow(standardDesviation, 2) * 2.0;
 
                 double exp = Math.exp(-(xSquare + ySquare) / standardDesviationSquare);
 
-                matrizMask[i][j] = (1.0 / (standardDesviationSquare * Math.PI)) * exp;
+                maskMatrix[i][j] = (1.0 / (standardDesviationSquare * Math.PI)) * exp;
             }
         }
 
-        return matrizMask;
+        return maskMatrix;
     }
 
     @Override

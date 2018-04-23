@@ -9,6 +9,7 @@ import domain.filter.MeanMask;
 import domain.filter.MedianMask;
 import presentation.controller.FilterSceneController;
 import presentation.util.InsertSquareMatrixPopup;
+import presentation.util.ShowResultPopup;
 
 import java.util.List;
 
@@ -45,8 +46,13 @@ public class FilterPresenter {
     public void onApplyWeightedMedianFilter() {
         int size = 3;
         List<Integer> weights = InsertSquareMatrixPopup.show("Insert weighted matrix", 3).get();
-        applyWithMask(new MedianMask(size, weights));
-        view.closeWindow();
+        if(weights.stream().noneMatch(integer -> integer < 0)) {
+            applyWithMask(new MedianMask(size, weights));
+            view.closeWindow();
+        } else {
+            view.closeWindow();
+            ShowResultPopup.show("Weighted matrix is not valid", "Try again!");
+        }
     }
 
     public void onApplyGaussianFilter() {

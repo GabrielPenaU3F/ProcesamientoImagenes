@@ -356,7 +356,7 @@ public class MainPresenter {
     }
 
     public void onApplyWeightedMedianFilter() {
-        FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEAN);
+        FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEDIAN);
         new FilterSceneCreator().createScene();
     }
 

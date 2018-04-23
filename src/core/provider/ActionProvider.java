@@ -299,7 +299,6 @@ class ActionProvider {
     public static ApplyPrewittFilterAction provideApplyPrewittFilterAction() {
         if (applyPrewittFilterAction == null) {
             applyPrewittFilterAction = new ApplyPrewittFilterAction(
-                    ServiceProvider.provideMaskService(),
                     ServiceProvider.provideImageOperationsService(),
                     ServiceProvider.provideMatrixService(),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject()
