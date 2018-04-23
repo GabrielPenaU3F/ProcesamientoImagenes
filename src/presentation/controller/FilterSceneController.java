@@ -35,6 +35,11 @@ public class FilterSceneController {
         if(FilterSemaphore.is(Mask.Type.MEDIAN)) {
             labelSize.setText("Enter size mask");
         }
+
+        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEAN)) {
+            labelSize.setText("Only 3x3 mask is available");
+            sizeTextField.setDisable(true);
+        }
     }
 
     @FXML
@@ -45,6 +50,10 @@ public class FilterSceneController {
 
         if(FilterSemaphore.is(Mask.Type.MEDIAN)) {
             this.filterPresenter.onApplyMedianFilter();
+        }
+
+        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEAN)) {
+            this.filterPresenter.onApplyWeightedMedianFilter();
         }
     }
 

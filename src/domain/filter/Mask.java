@@ -18,10 +18,10 @@ public abstract class Mask {
         return size;
     }
 
-    public abstract double getValue(int x, int y);
+    public abstract double getValue(int index);
 
     public enum Type {
-        MEAN, MEDIAN
+        MEAN, WEIGHTED_MEAN, MEDIAN
     }
 
     public class ActionNotAvailable extends RuntimeException {

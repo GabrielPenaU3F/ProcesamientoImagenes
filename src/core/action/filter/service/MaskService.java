@@ -22,7 +22,7 @@ public class MaskService {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        double maskValue = mask.getValue(0, 0);
+        double maskValue = mask.getValue(0);
 
         for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
             for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
@@ -50,13 +50,15 @@ public class MaskService {
 
         List<Double> pixelsInMask = new ArrayList<>();
 
+        int index = 0;
         for (int j = y - (maskSize / 2); j <= y + (maskSize / 2); j++) {
             for (int i = x - (maskSize / 2); i <= x + (maskSize / 2); i++) {
 
                 if (isPositionValid(width, height, i, j)) {
                     Color color = image.getPixelReader().getColor(i, j);
-                    pixelsInMask.add(255 * color.getRed());
+                    applyWeights(mask, pixelsInMask, color, index);
                 }
+                index++;
             }
         }
 
@@ -76,5 +78,11 @@ public class MaskService {
     private boolean isPositionValid(int width, int height, int i, int j) {
         // Ignore the portion of the mask outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;
+    }
+
+    private void applyWeights(Mask mask, List<Double> pixelsInMask, Color color, int index) {
+        for (int n = 0; n < mask.getValue(index); n++) {
+            pixelsInMask.add(255 * color.getRed());
+        }
     }
 }
