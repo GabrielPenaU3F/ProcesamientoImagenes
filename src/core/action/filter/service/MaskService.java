@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 
 public class MaskService {
 
+    //Here, x and y are the coordinates of the point where the mask's center is currently standing
     public void applyMediaMask(CustomImage image, WritableImage filteredImage, Mask mask, int x, int y) {
 
         double red = 0;
@@ -29,6 +30,7 @@ public class MaskService {
                     green += 255 * color.getGreen() * maskValue;
                     blue += 255 * color.getBlue() * maskValue;
                 }
+                //Ignoring the invalid positions, is equal to do a zero-padding. We're averaging zeros
             }
         }
 
@@ -37,7 +39,7 @@ public class MaskService {
     }
 
     private boolean isPositionValid(int width, int height, int i, int j) {
-        // Ignore portion of the mask is outside the image.
+        // Ignore the portion of the mask outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;
     }
 
