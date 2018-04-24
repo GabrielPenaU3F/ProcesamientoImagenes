@@ -2,13 +2,13 @@ package domain.filter;
 
 public class GaussianMask extends Mask {
 
-    private final double standardDesviation;
+    private final double standardDeviation;
     private final double[][] matrix;
 
-    public GaussianMask(double standardDesviation) {
-        super(Type.GAUSSIAN, createSize(standardDesviation));
+    public GaussianMask(double standardDeviation) {
+        super(Type.GAUSSIAN, createSize(standardDeviation));
 
-        this.standardDesviation = standardDesviation;
+        this.standardDeviation = standardDeviation;
         this.matrix = createMatrix();
     }
 
@@ -22,11 +22,11 @@ public class GaussianMask extends Mask {
 
                 double xSquare = Math.pow(i - sizeMask / 2, 2);
                 double ySquare = Math.pow(j - sizeMask / 2, 2);
-                double standardDesviationSquare = Math.pow(standardDesviation, 2) * 2.0;
+                double standardDeviationSquare = Math.pow(standardDeviation, 2) * 2.0;
 
-                double exp = Math.exp(-(xSquare + ySquare) / standardDesviationSquare);
+                double exp = Math.exp(-(xSquare + ySquare) / standardDeviationSquare);
 
-                matrizMask[i][j] = (1.0 / (standardDesviationSquare * Math.PI)) * exp;
+                matrizMask[i][j] = (1.0 / (standardDeviationSquare * Math.PI)) * exp;
             }
         }
 
@@ -43,7 +43,7 @@ public class GaussianMask extends Mask {
         throw new ActionNotAvailableException(getType());
     }
 
-    private static int createSize(double standardDesviation) {
-        return (int) (2 * standardDesviation + 1);
+    private static int createSize(double standardDeviation) {
+        return (int) (2 * standardDeviation + 1);
     }
 }

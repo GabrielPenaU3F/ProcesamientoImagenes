@@ -314,7 +314,12 @@ public class MainPresenter {
     }
 
     public void onApplyEdgeEnhancement(){
-        int size = 3;//por defecto la hago de 3x3
+        int insertedSize = 0;
+        while (insertedSize % 2 == 0 || insertedSize <= 0){
+            insertedSize = Integer.parseInt(InsertValuePopup.show("Insert High Pass mask size (odd)", "3").get());
+        }
+        //hago esto, porque sino una expresion lambda que la usa despues tiene problemas
+        int size = insertedSize;
         this.getImageAction.execute()
                 .ifPresent(customImage -> {
                     BufferedImage bufferedFilteredImage = applyFilterAction.executeHighPass(customImage, new HighPassMask(size)).getBufferedImage();
@@ -322,6 +327,7 @@ public class MainPresenter {
                     imageRepository.saveImage(new CustomImage(bufferedFilteredImage, "png"));
                     this.onThreshold();
                 });
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onGenerateExponentialNoiseSyntheticImage() {
@@ -370,25 +376,30 @@ public class MainPresenter {
     public void onApplyMeanFilter() {
         FilterSemaphore.setValue(Mask.Type.MEAN);
         new FilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyMedianFilter() {
         FilterSemaphore.setValue(Mask.Type.MEDIAN);
         new FilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyWeightedMedianFilter() {
         FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEAN);
         new FilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyGaussianFilter() {
         FilterSemaphore.setValue(Mask.Type.GAUSSIAN);
         new FilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onApplyPrewittFilter() {
         FilterSemaphore.setValue(Mask.Type.PREWITT);
         new FilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 }

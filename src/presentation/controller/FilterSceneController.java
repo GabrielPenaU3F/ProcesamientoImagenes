@@ -42,7 +42,7 @@ public class FilterSceneController {
         }
 
         if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
-            label.setText("Enter standard desviation");
+            label.setText("Enter standard deviation");
         }
 
         if(FilterSemaphore.is(Mask.Type.PREWITT)) {
