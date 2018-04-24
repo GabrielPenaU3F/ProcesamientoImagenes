@@ -46,20 +46,19 @@ public class ApplyFilterAction {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                applyMask(mask, customImage, filteredMatrix, x, y);
+                maskService.applyHighPassMask(customImage, filteredMatrix, mask, x, y);
             }
         }
-        this.imageOperationsService.displacePixelsValues(filteredMatrix);
-        this.imageOperationsService.adjustScale(filteredMatrix);
+
+        int[][] matrixedImage = this.imageOperationsService.toMatrixedImage(filteredMatrix);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                int grayValue = filteredMatrix[x][y];
+                int grayValue = matrixedImage[x][y];
                 Color color = Color.rgb(grayValue, grayValue, grayValue);
                 filtered.getPixelWriter().setColor(x, y, color);
             }
         }
-        CustomImage filteredCustomImage = new CustomImage(filtered, "png");
-        return filteredCustomImage;
+        return new CustomImage(filtered, "png");
     }
 
     private void applyMask(Mask mask, CustomImage customImage, WritableImage filteredImage, int x, int y) {

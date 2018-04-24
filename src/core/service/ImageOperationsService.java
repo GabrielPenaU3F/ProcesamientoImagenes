@@ -276,7 +276,7 @@ public class ImageOperationsService {
     }
 
     public int[][] toMatrixedImage(int[][] pixels) {
-        return this.displacePixelsValues(this.adjustScale(pixels));
+        return this.adjustScale(this.displacePixelsValues(pixels));
     }
 
     public int[][] multiplyGrayPixelsValues(int[][] matrix1, int[][] matrix2) {
