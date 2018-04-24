@@ -14,17 +14,13 @@ import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.modifiedimage.PutModifiedImageAction;
-import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.repository.ImageRepository;
-import domain.filter.HighPassMask;
-import domain.generation.Channel;
-import domain.generation.Figure;
-import domain.generation.Gradient;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.RandomElement;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.filter.FilterSemaphore;
+import domain.filter.HighPassMask;
 import domain.filter.Mask;
 import domain.generation.Channel;
 import domain.generation.Figure;
@@ -248,8 +244,17 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
+    private void applyThresholdToModifiedImage(CustomImage customImage) {
+        applyThreshold(customImage);
+    }
+
     public void onThreshold() {
-        view.modifiedImageView.setImage(applyThresholdAction.execute(Integer.parseInt(InsertValuePopup.show("Threshold", "0").get())));
+        this.getImageAction.execute().ifPresent(this::applyThreshold);
+    }
+
+    private void applyThreshold(CustomImage customImage) {
+        int threshold = Integer.parseInt(InsertValuePopup.show("Threshold", "0").get());
+        view.modifiedImageView.setImage(applyThresholdAction.execute(customImage, threshold));
         view.applyChangesButton.setVisible(true);
     }
 
@@ -313,9 +318,9 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyEdgeEnhancement(){
+    public void onApplyEdgeEnhancement() {
         int insertedSize = 0;
-        while (insertedSize % 2 == 0 || insertedSize <= 0){
+        while (insertedSize % 2 == 0 || insertedSize <= 0) {
             insertedSize = Integer.parseInt(InsertValuePopup.show("Insert High Pass mask size (odd)", "3").get());
         }
         //hago esto, porque sino una expresion lambda que la usa despues tiene problemas
@@ -323,9 +328,9 @@ public class MainPresenter {
         this.getImageAction.execute()
                 .ifPresent(customImage -> {
                     BufferedImage bufferedFilteredImage = applyFilterAction.executeHighPass(customImage, new HighPassMask(size)).getBufferedImage();
-                    view.customImageView.setImage(SwingFXUtils.toFXImage(bufferedFilteredImage, null));
-                    imageRepository.saveImage(new CustomImage(bufferedFilteredImage, "png"));
-                    this.onThreshold();
+                    view.modifiedImageView.setImage(SwingFXUtils.toFXImage(bufferedFilteredImage, null));
+
+                    this.applyThresholdToModifiedImage(new CustomImage(bufferedFilteredImage, Format.PNG));
                 });
         view.applyChangesButton.setVisible(true);
     }

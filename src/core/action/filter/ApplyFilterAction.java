@@ -3,6 +3,7 @@ package core.action.filter;
 import core.service.ImageOperationsService;
 import core.service.MaskService;
 import domain.customimage.CustomImage;
+import domain.customimage.Format;
 import domain.filter.Mask;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
@@ -58,7 +59,7 @@ public class ApplyFilterAction {
                 filtered.getPixelWriter().setColor(x, y, color);
             }
         }
-        return new CustomImage(filtered, "png");
+        return new CustomImage(filtered, Format.PNG);
     }
 
     private void applyMask(Mask mask, CustomImage customImage, WritableImage filteredImage, int x, int y) {

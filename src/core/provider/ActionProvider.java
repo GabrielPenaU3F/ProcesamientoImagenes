@@ -162,9 +162,7 @@ class ActionProvider {
 
     public static ApplyThresholdAction provideApplyThresholdAction() {
         if (applyThresholdAction == null) {
-            applyThresholdAction = new ApplyThresholdAction(
-                    RepositoryProvider.provideImageRepository(),
-                    ServiceProvider.provideModifyImageService());
+            applyThresholdAction = new ApplyThresholdAction(ServiceProvider.provideModifyImageService());
         }
         return applyThresholdAction;
     }

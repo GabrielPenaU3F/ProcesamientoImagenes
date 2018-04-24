@@ -14,19 +14,12 @@ import java.util.Optional;
 public class ApplyThresholdAction {
 
     private final ModifyImageService modifyImageService;
-    private final ImageRepository imageRepository;
 
-    public ApplyThresholdAction(ImageRepository imageRepository, ModifyImageService modifyImageService) {
-        this.imageRepository = imageRepository;
+    public ApplyThresholdAction(ModifyImageService modifyImageService) {
         this.modifyImageService = modifyImageService;
     }
 
-    public Image execute(int threshold) {
-
-        Optional<CustomImage> imageOptional = this.imageRepository.getImage();
-        if(!imageOptional.isPresent()) return SwingFXUtils.toFXImage(new BufferedImage(500,500, BufferedImage.TYPE_INT_RGB), null);
-
-        CustomImage customImage = imageOptional.get();
+    public Image execute(CustomImage customImage, int threshold) {
         WritableImage image = new WritableImage(customImage.getWidth(), customImage.getHeight());
         PixelWriter pixelWriter = image.getPixelWriter();
 
@@ -41,6 +34,5 @@ public class ApplyThresholdAction {
         }
 
         return image;
-
     }
 }
