@@ -3,6 +3,7 @@ package core.action.edit.space_domain;
 import core.repository.ImageRepository;
 import core.service.ModifyImageService;
 import domain.customimage.CustomImage;
+import domain.customimage.RGB;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
@@ -33,15 +34,15 @@ public class CalculateNegativeImageAction {
 
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                CustomImage.RGB pixelValue = customImage.getPixelValue(i, j);
-                this.modifyImageService.modifySinglePixel(i, j, toNegative(pixelValue.getR()), toNegative(pixelValue.getG()), toNegative(pixelValue.getB()), pixelWriter);
+                RGB pixelValue = customImage.getPixelValue(i, j);
+                this.modifyImageService.modifySinglePixel(i, j, toNegative(pixelValue.getRed()), toNegative(pixelValue.getGreen()), toNegative(pixelValue.getBlue()), pixelWriter);
             }
         }
 
         return image;
     }
 
-    private int toNegative(Double value) {
-        return (int) (255 - value);
+    private int toNegative(Integer value) {
+        return 255 - value;
     }
 }

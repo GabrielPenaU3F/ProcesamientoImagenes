@@ -1,7 +1,7 @@
 package presentation.presenter;
 
 import core.action.image.CreateImageInformAction;
-import core.action.modifiedimage.GetModifiedImageAction;
+import core.action.image.GetModifiedImageAction;
 import domain.ImageInform;
 import javafx.embed.swing.SwingFXUtils;
 

@@ -1,24 +1,70 @@
 package domain.customimage;
 
+import core.provider.ServiceProvider;
+import core.service.MatrixService;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CustomImage {
 
     public static final CustomImage EMPTY = new CustomImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), Format.PNG);
-    private static final Double INDEX_OUT_OF_BOUND = -1.0;
+    private static final int INDEX_OUT_OF_BOUND = -1;
     private final PixelReader reader;
     private final BufferedImage bufferedImage;
     private final Format format;
+    private final MatrixService matrixService;
+    private int[][] redMatrix;
+    private int[][] greenMatrix;
+    private int[][] blueMatrix;
     private List<Pixel> pixelList;
 
-    public CustomImage(Image image, String formatString){
-        this(SwingFXUtils.fromFXImage(image, null), formatString);
+    public CustomImage(ChannelMatrix channelMatrix, String formatString) {
+        this(channelMatrixToFXImage(channelMatrix.getRedChannel(), channelMatrix.getGreenChannel(), channelMatrix.getBlueChannel()), formatString);
+    }
+
+    private static Image channelMatrixToFXImage(int[][] red, int[][] green, int[][] blue) {
+        int width = red.length;
+        int height = red[0].length;
+        WritableImage image = new WritableImage(width, height);
+        PixelWriter pixelWriter = image.getPixelWriter();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Color color = Color.rgb(red[i][j], green[i][j], blue[i][j]);
+                pixelWriter.setColor(i, j, color);
+            }
+        }
+
+        return image;
+    }
+
+    public CustomImage(Image image, String formatString) {
+        this(SwingFXUtils.fromFXImage(image, null), formatString); //See the other constructor
+
+        this.redMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getRed());
+        this.greenMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getGreen());
+        this.blueMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getBlue());
+    }
+
+    public int[][] getRedMatrix() {
+        return redMatrix;
+    }
+
+    public int[][] getGreenMatrix() {
+        return greenMatrix;
+    }
+
+    public int[][] getBlueMatrix() {
+        return blueMatrix;
     }
 
     public CustomImage(BufferedImage bufferedImage, String formatString) {
@@ -26,9 +72,12 @@ public class CustomImage {
         this.format = new Format(formatString);
         this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
         this.pixelList = getListOfPixels();
+        this.matrixService = ServiceProvider.provideMatrixService();
     }
 
-    public int getPixelQuantity() { return this.pixelList.size(); }
+    public int getPixelQuantity() {
+        return this.pixelList.size();
+    }
 
     private List<Pixel> getListOfPixels() {
         List<Pixel> total = new ArrayList<>();
@@ -58,10 +107,9 @@ public class CustomImage {
 
     public int getAverageValue(Integer x, Integer y) {
         RGB pixelValue = getPixelValue(x, y);
-        return (int) (pixelValue.getR() +
-                pixelValue.getG() +
-                pixelValue.getB())
-                / 3;
+        return (pixelValue.getRed() +
+                pixelValue.getGreen() +
+                pixelValue.getBlue()) / 3;
     }
 
     public RGB getPixelValue(Integer x, Integer y) {
@@ -72,16 +120,16 @@ public class CustomImage {
         }
     }
 
-    public Double getRChannelValue(int x, int y) {
-        return reader.getColor(x, y).getRed() * 255;
+    public int getRChannelValue(int x, int y) {
+        return (int) (reader.getColor(x, y).getRed() * 255);
     }
 
-    public Double getGChannelValue(int x, int y) {
-        return reader.getColor(x, y).getGreen() * 255;
+    public int getGChannelValue(int x, int y) {
+        return (int) (reader.getColor(x, y).getGreen() * 255);
     }
 
-    public Double getBChannelValue(int x, int y) {
-        return reader.getColor(x, y).getBlue() * 255;
+    public int getBChannelValue(int x, int y) {
+        return (int) (reader.getColor(x, y).getBlue() * 255);
     }
 
     public Integer getHeight() {
@@ -96,32 +144,12 @@ public class CustomImage {
         return reader;
     }
 
-    public List<Pixel> getPixels() {
-        return pixelList;
+    public Image toFXImage() {
+        return this.matrixService.toImage(this.getRedMatrix(), this.getGreenMatrix(), this.getBlueMatrix());
     }
 
-    public class RGB {
-
-        private final Double r;
-        private final Double g;
-        private final Double b;
-
-        public RGB(Double R, Double G, Double B) {
-            r = R;
-            g = G;
-            b = B;
-        }
-
-        public Double getR() {
-            return r;
-        }
-
-        public Double getG() {
-            return g;
-        }
-
-        public Double getB() {
-            return b;
-        }
+    public boolean isPositionValid(int width, int height, int i, int j) {
+        // Ignore the portion of the mask outside the image.
+        return j >= 0 && j < height && i >= 0 && i < width;
     }
 }

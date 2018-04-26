@@ -1,6 +1,5 @@
 package core.provider;
 
-import core.action.filter.ApplyPrewittFilterAction;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
@@ -11,15 +10,11 @@ import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
+import core.action.filter.ApplyPrewittFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.image.CreateImageInformAction;
-import core.action.image.GetImageAction;
-import core.action.image.LoadImageAction;
-import core.action.image.SaveImageAction;
-import core.action.modifiedimage.GetModifiedImageAction;
-import core.action.modifiedimage.PutModifiedImageAction;
+import core.action.image.*;
 import core.action.noise.ApplyExponentialNoiseToImageAction;
 import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
@@ -60,6 +55,7 @@ class ActionProvider {
     private static ApplyRayleighNoiseToImageAction applyRayleighNoiseToImageAction;
     private static ApplyExponentialNoiseToImageAction applyExponentialNoiseToImageAction;
     private static ApplyPrewittFilterAction applyPrewittFilterAction;
+    private static UpdateCurrentImageAction updateCurrentImageAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -253,7 +249,6 @@ class ActionProvider {
     public static ApplyFilterAction provideApplyFilterAction() {
         if (applyFilterAction == null) {
             applyFilterAction = new ApplyFilterAction(
-                    ServiceProvider.provideMaskService(),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ServiceProvider.provideImageOperationsService()
             );
@@ -299,12 +294,19 @@ class ActionProvider {
     public static ApplyPrewittFilterAction provideApplyPrewittFilterAction() {
         if (applyPrewittFilterAction == null) {
             applyPrewittFilterAction = new ApplyPrewittFilterAction(
-                    ServiceProvider.provideMaskService(),
                     ServiceProvider.provideImageOperationsService(),
-                    ServiceProvider.provideMatrixService(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject()
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                    ServiceProvider.provideMatrixService()
             );
         }
         return applyPrewittFilterAction;
     }
+
+    public static UpdateCurrentImageAction provideUpdateCurrentImageAction() {
+        if (updateCurrentImageAction == null) {
+            updateCurrentImageAction = new UpdateCurrentImageAction(RepositoryProvider.provideImageRepository());
+        }
+        return updateCurrentImageAction;
+    }
+
 }

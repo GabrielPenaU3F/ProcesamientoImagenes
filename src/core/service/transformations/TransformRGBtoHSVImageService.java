@@ -12,13 +12,13 @@ public class TransformRGBtoHSVImageService {
         int height = image.getHeight();
         HSVImage hsvImage = new HSVImage(width, height);
 
-        for (int i=0; i < width; i++) {
-            for (int j=0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
 
-                int r = image.getRChannelValue(i, j).intValue();
-                int g = image.getGChannelValue(i, j).intValue();
-                int b = image.getBChannelValue(i, j).intValue();
-                hsvImage.setPixel(i,j, createHSVPixelFromRGB(r,g,b));
+                int r = image.getRChannelValue(i, j);
+                int g = image.getGChannelValue(i, j);
+                int b = image.getBChannelValue(i, j);
+                hsvImage.setPixel(i, j, createHSVPixelFromRGB(r, g, b));
 
             }
         }
@@ -29,11 +29,11 @@ public class TransformRGBtoHSVImageService {
     //This transformation was based on this model: https://es.wikipedia.org/wiki/Modelo_de_color_HSV
     private HSVPixel createHSVPixelFromRGB(int redRGB, int greenRGB, int blueRGB) {
 
-        double red = (double)redRGB/255;
-        double green = (double)greenRGB/255;
-        double blue = (double)blueRGB/255;
-        double max = Math.max(Math.max(red,green), blue);
-        double min = Math.min(Math.min(red,green), blue);
+        double red = (double) redRGB / 255;
+        double green = (double) greenRGB / 255;
+        double blue = (double) blueRGB / 255;
+        double max = Math.max(Math.max(red, green), blue);
+        double min = Math.min(Math.min(red, green), blue);
 
         double hue = calculateHue(red, green, blue, max, min);
         double saturation = calculateSaturation(max, min);
@@ -46,7 +46,7 @@ public class TransformRGBtoHSVImageService {
 
         double saturation = 0;
         if (max == 0) saturation = 0;
-        else saturation = 1 - min/max;
+        else saturation = 1 - min / max;
         return saturation;
     }
 

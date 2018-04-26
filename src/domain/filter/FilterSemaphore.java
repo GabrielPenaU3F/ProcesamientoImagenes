@@ -1,8 +1,6 @@
 package domain.filter;
 
-import io.reactivex.functions.Action;
-
-import java.util.function.Supplier;
+import domain.filter.mask.Mask;
 
 public class FilterSemaphore {
 

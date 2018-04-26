@@ -1,6 +1,5 @@
 package core.provider;
 
-import core.service.MaskService;
 import core.service.ImageOperationsService;
 import core.service.ImageRawService;
 import core.service.ModifyImageService;
@@ -70,10 +69,6 @@ public class ServiceProvider {
 
     public static RandomNumberGenerationService provideRandomNumberGenerationService() {
         return new RandomNumberGenerationService(new Random());
-    }
-
-    public static MaskService provideMaskService() {
-        return new MaskService();
     }
 
     public static MatrixService provideMatrixService() {

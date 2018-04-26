@@ -13,15 +13,15 @@ import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
-import core.action.modifiedimage.PutModifiedImageAction;
-import core.repository.ImageRepository;
+import core.action.image.PutModifiedImageAction;
+import core.action.image.UpdateCurrentImageAction;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.RandomElement;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.filter.FilterSemaphore;
-import domain.filter.HighPassMask;
-import domain.filter.Mask;
+import domain.filter.mask.Mask;
+import domain.filter.mask.HighPassMask;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
@@ -33,8 +33,6 @@ import presentation.controller.MainSceneController;
 import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
-
-import java.awt.image.BufferedImage;
 
 public class MainPresenter {
 
@@ -57,7 +55,7 @@ public class MainPresenter {
     private final Observable<Image> onModifiedImage;
     private final CompressDynamicRangeAction compressDynamicRangeAction;
     private final ApplyFilterAction applyFilterAction;
-    private final ImageRepository imageRepository;
+    private final UpdateCurrentImageAction updateCurrentImageAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -74,7 +72,7 @@ public class MainPresenter {
                          Observable<Image> onModifiedImage,
                          CompressDynamicRangeAction compressDynamicRangeAction,
                          ApplyFilterAction applyFilterAction,
-                         ImageRepository imageRepository) {
+                         UpdateCurrentImageAction updateCurrentImageAction) {
 
         this.view = view;
 
@@ -92,7 +90,7 @@ public class MainPresenter {
         this.equalizeGrayImageAction = equalizeGrayImageAction;
         this.compressDynamicRangeAction = compressDynamicRangeAction;
         this.applyFilterAction = applyFilterAction;
-        this.imageRepository = imageRepository;
+        this.updateCurrentImageAction = updateCurrentImageAction;
     }
 
     public void initialize() {
@@ -134,7 +132,7 @@ public class MainPresenter {
     public void onApplyChanges() {
         CustomImage modifiedCustomImage = new CustomImage(view.modifiedImageView.getImage(), "png");
         view.customImageView.setImage(view.modifiedImageView.getImage());
-        imageRepository.saveImage(modifiedCustomImage);
+        updateCurrentImageAction.execute(modifiedCustomImage);
         view.modifiedImageView.setImage(null);
         view.applyChangesButton.setVisible(false);
     }
@@ -193,9 +191,9 @@ public class MainPresenter {
             this.getImageAction.execute()
                     .map(customImage -> customImage.getPixelValue(pixelX, pixelY))
                     .ifPresent(rgb -> {
-                        view.valueR.setText(rgb.getR().toString());
-                        view.valueG.setText(rgb.getG().toString());
-                        view.valueB.setText(rgb.getB().toString());
+                        view.valueR.setText(String.valueOf(rgb.getRed()));
+                        view.valueG.setText(String.valueOf(rgb.getGreen()));
+                        view.valueB.setText(String.valueOf(rgb.getBlue()));
                     });
 
         } else {
@@ -327,10 +325,10 @@ public class MainPresenter {
         int size = insertedSize;
         this.getImageAction.execute()
                 .ifPresent(customImage -> {
-                    BufferedImage bufferedFilteredImage = applyFilterAction.executeHighPass(customImage, new HighPassMask(size)).getBufferedImage();
-                    view.modifiedImageView.setImage(SwingFXUtils.toFXImage(bufferedFilteredImage, null));
+                    CustomImage filteredCustomImage = applyFilterAction.execute(customImage, new HighPassMask(size));
+                    view.modifiedImageView.setImage(filteredCustomImage.toFXImage());
 
-                    this.applyThresholdToModifiedImage(new CustomImage(bufferedFilteredImage, Format.PNG));
+                    this.applyThresholdToModifiedImage(filteredCustomImage);
                 });
         view.applyChangesButton.setVisible(true);
     }
@@ -391,7 +389,7 @@ public class MainPresenter {
     }
 
     public void onApplyWeightedMedianFilter() {
-        FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEAN);
+        FilterSemaphore.setValue(Mask.Type.WEIGHTED_MEDIAN);
         new FilterSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
     }

@@ -3,14 +3,12 @@ package presentation.presenter;
 import core.action.filter.ApplyPrewittFilterAction;
 import core.action.filter.ApplyFilterAction;
 import core.action.image.GetImageAction;
-import domain.filter.GaussianMask;
-import domain.filter.Mask;
-import domain.filter.MeanMask;
-import domain.filter.MedianMask;
+import domain.filter.mask.GaussianMask;
+import domain.filter.mask.Mask;
+import domain.filter.mask.MeanMask;
+import domain.filter.mask.MedianMask;
+import domain.filter.mask.WeightedMedianMask;
 import presentation.controller.FilterSceneController;
-import presentation.util.InsertSquareMatrixPopup;
-
-import java.util.List;
 
 public class FilterPresenter {
 
@@ -43,15 +41,13 @@ public class FilterPresenter {
     }
 
     public void onApplyWeightedMedianFilter() {
-        int size = 3;
-        List<Integer> weights = InsertSquareMatrixPopup.show("Insert weighted matrix", 3).get();
-        applyWithMask(new MedianMask(size, weights));
+        applyWithMask(new WeightedMedianMask());
         view.closeWindow();
     }
 
     public void onApplyGaussianFilter() {
-        int detour = Integer.parseInt(view.textField.getText());
-        applyWithMask(new GaussianMask(detour));
+        int standardDeviation = Integer.parseInt(view.textField.getText());
+        applyWithMask(new GaussianMask(standardDeviation));
         view.closeWindow();
     }
 

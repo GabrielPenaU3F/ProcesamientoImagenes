@@ -1,7 +1,7 @@
 package presentation.presenter;
 
 import core.action.image.SaveImageAction;
-import core.action.modifiedimage.GetModifiedImageAction;
+import core.action.image.GetModifiedImageAction;
 import domain.customimage.Format;
 import presentation.controller.SaveImageController;
 

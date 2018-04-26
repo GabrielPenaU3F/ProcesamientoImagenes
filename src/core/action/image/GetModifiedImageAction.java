@@ -1,4 +1,4 @@
-package core.action.modifiedimage;
+package core.action.image;
 
 import core.repository.ImageRepository;
 import domain.customimage.CustomImage;

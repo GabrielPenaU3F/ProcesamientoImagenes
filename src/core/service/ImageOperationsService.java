@@ -1,6 +1,7 @@
 package core.service;
 
 import core.service.statistics.GrayLevelStatisticsService;
+import domain.customimage.ChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.customimage.Pixel;
 import javafx.scene.image.Image;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ImageOperationsService {
 
-    GrayLevelStatisticsService grayLevelStatisticsService;
+    private GrayLevelStatisticsService grayLevelStatisticsService;
 
     public ImageOperationsService(GrayLevelStatisticsService grayLevelStatisticsService) {
         this.grayLevelStatisticsService = grayLevelStatisticsService;
@@ -46,7 +47,7 @@ public class ImageOperationsService {
         return resultantImageHeight;
     }
 
-    public void completeWithZero(WritableImage imageToNormalize) {
+    private void completeWithZero(WritableImage imageToNormalize) {
         PixelWriter pixelWriter = imageToNormalize.getPixelWriter();
         for (int i = 0; i < imageToNormalize.getWidth(); i++) {
             for (int j = 0; j < imageToNormalize.getHeight(); j++) {
@@ -56,16 +57,16 @@ public class ImageOperationsService {
         }
     }
 
-    public void setChannelsPixelsValuesInImage(WritableImage imageToNormalize, CustomImage image) {
+    private void setChannelsPixelsValuesInImage(WritableImage imageToNormalize, CustomImage image) {
         int redChannelValue = 0;
         int greenChannelValue = 0;
         int blueChannelValue = 0;
         PixelWriter pixelWriter = imageToNormalize.getPixelWriter();
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                redChannelValue = image.getRChannelValue(i, j).intValue();
-                greenChannelValue = image.getGChannelValue(i, j).intValue();
-                blueChannelValue = image.getBChannelValue(i, j).intValue();
+                redChannelValue = image.getRChannelValue(i, j);
+                greenChannelValue = image.getGChannelValue(i, j);
+                blueChannelValue = image.getBChannelValue(i, j);
                 Color color = Color.rgb(redChannelValue, greenChannelValue, blueChannelValue);
                 pixelWriter.setColor(i, j, color);
             }
@@ -275,39 +276,64 @@ public class ImageOperationsService {
         return pixelsValues;
     }
 
-    public int[][] toMatrixedImage(int[][] pixels) {
+    private int[][] toValidImageMatrix(int[][] pixels) {
         return this.adjustScale(this.displacePixelsValues(pixels));
     }
 
-    public int[][] multiplyGrayPixelsValues(int[][] matrix1, int[][] matrix2) {
+    public ChannelMatrix toValidImageMatrix(ChannelMatrix channelMatrix) {
+        int[][] redChannel = this.toValidImageMatrix(channelMatrix.getRedChannel());
+        int[][] greenChannel = this.toValidImageMatrix(channelMatrix.getGreenChannel());
+        int[][] blueChannel = this.toValidImageMatrix(channelMatrix.getBlueChannel());
+        return new ChannelMatrix(redChannel, greenChannel, blueChannel);
+    }
+
+    public ChannelMatrix multiplyChannelMatrixs(ChannelMatrix channelMatrix1, ChannelMatrix channelMatrix2) {
+        int[][] redChannel = multiplyMatrix(channelMatrix1.getRedChannel(), channelMatrix2.getRedChannel());
+        int[][] greenChannel = multiplyMatrix(channelMatrix1.getGreenChannel(), channelMatrix2.getGreenChannel());
+        int[][] blueChannel = multiplyMatrix(channelMatrix1.getBlueChannel(), channelMatrix2.getBlueChannel());
+        return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
+    }
+
+    public ChannelMatrix sumChannelMatrixs(ChannelMatrix channelMatrix1, ChannelMatrix channelMatrix2) {
+        int[][] redChannel = sumMatrix(channelMatrix1.getRedChannel(), channelMatrix2.getRedChannel());
+        int[][] greenChannel = sumMatrix(channelMatrix1.getGreenChannel(), channelMatrix2.getGreenChannel());
+        int[][] blueChannel = sumMatrix(channelMatrix1.getBlueChannel(), channelMatrix2.getBlueChannel());
+        return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
+    }
+
+    public ChannelMatrix sqrtChannelMatrixs(ChannelMatrix channelMatrix) {
+        int[][] redChannel = sqrtMatrix(channelMatrix.getRedChannel());
+        int[][] greenChannel = sqrtMatrix(channelMatrix.getGreenChannel());
+        int[][] blueChannel = sqrtMatrix(channelMatrix.getBlueChannel());
+        return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
+    }
+
+    private int[][] sumMatrix(int[][] matrix1, int[][] matrix2) {
         int width = matrix1.length;
         int height = matrix1[0].length;
-
         int[][] result = new int[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int value = matrix1[i][j] * matrix2[i][j];
-                result[i][j] = Math.round(value);
+                result[i][j] = matrix1[i][j] + matrix2[i][j];
             }
         }
         return result;
     }
 
-    public int[][] sumGrayPixelsValues(int[][] matrix1, int[][] matrix2) {
+    private int[][] multiplyMatrix(int[][] matrix1, int[][] matrix2) {
         int width = matrix1.length;
         int height = matrix1[0].length;
-
         int[][] result = new int[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int value = matrix1[i][j] + matrix2[i][j];
-                result[i][j] = Math.round(value);
+                double productResult = matrix1[i][j] * matrix2[i][j];
+                result[i][j] = (int) Math.round(productResult);
             }
         }
         return result;
     }
 
-    public int[][] sqrtGrayPixelsValues(int[][] matrix) {
+    private int[][] sqrtMatrix(int[][] matrix) {
         int width = matrix.length;
         int height = matrix[0].length;
 

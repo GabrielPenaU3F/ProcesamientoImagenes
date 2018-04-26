@@ -33,7 +33,7 @@ public class PresenterProvider {
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ActionProvider.provideCompressDynamicRangeAction(),
                     ActionProvider.provideApplyFilterAction(),
-                    RepositoryProvider.provideImageRepository());
+                    ActionProvider.provideUpdateCurrentImageAction());
 
             return mainPresenter;
         }

@@ -2,7 +2,7 @@ package presentation.controller;
 
 import core.provider.PresenterProvider;
 import domain.filter.FilterSemaphore;
-import domain.filter.Mask;
+import domain.filter.mask.Mask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -36,7 +36,7 @@ public class FilterSceneController {
             label.setText("Enter size mask");
         }
 
-        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEAN)) {
+        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEDIAN)) {
             label.setText("Only 3x3 mask is available");
             textField.setDisable(true);
         }
@@ -61,7 +61,7 @@ public class FilterSceneController {
             this.filterPresenter.onApplyMedianFilter();
         }
 
-        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEAN)) {
+        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEDIAN)) {
             this.filterPresenter.onApplyWeightedMedianFilter();
         }
 

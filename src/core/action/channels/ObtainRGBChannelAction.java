@@ -64,21 +64,21 @@ public class ObtainRGBChannelAction {
 
     private BiFunction<Integer, Integer, Color> functionRed(CustomImage image) {
         return (x, y) -> {
-            int red = image.getRChannelValue(x, y).intValue();
+            int red = image.getRChannelValue(x, y);
             return Color.rgb(red, 0, 0);
         };
     }
 
     private BiFunction<Integer, Integer, Color> functionGreen(CustomImage image) {
         return (x, y) -> {
-            int green = image.getGChannelValue(x, y).intValue();
+            int green = image.getGChannelValue(x, y);
             return Color.rgb(0, green, 0);
         };
     }
 
     private BiFunction<Integer, Integer, Color> functionBlue(CustomImage image) {
         return (x, y) -> {
-            int blue = image.getBChannelValue(x, y).intValue();
+            int blue = image.getBChannelValue(x, y);
             return Color.rgb(0, 0, blue);
         };
     }
