@@ -17,9 +17,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
-    <AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="441.0" prefWidth="1106.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1104.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
+    <AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="1111.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="1111.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="510.0" minWidth="10.0" prefWidth="488.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="431.0" />
@@ -39,9 +39,6 @@
                 <center>
                     <ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                 </center>
-            <bottom>
-               <Button fx:id="applyChangesButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false" BorderPane.alignment="BOTTOM_CENTER" />
-            </bottom>
             </BorderPane>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="215.0" GridPane.columnIndex="2">
                 <Pane prefHeight="153.0" prefWidth="125.0">
@@ -71,7 +68,8 @@
                         </GridPane>
                     </Pane>
                 </Pane>
-                <Pane prefHeight="257.0" prefWidth="149.0">
+                <Pane prefHeight="306.0" prefWidth="152.0">
+               <Button fx:id="applyChangesButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="265.0" mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false" />
                     <Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value" textAlignment="CENTER" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="34.0" text="R" textAlignment="CENTER" />
