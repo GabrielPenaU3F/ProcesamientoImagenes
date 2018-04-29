@@ -1,12 +1,12 @@
-package domain.filter.mask;
+package domain.mask;
 
 public class MeanMask extends Mask {
 
     public MeanMask(int size) {
         super(Type.MEAN, size);
 
-        this.matrix = createMatrix(size);
         this.factor = 1 / Math.pow(size, 2);
+        this.matrix = createMatrix(size);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class MeanMask extends Mask {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                matrix[i][j] = factor;
+                matrix[i][j] = this.factor;
             }
         }
 

@@ -1,10 +1,10 @@
-package domain.filter.mask;
+package domain.mask;
 
-public class YDerivativePrewittMask extends Mask {
+public class PrewittYDerivativeMask extends Mask {
 
     private static final int AVAILABLE_SIZE = 3;
 
-    public YDerivativePrewittMask() {
+    public PrewittYDerivativeMask() {
         super(Type.PREWITT, AVAILABLE_SIZE);
         this.matrix = createMatrix(AVAILABLE_SIZE);
     }

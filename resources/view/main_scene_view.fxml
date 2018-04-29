@@ -166,7 +166,8 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edges">
             <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittFilter" text="Prewitt" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
         </Menu>
     </MenuBar>
 </AnchorPane>

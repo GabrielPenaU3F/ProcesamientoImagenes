@@ -3,7 +3,7 @@ package core.action.filter;
 import core.service.ImageOperationsService;
 import domain.customimage.ChannelMatrix;
 import domain.customimage.CustomImage;
-import domain.filter.mask.Mask;
+import domain.mask.Mask;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 

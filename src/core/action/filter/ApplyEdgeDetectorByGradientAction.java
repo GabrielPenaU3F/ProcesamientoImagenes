@@ -4,30 +4,29 @@ import core.service.ImageOperationsService;
 import core.service.MatrixService;
 import domain.customimage.ChannelMatrix;
 import domain.customimage.CustomImage;
-import domain.filter.mask.XDerivativePrewittMask;
-import domain.filter.mask.YDerivativePrewittMask;
+import domain.mask.Mask;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
-public class ApplyPrewittFilterAction {
+public class ApplyEdgeDetectorByGradientAction {
 
     private final ImageOperationsService imageOperationsService;
     private final PublishSubject<Image> imagePublishSubject;
     private final MatrixService matrixService;
 
-    public ApplyPrewittFilterAction(ImageOperationsService imageOperationsService,
-                                    PublishSubject<Image> imagePublishSubject,
-                                    MatrixService matrixService) {
+    public ApplyEdgeDetectorByGradientAction(ImageOperationsService imageOperationsService,
+                                             PublishSubject<Image> imagePublishSubject,
+                                             MatrixService matrixService) {
 
         this.imageOperationsService = imageOperationsService;
         this.imagePublishSubject = imagePublishSubject;
         this.matrixService = matrixService;
     }
 
-    public void execute(CustomImage customImage) {
+    public void execute(CustomImage customImage, Mask xDerivativeMask, Mask yDerivativeMask) {
         //We calculate the partial X and Y derivative matrixes
-        ChannelMatrix xDerivateChannelMatrix = new XDerivativePrewittMask().apply(customImage);
-        ChannelMatrix yDerivateChannelMatrix = new YDerivativePrewittMask().apply(customImage);
+        ChannelMatrix xDerivateChannelMatrix = xDerivativeMask.apply(customImage);
+        ChannelMatrix yDerivateChannelMatrix = yDerivativeMask.apply(customImage);
 
         //We calculate the gradient by applying the formulae: sqrt(X^2 + Y^2)
         ChannelMatrix xDerivativeSquare = this.imageOperationsService.multiplyChannelMatrixs(xDerivateChannelMatrix, xDerivateChannelMatrix);

@@ -48,7 +48,7 @@ public class PresenterProvider {
 
     public static SaveImagePresenter provideSaveImagePresenter(SaveImageController saveImageController) {
         return new SaveImagePresenter(saveImageController,
-                ActionProvider.provideGetModifiedImageAction(),
+                ActionProvider.provideGetImageAction(),
                 ActionProvider.provideSaveImageAction());
 
     }
@@ -120,8 +120,7 @@ public class PresenterProvider {
     public static FilterPresenter provideFilterPresenter(FilterSceneController filterSceneController) {
         return new FilterPresenter(filterSceneController,
                 ActionProvider.provideGetImageAction(),
-                ActionProvider.provideApplyFilterAction(),
-                ActionProvider.provideApplyPrewittFilterAction());
+                ActionProvider.provideApplyFilterAction());
     }
 
     public static NoiseImagePresenter provideNoiseImagePresenter(NoiseImageSceneController noiseImageSceneController) {
@@ -137,5 +136,12 @@ public class PresenterProvider {
                         PublishSubjectProvider.provideOnEqualizeImagePublishSubject()),
                 ActionProvider.provideCreateImageHistogram(),
                 PublishSubjectProvider.provideOnEqualizeImagePublishSubject());
+    }
+
+    public static EdgeDetectorPresenter provideEdgeDetectorPresenter() {
+        return new EdgeDetectorPresenter(
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyEdgeDetectorByGradient()
+        );
     }
 }

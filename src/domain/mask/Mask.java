@@ -1,4 +1,4 @@
-package domain.filter.mask;
+package domain.mask;
 
 import domain.customimage.RGB;
 import domain.customimage.CustomImage;
@@ -75,6 +75,6 @@ public abstract class Mask {
     }
 
     public enum Type {
-        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN, HIGH_PASS
+        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN, SOBEL, HIGH_PASS
     }
 }

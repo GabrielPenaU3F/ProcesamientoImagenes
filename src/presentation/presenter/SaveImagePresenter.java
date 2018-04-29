@@ -1,5 +1,6 @@
 package presentation.presenter;
 
+import core.action.image.GetImageAction;
 import core.action.image.SaveImageAction;
 import core.action.image.GetModifiedImageAction;
 import domain.customimage.Format;
@@ -8,12 +9,12 @@ import presentation.controller.SaveImageController;
 public class SaveImagePresenter {
 
     private final SaveImageController view;
-    private final GetModifiedImageAction getModifiedImageAction;
+    private final GetImageAction getImageAction;
     private final SaveImageAction saveImageAction;
 
-    public SaveImagePresenter(SaveImageController view, GetModifiedImageAction getModifiedImageAction,
+    public SaveImagePresenter(SaveImageController view, GetImageAction getImageAction,
                               SaveImageAction saveImageAction) {
-        this.getModifiedImageAction = getModifiedImageAction;
+        this.getImageAction = getImageAction;
         this.saveImageAction = saveImageAction;
         this.view = view;
     }
@@ -21,8 +22,12 @@ public class SaveImagePresenter {
     public void saveImage() {
         String filename = this.view.outputName.getText();
         String extension = this.view.formatList.getSelectionModel().getSelectedItems().get(0);
-        this.getModifiedImageAction.execute()
-                .ifPresent(image -> saveImageAction.execute(image, filename, extension));
+        this.getImageAction.execute()
+                .ifPresent(image -> {
+                    if(saveImageAction.execute(image, filename, extension) != null) {
+                        this.view.closeWindow();
+                    }
+                });
     }
 
     private void fillFormatList() {

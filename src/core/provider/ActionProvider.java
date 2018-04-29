@@ -10,7 +10,7 @@ import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
-import core.action.filter.ApplyPrewittFilterAction;
+import core.action.filter.ApplyEdgeDetectorByGradientAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
@@ -54,7 +54,7 @@ class ActionProvider {
     private static ApplyGaussianNoiseToImageAction applyGaussianNoiseToImageAction;
     private static ApplyRayleighNoiseToImageAction applyRayleighNoiseToImageAction;
     private static ApplyExponentialNoiseToImageAction applyExponentialNoiseToImageAction;
-    private static ApplyPrewittFilterAction applyPrewittFilterAction;
+    private static ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction;
     private static UpdateCurrentImageAction updateCurrentImageAction;
 
     public static GetImageAction provideGetImageAction() {
@@ -291,15 +291,15 @@ class ActionProvider {
         return applyExponentialNoiseToImageAction;
     }
 
-    public static ApplyPrewittFilterAction provideApplyPrewittFilterAction() {
-        if (applyPrewittFilterAction == null) {
-            applyPrewittFilterAction = new ApplyPrewittFilterAction(
+    public static ApplyEdgeDetectorByGradientAction provideApplyEdgeDetectorByGradient() {
+        if (applyEdgeDetectorByGradientAction == null) {
+            applyEdgeDetectorByGradientAction = new ApplyEdgeDetectorByGradientAction(
                     ServiceProvider.provideImageOperationsService(),
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ServiceProvider.provideMatrixService()
             );
         }
-        return applyPrewittFilterAction;
+        return applyEdgeDetectorByGradientAction;
     }
 
     public static UpdateCurrentImageAction provideUpdateCurrentImageAction() {
@@ -308,5 +308,4 @@ class ActionProvider {
         }
         return updateCurrentImageAction;
     }
-
 }

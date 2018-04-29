@@ -1,4 +1,4 @@
-package domain.filter.mask;
+package domain.mask;
 
 public class WeightedMedianMask extends MedianMask {
 

@@ -258,7 +258,12 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onApplyPrewittFilter() {
-        this.mainPresenter.onApplyPrewittFilter();
+    public void onApplyPrewittEdgeDetector() {
+        this.mainPresenter.onApplyPrewittEdgeDetector();
+    }
+
+    @FXML
+    public void onApplySobelEdgeDetector() {
+        this.mainPresenter.onApplySobelEdgeDetector();
     }
 }

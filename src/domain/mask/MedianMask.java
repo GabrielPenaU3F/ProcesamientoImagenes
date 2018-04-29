@@ -1,4 +1,4 @@
-package domain.filter.mask;
+package domain.mask;
 
 import domain.customimage.RGB;
 import domain.customimage.CustomImage;

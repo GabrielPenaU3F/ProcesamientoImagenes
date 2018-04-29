@@ -15,13 +15,14 @@ import core.action.image.GetImageAction;
 import core.action.image.LoadImageAction;
 import core.action.image.PutModifiedImageAction;
 import core.action.image.UpdateCurrentImageAction;
+import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.RandomElement;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
-import domain.filter.FilterSemaphore;
-import domain.filter.mask.Mask;
-import domain.filter.mask.HighPassMask;
+import domain.FilterSemaphore;
+import domain.mask.Mask;
+import domain.mask.HighPassMask;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
@@ -400,9 +401,15 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyPrewittFilter() {
+    public void onApplyPrewittEdgeDetector() {
         FilterSemaphore.setValue(Mask.Type.PREWITT);
-        new FilterSceneCreator().createScene();
+        PresenterProvider.provideEdgeDetectorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplySobelEdgeDetector() {
+        FilterSemaphore.setValue(Mask.Type.SOBEL);
+        PresenterProvider.provideEdgeDetectorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
 }

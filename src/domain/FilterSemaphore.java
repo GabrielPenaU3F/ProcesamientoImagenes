@@ -1,6 +1,6 @@
-package domain.filter;
+package domain;
 
-import domain.filter.mask.Mask;
+import domain.mask.Mask;
 
 public class FilterSemaphore {
 

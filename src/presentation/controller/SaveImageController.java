@@ -4,6 +4,7 @@ import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import presentation.presenter.SaveImagePresenter;
 
 public class SaveImageController {
@@ -29,4 +30,8 @@ public class SaveImageController {
         this.saveImagePresenter.saveImage();
     }
 
+    public void closeWindow() {
+        Stage stage = (Stage) this.outputName.getScene().getWindow();
+        stage.close();
+    }
 }

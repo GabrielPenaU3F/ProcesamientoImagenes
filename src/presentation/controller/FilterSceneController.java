@@ -1,8 +1,8 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
-import domain.filter.FilterSemaphore;
-import domain.filter.mask.Mask;
+import domain.FilterSemaphore;
+import domain.mask.Mask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -28,24 +28,15 @@ public class FilterSceneController {
     }
 
     public void update() {
-        if(FilterSemaphore.is(Mask.Type.MEAN)) {
+        if (FilterSemaphore.is(Mask.Type.MEAN)) {
             label.setText("Enter size mask | Must be an odd integer");
         }
 
-        if(FilterSemaphore.is(Mask.Type.MEDIAN)) {
+        if (FilterSemaphore.is(Mask.Type.MEDIAN)) {
             label.setText("Enter size mask");
         }
 
-        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEDIAN)) {
-            label.setText("Only 3x3 mask is available");
-            textField.setDisable(true);
-        }
-
-        if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
-            label.setText("Enter standard deviation");
-        }
-
-        if(FilterSemaphore.is(Mask.Type.PREWITT)) {
+        if (FilterSemaphore.is(Mask.Type.WEIGHTED_MEDIAN)) {
             label.setText("Only 3x3 mask is available");
             textField.setDisable(true);
         }
@@ -53,25 +44,7 @@ public class FilterSceneController {
 
     @FXML
     public void apply() {
-        if(FilterSemaphore.is(Mask.Type.MEAN)) {
-            this.filterPresenter.onApplyMeanFilter();
-        }
-
-        if(FilterSemaphore.is(Mask.Type.MEDIAN)) {
-            this.filterPresenter.onApplyMedianFilter();
-        }
-
-        if(FilterSemaphore.is(Mask.Type.WEIGHTED_MEDIAN)) {
-            this.filterPresenter.onApplyWeightedMedianFilter();
-        }
-
-        if(FilterSemaphore.is(Mask.Type.GAUSSIAN)) {
-            this.filterPresenter.onApplyGaussianFilter();
-        }
-
-        if(FilterSemaphore.is(Mask.Type.PREWITT)) {
-            this.filterPresenter.onApplyPrewittFilter();
-        }
+        this.filterPresenter.onApplyFilter();
     }
 
     public void closeWindow() {
