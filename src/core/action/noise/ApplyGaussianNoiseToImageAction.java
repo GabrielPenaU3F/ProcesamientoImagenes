@@ -37,14 +37,16 @@ public class ApplyGaussianNoiseToImageAction {
         //Generate a matrix where N cells contain noise, and thw rest contain zeros
         int[][] noiseMatrix = this.generateNoiseMatrix(mu, sigma, customImage, pixelsToContaminate);
 
-        //Now, we sum the noise matrix to the image and normalize the scale
-        int[][] newGrayLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.sumImageAndNoiseMatrixes(customImage, noiseMatrix)), pixelsToContaminate);
+        //Now, we sum the noise matrix to the image and normalize the scale (for each channel)
+        int[][] newRedLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.sumImageRedChannelAndNoiseMatrixes(customImage, noiseMatrix)), pixelsToContaminate);
+        int[][] newGreenLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.sumImageGreenChannelAndNoiseMatrixes(customImage, noiseMatrix)), pixelsToContaminate);
+        int[][] newBlueLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.sumImageBlueChannelAndNoiseMatrixes(customImage, noiseMatrix)), pixelsToContaminate);
 
         //Finally, we write the resultant matrix to a new image
-        return this.imageOperationsService.writeNewPixelsValuesToImage(newGrayLevelMatrix, newGrayLevelMatrix, newGrayLevelMatrix);
+        return this.imageOperationsService.writeNewPixelsValuesToImage(newRedLevelMatrix, newGreenLevelMatrix, newBlueLevelMatrix);
     }
 
-    private int[][] sumImageAndNoiseMatrixes(CustomImage customImage, int[][] noiseMatrix) {
+    private int[][] sumImageRedChannelAndNoiseMatrixes(CustomImage customImage, int[][] noiseMatrix) {
 
         Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
         PixelReader reader = image.getPixelReader();
@@ -52,6 +54,34 @@ public class ApplyGaussianNoiseToImageAction {
         for (int i=0; i < customImage.getWidth(); i ++) {
             for (int j=0; j < customImage.getHeight(); j++) {
                 sumMatrix[i][j] = ((int)(reader.getColor(i,j).getRed()*255)) + noiseMatrix[i][j];
+            }
+        }
+        return sumMatrix;
+
+    }
+
+    private int[][] sumImageGreenChannelAndNoiseMatrixes(CustomImage customImage, int[][] noiseMatrix) {
+
+        Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
+        PixelReader reader = image.getPixelReader();
+        int[][] sumMatrix = new int[customImage.getWidth()][customImage.getHeight()];
+        for (int i=0; i < customImage.getWidth(); i ++) {
+            for (int j=0; j < customImage.getHeight(); j++) {
+                sumMatrix[i][j] = ((int)(reader.getColor(i,j).getGreen()*255)) + noiseMatrix[i][j];
+            }
+        }
+        return sumMatrix;
+
+    }
+
+    private int[][] sumImageBlueChannelAndNoiseMatrixes(CustomImage customImage, int[][] noiseMatrix) {
+
+        Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
+        PixelReader reader = image.getPixelReader();
+        int[][] sumMatrix = new int[customImage.getWidth()][customImage.getHeight()];
+        for (int i=0; i < customImage.getWidth(); i ++) {
+            for (int j=0; j < customImage.getHeight(); j++) {
+                sumMatrix[i][j] = ((int)(reader.getColor(i,j).getBlue()*255)) + noiseMatrix[i][j];
             }
         }
         return sumMatrix;

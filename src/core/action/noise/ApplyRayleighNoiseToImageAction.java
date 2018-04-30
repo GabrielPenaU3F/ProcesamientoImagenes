@@ -38,14 +38,16 @@ public class ApplyRayleighNoiseToImageAction {
         int[][] noiseMatrix = this.generateNoiseMatrix(psi, customImage, pixelsToContaminate);
 
         //Now, we multiply the noise matrix and the image and normalize the scale
-        int[][] newGrayLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.multiplyImageAndNoiseMatrixes(customImage, noiseMatrix)), pixelsToContaminate);
+        int[][] newRedLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.multiplyImageRedChannelAndNoiseMatrix(customImage, noiseMatrix)), pixelsToContaminate);
+        int[][] newGreenLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.multiplyImageGreenChannelAndNoiseMatrix(customImage, noiseMatrix)), pixelsToContaminate);
+        int[][] newBlueLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.multiplyImageBlueChannelAndNoiseMatrix(customImage, noiseMatrix)), pixelsToContaminate);
 
         //Finally, we write the resultant matrix to a new image
-        return this.imageOperationsService.writeNewPixelsValuesToImage(newGrayLevelMatrix, newGrayLevelMatrix, newGrayLevelMatrix);
+        return this.imageOperationsService.writeNewPixelsValuesToImage(newRedLevelMatrix, newGreenLevelMatrix, newBlueLevelMatrix);
 
     }
 
-    private int[][] multiplyImageAndNoiseMatrixes(CustomImage customImage, int[][] noiseMatrix) {
+    private int[][] multiplyImageRedChannelAndNoiseMatrix(CustomImage customImage, int[][] noiseMatrix) {
 
         Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
         PixelReader reader = image.getPixelReader();
@@ -53,6 +55,34 @@ public class ApplyRayleighNoiseToImageAction {
         for (int i=0; i < customImage.getWidth(); i ++) {
             for (int j=0; j < customImage.getHeight(); j++) {
                 productMatrix[i][j] = ((int)(reader.getColor(i,j).getRed()*255)) * noiseMatrix[i][j];
+            }
+        }
+        return productMatrix;
+
+    }
+
+    private int[][] multiplyImageGreenChannelAndNoiseMatrix(CustomImage customImage, int[][] noiseMatrix) {
+
+        Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
+        PixelReader reader = image.getPixelReader();
+        int[][] productMatrix = new int[customImage.getWidth()][customImage.getHeight()];
+        for (int i=0; i < customImage.getWidth(); i ++) {
+            for (int j=0; j < customImage.getHeight(); j++) {
+                productMatrix[i][j] = ((int)(reader.getColor(i,j).getGreen()*255)) * noiseMatrix[i][j];
+            }
+        }
+        return productMatrix;
+
+    }
+
+    private int[][] multiplyImageBlueChannelAndNoiseMatrix(CustomImage customImage, int[][] noiseMatrix) {
+
+        Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
+        PixelReader reader = image.getPixelReader();
+        int[][] productMatrix = new int[customImage.getWidth()][customImage.getHeight()];
+        for (int i=0; i < customImage.getWidth(); i ++) {
+            for (int j=0; j < customImage.getHeight(); j++) {
+                productMatrix[i][j] = ((int)(reader.getColor(i,j).getBlue())*255) * noiseMatrix[i][j];
             }
         }
         return productMatrix;
