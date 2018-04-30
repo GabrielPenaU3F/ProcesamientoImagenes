@@ -424,4 +424,10 @@ public class MainPresenter {
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
+
+    public void onApplyDirectionalDerivativeOperatorPrewittMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_PREWITT);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
 }

@@ -9,6 +9,10 @@ import domain.mask.derivativedirectionaloperator.kirsh.KirshHorizontalStraightMa
 import domain.mask.derivativedirectionaloperator.kirsh.KirshMainDiagonalMask;
 import domain.mask.derivativedirectionaloperator.kirsh.KirshSecondaryDiagonalMask;
 import domain.mask.derivativedirectionaloperator.kirsh.KirshVerticalStraightMask;
+import domain.mask.derivativedirectionaloperator.prewitt.PrewittHorizontalStraightMask;
+import domain.mask.derivativedirectionaloperator.prewitt.PrewittMainDiagonalMask;
+import domain.mask.derivativedirectionaloperator.prewitt.PrewittSecondaryDiagonalMask;
+import domain.mask.derivativedirectionaloperator.prewitt.PrewittVerticalStraightMask;
 import domain.mask.derivativedirectionaloperator.standard.StandardHorizontalStraightMask;
 import domain.mask.derivativedirectionaloperator.standard.StandardMainDiagonalMask;
 import domain.mask.derivativedirectionaloperator.standard.StandardSecondaryDiagonalMask;
@@ -36,6 +40,10 @@ public class DirectionalDerivativeOperatorPresenter {
                     if (FilterSemaphore.is(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_KIRSH)) {
                         this.applyKirshMask(customImage);
                     }
+
+                    if (FilterSemaphore.is(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_PREWITT)) {
+                        this.applyPrewittMask(customImage);
+                    }
                 });
     }
 
@@ -55,6 +63,17 @@ public class DirectionalDerivativeOperatorPresenter {
         Mask verticalStraightMask = new KirshVerticalStraightMask();
         Mask mainDiagonalMask = new KirshMainDiagonalMask();
         Mask secondaryDiagonalMask = new KirshSecondaryDiagonalMask();
+
+        applyDirectionalDerivativeOperatorAction.execute(customImage,
+                horizontalStraightMask, verticalStraightMask,
+                mainDiagonalMask, secondaryDiagonalMask);
+    }
+
+    private void applyPrewittMask(CustomImage customImage) {
+        Mask horizontalStraightMask = new PrewittHorizontalStraightMask();
+        Mask verticalStraightMask = new PrewittVerticalStraightMask();
+        Mask mainDiagonalMask = new PrewittMainDiagonalMask();
+        Mask secondaryDiagonalMask = new PrewittSecondaryDiagonalMask();
 
         applyDirectionalDerivativeOperatorAction.execute(customImage,
                 horizontalStraightMask, verticalStraightMask,

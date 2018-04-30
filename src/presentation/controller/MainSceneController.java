@@ -276,4 +276,9 @@ public class MainSceneController {
     public void onApplyDirectionalDerivativeOperatorKirshMask() {
         this.mainPresenter.onApplyDirectionalDerivativeOperatorKirshMask();
     }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorPrewittMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorPrewittMask();
+    }
 }
