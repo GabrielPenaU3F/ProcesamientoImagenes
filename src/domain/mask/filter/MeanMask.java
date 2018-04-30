@@ -1,4 +1,6 @@
-package domain.mask;
+package domain.mask.filter;
+
+import domain.mask.Mask;
 
 public class MeanMask extends Mask {
 

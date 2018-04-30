@@ -1,7 +1,8 @@
-package domain.mask;
+package domain.mask.filter;
 
 import domain.customimage.RGB;
 import domain.customimage.CustomImage;
+import domain.mask.Mask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MedianMask extends Mask {
     }
 
     @Override
-    protected RGB applyMaskToPixel(CustomImage image, int x, int y) {
+    public RGB applyMaskToPixel(CustomImage image, int x, int y) {
         List<RGB> pixelsWithinMaskRange = this.obtainPixelsWithinMaskRange(image, x, y);
 
         List<Integer> redValues = this.sortRedValues(pixelsWithinMaskRange);

@@ -1,10 +1,12 @@
-package domain.mask;
+package domain.mask.prewitt;
 
-public class PrewittXDerivativeMask extends Mask {
+import domain.mask.Mask;
+
+public class PrewittYDerivativeMask extends Mask {
 
     private static final int AVAILABLE_SIZE = 3;
 
-    public PrewittXDerivativeMask() {
+    public PrewittYDerivativeMask() {
         super(Type.PREWITT, AVAILABLE_SIZE);
         this.matrix = createMatrix(AVAILABLE_SIZE);
     }
@@ -12,9 +14,9 @@ public class PrewittXDerivativeMask extends Mask {
     @Override
     protected double[][] createMatrix(int size) {
         return new double[][]{
-                {-1, -1, -1},
-                {0, 0, 0},
-                {1, 1, 1}
+                {-1, 0, 1},
+                {-1, 0, 1},
+                {-1, 0, 1}
         };
     }
 

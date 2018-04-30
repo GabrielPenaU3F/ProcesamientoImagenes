@@ -266,4 +266,9 @@ public class MainSceneController {
     public void onApplySobelEdgeDetector() {
         this.mainPresenter.onApplySobelEdgeDetector();
     }
+
+    @FXML
+    public void onApplyDerivateDirectionalOperatorStandard() {
+        this.mainPresenter.onApplyDerivateDirectionalOperatorStandard();
+    }
 }

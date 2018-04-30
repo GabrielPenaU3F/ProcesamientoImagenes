@@ -1,7 +1,8 @@
-package domain.mask;
+package domain.mask.filter;
 
 import domain.customimage.CustomImage;
 import domain.customimage.RGB;
+import domain.mask.Mask;
 
 public class GaussianMask extends Mask {
 
@@ -27,7 +28,7 @@ public class GaussianMask extends Mask {
             }
         }
 
-        return 1/divider;
+        return 1 / divider;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class GaussianMask extends Mask {
     }
 
     @Override
-    protected RGB applyMaskToPixel(CustomImage image, int x, int y) {
+    public RGB applyMaskToPixel(CustomImage image, int x, int y) {
 
         int red = 0;
         int green = 0;

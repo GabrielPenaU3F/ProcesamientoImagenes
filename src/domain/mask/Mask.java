@@ -6,6 +6,8 @@ import domain.customimage.ChannelMatrix;
 
 public abstract class Mask {
 
+    public static final int AVAILABLE_SIZE = 3;
+
     protected final Type type;
     protected final int size;
     protected double[][] matrix;
@@ -46,7 +48,7 @@ public abstract class Mask {
     }
 
     /* Basic convolution segment algorithm */
-    protected RGB applyMaskToPixel(CustomImage image, int x, int y) {
+    public RGB applyMaskToPixel(CustomImage image, int x, int y) {
         int red = 0;
         int green = 0;
         int blue = 0;
@@ -75,6 +77,6 @@ public abstract class Mask {
     }
 
     public enum Type {
-        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN, SOBEL, HIGH_PASS
+        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN, SOBEL, DERIVATE_DIRECTIONAL_OPERATOR_STANDARD, HIGH_PASS
     }
 }

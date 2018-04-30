@@ -22,7 +22,7 @@ import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
 import domain.mask.Mask;
-import domain.mask.HighPassMask;
+import domain.mask.filter.HighPassMask;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
@@ -410,6 +410,12 @@ public class MainPresenter {
     public void onApplySobelEdgeDetector() {
         FilterSemaphore.setValue(Mask.Type.SOBEL);
         PresenterProvider.provideEdgeDetectorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyDerivateDirectionalOperatorStandard() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_STANDARD);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
 }
