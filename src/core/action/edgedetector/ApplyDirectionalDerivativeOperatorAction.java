@@ -30,14 +30,21 @@ public class ApplyDirectionalDerivativeOperatorAction {
                         Mask mainDiagonalMask,
                         Mask secondaryDiagonalMask) {
 
-        ChannelMatrix channelMatrix = applyMasks(customImage, horizontalStraightMask, verticalStraightMask, mainDiagonalMask, secondaryDiagonalMask);
+        ChannelMatrix channelMatrix = applyMasks(customImage, horizontalStraightMask, verticalStraightMask,
+                mainDiagonalMask, secondaryDiagonalMask);
 
-        Image resultantImage = this.matrixService.toImage(channelMatrix.getRedChannel(), channelMatrix.getGreenChannel(), channelMatrix.getBlueChannel());
+        int[][] redChannel = channelMatrix.getRedChannel();
+        int[][] greenChannel = channelMatrix.getGreenChannel();
+        int[][] blueChannel = channelMatrix.getBlueChannel();
+        Image resultantImage = this.matrixService.toImage(redChannel, greenChannel, blueChannel);
 
         imagePublishSubject.onNext(resultantImage);
     }
 
-    private ChannelMatrix applyMasks(CustomImage image, Mask horizontalStraightMask, Mask verticalStraightMask, Mask mainDiagonalMask, Mask secondaryDiagonalMask) {
+    private ChannelMatrix applyMasks(CustomImage image,
+                                     Mask horizontalStraightMask, Mask verticalStraightMask,
+                                     Mask mainDiagonalMask, Mask secondaryDiagonalMask) {
+
         Integer width = image.getWidth();
         Integer height = image.getHeight();
         ChannelMatrix channelMatrix = new ChannelMatrix(width, height);

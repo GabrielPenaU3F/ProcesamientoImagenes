@@ -168,7 +168,8 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
             <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyDerivateDirectionalOperatorStandard" text="Derivate Directional Operator Standard" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />
         </Menu>
     </MenuBar>
 </AnchorPane>

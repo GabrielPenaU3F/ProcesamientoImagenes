@@ -413,8 +413,14 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyDerivateDirectionalOperatorStandard() {
+    public void onApplyDirectionalDerivativeOperatorStandardMask() {
         FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_STANDARD);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyDirectionalDerivativeOperatorKirshMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_KIRSH);
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }

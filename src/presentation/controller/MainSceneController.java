@@ -268,7 +268,12 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onApplyDerivateDirectionalOperatorStandard() {
-        this.mainPresenter.onApplyDerivateDirectionalOperatorStandard();
+    public void onApplyDirectionalDerivativeOperatorStandardMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorStandardMask();
+    }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorKirshMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorKirshMask();
     }
 }

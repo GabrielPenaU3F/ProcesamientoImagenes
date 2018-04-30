@@ -2,9 +2,9 @@ package domain.mask.derivativedirectionaloperator.standard;
 
 import domain.mask.Mask;
 
-public class SecondaryDiagonalMask extends Mask {
+public class StandardSecondaryDiagonalMask extends Mask {
 
-    public SecondaryDiagonalMask() {
+    public StandardSecondaryDiagonalMask() {
         super(Type.DERIVATE_DIRECTIONAL_OPERATOR_STANDARD, AVAILABLE_SIZE);
 
         this.matrix = createMatrix(AVAILABLE_SIZE);
@@ -13,7 +13,7 @@ public class SecondaryDiagonalMask extends Mask {
     @Override
     protected double[][] createMatrix(int size) {
         return new double[][]{
-                {1, 1, 1},
+                {1,  1,  1},
                 {1, -2, -1},
                 {1, -1, -1}
         };
