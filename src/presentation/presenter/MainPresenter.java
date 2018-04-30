@@ -430,4 +430,9 @@ public class MainPresenter {
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
+    public void onApplyDirectionalDerivativeOperatorSobelMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
 }

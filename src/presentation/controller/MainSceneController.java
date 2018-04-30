@@ -281,4 +281,9 @@ public class MainSceneController {
     public void onApplyDirectionalDerivativeOperatorPrewittMask() {
         this.mainPresenter.onApplyDirectionalDerivativeOperatorPrewittMask();
     }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorSobelMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorSobelMask();
+    }
 }

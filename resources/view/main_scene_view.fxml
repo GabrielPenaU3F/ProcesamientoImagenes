@@ -164,6 +164,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
+                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
             </Menu>
         </Menu>
     </MenuBar>

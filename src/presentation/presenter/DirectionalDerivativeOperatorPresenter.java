@@ -13,6 +13,10 @@ import domain.mask.derivativedirectionaloperator.prewitt.PrewittHorizontalStraig
 import domain.mask.derivativedirectionaloperator.prewitt.PrewittMainDiagonalMask;
 import domain.mask.derivativedirectionaloperator.prewitt.PrewittSecondaryDiagonalMask;
 import domain.mask.derivativedirectionaloperator.prewitt.PrewittVerticalStraightMask;
+import domain.mask.derivativedirectionaloperator.sobel.SobelHorizontalStraightMask;
+import domain.mask.derivativedirectionaloperator.sobel.SobelMainDiagonalMask;
+import domain.mask.derivativedirectionaloperator.sobel.SobelSecondaryDiagonalMask;
+import domain.mask.derivativedirectionaloperator.sobel.SobelVerticalStraightMask;
 import domain.mask.derivativedirectionaloperator.standard.StandardHorizontalStraightMask;
 import domain.mask.derivativedirectionaloperator.standard.StandardMainDiagonalMask;
 import domain.mask.derivativedirectionaloperator.standard.StandardSecondaryDiagonalMask;
@@ -44,6 +48,10 @@ public class DirectionalDerivativeOperatorPresenter {
                     if (FilterSemaphore.is(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_PREWITT)) {
                         this.applyPrewittMask(customImage);
                     }
+
+                    if (FilterSemaphore.is(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL)) {
+                        this.applySobelMask(customImage);
+                    }
                 });
     }
 
@@ -74,6 +82,17 @@ public class DirectionalDerivativeOperatorPresenter {
         Mask verticalStraightMask = new PrewittVerticalStraightMask();
         Mask mainDiagonalMask = new PrewittMainDiagonalMask();
         Mask secondaryDiagonalMask = new PrewittSecondaryDiagonalMask();
+
+        applyDirectionalDerivativeOperatorAction.execute(customImage,
+                horizontalStraightMask, verticalStraightMask,
+                mainDiagonalMask, secondaryDiagonalMask);
+    }
+
+    private void applySobelMask(CustomImage customImage) {
+        Mask horizontalStraightMask = new SobelHorizontalStraightMask();
+        Mask verticalStraightMask = new SobelVerticalStraightMask();
+        Mask mainDiagonalMask = new SobelMainDiagonalMask();
+        Mask secondaryDiagonalMask = new SobelSecondaryDiagonalMask();
 
         applyDirectionalDerivativeOperatorAction.execute(customImage,
                 horizontalStraightMask, verticalStraightMask,
