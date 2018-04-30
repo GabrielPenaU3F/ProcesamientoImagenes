@@ -11,6 +11,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class ApplyExponentialNoiseToImageAction {
 
@@ -33,32 +34,34 @@ public class ApplyExponentialNoiseToImageAction {
                 int numberOfPixelsToContaminate = (int)(percent * customImage.getPixelQuantity());
         List<Pixel> pixelsToContaminate = customImage.pickNRandomPixels(numberOfPixelsToContaminate);
 
-        //Generate a matrix where N cells contain noise, and thw rest contain zeros
+        //Generate a matrix where N cells contain noise, and the rest contain zeros
         int[][] noiseMatrix = this.generateNoiseMatrix(lambda, customImage, pixelsToContaminate);
 
-        //Now, we multiply the noise matrix and the image and normalize the scale
-        int[][] newGrayLevelMatrix = this.imageOperationsService.adjustScale(this.imageOperationsService.displacePixelsValues(this.multiplyImageAndNoiseMatrixes(customImage, noiseMatrix)), pixelsToContaminate);
+        //Now, we multiply the noise matrix and the image and normalize the scale (for each channel)
+        int[][] redChannelValues = this.multiplyImageChannelAndNoiseMatrix(customImage, noiseMatrix, (i, j) -> (int) (customImage.getPixelReader().getColor(i, j).getRed() * 255));
+        int[][] greenChannelValues = this.multiplyImageChannelAndNoiseMatrix(customImage, noiseMatrix, (i, j) -> (int) (customImage.getPixelReader().getColor(i, j).getGreen() * 255));
+        int[][] blueChannelValues = this.multiplyImageChannelAndNoiseMatrix(customImage, noiseMatrix, (i, j) -> (int) (customImage.getPixelReader().getColor(i, j).getBlue() * 255));
+
+        int[][] adjustedRedChannelValues = this.imageOperationsService.toValidContaminatedImage(redChannelValues, pixelsToContaminate);
+        int[][] adjustedGreenChannelValues = this.imageOperationsService.toValidContaminatedImage(greenChannelValues, pixelsToContaminate);
+        int[][] adjustedBlueChannelValues = this.imageOperationsService.toValidContaminatedImage(blueChannelValues, pixelsToContaminate);
 
         //Finally, we write the resultant matrix to a new image
-        return this.imageOperationsService.writeNewPixelsValuesToImage(newGrayLevelMatrix, newGrayLevelMatrix, newGrayLevelMatrix);
+        return this.imageOperationsService.writeNewPixelsValuesToImage(adjustedRedChannelValues, adjustedGreenChannelValues, adjustedBlueChannelValues);
 
     }
 
-    private int[][] multiplyImageAndNoiseMatrixes(CustomImage customImage, int[][] noiseMatrix) {
-
-        Image image = SwingFXUtils.toFXImage(customImage.getBufferedImage(), null);
-        PixelReader reader = image.getPixelReader();
+    private int[][] multiplyImageChannelAndNoiseMatrix(CustomImage customImage, int[][] noiseMatrix, BiFunction<Integer, Integer, Integer> channel) {
         int[][] productMatrix = new int[customImage.getWidth()][customImage.getHeight()];
         for (int i=0; i < customImage.getWidth(); i ++) {
             for (int j=0; j < customImage.getHeight(); j++) {
-                productMatrix[i][j] = ((int)(reader.getColor(i,j).getRed()*255)) * noiseMatrix[i][j];
+                productMatrix[i][j] = channel.apply(i, j) * noiseMatrix[i][j];
             }
         }
         return productMatrix;
-
     }
 
-    private int[][] generateNoiseMatrix(double lambda, CustomImage customImage, List<Pixel> pixelsToContaminate) {
+        private int[][] generateNoiseMatrix(double lambda, CustomImage customImage, List<Pixel> pixelsToContaminate) {
         int[][] noiseMatrix = new int[customImage.getWidth()][customImage.getHeight()];
         for (int i=0; i < noiseMatrix.length; i++) {
             for (int j=0; j < noiseMatrix[i].length; j++) {
