@@ -94,6 +94,10 @@ public class ImageOperationsService {
         return channelValues;
     }
 
+    public int[][] toValidContaminatedImage(int[][] channelValues, List<Pixel> contaminatedPixels) {
+        return adjustScale(displacePixelsValues(channelValues), contaminatedPixels);
+    }
+
     public Image writeNewPixelsValuesToImage(int[][] redChannelValues, int[][] greenChannelValues,
                                              int[][] blueChannelValues) {
         int width = redChannelValues.length;
