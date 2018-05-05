@@ -166,6 +166,9 @@
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
             </Menu>
+            <Menu mnemonicParsing="false" text="Threshold">
+                <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimationAction" text="Global Threshold Estimation" />
+            </Menu>
         </Menu>
     </MenuBar>
 </AnchorPane>

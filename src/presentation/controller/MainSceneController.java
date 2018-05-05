@@ -286,4 +286,9 @@ public class MainSceneController {
     public void onApplyDirectionalDerivativeOperatorSobelMask() {
         this.mainPresenter.onApplyDirectionalDerivativeOperatorSobelMask();
     }
+
+    @FXML
+    public void applyGlobalThresholdEstimationAction(){
+        this.mainPresenter.onApplyGlobalThresholdEstimation();
+    }
 }

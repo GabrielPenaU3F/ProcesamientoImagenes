@@ -33,7 +33,8 @@ public class PresenterProvider {
                     PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ActionProvider.provideCompressDynamicRangeAction(),
                     ActionProvider.provideApplyFilterAction(),
-                    ActionProvider.provideUpdateCurrentImageAction());
+                    ActionProvider.provideUpdateCurrentImageAction(),
+                    ActionProvider.provideApplyApplyGlobalThresholdEstimation());
 
             return mainPresenter;
         }

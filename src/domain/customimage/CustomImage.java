@@ -73,6 +73,11 @@ public class CustomImage {
         this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
         this.pixelList = getListOfPixels();
         this.matrixService = ServiceProvider.provideMatrixService();
+
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null );
+        this.redMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getRed());
+        this.greenMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getGreen());
+        this.blueMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getBlue());
     }
 
     public int getPixelQuantity() {

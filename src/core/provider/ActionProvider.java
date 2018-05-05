@@ -58,6 +58,7 @@ class ActionProvider {
     private static ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction;
     private static UpdateCurrentImageAction updateCurrentImageAction;
     private static ApplyDirectionalDerivativeOperatorAction applyDirectionalDerivativeOperatorAction;
+    private static ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -320,5 +321,13 @@ class ActionProvider {
             );
         }
         return applyDirectionalDerivativeOperatorAction;
+    }
+
+    public static ApplyGlobalThresholdEstimationAction provideApplyApplyGlobalThresholdEstimation(){
+        if (applyGlobalThresholdEstimationAction == null) {
+            applyGlobalThresholdEstimationAction = new ApplyGlobalThresholdEstimationAction(
+                    ServiceProvider.provideMatrixService());
+        }
+        return applyGlobalThresholdEstimationAction;
     }
 }

@@ -3,6 +3,7 @@ package presentation.presenter;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
+import core.action.edit.space_domain.ApplyGlobalThresholdEstimationAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
@@ -18,6 +19,7 @@ import core.action.image.UpdateCurrentImageAction;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.RandomElement;
+import domain.automaticthreshold.GlobalThresholdImage;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
@@ -34,6 +36,8 @@ import presentation.controller.MainSceneController;
 import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
+
+import javax.swing.*;
 
 public class MainPresenter {
 
@@ -57,6 +61,7 @@ public class MainPresenter {
     private final CompressDynamicRangeAction compressDynamicRangeAction;
     private final ApplyFilterAction applyFilterAction;
     private final UpdateCurrentImageAction updateCurrentImageAction;
+    private final ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -73,7 +78,8 @@ public class MainPresenter {
                          Observable<Image> onModifiedImage,
                          CompressDynamicRangeAction compressDynamicRangeAction,
                          ApplyFilterAction applyFilterAction,
-                         UpdateCurrentImageAction updateCurrentImageAction) {
+                         UpdateCurrentImageAction updateCurrentImageAction,
+                         ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction) {
 
         this.view = view;
 
@@ -92,6 +98,7 @@ public class MainPresenter {
         this.compressDynamicRangeAction = compressDynamicRangeAction;
         this.applyFilterAction = applyFilterAction;
         this.updateCurrentImageAction = updateCurrentImageAction;
+        this.applyGlobalThresholdEstimationAction = applyGlobalThresholdEstimationAction;
     }
 
     public void initialize() {
@@ -434,5 +441,20 @@ public class MainPresenter {
         FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL);
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyGlobalThresholdEstimation(){
+
+        view.applyChangesButton.setVisible(true);
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+
+                    int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold", "1").get());
+                    int deltaT = Integer.parseInt(InsertValuePopup.show("Define Delta T", "1").get());
+                    GlobalThresholdImage globalThresholdImage = applyGlobalThresholdEstimationAction.execute(customImage, initialThreshold, deltaT);
+                    view.modifiedImageView.setImage(globalThresholdImage.getImage());
+                    JOptionPane.showMessageDialog(null, "Iterations: " + String.valueOf(globalThresholdImage.getIterations()) +
+                    "\n" + "Final Threshold: " + String.valueOf(globalThresholdImage.getThreshold()));
+                });
     }
 }

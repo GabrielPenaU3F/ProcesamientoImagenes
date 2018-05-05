@@ -47,12 +47,20 @@ public class ImageOperationsService {
         return resultantImageHeight;
     }
 
-    private void completeWithZero(WritableImage imageToNormalize) {
+    public void completeWithZero(WritableImage imageToNormalize) {
         PixelWriter pixelWriter = imageToNormalize.getPixelWriter();
         for (int i = 0; i < imageToNormalize.getWidth(); i++) {
             for (int j = 0; j < imageToNormalize.getHeight(); j++) {
                 Color color = Color.rgb(0, 0, 0);
                 pixelWriter.setColor(i, j, color);
+            }
+        }
+    }
+
+    public void completeWithZero(int[][] image) {
+        for (int i = 0; i < image.length; i++) {
+            for (int j = 0; j < image[0].length; j++) {
+                image[i][j] = 0;
             }
         }
     }
@@ -312,7 +320,7 @@ public class ImageOperationsService {
         return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
     }
 
-    private int[][] sumMatrix(int[][] matrix1, int[][] matrix2) {
+    public int[][] sumMatrix(int[][] matrix1, int[][] matrix2) {
         int width = matrix1.length;
         int height = matrix1[0].length;
         int[][] result = new int[width][height];
@@ -324,7 +332,7 @@ public class ImageOperationsService {
         return result;
     }
 
-    private int[][] multiplyMatrix(int[][] matrix1, int[][] matrix2) {
+    public int[][] multiplyMatrix(int[][] matrix1, int[][] matrix2) {
         int width = matrix1.length;
         int height = matrix1[0].length;
         int[][] result = new int[width][height];
