@@ -266,4 +266,24 @@ public class MainSceneController {
     public void onApplySobelEdgeDetector() {
         this.mainPresenter.onApplySobelEdgeDetector();
     }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorStandardMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorStandardMask();
+    }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorKirshMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorKirshMask();
+    }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorPrewittMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorPrewittMask();
+    }
+
+    @FXML
+    public void onApplyDirectionalDerivativeOperatorSobelMask() {
+        this.mainPresenter.onApplyDirectionalDerivativeOperatorSobelMask();
+    }
 }

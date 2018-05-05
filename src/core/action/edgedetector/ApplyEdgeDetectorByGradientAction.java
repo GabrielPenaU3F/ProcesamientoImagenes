@@ -1,4 +1,4 @@
-package core.action.filter;
+package core.action.edgedetector;
 
 import core.service.ImageOperationsService;
 import core.service.MatrixService;

@@ -4,6 +4,10 @@ import core.action.filter.ApplyFilterAction;
 import core.action.image.GetImageAction;
 import domain.FilterSemaphore;
 import domain.mask.*;
+import domain.mask.filter.GaussianMask;
+import domain.mask.filter.MeanMask;
+import domain.mask.filter.MedianMask;
+import domain.mask.filter.WeightedMedianMask;
 import presentation.controller.FilterSceneController;
 
 public class FilterPresenter {

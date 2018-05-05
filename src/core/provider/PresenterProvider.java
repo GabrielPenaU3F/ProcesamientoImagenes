@@ -144,4 +144,10 @@ public class PresenterProvider {
                 ActionProvider.provideApplyEdgeDetectorByGradient()
         );
     }
+
+    public static DirectionalDerivativeOperatorPresenter provideDirectionalDerivativeOperatorPresenter() {
+        return new DirectionalDerivativeOperatorPresenter(
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyDerivateDirectionalOperatorAction());
+    }
 }

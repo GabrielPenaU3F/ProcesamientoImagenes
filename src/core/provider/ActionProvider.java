@@ -2,6 +2,7 @@ package core.provider;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.*;
 import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
@@ -10,7 +11,7 @@ import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
-import core.action.filter.ApplyEdgeDetectorByGradientAction;
+import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
@@ -56,6 +57,7 @@ class ActionProvider {
     private static ApplyExponentialNoiseToImageAction applyExponentialNoiseToImageAction;
     private static ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction;
     private static UpdateCurrentImageAction updateCurrentImageAction;
+    private static ApplyDirectionalDerivativeOperatorAction applyDirectionalDerivativeOperatorAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -307,5 +309,16 @@ class ActionProvider {
             updateCurrentImageAction = new UpdateCurrentImageAction(RepositoryProvider.provideImageRepository());
         }
         return updateCurrentImageAction;
+    }
+
+    public static ApplyDirectionalDerivativeOperatorAction provideApplyDerivateDirectionalOperatorAction() {
+        if (applyDirectionalDerivativeOperatorAction == null) {
+            applyDirectionalDerivativeOperatorAction = new ApplyDirectionalDerivativeOperatorAction(
+                    ServiceProvider.provideImageOperationsService(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                    ServiceProvider.provideMatrixService()
+            );
+        }
+        return applyDirectionalDerivativeOperatorAction;
     }
 }

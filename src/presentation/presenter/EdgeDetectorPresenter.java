@@ -1,10 +1,14 @@
 package presentation.presenter;
 
-import core.action.filter.ApplyEdgeDetectorByGradientAction;
+import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.image.GetImageAction;
-import domain.customimage.CustomImage;
 import domain.FilterSemaphore;
+import domain.customimage.CustomImage;
 import domain.mask.*;
+import domain.mask.prewitt.PrewittXDerivativeMask;
+import domain.mask.prewitt.PrewittYDerivativeMask;
+import domain.mask.sobel.SobelXDerivativeMask;
+import domain.mask.sobel.SobelYDerivativeMask;
 
 public class EdgeDetectorPresenter {
 

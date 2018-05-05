@@ -1,10 +1,12 @@
-package domain.mask;
+package domain.mask.sobel;
 
-public class SobelYDerivativeMask extends Mask {
+import domain.mask.Mask;
+
+public class SobelXDerivativeMask extends Mask {
 
     private static final int AVAILABLE_SIZE = 3;
 
-    public SobelYDerivativeMask() {
+    public SobelXDerivativeMask() {
         super(Type.PREWITT, AVAILABLE_SIZE);
         this.matrix = createMatrix(AVAILABLE_SIZE);
     }
@@ -12,9 +14,9 @@ public class SobelYDerivativeMask extends Mask {
     @Override
     protected double[][] createMatrix(int size) {
         return new double[][]{
-                {-1, 0, 1},
-                {-2, 0, 2},
-                {-1, 0, 1}
+                {-1, -2, -1},
+                {0, 0, 0},
+                {1, 2, 1}
         };
     }
 

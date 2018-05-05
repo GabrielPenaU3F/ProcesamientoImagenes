@@ -118,30 +118,22 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Generation">
             <Menu mnemonicParsing="false" text="Gradients">
-                <items>
-                    <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient" />
-                    <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient" />
-                </items>
+                <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient" />
+                <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient" />
             </Menu>
             <Menu mnemonicParsing="false" text="Images">
-                <items>
-                    <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle" />
-                    <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate" />
-               <Menu mnemonicParsing="false" text="Noise 100x100 Images">
-                 <items>
-                     <MenuItem mnemonicParsing="false" onAction="#generateExponentialNoiseSyntheticImage" text="Exponential" />
-                   <MenuItem mnemonicParsing="false" onAction="#generateRayleighNoiseSyntheticImage" text="Rayleigh" />
-                     <MenuItem mnemonicParsing="false" onAction="#generateGaussianNoiseSyntheticImage" text="Gaussian" />
-                 </items>
+                <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle" />
+                <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate" />
+                <Menu mnemonicParsing="false" text="Noise 100x100 Images">
+                    <MenuItem mnemonicParsing="false" onAction="#generateExponentialNoiseSyntheticImage" text="Exponential" />
+                    <MenuItem mnemonicParsing="false" onAction="#generateRayleighNoiseSyntheticImage" text="Rayleigh" />
+                    <MenuItem mnemonicParsing="false" onAction="#generateGaussianNoiseSyntheticImage" text="Gaussian" />
                </Menu>
-                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Random Numbers">
-                <items>
-                    <MenuItem mnemonicParsing="false" onAction="#generateExponentialRandomNumber" text="Exponential" />
-                    <MenuItem mnemonicParsing="false" onAction="#generateRayleighRandomNumber" text="Rayleigh" />
-                    <MenuItem mnemonicParsing="false" onAction="#generateGaussianRandomNumber" text="Gaussian" />
-                </items>
+                <MenuItem mnemonicParsing="false" onAction="#generateExponentialRandomNumber" text="Exponential" />
+                <MenuItem mnemonicParsing="false" onAction="#generateRayleighRandomNumber" text="Rayleigh" />
+                <MenuItem mnemonicParsing="false" onAction="#generateGaussianRandomNumber" text="Gaussian" />
             </Menu>
         </Menu>
         <Menu mnemonicParsing="false" text="Channels">
@@ -153,9 +145,9 @@
             <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value" />
         </Menu>
         <Menu mnemonicParsing="false" text="Noise">
-         <MenuItem mnemonicParsing="false" onAction="#applyAdditiveGaussianNoise" text="Additive Gaussian" />
-         <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeRayleighNoise" text="Multiplicative Rayleigh" />
-         <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeExponentialNoise" text="Multiplicative Exponential" />
+            <MenuItem mnemonicParsing="false" onAction="#applyAdditiveGaussianNoise" text="Additive Gaussian" />
+            <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeRayleighNoise" text="Multiplicative Rayleigh" />
+            <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeExponentialNoise" text="Multiplicative Exponential" />
             <MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper" />
         </Menu>
         <Menu mnemonicParsing="false" text="Filter">
@@ -168,6 +160,12 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
             <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
+            <Menu mnemonicParsing="false" text="Directional Derivative Operators">
+                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
+                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />
+                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
+                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
+            </Menu>
         </Menu>
     </MenuBar>
 </AnchorPane>

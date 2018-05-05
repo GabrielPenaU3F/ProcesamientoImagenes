@@ -22,7 +22,7 @@ import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
 import domain.mask.Mask;
-import domain.mask.HighPassMask;
+import domain.mask.filter.HighPassMask;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
@@ -410,6 +410,29 @@ public class MainPresenter {
     public void onApplySobelEdgeDetector() {
         FilterSemaphore.setValue(Mask.Type.SOBEL);
         PresenterProvider.provideEdgeDetectorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyDirectionalDerivativeOperatorStandardMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_STANDARD);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyDirectionalDerivativeOperatorKirshMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_KIRSH);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyDirectionalDerivativeOperatorPrewittMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_PREWITT);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+    public void onApplyDirectionalDerivativeOperatorSobelMask() {
+        FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL);
+        PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
 }

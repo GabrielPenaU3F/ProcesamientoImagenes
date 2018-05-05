@@ -1,7 +1,8 @@
-package domain.mask;
+package domain.mask.filter;
 
 import domain.customimage.CustomImage;
 import domain.customimage.RGB;
+import domain.mask.Mask;
 
 public class HighPassMask extends Mask {
 
@@ -33,7 +34,7 @@ public class HighPassMask extends Mask {
     }
 
     @Override
-    protected RGB applyMaskToPixel(CustomImage image, int x, int y) {
+    public RGB applyMaskToPixel(CustomImage image, int x, int y) {
 
         int red = 0;
         int green = 0;
