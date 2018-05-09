@@ -5,16 +5,12 @@ import domain.customimage.Pixel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThresholdGroups {
+public class GlobalThresholdGroups {
 
-    private int g1;
-    private int g2;
     private List<Pixel> g1Pixels;
     private List<Pixel> g2Pixels;
 
-    public ThresholdGroups(){
-        this.g1 = 0;
-        this.g2 = 0;
+    public GlobalThresholdGroups(){
         this.g1Pixels = new ArrayList<Pixel>();
         this.g2Pixels = new ArrayList<Pixel>();
     }

@@ -74,4 +74,8 @@ public class ServiceProvider {
     public static MatrixService provideMatrixService() {
         return new MatrixService();
     }
+
+    public static ApplyThresholdService provideApplyThresholdService(){
+        return new ApplyThresholdService(provideModifyImageService());
+    }
 }

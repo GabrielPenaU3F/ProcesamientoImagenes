@@ -34,7 +34,8 @@ public class PresenterProvider {
                     ActionProvider.provideCompressDynamicRangeAction(),
                     ActionProvider.provideApplyFilterAction(),
                     ActionProvider.provideUpdateCurrentImageAction(),
-                    ActionProvider.provideApplyApplyGlobalThresholdEstimation());
+                    ActionProvider.provideApplyGlobalThresholdEstimation(),
+                    ActionProvider.provideApplyOtsuThresholdEstimation());
 
             return mainPresenter;
         }

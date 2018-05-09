@@ -288,7 +288,12 @@ public class MainSceneController {
     }
 
     @FXML
-    public void applyGlobalThresholdEstimationAction(){
+    public void applyGlobalThresholdEstimation(){
         this.mainPresenter.onApplyGlobalThresholdEstimation();
+    }
+
+    @FXML
+    public void applyOtsuThresholdEstimation(){
+        this.mainPresenter.onApplyOtsuThresholdEstimation();
     }
 }

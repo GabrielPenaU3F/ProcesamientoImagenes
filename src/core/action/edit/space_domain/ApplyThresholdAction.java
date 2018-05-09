@@ -1,38 +1,20 @@
 package core.action.edit.space_domain;
 
-import core.repository.ImageRepository;
-import core.service.ModifyImageService;
+import core.service.ApplyThresholdService;
 import domain.customimage.CustomImage;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 
-import java.awt.image.BufferedImage;
-import java.util.Optional;
 
 public class ApplyThresholdAction {
 
-    private final ModifyImageService modifyImageService;
+    private final ApplyThresholdService applyThresholdService;
 
-    public ApplyThresholdAction(ModifyImageService modifyImageService) {
-        this.modifyImageService = modifyImageService;
+    public ApplyThresholdAction(ApplyThresholdService applyThresholdService) {
+        this.applyThresholdService = applyThresholdService;
     }
 
     public Image execute(CustomImage customImage, int threshold) {
-        WritableImage image = new WritableImage(customImage.getWidth(), customImage.getHeight());
-        PixelWriter pixelWriter = image.getPixelWriter();
-
-        for (int i=0; i < image.getWidth(); i++) {
-            for(int j=0; j < image.getHeight(); j++) {
-                if (customImage.getAverageValue(i,j) >= threshold) {
-                    this.modifyImageService.modifySinglePixel(i, j, 255, pixelWriter);
-                } else {
-                    this.modifyImageService.modifySinglePixel(i, j, 0, pixelWriter);
-                }
-            }
-        }
-
-        return image;
+        return this.applyThresholdService.applyThreshold(customImage, threshold);
     }
+
 }

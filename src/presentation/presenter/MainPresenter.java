@@ -3,10 +3,7 @@ package presentation.presenter;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edit.ModifyPixelAction;
-import core.action.edit.space_domain.ApplyGlobalThresholdEstimationAction;
-import core.action.edit.space_domain.ApplyThresholdAction;
-import core.action.edit.space_domain.CalculateNegativeImageAction;
-import core.action.edit.space_domain.CompressDynamicRangeAction;
+import core.action.edit.space_domain.*;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
@@ -19,7 +16,8 @@ import core.action.image.UpdateCurrentImageAction;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.RandomElement;
-import domain.automaticthreshold.GlobalThresholdImage;
+import domain.automaticthreshold.GlobalThresholdResult;
+import domain.automaticthreshold.OtsuThresholdResult;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
@@ -62,6 +60,7 @@ public class MainPresenter {
     private final ApplyFilterAction applyFilterAction;
     private final UpdateCurrentImageAction updateCurrentImageAction;
     private final ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
+    private final ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -79,7 +78,8 @@ public class MainPresenter {
                          CompressDynamicRangeAction compressDynamicRangeAction,
                          ApplyFilterAction applyFilterAction,
                          UpdateCurrentImageAction updateCurrentImageAction,
-                         ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction) {
+                         ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
+                         ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction) {
 
         this.view = view;
 
@@ -99,6 +99,7 @@ public class MainPresenter {
         this.applyFilterAction = applyFilterAction;
         this.updateCurrentImageAction = updateCurrentImageAction;
         this.applyGlobalThresholdEstimationAction = applyGlobalThresholdEstimationAction;
+        this.applyOtsuThresholdEstimationAction = applyOtsuThresholdEstimationAction;
     }
 
     public void initialize() {
@@ -444,17 +445,28 @@ public class MainPresenter {
     }
 
     public void onApplyGlobalThresholdEstimation(){
-
-        view.applyChangesButton.setVisible(true);
         this.getImageAction.execute()
                 .ifPresent(customImage -> {
 
                     int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold", "1").get());
                     int deltaT = Integer.parseInt(InsertValuePopup.show("Define Delta T", "1").get());
-                    GlobalThresholdImage globalThresholdImage = applyGlobalThresholdEstimationAction.execute(customImage, initialThreshold, deltaT);
-                    view.modifiedImageView.setImage(globalThresholdImage.getImage());
-                    JOptionPane.showMessageDialog(null, "Iterations: " + String.valueOf(globalThresholdImage.getIterations()) +
-                    "\n" + "Final Threshold: " + String.valueOf(globalThresholdImage.getThreshold()));
+                    GlobalThresholdResult globalThresholdResult = applyGlobalThresholdEstimationAction.execute(customImage, initialThreshold, deltaT);
+                    view.modifiedImageView.setImage(globalThresholdResult.getImage());
+                    JOptionPane.showMessageDialog(null, "Iterations: " + String.valueOf(globalThresholdResult.getIterations()) +
+                    "\n" + "Final Threshold: " + String.valueOf(globalThresholdResult.getThreshold()));
                 });
+
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyOtsuThresholdEstimation(){
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+                    OtsuThresholdResult otsuThresholdResult = applyOtsuThresholdEstimationAction.execute(customImage);
+                    view.modifiedImageView.setImage(otsuThresholdResult.getImage());
+                    JOptionPane.showMessageDialog(null, "Final Threshold: " + String.valueOf(otsuThresholdResult.getThreshold()));
+                });
+
+        view.applyChangesButton.setVisible(true);
     }
 }

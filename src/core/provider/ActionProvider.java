@@ -21,6 +21,7 @@ import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
+import core.service.MatrixService;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
@@ -59,6 +60,7 @@ class ActionProvider {
     private static UpdateCurrentImageAction updateCurrentImageAction;
     private static ApplyDirectionalDerivativeOperatorAction applyDirectionalDerivativeOperatorAction;
     private static ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
+    private static ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -161,7 +163,7 @@ class ActionProvider {
 
     public static ApplyThresholdAction provideApplyThresholdAction() {
         if (applyThresholdAction == null) {
-            applyThresholdAction = new ApplyThresholdAction(ServiceProvider.provideModifyImageService());
+            applyThresholdAction = new ApplyThresholdAction(ServiceProvider.provideApplyThresholdService());
         }
         return applyThresholdAction;
     }
@@ -323,11 +325,22 @@ class ActionProvider {
         return applyDirectionalDerivativeOperatorAction;
     }
 
-    public static ApplyGlobalThresholdEstimationAction provideApplyApplyGlobalThresholdEstimation(){
+    public static ApplyGlobalThresholdEstimationAction provideApplyGlobalThresholdEstimation(){
         if (applyGlobalThresholdEstimationAction == null) {
             applyGlobalThresholdEstimationAction = new ApplyGlobalThresholdEstimationAction(
-                    ServiceProvider.provideMatrixService());
+                    ServiceProvider.provideMatrixService(),
+                    ServiceProvider.provideApplyThresholdService());
         }
         return applyGlobalThresholdEstimationAction;
+    }
+
+    public static ApplyOtsuThresholdEstimationAction provideApplyOtsuThresholdEstimation(){
+        if (applyOtsuThresholdEstimationAction == null) {
+            applyOtsuThresholdEstimationAction = new ApplyOtsuThresholdEstimationAction(
+                    ServiceProvider.provideHistogramService(),
+                    ServiceProvider.provideMatrixService(),
+                    ServiceProvider.provideApplyThresholdService());
+        }
+        return applyOtsuThresholdEstimationAction;
     }
 }

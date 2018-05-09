@@ -167,7 +167,8 @@
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
             </Menu>
             <Menu mnemonicParsing="false" text="Threshold">
-                <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimationAction" text="Global Threshold Estimation" />
+                <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimation" text="Global Threshold Estimation" />
+                <MenuItem mnemonicParsing="false" onAction="#applyOtsuThresholdEstimation" text="Otsu Threshold Estimation" />
             </Menu>
         </Menu>
     </MenuBar>
