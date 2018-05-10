@@ -32,6 +32,26 @@ public class CustomImage {
         this(channelMatrixToFXImage(channelMatrix.getRedChannel(), channelMatrix.getGreenChannel(), channelMatrix.getBlueChannel()), formatString);
     }
 
+    public CustomImage(Image image, String formatString) {
+        this(SwingFXUtils.fromFXImage(image, null), formatString); //See the other constructor
+    }
+
+    public CustomImage(BufferedImage bufferedImage, String formatString) {
+        this.bufferedImage = bufferedImage;
+        this.format = new Format(formatString);
+        WritableImage image = SwingFXUtils.toFXImage(bufferedImage, null);
+        this.reader = image.getPixelReader();
+        this.pixelList = getListOfPixels();
+        this.matrixService = ServiceProvider.provideMatrixService();
+
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        this.redMatrix = matrixService.toChannelMatrix((x, y) -> reader.getColor(x, y).getRed(), width, height);
+        this.greenMatrix = matrixService.toChannelMatrix((x, y) -> reader.getColor(x, y).getGreen(), width, height);
+        this.blueMatrix = matrixService.toChannelMatrix((x, y) -> reader.getColor(x, y).getBlue(), width, height);
+    }
+
     private static Image channelMatrixToFXImage(int[][] red, int[][] green, int[][] blue) {
         int width = red.length;
         int height = red[0].length;
@@ -47,14 +67,6 @@ public class CustomImage {
         return image;
     }
 
-    public CustomImage(Image image, String formatString) {
-        this(SwingFXUtils.fromFXImage(image, null), formatString); //See the other constructor
-
-        this.redMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getRed());
-        this.greenMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getGreen());
-        this.blueMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getBlue());
-    }
-
     public int[][] getRedMatrix() {
         return redMatrix;
     }
@@ -65,19 +77,6 @@ public class CustomImage {
 
     public int[][] getBlueMatrix() {
         return blueMatrix;
-    }
-
-    public CustomImage(BufferedImage bufferedImage, String formatString) {
-        this.bufferedImage = bufferedImage;
-        this.format = new Format(formatString);
-        this.reader = SwingFXUtils.toFXImage(bufferedImage, null).getPixelReader();
-        this.pixelList = getListOfPixels();
-        this.matrixService = ServiceProvider.provideMatrixService();
-
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null );
-        this.redMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getRed());
-        this.greenMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getGreen());
-        this.blueMatrix = matrixService.toChannelMatrix(image, (x, y) -> image.getPixelReader().getColor(x, y).getBlue());
     }
 
     public int getPixelQuantity() {

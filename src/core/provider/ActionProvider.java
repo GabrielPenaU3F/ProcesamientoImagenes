@@ -2,6 +2,7 @@ package core.provider;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.diffusion.ApplyDiffusionAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
@@ -75,6 +76,7 @@ class ActionProvider {
     private static ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
     private static ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
     private static ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
+    private static ApplyDiffusionAction applyDiffusionAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -363,5 +365,15 @@ class ActionProvider {
             applyLaplacianDetectorAction = new ApplyLaplacianDetectorAction();
         }
         return applyLaplacianDetectorAction;
+    }
+
+    public static ApplyDiffusionAction provideApplyDiffusionAction() {
+        if (applyDiffusionAction == null) {
+            applyDiffusionAction = new ApplyDiffusionAction(
+                    ServiceProvider.provideImageOperationsService(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject()
+            );
+        }
+        return applyDiffusionAction;
     }
 }

@@ -10,10 +10,7 @@ import java.util.function.BiFunction;
 
 public class MatrixService {
 
-    public int[][] toChannelMatrix(Image image, BiFunction<Integer, Integer, Double> channel) {
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-
+    public int[][] toChannelMatrix(BiFunction<Integer, Integer, Double> channel, int width, int height) {
         int[][] matrix = new int[width][height];
 
         for (int x = 0; x < width; x++) {

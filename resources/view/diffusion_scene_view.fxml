@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="298.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.DiffusionSceneController">
+   <children>
+      <Label layoutX="82.0" layoutY="61.0" text="Diffusion type" />
+      <RadioButton fx:id="isotropic" layoutX="48.0" layoutY="89.0" mnemonicParsing="false" onAction="#onIsotropicSelection" text="Isotropic">
+         <toggleGroup>
+            <ToggleGroup fx:id="diffusionGroup" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="anisotropic" layoutX="129.0" layoutY="89.0" mnemonicParsing="false" onAction="#onAnisotropicSelection" selected="true" text="Anisotropic" toggleGroup="$diffusionGroup" />
+      <Label layoutX="300.0" layoutY="61.0" text="'g' detector" />
+      <RadioButton fx:id="lorentz" layoutX="270.0" layoutY="89.0" mnemonicParsing="false" selected="true" text="Lorentz">
+         <toggleGroup>
+            <ToggleGroup fx:id="gDetectorGroup" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="leclerc" layoutX="339.0" layoutY="89.0" mnemonicParsing="false" text="Leclerc" toggleGroup="$gDetectorGroup" />
+      <Label layoutX="188.0" layoutY="192.0" text="Sigma" />
+      <Label layoutX="115.0" layoutY="151.0" text="Number of Iterations" />
+      <TextField fx:id="iterationsTextField" layoutX="230.0" layoutY="147.0" prefHeight="25.0" prefWidth="58.0" />
+      <TextField fx:id="sigmaTextField" layoutX="228.0" layoutY="188.0" prefHeight="25.0" prefWidth="61.0" />
+      <Button layoutX="204.0" layoutY="239.0" mnemonicParsing="false" onAction="#onApply" text="Apply" />
+   </children>
+</AnchorPane>

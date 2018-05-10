@@ -42,6 +42,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
 import presentation.scenecreator.ContrastSceneCreator;
+import presentation.scenecreator.DiffusionSceneCreator;
 import presentation.scenecreator.EqualizeImageByHistogramSceneCreator;
 import presentation.scenecreator.ExponentialSceneCreator;
 import presentation.scenecreator.FilterSceneCreator;
@@ -520,5 +521,15 @@ public class MainPresenter {
                                        .execute(customImage, new GaussianLaplacianMask(sigma), slopeThershold);
                                this.updateModifiedImage(edgedImage);
                            });
+    }
+
+    public void onApplyDiffusion() {
+        new DiffusionSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onResetModifiedImage() {
+        view.modifiedImageView.setImage(null);
+        view.applyChangesButton.setVisible(false);
     }
 }

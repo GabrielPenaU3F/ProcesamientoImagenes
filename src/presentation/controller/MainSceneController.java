@@ -24,6 +24,8 @@ public class MainSceneController {
     @FXML
     public Button applyChangesButton;
     @FXML
+    public Button resetModifiedImageButton;
+    @FXML
     public TextField pixelX;
     @FXML
     public TextField pixelY;
@@ -312,5 +314,15 @@ public class MainSceneController {
     @FXML
     public void onApplyMarrHildrethEdgeDetector() {
         this.mainPresenter.onApplyMarrHildrethEdgeDetector();
+    }
+
+    @FXML
+    public void onApplyDiffusion() {
+        this.mainPresenter.onApplyDiffusion();
+    }
+
+    @FXML
+    public void resetModifiedImage() {
+        this.mainPresenter.onResetModifiedImage();
     }
 }

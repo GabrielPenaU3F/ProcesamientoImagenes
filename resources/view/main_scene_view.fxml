@@ -177,6 +177,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimation" text="Global Threshold Estimation" />
                 <MenuItem mnemonicParsing="false" onAction="#applyOtsuThresholdEstimation" text="Otsu Threshold Estimation" />
             </Menu>
-        </Menu>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyDiffusion" text="Diffusion" />
+		</Menu>
     </MenuBar>
 </AnchorPane>
