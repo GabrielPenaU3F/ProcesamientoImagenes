@@ -3,21 +3,16 @@ package core.action.edgedetector;
 import domain.customimage.ChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.flags.LaplacianDetector;
-import domain.mask.LaplacianMask;
 import domain.mask.Mask;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import presentation.util.InsertValuePopup;
-
-import java.util.Optional;
 
 public class ApplyLaplacianDetectorAction {
 
-    public CustomImage execute(CustomImage customImage, LaplacianDetector detector) {
+    public CustomImage execute(CustomImage customImage, LaplacianDetector detector, Mask mask) {
 
-        Mask mask = new LaplacianMask();
-        ChannelMatrix laplacianMaskResult = mask.apply(customImage);
-        return new CustomImage(this.markZeroCrossings(laplacianMaskResult, detector), customImage.getFormatString());
+        ChannelMatrix maskResult = mask.apply(customImage);
+
+        return new CustomImage(this.markZeroCrossings(maskResult, detector), customImage.getFormatString());
 
     }
 

@@ -164,7 +164,7 @@
            <items>
              <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetector" text="Standard Laplacian" />
                <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetectorWithSlopeEvaluation" text="Laplacian with slope evaluation" />
-               <MenuItem mnemonicParsing="false" text="Marr-Hildreth (Gaussian-Laplacian)" />
+               <MenuItem mnemonicParsing="false" onAction="#onApplyMarrHildrethEdgeDetector" text="Marr-Hildreth (Gaussian-Laplacian)" />
            </items>
          </Menu>
             <Menu mnemonicParsing="false" text="Directional Derivative Operators">

@@ -4,6 +4,7 @@ import core.provider.PresenterProvider;
 import core.provider.ViewProvider;
 import domain.flags.LaplacianDetector;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -296,5 +297,10 @@ public class MainSceneController {
     @FXML
     public void onApplyLaplacianEdgeDetectorWithSlopeEvaluation() {
         this.mainPresenter.onApplyLaplacianEdgeDetector(LaplacianDetector.WITH_SLOPE_EVALUATION);
+    }
+
+    @FXML
+    public void onApplyMarrHildrethEdgeDetector() {
+        this.mainPresenter.onApplyMarrHildrethEdgeDetector();
     }
 }

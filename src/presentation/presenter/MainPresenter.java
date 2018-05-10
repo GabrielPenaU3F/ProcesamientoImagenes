@@ -23,6 +23,8 @@ import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
 import domain.flags.LaplacianDetector;
+import domain.mask.GaussianLaplacianMask;
+import domain.mask.LaplacianMask;
 import domain.mask.Mask;
 import domain.mask.filter.HighPassMask;
 import domain.generation.Channel;
@@ -97,7 +99,6 @@ public class MainPresenter {
         this.applyFilterAction = applyFilterAction;
         this.updateCurrentImageAction = updateCurrentImageAction;
         this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
-
     }
 
     public void initialize() {
@@ -450,7 +451,16 @@ public class MainPresenter {
     public void onApplyLaplacianEdgeDetector(LaplacianDetector detector) {
         this.getImageAction.execute()
                 .ifPresent(customImage -> {
-                    CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, detector);
+                    CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, detector, new LaplacianMask());
+                    this.updateModifiedImage(edgedImage);
+                });
+    }
+
+    public void onApplyMarrHildrethEdgeDetector() {
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+                    double sigma = Double.parseDouble(InsertValuePopup.show("Insert standard deviation value","0").get());
+                    CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, LaplacianDetector.WITH_SLOPE_EVALUATION, new GaussianLaplacianMask(sigma));
                     this.updateModifiedImage(edgedImage);
                 });
     }
