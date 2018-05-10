@@ -35,4 +35,12 @@ public class ChannelMatrix {
     public int[][] getBlueChannel() {
         return blueChannel;
     }
+
+    public int getWidth() {
+        return this.redChannel.length;
+    }
+
+    public int getHeight() {
+        return this.redChannel[0].length;
+    }
 }

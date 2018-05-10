@@ -35,7 +35,8 @@ public class PresenterProvider {
                     ActionProvider.provideApplyFilterAction(),
                     ActionProvider.provideUpdateCurrentImageAction(),
                     ActionProvider.provideApplyGlobalThresholdEstimation(),
-                    ActionProvider.provideApplyOtsuThresholdEstimation());
+                    ActionProvider.provideApplyOtsuThresholdEstimation(),
+                    ActionProvider.provideApplyLaplacianDetectorAction());
 
             return mainPresenter;
         }

@@ -2,6 +2,7 @@ package presentation.controller;
 
 import core.provider.PresenterProvider;
 import core.provider.ViewProvider;
+import domain.flags.LaplacianDetector;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -295,5 +296,15 @@ public class MainSceneController {
     @FXML
     public void applyOtsuThresholdEstimation(){
         this.mainPresenter.onApplyOtsuThresholdEstimation();
+    }
+
+    @FXML
+    public void onApplyLaplacianEdgeDetector() {
+        this.mainPresenter.onApplyLaplacianEdgeDetector(LaplacianDetector.STANDARD);
+    }
+
+    @FXML
+    public void onApplyLaplacianEdgeDetectorWithSlopeEvaluation() {
+        this.mainPresenter.onApplyLaplacianEdgeDetector(LaplacianDetector.WITH_SLOPE_EVALUATION);
     }
 }

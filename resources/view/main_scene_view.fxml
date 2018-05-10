@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
+<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
     <AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="1111.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="1111.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
             <columnConstraints>
@@ -160,6 +160,13 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
             <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
+         <Menu mnemonicParsing="false" text="Laplacian">
+           <items>
+             <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetector" text="Standard Laplacian" />
+               <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetectorWithSlopeEvaluation" text="Laplacian with slope evaluation" />
+               <MenuItem mnemonicParsing="false" text="Marr-Hildreth (Gaussian-Laplacian)" />
+           </items>
+         </Menu>
             <Menu mnemonicParsing="false" text="Directional Derivative Operators">
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />

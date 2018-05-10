@@ -1,9 +1,16 @@
 package presentation.presenter;
 
+import javax.swing.*;
+
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edit.ModifyPixelAction;
-import core.action.edit.space_domain.*;
+import core.action.edit.space_domain.ApplyGlobalThresholdEstimationAction;
+import core.action.edit.space_domain.ApplyOtsuThresholdEstimationAction;
+import core.action.edit.space_domain.ApplyThresholdAction;
+import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
@@ -15,27 +22,37 @@ import core.action.image.PutModifiedImageAction;
 import core.action.image.UpdateCurrentImageAction;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
+import domain.FilterSemaphore;
 import domain.RandomElement;
 import domain.automaticthreshold.GlobalThresholdResult;
 import domain.automaticthreshold.OtsuThresholdResult;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
-import domain.FilterSemaphore;
-import domain.mask.Mask;
-import domain.mask.filter.HighPassMask;
+import domain.flags.LaplacianDetector;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
+import domain.mask.Mask;
+import domain.mask.filter.HighPassMask;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.*;
+import presentation.scenecreator.ContrastSceneCreator;
+import presentation.scenecreator.EqualizeImageByHistogramSceneCreator;
+import presentation.scenecreator.ExponentialSceneCreator;
+import presentation.scenecreator.FilterSceneCreator;
+import presentation.scenecreator.GammaPowerFunctionSceneCreator;
+import presentation.scenecreator.GaussianSceneCreator;
+import presentation.scenecreator.ImageHistogramSceneCreator;
+import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.ImagesOperationsSceneCreator;
+import presentation.scenecreator.RayleighSceneCreator;
+import presentation.scenecreator.SaltAndPepperNoiseSceneCreator;
+import presentation.scenecreator.SaveImageSceneCreator;
 import presentation.util.InsertValuePopup;
 import presentation.view.CustomImageView;
-
-import javax.swing.*;
 
 public class MainPresenter {
 
@@ -61,25 +78,27 @@ public class MainPresenter {
     private final UpdateCurrentImageAction updateCurrentImageAction;
     private final ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
     private final ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
+    private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
 
     public MainPresenter(MainSceneController view,
-                         LoadImageAction loadImageAction,
-                         GetImageAction getImageAction,
-                         PutModifiedImageAction putModifiedImageAction,
-                         ModifyPixelAction modifyPixelAction,
-                         CalculateNegativeImageAction calculateNegativeImageAction,
-                         ApplyThresholdAction applyThresholdAction,
-                         CreateImageWithGradientAction createImageWithGradientAction,
-                         ObtainRGBChannelAction obtainRGBChannelAction,
-                         ObtainHSVChannelAction obtainHSVChannelAction,
-                         CreateImageWithFigureAction createImageWithFigureAction,
-                         EqualizeGrayImageAction equalizeGrayImageAction,
-                         Observable<Image> onModifiedImage,
-                         CompressDynamicRangeAction compressDynamicRangeAction,
-                         ApplyFilterAction applyFilterAction,
-                         UpdateCurrentImageAction updateCurrentImageAction,
-                         ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
-                         ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction) {
+            LoadImageAction loadImageAction,
+            GetImageAction getImageAction,
+            PutModifiedImageAction putModifiedImageAction,
+            ModifyPixelAction modifyPixelAction,
+            CalculateNegativeImageAction calculateNegativeImageAction,
+            ApplyThresholdAction applyThresholdAction,
+            CreateImageWithGradientAction createImageWithGradientAction,
+            ObtainRGBChannelAction obtainRGBChannelAction,
+            ObtainHSVChannelAction obtainHSVChannelAction,
+            CreateImageWithFigureAction createImageWithFigureAction,
+            EqualizeGrayImageAction equalizeGrayImageAction,
+            Observable<Image> onModifiedImage,
+            CompressDynamicRangeAction compressDynamicRangeAction,
+            ApplyFilterAction applyFilterAction,
+            UpdateCurrentImageAction updateCurrentImageAction,
+            ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
+            ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
+            ApplyLaplacianDetectorAction applyLaplacianDetectorAction) {
 
         this.view = view;
 
@@ -100,6 +119,8 @@ public class MainPresenter {
         this.updateCurrentImageAction = updateCurrentImageAction;
         this.applyGlobalThresholdEstimationAction = applyGlobalThresholdEstimationAction;
         this.applyOtsuThresholdEstimationAction = applyOtsuThresholdEstimationAction;
+        this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
+
     }
 
     public void initialize() {
@@ -186,6 +207,11 @@ public class MainPresenter {
         setImageOnModifiedImageView(obtainHSVChannelAction.execute(Channel.VALUE));
     }
 
+    private void updateModifiedImage(CustomImage customImage) {
+        this.putModifiedImageAction.execute(customImage);
+        this.setImageOnModifiedImageView(customImage);
+    }
+
     private void setImageOnModifiedImageView(CustomImage customImage) {
         view.modifiedImageView.setImage(SwingFXUtils.toFXImage(customImage.getBufferedImage(), null));
         view.applyChangesButton.setVisible(true);
@@ -198,12 +224,12 @@ public class MainPresenter {
             int pixelY = Integer.parseInt(view.pixelY.getText());
 
             this.getImageAction.execute()
-                    .map(customImage -> customImage.getPixelValue(pixelX, pixelY))
-                    .ifPresent(rgb -> {
-                        view.valueR.setText(String.valueOf(rgb.getRed()));
-                        view.valueG.setText(String.valueOf(rgb.getGreen()));
-                        view.valueB.setText(String.valueOf(rgb.getBlue()));
-                    });
+                               .map(customImage -> customImage.getPixelValue(pixelX, pixelY))
+                               .ifPresent(rgb -> {
+                                   view.valueR.setText(String.valueOf(rgb.getRed()));
+                                   view.valueG.setText(String.valueOf(rgb.getGreen()));
+                                   view.valueB.setText(String.valueOf(rgb.getBlue()));
+                               });
 
         } else {
             view.valueR.setText("Error");
@@ -280,13 +306,13 @@ public class MainPresenter {
 
     public void onCreateEqualizedImageOnce() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 1));
+                           .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 1));
         view.applyChangesButton.setVisible(true);
     }
 
     public void onCreateEqualizedImageTwice() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 2));
+                           .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 2));
         view.applyChangesButton.setVisible(true);
     }
 
@@ -333,12 +359,12 @@ public class MainPresenter {
         //hago esto, porque sino una expresion lambda que la usa despues tiene problemas
         int size = insertedSize;
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
-                    CustomImage filteredCustomImage = applyFilterAction.execute(customImage, new HighPassMask(size));
-                    view.modifiedImageView.setImage(filteredCustomImage.toFXImage());
+                           .ifPresent(customImage -> {
+                               CustomImage filteredCustomImage = applyFilterAction.execute(customImage, new HighPassMask(size));
+                               view.modifiedImageView.setImage(filteredCustomImage.toFXImage());
 
-                    this.applyThresholdToModifiedImage(filteredCustomImage);
-                });
+                               this.applyThresholdToModifiedImage(filteredCustomImage);
+                           });
         view.applyChangesButton.setVisible(true);
     }
 
@@ -438,35 +464,45 @@ public class MainPresenter {
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
+
     public void onApplyDirectionalDerivativeOperatorSobelMask() {
         FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL);
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyGlobalThresholdEstimation(){
+    public void onApplyGlobalThresholdEstimation() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
+                           .ifPresent(customImage -> {
 
-                    int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold", "1").get());
-                    int deltaT = Integer.parseInt(InsertValuePopup.show("Define Delta T", "1").get());
-                    GlobalThresholdResult globalThresholdResult = applyGlobalThresholdEstimationAction.execute(customImage, initialThreshold, deltaT);
-                    view.modifiedImageView.setImage(globalThresholdResult.getImage());
-                    JOptionPane.showMessageDialog(null, "Iterations: " + String.valueOf(globalThresholdResult.getIterations()) +
-                    "\n" + "Final Threshold: " + String.valueOf(globalThresholdResult.getThreshold()));
-                });
+                               int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold", "1").get());
+                               int deltaT = Integer.parseInt(InsertValuePopup.show("Define Delta T", "1").get());
+                               GlobalThresholdResult globalThresholdResult = applyGlobalThresholdEstimationAction
+                                       .execute(customImage, initialThreshold, deltaT);
+                               view.modifiedImageView.setImage(globalThresholdResult.getImage());
+                               JOptionPane.showMessageDialog(null, "Iterations: " + String.valueOf(globalThresholdResult.getIterations()) +
+                                       "\n" + "Final Threshold: " + String.valueOf(globalThresholdResult.getThreshold()));
+                           });
 
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyOtsuThresholdEstimation(){
+    public void onApplyOtsuThresholdEstimation() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
-                    OtsuThresholdResult otsuThresholdResult = applyOtsuThresholdEstimationAction.execute(customImage);
-                    view.modifiedImageView.setImage(otsuThresholdResult.getImage());
-                    JOptionPane.showMessageDialog(null, "Final Threshold: " + String.valueOf(otsuThresholdResult.getThreshold()));
-                });
+                           .ifPresent(customImage -> {
+                               OtsuThresholdResult otsuThresholdResult = applyOtsuThresholdEstimationAction.execute(customImage);
+                               view.modifiedImageView.setImage(otsuThresholdResult.getImage());
+                               JOptionPane.showMessageDialog(null, "Final Threshold: " + String.valueOf(otsuThresholdResult.getThreshold()));
+                           });
 
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyLaplacianEdgeDetector(LaplacianDetector detector) {
+        this.getImageAction.execute()
+                           .ifPresent(customImage -> {
+                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, detector);
+                               this.updateModifiedImage(edgedImage);
+                           });
     }
 }
