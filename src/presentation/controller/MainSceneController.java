@@ -286,4 +286,14 @@ public class MainSceneController {
     public void onApplyDirectionalDerivativeOperatorSobelMask() {
         this.mainPresenter.onApplyDirectionalDerivativeOperatorSobelMask();
     }
+
+    @FXML
+    public void onApplyIsotropicDiffusion() {
+        this.mainPresenter.onApplyIsotropicDiffusion();
+    }
+
+    @FXML
+    public void onApplyAnisotropicDiffusion() {
+        this.mainPresenter.onApplyAnisotropicDiffusion();
+    }
 }

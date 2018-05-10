@@ -150,4 +150,11 @@ public class PresenterProvider {
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplyDerivateDirectionalOperatorAction());
     }
+
+    public static DiffusionPresenter provideDiffusionPresenter() {
+        return new DiffusionPresenter(
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyDiffusionAction()
+        );
+    }
 }

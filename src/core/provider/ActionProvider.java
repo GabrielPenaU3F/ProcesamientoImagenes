@@ -2,6 +2,7 @@ package core.provider;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.diffusion.ApplyDiffusionAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.*;
@@ -58,6 +59,7 @@ class ActionProvider {
     private static ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction;
     private static UpdateCurrentImageAction updateCurrentImageAction;
     private static ApplyDirectionalDerivativeOperatorAction applyDirectionalDerivativeOperatorAction;
+    private static ApplyDiffusionAction applyDiffusionAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -320,5 +322,15 @@ class ActionProvider {
             );
         }
         return applyDirectionalDerivativeOperatorAction;
+    }
+
+    public static ApplyDiffusionAction provideApplyDiffusionAction() {
+        if (applyDiffusionAction == null) {
+            applyDiffusionAction = new ApplyDiffusionAction(
+                    ServiceProvider.provideImageOperationsService(),
+                    PublishSubjectProvider.provideOnModifiedImagePublishSubject()
+            );
+        }
+        return applyDiffusionAction;
     }
 }

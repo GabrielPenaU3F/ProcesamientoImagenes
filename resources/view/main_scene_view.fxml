@@ -166,6 +166,10 @@
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
                 <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
             </Menu>
+            <Menu mnemonicParsing="false" text="Diffusion">
+                <MenuItem mnemonicParsing="false" onAction="#onApplyIsotropicDiffusion" text="Isotropic" />
+                <MenuItem mnemonicParsing="false" onAction="#onApplyAnisotropicDiffusion" text="Anisotropic" />
+            </Menu>
         </Menu>
     </MenuBar>
 </AnchorPane>
