@@ -3,26 +3,38 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
+import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edit.ModifyPixelAction;
-import core.action.edit.space_domain.*;
+import core.action.edit.space_domain.ApplyContrastAction;
+import core.action.edit.space_domain.ApplyGlobalThresholdEstimationAction;
+import core.action.edit.space_domain.ApplyOtsuThresholdEstimationAction;
+import core.action.edit.space_domain.ApplyThresholdAction;
+import core.action.edit.space_domain.CalculateNegativeImageAction;
+import core.action.edit.space_domain.CompressDynamicRangeAction;
+import core.action.edit.space_domain.GammaFunctionAction;
+import core.action.edit.space_domain.NormalizeImageAction;
 import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
 import core.action.edit.space_domain.operations.MultiplyImagesAction;
 import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
-import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.image.*;
+import core.action.image.CreateImageInformAction;
+import core.action.image.GetImageAction;
+import core.action.image.GetModifiedImageAction;
+import core.action.image.LoadImageAction;
+import core.action.image.PutModifiedImageAction;
+import core.action.image.SaveImageAction;
+import core.action.image.UpdateCurrentImageAction;
 import core.action.noise.ApplyExponentialNoiseToImageAction;
 import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
-import core.service.MatrixService;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
@@ -327,7 +339,7 @@ class ActionProvider {
         return applyDirectionalDerivativeOperatorAction;
     }
 
-    public static ApplyGlobalThresholdEstimationAction provideApplyGlobalThresholdEstimation(){
+    public static ApplyGlobalThresholdEstimationAction provideApplyGlobalThresholdEstimation() {
         if (applyGlobalThresholdEstimationAction == null) {
             applyGlobalThresholdEstimationAction = new ApplyGlobalThresholdEstimationAction(
                     ServiceProvider.provideMatrixService(),
@@ -336,7 +348,7 @@ class ActionProvider {
         return applyGlobalThresholdEstimationAction;
     }
 
-    public static ApplyOtsuThresholdEstimationAction provideApplyOtsuThresholdEstimation(){
+    public static ApplyOtsuThresholdEstimationAction provideApplyOtsuThresholdEstimation() {
         if (applyOtsuThresholdEstimationAction == null) {
             applyOtsuThresholdEstimationAction = new ApplyOtsuThresholdEstimationAction(
                     ServiceProvider.provideHistogramService(),

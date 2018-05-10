@@ -6,7 +6,7 @@ import domain.mask.Mask;
 
 public class GaussianMask extends Mask {
 
-    private final double standardDeviation;
+    protected final double standardDeviation;
 
     public GaussianMask(double standardDeviation) {
         super(Type.GAUSSIAN, createSize(standardDeviation));
@@ -16,11 +16,16 @@ public class GaussianMask extends Mask {
         this.factor = createFactor();
     }
 
+    public GaussianMask(double standardDeviation, int size, Type type) {
+        super(type, size);
+        this.standardDeviation = standardDeviation;
+    }
+
     private static int createSize(double standardDeviation) {
         return (int) (2 * standardDeviation + 1);
     }
 
-    private double createFactor() {
+    protected double createFactor() {
         double divider = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -41,20 +46,15 @@ public class GaussianMask extends Mask {
 
                 double xSquare = Math.pow(i - size / 2, 2);
                 double ySquare = Math.pow(j - size / 2, 2);
-                double standardDeviationSquare = Math.pow(standardDeviation, 2) * 2.0;
+                double standardDeviationSquare = Math.pow(standardDeviation, 2);
 
-                double exp = Math.exp(-(xSquare + ySquare) / standardDeviationSquare);
+                double exp = Math.exp(-(xSquare + ySquare) / (standardDeviationSquare*2.0));
 
-                matrix[i][j] = (1.0 / (standardDeviationSquare * Math.PI)) * exp;
+                matrix[i][j] = (1.0 / (standardDeviation * Math.sqrt(2.0 * Math.PI))) * exp;
             }
         }
 
         return matrix;
-    }
-
-    @Override
-    public double getValue(int x, int y) {
-        return matrix[x][y];
     }
 
     @Override

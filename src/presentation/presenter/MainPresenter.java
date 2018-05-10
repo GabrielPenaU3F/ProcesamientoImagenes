@@ -32,6 +32,8 @@ import domain.flags.LaplacianDetector;
 import domain.generation.Channel;
 import domain.generation.Figure;
 import domain.generation.Gradient;
+import domain.mask.GaussianLaplacianMask;
+import domain.mask.LaplacianMask;
 import domain.mask.Mask;
 import domain.mask.filter.HighPassMask;
 import io.reactivex.Observable;
@@ -120,7 +122,6 @@ public class MainPresenter {
         this.applyGlobalThresholdEstimationAction = applyGlobalThresholdEstimationAction;
         this.applyOtsuThresholdEstimationAction = applyOtsuThresholdEstimationAction;
         this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
-
     }
 
     public void initialize() {
@@ -501,7 +502,22 @@ public class MainPresenter {
     public void onApplyLaplacianEdgeDetector(LaplacianDetector detector) {
         this.getImageAction.execute()
                            .ifPresent(customImage -> {
-                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, detector);
+                               int slopeThershold = 0;
+                               if (detector == LaplacianDetector.WITH_SLOPE_EVALUATION) {
+                                   slopeThershold = Integer.parseInt(InsertValuePopup.show("Insert slope thershold", "0").get());
+                               }
+                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, new LaplacianMask(), slopeThershold);
+                               this.updateModifiedImage(edgedImage);
+                           });
+    }
+
+    public void onApplyMarrHildrethEdgeDetector() {
+        this.getImageAction.execute()
+                           .ifPresent(customImage -> {
+                               double sigma = Double.parseDouble(InsertValuePopup.show("Insert standard deviation value", "0").get());
+                               int slopeThershold = Integer.parseInt(InsertValuePopup.show("Insert slope thershold", "0").get());
+                               CustomImage edgedImage = this.applyLaplacianDetectorAction
+                                       .execute(customImage, new GaussianLaplacianMask(sigma), slopeThershold);
                                this.updateModifiedImage(edgedImage);
                            });
     }
