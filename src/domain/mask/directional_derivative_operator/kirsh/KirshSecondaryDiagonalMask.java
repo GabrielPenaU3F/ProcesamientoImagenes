@@ -1,4 +1,4 @@
-package domain.mask.derivativedirectionaloperator.kirsh;
+package domain.mask.directional_derivative_operator.kirsh;
 
 import domain.mask.Mask;
 

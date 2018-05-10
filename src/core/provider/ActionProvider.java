@@ -3,6 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
+import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.*;
 import core.action.edit.space_domain.operations.MultiplyImageByScalarNumberAction;
@@ -58,6 +59,7 @@ class ActionProvider {
     private static ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction;
     private static UpdateCurrentImageAction updateCurrentImageAction;
     private static ApplyDirectionalDerivativeOperatorAction applyDirectionalDerivativeOperatorAction;
+    private static ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -320,5 +322,12 @@ class ActionProvider {
             );
         }
         return applyDirectionalDerivativeOperatorAction;
+    }
+
+    public static ApplyLaplacianDetectorAction provideApplyLaplacianDetectorAction() {
+        if (applyLaplacianDetectorAction == null) {
+            applyLaplacianDetectorAction = new ApplyLaplacianDetectorAction();
+        }
+        return applyLaplacianDetectorAction;
     }
 }

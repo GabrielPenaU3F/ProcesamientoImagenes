@@ -1,10 +1,10 @@
-package domain.mask.derivativedirectionaloperator.sobel;
+package domain.mask.directional_derivative_operator.kirsh;
 
 import domain.mask.Mask;
 
-public class SobelVerticalStraightMask extends Mask {
+public class KirshMainDiagonalMask extends Mask {
 
-    public SobelVerticalStraightMask() {
+    public KirshMainDiagonalMask() {
         super(Type.DERIVATE_DIRECTIONAL_OPERATOR_KIRSH, AVAILABLE_SIZE);
 
         this.matrix = createMatrix(AVAILABLE_SIZE);
@@ -13,9 +13,9 @@ public class SobelVerticalStraightMask extends Mask {
     @Override
     protected double[][] createMatrix(int size) {
         return new double[][]{
-                {1, 0, -1},
-                {2, 0, -2},
-                {1, 0, -1}
+                {-3, -3, -3},
+                {5,   0, -3},
+                {5,   5, -3}
         };
     }
 

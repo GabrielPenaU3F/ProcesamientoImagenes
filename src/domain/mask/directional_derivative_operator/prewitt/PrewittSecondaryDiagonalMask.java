@@ -1,10 +1,10 @@
-package domain.mask.derivativedirectionaloperator.prewitt;
+package domain.mask.directional_derivative_operator.prewitt;
 
 import domain.mask.Mask;
 
-public class PrewittVerticalStraightMask extends Mask {
+public class PrewittSecondaryDiagonalMask extends Mask {
 
-    public PrewittVerticalStraightMask() {
+    public PrewittSecondaryDiagonalMask() {
         super(Type.DERIVATE_DIRECTIONAL_OPERATOR_KIRSH, AVAILABLE_SIZE);
 
         this.matrix = createMatrix(AVAILABLE_SIZE);
@@ -13,9 +13,9 @@ public class PrewittVerticalStraightMask extends Mask {
     @Override
     protected double[][] createMatrix(int size) {
         return new double[][]{
-                {1, 0, -1},
-                {1, 0, -1},
-                {1, 0, -1}
+                {1,  1,  0},
+                {1,  0, -1},
+                {0, -1, -1}
         };
     }
 

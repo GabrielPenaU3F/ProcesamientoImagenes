@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
@@ -21,6 +22,7 @@ import domain.RandomElement;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
+import domain.flags.LaplacianDetector;
 import domain.mask.Mask;
 import domain.mask.filter.HighPassMask;
 import domain.generation.Channel;
@@ -57,6 +59,7 @@ public class MainPresenter {
     private final CompressDynamicRangeAction compressDynamicRangeAction;
     private final ApplyFilterAction applyFilterAction;
     private final UpdateCurrentImageAction updateCurrentImageAction;
+    private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
 
     public MainPresenter(MainSceneController view,
                          LoadImageAction loadImageAction,
@@ -73,7 +76,8 @@ public class MainPresenter {
                          Observable<Image> onModifiedImage,
                          CompressDynamicRangeAction compressDynamicRangeAction,
                          ApplyFilterAction applyFilterAction,
-                         UpdateCurrentImageAction updateCurrentImageAction) {
+                         UpdateCurrentImageAction updateCurrentImageAction,
+                         ApplyLaplacianDetectorAction applyLaplacianDetectorAction) {
 
         this.view = view;
 
@@ -92,6 +96,8 @@ public class MainPresenter {
         this.compressDynamicRangeAction = compressDynamicRangeAction;
         this.applyFilterAction = applyFilterAction;
         this.updateCurrentImageAction = updateCurrentImageAction;
+        this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
+
     }
 
     public void initialize() {
@@ -176,6 +182,11 @@ public class MainPresenter {
 
     public void onShowValueHSVChannel() {
         setImageOnModifiedImageView(obtainHSVChannelAction.execute(Channel.VALUE));
+    }
+
+    private void updateModifiedImage(CustomImage customImage) {
+        this.putModifiedImageAction.execute(customImage);
+        this.setImageOnModifiedImageView(customImage);
     }
 
     private void setImageOnModifiedImageView(CustomImage customImage) {
@@ -434,5 +445,13 @@ public class MainPresenter {
         FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL);
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyLaplacianEdgeDetector(LaplacianDetector detector) {
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+                    CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, detector);
+                    this.updateModifiedImage(edgedImage);
+                });
     }
 }

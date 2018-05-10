@@ -5,22 +5,22 @@ import core.action.image.GetImageAction;
 import domain.FilterSemaphore;
 import domain.customimage.CustomImage;
 import domain.mask.Mask;
-import domain.mask.derivativedirectionaloperator.kirsh.KirshHorizontalStraightMask;
-import domain.mask.derivativedirectionaloperator.kirsh.KirshMainDiagonalMask;
-import domain.mask.derivativedirectionaloperator.kirsh.KirshSecondaryDiagonalMask;
-import domain.mask.derivativedirectionaloperator.kirsh.KirshVerticalStraightMask;
-import domain.mask.derivativedirectionaloperator.prewitt.PrewittHorizontalStraightMask;
-import domain.mask.derivativedirectionaloperator.prewitt.PrewittMainDiagonalMask;
-import domain.mask.derivativedirectionaloperator.prewitt.PrewittSecondaryDiagonalMask;
-import domain.mask.derivativedirectionaloperator.prewitt.PrewittVerticalStraightMask;
-import domain.mask.derivativedirectionaloperator.sobel.SobelHorizontalStraightMask;
-import domain.mask.derivativedirectionaloperator.sobel.SobelMainDiagonalMask;
-import domain.mask.derivativedirectionaloperator.sobel.SobelSecondaryDiagonalMask;
-import domain.mask.derivativedirectionaloperator.sobel.SobelVerticalStraightMask;
-import domain.mask.derivativedirectionaloperator.standard.StandardHorizontalStraightMask;
-import domain.mask.derivativedirectionaloperator.standard.StandardMainDiagonalMask;
-import domain.mask.derivativedirectionaloperator.standard.StandardSecondaryDiagonalMask;
-import domain.mask.derivativedirectionaloperator.standard.StandardVerticalStraightMask;
+import domain.mask.directional_derivative_operator.kirsh.KirshHorizontalStraightMask;
+import domain.mask.directional_derivative_operator.kirsh.KirshMainDiagonalMask;
+import domain.mask.directional_derivative_operator.kirsh.KirshSecondaryDiagonalMask;
+import domain.mask.directional_derivative_operator.kirsh.KirshVerticalStraightMask;
+import domain.mask.directional_derivative_operator.prewitt.PrewittHorizontalStraightMask;
+import domain.mask.directional_derivative_operator.prewitt.PrewittMainDiagonalMask;
+import domain.mask.directional_derivative_operator.prewitt.PrewittSecondaryDiagonalMask;
+import domain.mask.directional_derivative_operator.prewitt.PrewittVerticalStraightMask;
+import domain.mask.directional_derivative_operator.sobel.SobelHorizontalStraightMask;
+import domain.mask.directional_derivative_operator.sobel.SobelMainDiagonalMask;
+import domain.mask.directional_derivative_operator.sobel.SobelSecondaryDiagonalMask;
+import domain.mask.directional_derivative_operator.sobel.SobelVerticalStraightMask;
+import domain.mask.directional_derivative_operator.standard.StandardHorizontalStraightMask;
+import domain.mask.directional_derivative_operator.standard.StandardMainDiagonalMask;
+import domain.mask.directional_derivative_operator.standard.StandardSecondaryDiagonalMask;
+import domain.mask.directional_derivative_operator.standard.StandardVerticalStraightMask;
 
 public class DirectionalDerivativeOperatorPresenter {
 
