@@ -4,14 +4,14 @@ public class Derivative {
 
     private final int value;
     private final float north;
-    private final float sud;
+    private final float south;
     private final float east;
     private final float west;
 
     public Derivative(int[][] matrix, int x, int y) {
         value = matrix[x][y];
         north = calculateNorth(matrix, x, y);
-        sud = calculateSud(matrix, x, y);
+        south = calculateSouth(matrix, x, y);
         east = calculateEast(matrix, x, y);
         west = calculateWest(matrix, x, y);
     }
@@ -24,8 +24,8 @@ public class Derivative {
         return north;
     }
 
-    public float getSud() {
-        return sud;
+    public float getSouth() {
+        return south;
     }
 
     public float getEast() {
@@ -37,46 +37,34 @@ public class Derivative {
     }
 
     private float calculateNorth(int[][] matrix, int x, int y) {
-        int coordinate = y - 1;
-        return onY(matrix, x, y, coordinate);
+        return onY(matrix, x, y, y - 1);
     }
 
-    private float calculateSud(int[][] matrix, int x, int y) {
-        int coordinate = y + 1;
-        return onY(matrix, x, y, coordinate);
-    }
-
-    private float calculateEast(int[][] matrix, int x, int y) {
-        int coordinate = x + 1;
-        return onX(matrix, x, y, coordinate);
+    private float calculateSouth(int[][] matrix, int x, int y) {
+        return onY(matrix, x, y, y + 1);
     }
 
     private float calculateWest(int[][] matrix, int x, int y) {
-        int coordinate = x - 1;
-        return onX(matrix, x, y, coordinate);
+        return onX(matrix, x, y, x - 1);
+    }
+
+    private float calculateEast(int[][] matrix, int x, int y) {
+        return onX(matrix, x, y, x + 1);
     }
 
     private float onX(int[][] matrix, int x, int y, int coordinate) {
-        int value;
-        int currentValue = matrix[x][y];
-        if (coordinate < matrix.length && coordinate >= 0) {
-            value = matrix[coordinate][y];
-        } else {
-            value = currentValue;
+        if (coordinate < 0 || coordinate >= matrix.length) {
+            return 0;
         }
 
-        return value - currentValue;
+        return matrix[coordinate][y] - matrix[x][y];
     }
 
     private float onY(int[][] matrix, int x, int y, int coordinate) {
-        int value;
-        int currentValue = matrix[x][y];
-        if (coordinate < matrix[0].length && coordinate >= 0) {
-            value = matrix[x][coordinate];
-        } else {
-            value = currentValue;
+        if (coordinate < 0 || coordinate >= matrix[0].length) {
+            return 0;
         }
 
-        return value - currentValue;
+        return matrix[x][coordinate] - matrix[x][y];
     }
 }
