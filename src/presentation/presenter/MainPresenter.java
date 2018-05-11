@@ -445,9 +445,20 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyAnisotropicDiffusion() {
-        DiffusionSemaphore.setValue(Diffusion.Type.ANISOTROPIC);
+    public void onApplyAnisotropicDiffusionWithLorentzEdgeDetection() {
+        DiffusionSemaphore.setValue(Diffusion.Type.LORENTZ_ANISOTROPIC);
         PresenterProvider.provideDiffusionPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyAnisotropicDiffusionWithLeclercEdgeDetection() {
+        DiffusionSemaphore.setValue(Diffusion.Type.LECLERC_ANISOTROPIC);
+        PresenterProvider.provideDiffusionPresenter().onInitialize();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onResetModifiedImage() {
+        view.modifiedImageView.setImage(null);
+        view.applyChangesButton.setVisible(false);
     }
 }

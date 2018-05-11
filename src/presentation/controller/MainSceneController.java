@@ -22,6 +22,8 @@ public class MainSceneController {
     @FXML
     public Button applyChangesButton;
     @FXML
+    public Button resetModifiedImageButton;
+    @FXML
     public TextField pixelX;
     @FXML
     public TextField pixelY;
@@ -293,7 +295,17 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onApplyAnisotropicDiffusion() {
-        this.mainPresenter.onApplyAnisotropicDiffusion();
+    public void onApplyAnisotropicDiffusionWithLorentzEdgeDetection() {
+        this.mainPresenter.onApplyAnisotropicDiffusionWithLorentzEdgeDetection();
+    }
+
+    @FXML
+    public void onApplyAnisotropicDiffusionWithLeclercEdgeDetection() {
+        this.mainPresenter.onApplyAnisotropicDiffusionWithLeclercEdgeDetection();
+    }
+
+    @FXML
+    public void resetModifiedImage() {
+        this.mainPresenter.onResetModifiedImage();
     }
 }

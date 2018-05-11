@@ -2,7 +2,8 @@ package presentation.presenter;
 
 import core.action.diffusion.ApplyDiffusionAction;
 import core.action.image.GetImageAction;
-import domain.diffusion.AnisotropicDiffusion;
+import domain.diffusion.AnisotropicWithLeclercEdgeDiffusion;
+import domain.diffusion.AnisotropicWithLorentzEdgeDiffusion;
 import domain.diffusion.Diffusion;
 import domain.diffusion.DiffusionSemaphore;
 import domain.diffusion.IsotropicDiffusion;
@@ -32,7 +33,16 @@ public class DiffusionPresenter {
             return new IsotropicDiffusion();
         }
 
-        Double sigma = Double.parseDouble(InsertValuePopup.show("Insert sigma", "0").get());
-        return new AnisotropicDiffusion(sigma);
+        if(DiffusionSemaphore.getValue() == Diffusion.Type.LORENTZ_ANISOTROPIC){
+            Double sigma = Double.parseDouble(InsertValuePopup.show("Insert sigma", "0").get());
+            return new AnisotropicWithLorentzEdgeDiffusion(sigma);
+        }
+
+        if(DiffusionSemaphore.getValue() == Diffusion.Type.LECLERC_ANISOTROPIC){
+            Double sigma = Double.parseDouble(InsertValuePopup.show("Insert sigma", "0").get());
+            return new AnisotropicWithLeclercEdgeDiffusion(sigma);
+        }
+
+        throw new RuntimeException("Diffusion " + DiffusionSemaphore.getValue() + " not found");
     }
 }

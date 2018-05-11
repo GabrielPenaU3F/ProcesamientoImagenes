@@ -5,6 +5,8 @@ public interface Diffusion {
     int apply(Derivative derivative);
 
     enum Type {
-        ISOTROPIC, ANISOTROPIC
+        ISOTROPIC,
+        LORENTZ_ANISOTROPIC,
+        LECLERC_ANISOTROPIC
     }
 }

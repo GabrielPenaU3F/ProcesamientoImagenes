@@ -38,29 +38,29 @@ public class Derivative {
 
     private float calculateNorth(int[][] matrix, int x, int y) {
         int coordinate = y - 1;
-        return onVertical(matrix, x, y, coordinate);
+        return onY(matrix, x, y, coordinate);
     }
 
     private float calculateSud(int[][] matrix, int x, int y) {
         int coordinate = y + 1;
-        return onVertical(matrix, x, y, coordinate);
+        return onY(matrix, x, y, coordinate);
     }
 
     private float calculateEast(int[][] matrix, int x, int y) {
         int coordinate = x + 1;
-        return onHorizontal(matrix, x, y, coordinate);
+        return onX(matrix, x, y, coordinate);
     }
 
     private float calculateWest(int[][] matrix, int x, int y) {
         int coordinate = x - 1;
-        return onHorizontal(matrix, x, y, coordinate);
+        return onX(matrix, x, y, coordinate);
     }
 
-    private float onVertical(int[][] matrix, int x, int y, int coordinate) {
+    private float onX(int[][] matrix, int x, int y, int coordinate) {
         int value;
         int currentValue = matrix[x][y];
-        if (coordinate < y && coordinate >= 0) {
-            value = matrix[x][coordinate];
+        if (coordinate < matrix.length && coordinate >= 0) {
+            value = matrix[coordinate][y];
         } else {
             value = currentValue;
         }
@@ -68,11 +68,11 @@ public class Derivative {
         return value - currentValue;
     }
 
-    private float onHorizontal(int[][] matrix, int x, int y, int coordinate) {
+    private float onY(int[][] matrix, int x, int y, int coordinate) {
         int value;
         int currentValue = matrix[x][y];
-        if (coordinate < x && coordinate >= 0) {
-            value = matrix[coordinate][y];
+        if (coordinate < matrix[0].length && coordinate >= 0) {
+            value = matrix[x][coordinate];
         } else {
             value = currentValue;
         }

@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 public class ApplyDiffusionAction {
 
     private final ImageOperationsService imageOperationsService;
-    private PublishSubject<Image> onModifiedImagePublishSubject;
+    private final PublishSubject<Image> onModifiedImagePublishSubject;
 
     public ApplyDiffusionAction(ImageOperationsService imageOperationsService,
                                 PublishSubject<Image> onModifiedImagePublishSubject) {

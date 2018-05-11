@@ -17,159 +17,169 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.MainSceneController">
-    <AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="1111.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="1111.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="510.0" minWidth="10.0" prefWidth="488.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="431.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="132.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-                <center>
-                    <Group fx:id="groupImageView" BorderPane.alignment="CENTER">
-                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
-                    </Group>
-                </center>
-            </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                <center>
-                    <ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                </center>
-            </BorderPane>
-            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="215.0" GridPane.columnIndex="2">
-                <Pane prefHeight="153.0" prefWidth="125.0">
-                    <Label alignment="CENTER" layoutX="52.0" layoutY="6.0" text="Pixel" textAlignment="CENTER" />
-                    <Pane layoutY="17.0" prefHeight="67.0" prefWidth="132.0">
-                        <GridPane alignment="CENTER" prefHeight="66.0" prefWidth="132.0">
-                            <columnConstraints>
-                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.0" minWidth="10.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="45.0" minHeight="10.0" vgrow="ALWAYS" />
-                                <RowConstraints maxHeight="31.0" minHeight="10.0" vgrow="ALWAYS" />
-                            </rowConstraints>
-                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="24.0" text="X" textAlignment="CENTER" />
-                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="30.0" text="Y" GridPane.columnIndex="1" />
-                            <TextField fx:id="pixelX" alignment="CENTER" prefHeight="27.0" prefWidth="17.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </GridPane.margin>
-                            </TextField>
-                            <TextField fx:id="pixelY" alignment="CENTER" prefHeight="27.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </GridPane.margin>
-                            </TextField>
-                        </GridPane>
-                    </Pane>
-                </Pane>
-                <Pane prefHeight="306.0" prefWidth="152.0">
-               <Button fx:id="applyChangesButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="265.0" mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false" />
-                    <Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value" textAlignment="CENTER" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="34.0" text="R" textAlignment="CENTER" />
-                        <TextField fx:id="valueR" editable="false" layoutX="22.0" layoutY="58.0" prefHeight="27.0" prefWidth="67.0" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="96.0" text="G" textAlignment="CENTER" />
-                        <TextField fx:id="valueG" editable="false" layoutX="23.0" layoutY="120.0" prefHeight="27.0" prefWidth="67.0" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="161.0" text="B" textAlignment="CENTER" />
-                        <TextField fx:id="valueB" editable="false" layoutX="22.0" layoutY="184.0" prefHeight="27.0" prefWidth="67.0" />
-                    </Pane>
-                </Pane>
-            </VBox>
-        </GridPane>
-    </AnchorPane>
-    <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#openImage" text="Open" />
-            <MenuItem mnemonicParsing="false" onAction="#saveModifiedImage" text="Save" />
-            <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-            <Menu mnemonicParsing="false" text="Space Domain">
-                <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
-                <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
-                <MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast" />
-                <MenuItem mnemonicParsing="false" onAction="#compressDynamicRange" text="Dynamic Range Compression" />
-                <MenuItem mnemonicParsing="false" onAction="#gammaPowerFunction" text="Gamma Power Function" />
-                <MenuItem mnemonicParsing="false" onAction="#calculateImagesOperations" text="Image Operations" />
-                <Menu mnemonicParsing="false" text="Histogram">
-                    <MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create" />
-                    <Menu mnemonicParsing="false" text="Equalize Image">
-                        <MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Image" />
-                        <MenuItem mnemonicParsing="false" onAction="#createEqualizedImageByHistogram" text="Image with Histogram" />
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Equalize Image Twice">
-                        <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Image" />
-                        <MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwiceByHistogram" text="Image with Histogram" />
-                    </Menu>
-                </Menu>
-            </Menu>
-            <MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut" />
-            <MenuItem mnemonicParsing="false" onAction="#showReport" text="Report" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Pixel">
-            <MenuItem mnemonicParsing="false" onAction="#calculatePixelValue" text="Calculate" />
-            <MenuItem mnemonicParsing="false" onAction="#modifyPixelValue" text="Modify" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Generation">
-            <Menu mnemonicParsing="false" text="Gradients">
-                <MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient" />
-                <MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Images">
-                <MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle" />
-                <MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate" />
-                <Menu mnemonicParsing="false" text="Noise 100x100 Images">
-                    <MenuItem mnemonicParsing="false" onAction="#generateExponentialNoiseSyntheticImage" text="Exponential" />
-                    <MenuItem mnemonicParsing="false" onAction="#generateRayleighNoiseSyntheticImage" text="Rayleigh" />
-                    <MenuItem mnemonicParsing="false" onAction="#generateGaussianNoiseSyntheticImage" text="Gaussian" />
-               </Menu>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Random Numbers">
-                <MenuItem mnemonicParsing="false" onAction="#generateExponentialRandomNumber" text="Exponential" />
-                <MenuItem mnemonicParsing="false" onAction="#generateRayleighRandomNumber" text="Rayleigh" />
-                <MenuItem mnemonicParsing="false" onAction="#generateGaussianRandomNumber" text="Gaussian" />
-            </Menu>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Channels">
-            <MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="RGB Red" />
-            <MenuItem mnemonicParsing="false" onAction="#showRGBImageGreenChannel" text="RGB Green" />
-            <MenuItem mnemonicParsing="false" onAction="#showRGBImageBlueChannel" text="RGB Blue" />
-            <MenuItem mnemonicParsing="false" onAction="#showHueHSVChannel" text="HSV Hue" />
-            <MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="HSV Saturation" />
-            <MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Noise">
-            <MenuItem mnemonicParsing="false" onAction="#applyAdditiveGaussianNoise" text="Additive Gaussian" />
-            <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeRayleighNoise" text="Multiplicative Rayleigh" />
-            <MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeExponentialNoise" text="Multiplicative Exponential" />
-            <MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Filter">
-            <MenuItem mnemonicParsing="false" onAction="#onApplyMeanFilter" text="Mean" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyMedianFilter" text="Median" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyWeightedMedianFilter" text="Weighted Median" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edges">
-            <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
-            <Menu mnemonicParsing="false" text="Directional Derivative Operators">
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Diffusion">
-                <MenuItem mnemonicParsing="false" onAction="#onApplyIsotropicDiffusion" text="Isotropic" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyAnisotropicDiffusion" text="Anisotropic" />
-            </Menu>
-        </Menu>
-    </MenuBar>
+<AnchorPane prefHeight="473.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+			fx:controller="presentation.controller.MainSceneController">
+	<AnchorPane layoutY="29.0" minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="1111.0" AnchorPane.leftAnchor="0"
+				AnchorPane.rightAnchor="0">
+		<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="1111.0"
+				  AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="510.0" minWidth="10.0" prefWidth="488.0"/>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="431.0"/>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="132.0"/>
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+			</rowConstraints>
+			<BorderPane prefHeight="200.0" prefWidth="200.0">
+				<center>
+					<Group fx:id="groupImageView" BorderPane.alignment="CENTER">
+						<ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true"/>
+					</Group>
+				</center>
+			</BorderPane>
+			<BorderPane prefHeight="525.0" prefWidth="409.0" GridPane.columnIndex="1">
+				<center>
+					<ImageView fx:id="modifiedImageView" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER"/>
+				</center>
+			</BorderPane>
+			<VBox alignment="CENTER" prefHeight="400.0" prefWidth="215.0" GridPane.columnIndex="2">
+				<Pane prefHeight="153.0" prefWidth="125.0">
+					<Label alignment="CENTER" layoutX="52.0" layoutY="6.0" text="Pixel" textAlignment="CENTER"/>
+					<Pane layoutY="17.0" prefHeight="67.0" prefWidth="132.0">
+						<GridPane alignment="CENTER" prefHeight="66.0" prefWidth="132.0">
+							<columnConstraints>
+								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.0" minWidth="10.0"/>
+								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0"/>
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints maxHeight="45.0" minHeight="10.0" vgrow="ALWAYS"/>
+								<RowConstraints maxHeight="31.0" minHeight="10.0" vgrow="ALWAYS"/>
+							</rowConstraints>
+							<Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="24.0" text="X" textAlignment="CENTER"/>
+							<Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="30.0" text="Y" GridPane.columnIndex="1"/>
+							<TextField fx:id="pixelX" alignment="CENTER" prefHeight="27.0" prefWidth="17.0" GridPane.halignment="CENTER"
+									   GridPane.rowIndex="1" GridPane.valignment="CENTER">
+								<GridPane.margin>
+									<Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+								</GridPane.margin>
+							</TextField>
+							<TextField fx:id="pixelY" alignment="CENTER" prefHeight="27.0" prefWidth="0.0" GridPane.columnIndex="1"
+									   GridPane.rowIndex="1">
+								<GridPane.margin>
+									<Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+								</GridPane.margin>
+							</TextField>
+						</GridPane>
+					</Pane>
+				</Pane>
+				<Pane prefHeight="369.0" prefWidth="152.0">
+					<Button fx:id="applyChangesButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="265.0"
+							mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false"/>
+					<Button fx:id="resetModifiedImageButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="300.0"
+							mnemonicParsing="false" onAction="#resetModifiedImage" text="Reset"/>
+					<Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
+						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value" textAlignment="CENTER"/>
+						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="34.0" text="R" textAlignment="CENTER"/>
+						<TextField fx:id="valueR" editable="false" layoutX="22.0" layoutY="58.0" prefHeight="27.0" prefWidth="67.0"/>
+						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="96.0" text="G" textAlignment="CENTER"/>
+						<TextField fx:id="valueG" editable="false" layoutX="23.0" layoutY="120.0" prefHeight="27.0" prefWidth="67.0"/>
+						<Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="161.0" text="B" textAlignment="CENTER"/>
+						<TextField fx:id="valueB" editable="false" layoutX="22.0" layoutY="184.0" prefHeight="27.0" prefWidth="67.0"/>
+					</Pane>
+				</Pane>
+			</VBox>
+		</GridPane>
+	</AnchorPane>
+	<MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+		<Menu mnemonicParsing="false" text="File">
+			<MenuItem mnemonicParsing="false" onAction="#openImage" text="Open"/>
+			<MenuItem mnemonicParsing="false" onAction="#saveModifiedImage" text="Save"/>
+			<MenuItem mnemonicParsing="false" onAction="#close" text="Close"/>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Edit">
+			<Menu mnemonicParsing="false" text="Space Domain">
+				<MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative"/>
+				<MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold"/>
+				<MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast"/>
+				<MenuItem mnemonicParsing="false" onAction="#compressDynamicRange" text="Dynamic Range Compression"/>
+				<MenuItem mnemonicParsing="false" onAction="#gammaPowerFunction" text="Gamma Power Function"/>
+				<MenuItem mnemonicParsing="false" onAction="#calculateImagesOperations" text="Image Operations"/>
+				<Menu mnemonicParsing="false" text="Histogram">
+					<MenuItem mnemonicParsing="false" onAction="#createImageHistogram" text="Create"/>
+					<Menu mnemonicParsing="false" text="Equalize Image">
+						<MenuItem mnemonicParsing="false" onAction="#createEqualizedImage" text="Image"/>
+						<MenuItem mnemonicParsing="false" onAction="#createEqualizedImageByHistogram" text="Image with Histogram"/>
+					</Menu>
+					<Menu mnemonicParsing="false" text="Equalize Image Twice">
+						<MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwice" text="Image"/>
+						<MenuItem mnemonicParsing="false" onAction="#createImageEqualizedTwiceByHistogram" text="Image with Histogram"/>
+					</Menu>
+				</Menu>
+			</Menu>
+			<MenuItem mnemonicParsing="false" onAction="#cutPartialImage" text="Cut"/>
+			<MenuItem mnemonicParsing="false" onAction="#showReport" text="Report"/>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Pixel">
+			<MenuItem mnemonicParsing="false" onAction="#calculatePixelValue" text="Calculate"/>
+			<MenuItem mnemonicParsing="false" onAction="#modifyPixelValue" text="Modify"/>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Generation">
+			<Menu mnemonicParsing="false" text="Gradients">
+				<MenuItem mnemonicParsing="false" onAction="#showColorGradient" text="Color Gradient"/>
+				<MenuItem mnemonicParsing="false" onAction="#showGreyGradient" text="Gray Gradient"/>
+			</Menu>
+			<Menu mnemonicParsing="false" text="Images">
+				<MenuItem mnemonicParsing="false" onAction="#showImageWithCircle" text="Image with Circle"/>
+				<MenuItem mnemonicParsing="false" onAction="#showImageWithQuadrate" text="Image with Quadrate"/>
+				<Menu mnemonicParsing="false" text="Noise 100x100 Images">
+					<MenuItem mnemonicParsing="false" onAction="#generateExponentialNoiseSyntheticImage" text="Exponential"/>
+					<MenuItem mnemonicParsing="false" onAction="#generateRayleighNoiseSyntheticImage" text="Rayleigh"/>
+					<MenuItem mnemonicParsing="false" onAction="#generateGaussianNoiseSyntheticImage" text="Gaussian"/>
+				</Menu>
+			</Menu>
+			<Menu mnemonicParsing="false" text="Random Numbers">
+				<MenuItem mnemonicParsing="false" onAction="#generateExponentialRandomNumber" text="Exponential"/>
+				<MenuItem mnemonicParsing="false" onAction="#generateRayleighRandomNumber" text="Rayleigh"/>
+				<MenuItem mnemonicParsing="false" onAction="#generateGaussianRandomNumber" text="Gaussian"/>
+			</Menu>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Channels">
+			<MenuItem mnemonicParsing="false" onAction="#showRGBImageRedChannel" text="RGB Red"/>
+			<MenuItem mnemonicParsing="false" onAction="#showRGBImageGreenChannel" text="RGB Green"/>
+			<MenuItem mnemonicParsing="false" onAction="#showRGBImageBlueChannel" text="RGB Blue"/>
+			<MenuItem mnemonicParsing="false" onAction="#showHueHSVChannel" text="HSV Hue"/>
+			<MenuItem mnemonicParsing="false" onAction="#showSaturationHSVChannel" text="HSV Saturation"/>
+			<MenuItem mnemonicParsing="false" onAction="#showValueHSVChannel" text="HSV Value"/>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Noise">
+			<MenuItem mnemonicParsing="false" onAction="#applyAdditiveGaussianNoise" text="Additive Gaussian"/>
+			<MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeRayleighNoise" text="Multiplicative Rayleigh"/>
+			<MenuItem mnemonicParsing="false" onAction="#applyMultiplicativeExponentialNoise" text="Multiplicative Exponential"/>
+			<MenuItem mnemonicParsing="false" onAction="#applySaltAndPepperNoise" text="Salt and Pepper"/>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Filter">
+			<MenuItem mnemonicParsing="false" onAction="#onApplyMeanFilter" text="Mean"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyMedianFilter" text="Median"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyWeightedMedianFilter" text="Weighted Median"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian"/>
+		</Menu>
+		<Menu mnemonicParsing="false" text="Edges">
+			<MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel"/>
+			<Menu mnemonicParsing="false" text="Directional Derivative Operators">
+				<MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask"/>
+				<MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask"/>
+				<MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask"/>
+				<MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask"/>
+			</Menu>
+			<Menu mnemonicParsing="false" text="Diffusion">
+				<MenuItem mnemonicParsing="false" onAction="#onApplyIsotropicDiffusion" text="Isotropic"/>
+				<MenuItem mnemonicParsing="false" onAction="#onApplyAnisotropicDiffusionWithLorentzEdgeDetection" text="Anisotropic with Lorentz Edge Detection"/>
+				<MenuItem mnemonicParsing="false" onAction="#onApplyAnisotropicDiffusionWithLeclercEdgeDetection"
+						  text="Anisotropic with Leclerc Edge Detection"/>
+			</Menu>
+		</Menu>
+	</MenuBar>
 </AnchorPane>
