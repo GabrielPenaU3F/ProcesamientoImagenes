@@ -290,18 +290,8 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onApplyIsotropicDiffusion() {
-        this.mainPresenter.onApplyIsotropicDiffusion();
-    }
-
-    @FXML
-    public void onApplyAnisotropicDiffusionWithLorentzEdgeDetection() {
-        this.mainPresenter.onApplyAnisotropicDiffusionWithLorentzEdgeDetection();
-    }
-
-    @FXML
-    public void onApplyAnisotropicDiffusionWithLeclercEdgeDetection() {
-        this.mainPresenter.onApplyAnisotropicDiffusionWithLeclercEdgeDetection();
+    public void onApplyDiffusion() {
+        this.mainPresenter.onApplyDiffusion();
     }
 
     @FXML

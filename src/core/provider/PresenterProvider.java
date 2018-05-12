@@ -151,8 +151,8 @@ public class PresenterProvider {
                 ActionProvider.provideApplyDerivateDirectionalOperatorAction());
     }
 
-    public static DiffusionPresenter provideDiffusionPresenter() {
-        return new DiffusionPresenter(
+    public static DiffusionPresenter provideDiffusionPresenter(DiffusionSceneController diffusionSceneController) {
+        return new DiffusionPresenter(diffusionSceneController,
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplyDiffusionAction()
         );

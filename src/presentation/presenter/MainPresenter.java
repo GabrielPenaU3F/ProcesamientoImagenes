@@ -21,8 +21,6 @@ import domain.RandomElement;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
 import domain.FilterSemaphore;
-import domain.diffusion.Diffusion;
-import domain.diffusion.DiffusionSemaphore;
 import domain.mask.Mask;
 import domain.mask.filter.HighPassMask;
 import domain.generation.Channel;
@@ -439,21 +437,8 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyIsotropicDiffusion() {
-        DiffusionSemaphore.setValue(Diffusion.Type.ISOTROPIC);
-        PresenterProvider.provideDiffusionPresenter().onInitialize();
-        view.applyChangesButton.setVisible(true);
-    }
-
-    public void onApplyAnisotropicDiffusionWithLorentzEdgeDetection() {
-        DiffusionSemaphore.setValue(Diffusion.Type.LORENTZ_ANISOTROPIC);
-        PresenterProvider.provideDiffusionPresenter().onInitialize();
-        view.applyChangesButton.setVisible(true);
-    }
-
-    public void onApplyAnisotropicDiffusionWithLeclercEdgeDetection() {
-        DiffusionSemaphore.setValue(Diffusion.Type.LECLERC_ANISOTROPIC);
-        PresenterProvider.provideDiffusionPresenter().onInitialize();
+    public void onApplyDiffusion() {
+        new DiffusionSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
     }
 
