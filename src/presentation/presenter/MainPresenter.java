@@ -64,22 +64,22 @@ public class MainPresenter {
     private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
 
     public MainPresenter(MainSceneController view,
-                         LoadImageAction loadImageAction,
-                         GetImageAction getImageAction,
-                         PutModifiedImageAction putModifiedImageAction,
-                         ModifyPixelAction modifyPixelAction,
-                         CalculateNegativeImageAction calculateNegativeImageAction,
-                         ApplyThresholdAction applyThresholdAction,
-                         CreateImageWithGradientAction createImageWithGradientAction,
-                         ObtainRGBChannelAction obtainRGBChannelAction,
-                         ObtainHSVChannelAction obtainHSVChannelAction,
-                         CreateImageWithFigureAction createImageWithFigureAction,
-                         EqualizeGrayImageAction equalizeGrayImageAction,
-                         Observable<Image> onModifiedImage,
-                         CompressDynamicRangeAction compressDynamicRangeAction,
-                         ApplyFilterAction applyFilterAction,
-                         UpdateCurrentImageAction updateCurrentImageAction,
-                         ApplyLaplacianDetectorAction applyLaplacianDetectorAction) {
+            LoadImageAction loadImageAction,
+            GetImageAction getImageAction,
+            PutModifiedImageAction putModifiedImageAction,
+            ModifyPixelAction modifyPixelAction,
+            CalculateNegativeImageAction calculateNegativeImageAction,
+            ApplyThresholdAction applyThresholdAction,
+            CreateImageWithGradientAction createImageWithGradientAction,
+            ObtainRGBChannelAction obtainRGBChannelAction,
+            ObtainHSVChannelAction obtainHSVChannelAction,
+            CreateImageWithFigureAction createImageWithFigureAction,
+            EqualizeGrayImageAction equalizeGrayImageAction,
+            Observable<Image> onModifiedImage,
+            CompressDynamicRangeAction compressDynamicRangeAction,
+            ApplyFilterAction applyFilterAction,
+            UpdateCurrentImageAction updateCurrentImageAction,
+            ApplyLaplacianDetectorAction applyLaplacianDetectorAction) {
 
         this.view = view;
 
@@ -202,12 +202,12 @@ public class MainPresenter {
             int pixelY = Integer.parseInt(view.pixelY.getText());
 
             this.getImageAction.execute()
-                    .map(customImage -> customImage.getPixelValue(pixelX, pixelY))
-                    .ifPresent(rgb -> {
-                        view.valueR.setText(String.valueOf(rgb.getRed()));
-                        view.valueG.setText(String.valueOf(rgb.getGreen()));
-                        view.valueB.setText(String.valueOf(rgb.getBlue()));
-                    });
+                               .map(customImage -> customImage.getPixelValue(pixelX, pixelY))
+                               .ifPresent(rgb -> {
+                                   view.valueR.setText(String.valueOf(rgb.getRed()));
+                                   view.valueG.setText(String.valueOf(rgb.getGreen()));
+                                   view.valueB.setText(String.valueOf(rgb.getBlue()));
+                               });
 
         } else {
             view.valueR.setText("Error");
@@ -284,13 +284,13 @@ public class MainPresenter {
 
     public void onCreateEqualizedImageOnce() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 1));
+                           .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 1));
         view.applyChangesButton.setVisible(true);
     }
 
     public void onCreateEqualizedImageTwice() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 2));
+                           .ifPresent(customImage -> equalizeGrayImageAction.execute(customImage, 2));
         view.applyChangesButton.setVisible(true);
     }
 
@@ -337,12 +337,12 @@ public class MainPresenter {
         //hago esto, porque sino una expresion lambda que la usa despues tiene problemas
         int size = insertedSize;
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
-                    CustomImage filteredCustomImage = applyFilterAction.execute(customImage, new HighPassMask(size));
-                    view.modifiedImageView.setImage(filteredCustomImage.toFXImage());
+                           .ifPresent(customImage -> {
+                               CustomImage filteredCustomImage = applyFilterAction.execute(customImage, new HighPassMask(size));
+                               view.modifiedImageView.setImage(filteredCustomImage.toFXImage());
 
-                    this.applyThresholdToModifiedImage(filteredCustomImage);
-                });
+                               this.applyThresholdToModifiedImage(filteredCustomImage);
+                           });
         view.applyChangesButton.setVisible(true);
     }
 
@@ -442,6 +442,7 @@ public class MainPresenter {
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
         view.applyChangesButton.setVisible(true);
     }
+
     public void onApplyDirectionalDerivativeOperatorSobelMask() {
         FilterSemaphore.setValue(Mask.Type.DERIVATE_DIRECTIONAL_OPERATOR_SOBEL);
         PresenterProvider.provideDirectionalDerivativeOperatorPresenter().onInitialize();
@@ -450,18 +451,23 @@ public class MainPresenter {
 
     public void onApplyLaplacianEdgeDetector(LaplacianDetector detector) {
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
-                    CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, detector, new LaplacianMask());
-                    this.updateModifiedImage(edgedImage);
-                });
+                           .ifPresent(customImage -> {
+                               int slopeThershold = 0;
+                               if(detector == LaplacianDetector.WITH_SLOPE_EVALUATION) {
+                                   slopeThershold = Integer.parseInt(InsertValuePopup.show("Insert slope thershold", "0").get());
+                               }
+                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, new LaplacianMask(), slopeThershold);
+                               this.updateModifiedImage(edgedImage);
+                           });
     }
 
     public void onApplyMarrHildrethEdgeDetector() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
-                    double sigma = Double.parseDouble(InsertValuePopup.show("Insert standard deviation value","0").get());
-                    CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, LaplacianDetector.WITH_SLOPE_EVALUATION, new GaussianLaplacianMask(sigma));
-                    this.updateModifiedImage(edgedImage);
-                });
+                           .ifPresent(customImage -> {
+                               double sigma = Double.parseDouble(InsertValuePopup.show("Insert standard deviation value", "0").get());
+                               int slopeThershold = Integer.parseInt(InsertValuePopup.show("Insert slope thershold", "0").get());
+                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, new GaussianLaplacianMask(sigma), slopeThershold);
+                               this.updateModifiedImage(edgedImage);
+                           });
     }
 }

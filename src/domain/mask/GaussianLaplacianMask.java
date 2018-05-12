@@ -12,7 +12,7 @@ public class GaussianLaplacianMask extends GaussianMask {
 
     //The size is different then the original GaussianMask
     private static int createSize(double standardDeviation) {
-        return (int) (4*standardDeviation + 1);
+        return (int) (4 * standardDeviation + 1);
     }
 
     @Override
@@ -20,23 +20,22 @@ public class GaussianLaplacianMask extends GaussianMask {
 
         double[][] matrix = new double[size][size];
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
 
-                double xSquare = Math.pow(i - size/2, 2);
-                double ySquare = Math.pow(j - size/2, 2);
+                double xSquare = Math.pow(x - size / 2, 2);
+                double ySquare = Math.pow(y - size / 2, 2);
                 double standardDeviationSquare = Math.pow(standardDeviation, 2);
                 double standardDeviationCube = Math.pow(standardDeviation, 3);
 
+                double firstTerm = -1.0 / (standardDeviationCube * Math.sqrt(2.0 * Math.PI));
+                double secondTerm = 2 - ((xSquare + ySquare) / standardDeviationSquare);
+                double thirdTerm = Math.exp(-(xSquare + ySquare) / (standardDeviationSquare * 2.0));
 
-                double exp = Math.exp(-(xSquare + ySquare) / (standardDeviationSquare*2.0));
-
-                matrix[i][j] = -(1.0 / (standardDeviationCube * Math.sqrt(2.0 * Math.PI))) * (2 - ((xSquare + ySquare)/standardDeviationSquare)) * exp;
-
+                matrix[x][y] = firstTerm * secondTerm * thirdTerm;
             }
         }
 
         return matrix;
     }
-
 }
