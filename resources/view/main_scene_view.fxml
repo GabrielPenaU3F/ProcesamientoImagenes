@@ -70,6 +70,7 @@
                 </Pane>
                 <Pane prefHeight="371.0" prefWidth="152.0">
                <Button fx:id="applyChangesButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="265.0" mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false" />
+               <Button fx:id="resetModifiedImageButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="300.0" mnemonicParsing="false" onAction="#resetModifiedImage" text="Reset"/>
                     <Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value" textAlignment="CENTER" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="34.0" text="R" textAlignment="CENTER" />

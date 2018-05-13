@@ -1,0 +1,46 @@
+## TP 2
+
+# 2 - Aplicar detectores de bordes a imagenes contaminadas con ruido
+
+- Ruido Sal y Pimienta
+  - 30% de contaminacion
+  - p0 = 0.2
+  - p1 = 0.8
+
+    	Conclusiones: Al aplicarle ruido sal y pimienta a una imagen, se le agregaran
+  	pixeles con valores 0 y 255. Al aplicarle el detector de bordes, este
+  	detectará estos pixeles agregados como cambios significativos del nivel de gris,
+  	los cuales serán interpretados como un borde.
+  	Ambos detectores se comportan de manera similar, por lo cual las Conclusiones
+  	de los resultados, son practicamente identicas.
+
+- Gaussiano Aditivo
+  	- 80% de contaminacion
+  	- Media: 5
+  	- Desviacion estandar: 15
+
+  		Conclusiones: Al aplicarle la deteccion de bordes Prewitt a una imagen contaminada
+  	con ruido Gaussiano aditivo, se puede apreciar que aparecieron pequeños
+  	bordes que en la imagen original no se encontraban, por ejemplo, en la imagen que
+  	utilizamos (LENA.RAW) se pueden ver que en el sombrero.
+  	De la misma manera, en el detector de bordes Sobel, aparecen nuevos bordes que son muy
+  	pequeños.
+
+- Rayleigh Multiplicativo
+	- 30% de contaminacion
+	- Psi: 2
+
+		Conclusiones: Al aplicarle la deteccion de bordes Prewitt a una imagen contaminada
+	con ruido Rayleigh Multiplicativo, se puede apreciar como los pixeles con
+	valor 0 que agregó dicho ruido hacen que la deteccion de bordes sea mucho mas compleja.
+	Ya que la deteccion detectará muchos bordes falsos a partir del ruido agregado a la imagen.
+	De la misma manera, en el detector de bordes Sobel, aparecen muchos bordes falsos creados
+	por a partir del ruido de la imagen.
+
+- Exponencial Multiplicativo
+	- 30% de contaminacion
+	- Lambda: 2
+
+		Conclusiones: Al aplicarle la deteccion de bordes Prewitt a una imagen contaminada con
+	ruido Exponencial Multiplicativo, se puede apreciar como aparecen los mismos bordes falsos
+	como en el caso anterior. El mismo caso sucede al aplicarle la deteccion de bordes Sobel.
