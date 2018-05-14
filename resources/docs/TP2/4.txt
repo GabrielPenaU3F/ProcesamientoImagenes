@@ -1,0 +1,23 @@
+## TP 2
+
+# 4 - Eliminar primero el ruido en las ima ́genes del punto anterior con
+# los filtros de la media, mediana, Gaussiano y luego aplicar los detectores de borde.
+
+	- Filtro de la media: (3x3) no elimina el ruido aplicado, solamente difumina
+	los pixeles contaminados. Luego, al aplicar los detectores de bordes, se crean bordes falsos
+	que no corresponden a la imagen original.
+
+	- Filtro de la mediana: (3x3) elimina gran parte del ruido aplicado. Luego,
+	al al aplicar los detectores de bordes, se crean unos pocos bordes falsos que no corresponden con
+	la imagen original.
+
+	- Filtro de la mediana ponderada: (3x3) elimina parte del ruido aplicado. Luego,
+	al al aplicar los detectores de bordes, se crean unos pocos bordes falsos que no corresponden con
+   	la imagen original.
+
+   	- Filtro Gaussiano: (3x3) no elimina el ruido aplicado, en su lugar, parece agregar mas.
+   	Al aplicarle los detectores de bordes, la imagen resultante tiene cierta similitud con la original,
+   	la unica diferencia es que en esta ultima imagen, se ven los bordes imperfectos.
+
+ 	Conclusiones: en general, los resultados obtenidos para las imagenes contaminadas, es indistinto del
+ 	filtro aplicado. Se comportan todos muy parecido.
