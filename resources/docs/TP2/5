@@ -1,0 +1,37 @@
+Punto 5:
+
+Enunciado: Implementar los operadores direccionales derivados de las siguientes mascaras en todas
+           las direcciones. Tomar el maximo entre las cuatro imagenes de borde. Aplicarlos a dos
+           imagenes y a sus versiones contaminadas generadas en los puntos anteriores.
+
+           - Ruido Sal y Pimienta
+             - 30% de contaminacion
+             - p0 = 0.2
+             - p1 = 0.8
+
+               	Conclusiones: Para los 4 casos se detectan los bordes de los píxeles con ruido, creando
+               	de esta manera bordes falsos.
+
+
+           - Gaussiano Aditivo
+             	- 80% de contaminacion
+             	- Media: 5
+             	- Desviacion estandar: 15
+
+             		Conclusiones: El ruido si bien se puede apreciar a aplicar las máscaras no es tan
+             		marcado como en el caso anterior que afectaba de manera visible la imagen. Acá
+             		simplemente le agrega un efecto como de papel arrugado a la imagen.
+
+
+           - Rayleigh Multiplicativo
+           	- 30% de contaminacion
+           	- Psi: 2
+
+           		Conclusiones: Similar al sal y pimienta en lineas generales. Crea puntos como si fuera
+           		telgopor la imagen (en especial para la máscara estandar esto último).
+
+           - Exponencial Multiplicativo
+           	- 30% de contaminacion
+           	- Lambda: 2
+
+           		Conclusiones: Similar al caso anterior.

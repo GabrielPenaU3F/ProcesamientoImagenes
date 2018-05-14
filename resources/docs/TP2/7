@@ -1,0 +1,17 @@
+Punto 7:
+
+Enunciado: Implementar los metodos de Disfusion Isotropica y Anisotropica. Aplicarlos a imagenes
+           con ruido gaussiano y con ruido sal y pimienta. Comparar con el filtro de la mediana, con
+           el filtro de Gauss en todos los casos.
+
+           Difusion isotropica elimina el ruido, pero elimina tambien los bordes (ruido gaussiano).
+
+           Difusion anisotropica con un sigma pequeño no hace nada, con un sigma grande (use sigma =10) elimino
+           completamente el ruido y ahora Prewitt funciona muy bien. Igualmente, algunos bordes como el del costado de
+           la cara y la boca murieron en el camino.
+
+           Con sal y pimienta la difusion isotropica destruye completamente los bordes, sin piedad.
+
+           De todas maneras, los detectores de borde con ese nivel de ruido siguen fallando aun despues de la difusion
+           anisotropica. Sobel es el que mejor funciona.
+

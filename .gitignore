@@ -21,6 +21,7 @@
 # Image Files #
 *.png
 *.raw
+*.jpg
 *.bmp
 *.ppm
 *.pgm

@@ -1,0 +1,15 @@
+Punto 6
+
+Enunciado: Implementar los siguientes detectores de borde y aplicarlos a dos im ́agenes y a sus ver-
+           siones contaminadas:
+
+           En imagenes con ruido, el laplaciano NO FUNCIONA, es puro ruido. Ni siquiera con evaluacion de la pendiente
+           funciona. Para empezar a distinguir algun rasgo de lena, tuve que pedirle que solo considere pendientes
+           mayores a 250. Y para notar realmente algunos bordes de lena, umbral de pendiente 490 (una barbaridad absoluta).
+           Con ese mismo ruido que destruia completamente el laplaciano, Marr-Hildreth (Laplaciano de la Gaussiana)
+           anda perfecto.
+           Con 30% de ruido sal y pimienta brutal, 0.49 y 0.51, el laplaciano queda absolutamente inutilizado, al igual
+           que Prewitt y Sobel.
+           A pesar de que el ambiente de trabajo es terrible, Marr-Hildreth se sobrepone y da un resultado que si no es
+           bueno, al menos es aceptable. Igual, solo funciona con sigma = 2. si le pones 1 o mas de 2, ya se deforma
+           mucho también.
