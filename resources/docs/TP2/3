@@ -1,0 +1,38 @@
+Punto 3:
+
+Enunciado: Aplicar los detectores de borde del punto (Sobel y Prewitt) anterior a iḿagenes en color.
+
+    Tanto Prewitt como Sobel nos marcan los píxeles de una imagen donde se produce
+    un cambio brusco en los valores de intensidad. Sin profundizar en detalles, lo
+    que básicamente sucede es que en los píxeles donde hay un mayor cambio de intensidad
+    , sus valores se disparan hacia valores muy altos. Lo que hace que cuando se ajuste
+    la escala, en los valores donde no hubo un cambio de intensidad fuerte, sus píxeles
+    van a quedar con valores mucho menores de en los que sí hubo.
+
+    En el caso de las imágenes en grises, al ser los 3 canales RGB iguales, el hecho de que
+    el valor de un pixel se dispare hacia arriba, significa que va a tomar distintas tonalidades
+    de blancos. Y un pixel en el que no hubo un cambio de intensidad va a quedarse en valores
+    cercanos al 0 (es decir al negro).
+
+    En el caso de las imágenes en color, se evalúa el cambio de intensidad para cada canal RGB.
+    Entonces, en el caso de que en ninguno de los 3 canales haya un cambio brusco la imagen va a
+    quedar con colores cercanos al negro (o negros). Para el caso del cambio de intensidad, ahora
+    empieza a jugar el hecho de en qué canal sucede. Si sucede en el RED, entonces el borde se va
+    a pintar de un tono de rojo, si sucede en el GREEN de un tono de verde, y si sucede en el BLUE
+    de un tono de azul. Esos son los casos donde se puede apreciar mejor su funcionamiento, ya que
+    cuando hay un cambio de intensidad en más de un canal, hay que analizar que tan brusco fue en
+    cada canal, cómo crece cada valor de RGB y que canal forma. Entonces puede resultar algo confuso
+    seguir en qué canal se produjo el cambio de intensidad.
+
+    Para concluir quiero resaltar que en una imagen puede predominar un canal, por ejemplo el RED si
+    la imagen es en su mayoría roja, pero esto no significa que cuando se aplique Prewitt o Sobel, los
+    bordes van a pintarse del color que predomina. Sino que va a depender de en qué canal/es se produce
+    la máxima variación de intensidad en un pixel. Esto último lo pudimos en una imagen en el que había
+    un morrón rojo en un fondo rojo. Uno intuitivamente podría pensar que los bordes del morrón iban a
+    pintarse en rojo, pero la mitad de este se pintó de verde. Entonces analizando los píxeles
+    pertenecientes a ese borde, descubrimos que la variación del canal RED, el cual tenía valores muy
+    altos, era menor a la del GREEN el cual oscilaba por valores bajos.
+    También quiero marcar que para poder ver de manera más clara el funcionamiento de Sobel y Prewitt
+    para imágenes a color utilizamos una imagen de vegetales en un fondo negro, donde de antemano ya
+    sabemos en qué canales va a suceder la mayor variación, y por ende verificar que se cumpla la
+    teoría tanto de Prewitt como de Sobel.

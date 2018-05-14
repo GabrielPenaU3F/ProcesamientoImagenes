@@ -20,7 +20,6 @@
 
 # Image Files #
 *.png
-*.jpg
 *.raw
 *.bmp
 *.ppm
