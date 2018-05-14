@@ -1,12 +1,12 @@
 package core.service;
 
+import java.util.function.BiFunction;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-
-import java.util.function.BiFunction;
 
 public class MatrixService {
 
@@ -31,7 +31,7 @@ public class MatrixService {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                int grayMean = (int)(reader.getColor(x,y).getRed()*255 + reader.getColor(x,y).getBlue()*255 + reader.getColor(x,y).getGreen()*255)/3;
+                int grayMean = (int) (reader.getColor(x, y).getRed() * 255 + reader.getColor(x, y).getBlue() * 255 + reader.getColor(x, y).getGreen() * 255) / 3;
                 matrix[x][y] = grayMean;
             }
         }
@@ -55,5 +55,19 @@ public class MatrixService {
         }
 
         return image;
+    }
+
+    public int[][] copy(int[][] matrix) {
+        int width = matrix.length;
+        int height = matrix[0].length;
+        int[][] copy = new int[width][height];
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                copy[i][j] = matrix[i][j];
+            }
+        }
+
+        return copy;
     }
 }

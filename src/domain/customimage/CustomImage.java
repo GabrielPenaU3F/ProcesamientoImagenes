@@ -68,15 +68,15 @@ public class CustomImage {
     }
 
     public int[][] getRedMatrix() {
-        return redMatrix;
+        return this.matrixService.copy(redMatrix);
     }
 
     public int[][] getGreenMatrix() {
-        return greenMatrix;
+        return this.matrixService.copy(greenMatrix);
     }
 
     public int[][] getBlueMatrix() {
-        return blueMatrix;
+        return this.matrixService.copy(blueMatrix);
     }
 
     public int getPixelQuantity() {
