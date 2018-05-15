@@ -6,26 +6,26 @@ import domain.mask.Mask;
 
 public class ApplyLaplacianDetectorAction {
 
-    public CustomImage execute(CustomImage customImage, Mask mask, int slopeThershold) {
+    public CustomImage execute(CustomImage customImage, Mask mask, int slopeThreshold) {
         ChannelMatrix maskResult = mask.apply(customImage);
-        ChannelMatrix markZeroCrossings = this.markZeroCrossings(maskResult, slopeThershold);
+        ChannelMatrix markZeroCrossings = this.markZeroCrossings(maskResult, slopeThreshold);
         return new CustomImage(markZeroCrossings, customImage.getFormatString());
     }
 
-    private ChannelMatrix markZeroCrossings(ChannelMatrix channelMatrix, int slopeThershold) {
+    private ChannelMatrix markZeroCrossings(ChannelMatrix channelMatrix, int slopeThreshold) {
 
-        int edgedRedMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getRedChannel(), slopeThershold);
-        int edgedGreenMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getGreenChannel(), slopeThershold);
-        int edgedBlueMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getBlueChannel(), slopeThershold);
+        int edgedRedMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getRedChannel(), slopeThreshold);
+        int edgedGreenMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getGreenChannel(), slopeThreshold);
+        int edgedBlueMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getBlueChannel(), slopeThreshold);
 
-        int resultantRedMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getRedChannel(), edgedRedMatrix, slopeThershold);
-        int resultantGreenMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getGreenChannel(), edgedGreenMatrix, slopeThershold);
-        int resultantBlueMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getBlueChannel(), edgedBlueMatrix, slopeThershold);
+        int resultantRedMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getRedChannel(), edgedRedMatrix, slopeThreshold);
+        int resultantGreenMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getGreenChannel(), edgedGreenMatrix, slopeThreshold);
+        int resultantBlueMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getBlueChannel(), edgedBlueMatrix, slopeThreshold);
 
         return new ChannelMatrix(resultantRedMatrix, resultantGreenMatrix, resultantBlueMatrix);
     }
 
-    private int[][] markHorizontalZeroCrossings(int[][] matrix, int slopeThershold) {
+    private int[][] markHorizontalZeroCrossings(int[][] matrix, int slopeThreshold) {
 
         int edgedMatrix[][] = new int[matrix.length][matrix[0].length];
 
@@ -34,7 +34,7 @@ public class ApplyLaplacianDetectorAction {
 
                 if (signsChangeHorizontally(matrix, x, y)) {
                     //The slope evaluation is always made, but in the case of the standard Laplacian detector, the slope is always 0
-                    if (this.evaluateHorizontalSlope(matrix, x, y, slopeThershold)) {
+                    if (this.evaluateHorizontalSlope(matrix, x, y, slopeThreshold)) {
                         edgedMatrix[x][y] = 255;
                     }
                 }
@@ -44,7 +44,7 @@ public class ApplyLaplacianDetectorAction {
         return edgedMatrix;
     }
 
-    private int[][] markVerticalZeroCrossings(int[][] matrix, int[][] horizontalZeroCrossingMatrix, int slopeThershold) {
+    private int[][] markVerticalZeroCrossings(int[][] matrix, int[][] horizontalZeroCrossingMatrix, int slopeThreshold) {
 
         int[][] resultantMatrix = horizontalZeroCrossingMatrix;
 
@@ -53,7 +53,7 @@ public class ApplyLaplacianDetectorAction {
 
                 if (signsChangeVertically(matrix, x, y)) {
                     //The slope evaluation is always made, but in the case of the standard Laplacian detector, the slope is always 0
-                    if (this.evaluateVerticalSlope(matrix, x, y, slopeThershold)) {
+                    if (this.evaluateVerticalSlope(matrix, x, y, slopeThreshold)) {
                         resultantMatrix[x][y] = 255;
                     }
                 }
@@ -72,18 +72,18 @@ public class ApplyLaplacianDetectorAction {
         return matrix[x][y + 1] * matrix[x][y] < 0;
     }
 
-    private boolean evaluateHorizontalSlope(int[][] matrix, int x, int y, int slopeThershold) {
+    private boolean evaluateHorizontalSlope(int[][] matrix, int x, int y, int slopeThreshold) {
         double a = matrix[x][y];
         double b = matrix[x + 1][y];
 
-        return (Math.abs(a) + Math.abs(b)) >= slopeThershold;
+        return (Math.abs(a) + Math.abs(b)) >= slopeThreshold;
     }
 
-    private boolean evaluateVerticalSlope(int[][] matrix, int x, int y, int slopeThershold) {
+    private boolean evaluateVerticalSlope(int[][] matrix, int x, int y, int slopeThreshold) {
         double a = matrix[x][y];
         double b = matrix[x][y + 1];
 
-        return (Math.abs(a) + Math.abs(b)) >= slopeThershold;
+        return (Math.abs(a) + Math.abs(b)) >= slopeThreshold;
     }
 
 }

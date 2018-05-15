@@ -72,6 +72,7 @@ class ActionProvider {
     private static ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
     private static ApplyDiffusionAction applyDiffusionAction;
     private static UndoChangesAction undoChangesAction;
+    private static GetImageLimitValuesAction getImageLimitValuesAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -377,5 +378,13 @@ class ActionProvider {
             undoChangesAction = new UndoChangesAction(RepositoryProvider.provideImageRepository());
         }
         return undoChangesAction;
+    }
+
+    public static GetImageLimitValuesAction provideGetImageLimitValuesAction() {
+        if (getImageLimitValuesAction == null) {
+            getImageLimitValuesAction = new GetImageLimitValuesAction(
+                    ServiceProvider.provideGrayLevelStatisticsService());
+        }
+        return getImageLimitValuesAction;
     }
 }

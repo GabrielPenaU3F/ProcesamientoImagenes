@@ -19,11 +19,13 @@ import core.action.image.UpdateCurrentImageAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
 import core.action.threshold.ApplyOtsuThresholdEstimationAction;
 import core.action.threshold.ApplyThresholdAction;
+import core.action.image.*;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.FilterSemaphore;
 import domain.RandomElement;
 import domain.automaticthreshold.GlobalThresholdResult;
+import domain.automaticthreshold.ImageLimitValues;
 import domain.automaticthreshold.OtsuThresholdResult;
 import domain.customimage.CustomImage;
 import domain.customimage.Format;
@@ -83,6 +85,7 @@ public class MainPresenter {
     private final ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
     private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
     private final UndoChangesAction undoChangesAction;
+    private final GetImageLimitValuesAction getImageLimitValuesAction;
 
     public MainPresenter(MainSceneController view,
             LoadImageAction loadImageAction,
@@ -103,7 +106,8 @@ public class MainPresenter {
             ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
             ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
             ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
-            UndoChangesAction undoChangesAction) {
+            UndoChangesAction undoChangesAction,
+            GetImageLimitValuesAction getImageLimitValuesAction) {
 
         this.view = view;
 
@@ -126,6 +130,7 @@ public class MainPresenter {
         this.applyOtsuThresholdEstimationAction = applyOtsuThresholdEstimationAction;
         this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
         this.undoChangesAction = undoChangesAction;
+        this.getImageLimitValuesAction = getImageLimitValuesAction;
     }
 
     public void initialize() {
@@ -480,7 +485,10 @@ public class MainPresenter {
     public void onApplyGlobalThresholdEstimation() {
         this.getImageAction.execute()
                            .ifPresent(customImage -> {
-                               int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold", "1").get());
+                               ImageLimitValues imageLimitValues = this.getImageLimitValuesAction.execute(customImage);
+                               int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold " +
+                                       "Max = " + String.valueOf(imageLimitValues.getMaxLimit()) +
+                                       " ; Min = " + String.valueOf(imageLimitValues.getMinLimit()), "1").get());
                                int deltaT = Integer.parseInt(InsertValuePopup.show("Define Delta T", "1").get());
                                GlobalThresholdResult globalThresholdResult = applyGlobalThresholdEstimationAction
                                        .execute(customImage, initialThreshold, deltaT);
@@ -508,11 +516,11 @@ public class MainPresenter {
     public void onApplyLaplacianEdgeDetector(LaplacianDetector detector) {
         this.getImageAction.execute()
                            .ifPresent(customImage -> {
-                               int slopeThershold = 0;
+                               int slopeThreshold = 0;
                                if (detector == LaplacianDetector.WITH_SLOPE_EVALUATION) {
-                                   slopeThershold = Integer.parseInt(InsertValuePopup.show("Insert slope thershold", "0").get());
+                                   slopeThreshold = Integer.parseInt(InsertValuePopup.show("Insert slope threshold", "0").get());
                                }
-                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, new LaplacianMask(), slopeThershold);
+                               CustomImage edgedImage = this.applyLaplacianDetectorAction.execute(customImage, new LaplacianMask(), slopeThreshold);
                                this.updateModifiedImage(edgedImage);
                            });
     }
@@ -521,9 +529,9 @@ public class MainPresenter {
         this.getImageAction.execute()
                            .ifPresent(customImage -> {
                                double sigma = Double.parseDouble(InsertValuePopup.show("Insert standard deviation value", "0").get());
-                               int slopeThershold = Integer.parseInt(InsertValuePopup.show("Insert slope thershold", "0").get());
+                               int slopeThreshold = Integer.parseInt(InsertValuePopup.show("Insert slope threshold", "0").get());
                                CustomImage edgedImage = this.applyLaplacianDetectorAction
-                                       .execute(customImage, new GaussianLaplacianMask(sigma), slopeThershold);
+                                       .execute(customImage, new GaussianLaplacianMask(sigma), slopeThreshold);
                                this.updateModifiedImage(edgedImage);
                            });
     }
