@@ -24,13 +24,7 @@ import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.image.CreateImageInformAction;
-import core.action.image.GetImageAction;
-import core.action.image.GetModifiedImageAction;
-import core.action.image.LoadImageAction;
-import core.action.image.PutModifiedImageAction;
-import core.action.image.SaveImageAction;
-import core.action.image.UpdateCurrentImageAction;
+import core.action.image.*;
 import core.action.noise.ApplyExponentialNoiseToImageAction;
 import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
@@ -77,6 +71,7 @@ class ActionProvider {
     private static ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
     private static ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
     private static ApplyDiffusionAction applyDiffusionAction;
+    private static UndoChangesAction undoChangesAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -375,5 +370,12 @@ class ActionProvider {
             );
         }
         return applyDiffusionAction;
+    }
+
+    public static UndoChangesAction provideUndoChangesAction() {
+        if (undoChangesAction == null) {
+            undoChangesAction = new UndoChangesAction(RepositoryProvider.provideImageRepository());
+        }
+        return undoChangesAction;
     }
 }

@@ -35,6 +35,8 @@ public class MainSceneController {
     public TextField valueG;
     @FXML
     public TextField valueB;
+    @FXML
+    public Button undoChangesButton;
 
     public CustomImageView customImageView;
 
@@ -324,5 +326,10 @@ public class MainSceneController {
     @FXML
     public void resetModifiedImage() {
         this.mainPresenter.onResetModifiedImage();
+    }
+
+    @FXML
+    public void onUndoChanges() {
+        this.mainPresenter.onUndoChanges();
     }
 }

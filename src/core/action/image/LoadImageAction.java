@@ -50,6 +50,7 @@ public class LoadImageAction {
     }
 
     private CustomImage putOnRepository(String extension, BufferedImage bufferedImage) {
+        imageRepository.setOriginalImageBackup(new CustomImage(bufferedImage, extension));
         return imageRepository.saveImage(new CustomImage(bufferedImage, extension));
     }
 }
