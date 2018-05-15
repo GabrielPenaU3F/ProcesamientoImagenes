@@ -1,4 +1,4 @@
-package core.action.edit.space_domain;
+package core.action.threshold;
 
 import core.service.ApplyThresholdService;
 import domain.customimage.CustomImage;

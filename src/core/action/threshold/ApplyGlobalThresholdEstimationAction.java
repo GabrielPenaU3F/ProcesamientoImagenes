@@ -1,4 +1,4 @@
-package core.action.edit.space_domain;
+package core.action.threshold;
 
 import core.service.ApplyThresholdService;
 import core.service.MatrixService;
@@ -6,7 +6,7 @@ import domain.automaticthreshold.GlobalThresholdResult;
 import domain.automaticthreshold.GlobalThresholdGroups;
 import domain.customimage.CustomImage;
 import domain.customimage.Pixel;
-
+import javafx.scene.image.Image;
 
 public class ApplyGlobalThresholdEstimationAction {
 
@@ -40,9 +40,9 @@ public class ApplyGlobalThresholdEstimationAction {
             currentDeltaT = Math.abs(oldThreshold - threshold);
             this.iterations++;
         }
-        GlobalThresholdResult globalThresholdResult = new GlobalThresholdResult(this.matrixService.toImage(transformedImage, transformedImage, transformedImage),
-                this.iterations, this.threshold);
-        return globalThresholdResult;
+
+        Image image = this.matrixService.toImage(transformedImage, transformedImage, transformedImage);
+        return new GlobalThresholdResult(image, this.iterations, this.threshold);
     }
 
 

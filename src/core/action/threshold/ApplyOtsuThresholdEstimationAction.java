@@ -1,4 +1,4 @@
-package core.action.edit.space_domain;
+package core.action.threshold;
 
 import core.service.ApplyThresholdService;
 import core.service.MatrixService;
@@ -6,6 +6,7 @@ import core.service.generation.HistogramService;
 import domain.Histogram;
 import domain.automaticthreshold.OtsuThresholdResult;
 import domain.customimage.CustomImage;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,9 @@ public class ApplyOtsuThresholdEstimationAction {
     }
 
     public OtsuThresholdResult execute(CustomImage customImage){
-        //calculo histograma
+
         Histogram histogram = this.histogramService.create(customImage);
 
-        //calculo las sumas acumulativas del histograma
         Double[] cumulativeProbabilities = new Double[256];
         for (int i = 0; i <= 255; i++){
             cumulativeProbabilities[i] = this.cumulativeProbability(histogram, i);
@@ -63,9 +63,8 @@ public class ApplyOtsuThresholdEstimationAction {
         int[][] transformedImage = this.applyThresholdService.applyThreshold(imageMatrix, threshold);
 
         //creo un objeto con la imagen modificada y el umbral usado, y lo devuelvo
-        OtsuThresholdResult otsuThresholdResult = new OtsuThresholdResult(this.matrixService.toImage(transformedImage, transformedImage, transformedImage),
-                threshold);
-        return otsuThresholdResult;
+        Image image = this.matrixService.toImage(transformedImage, transformedImage, transformedImage);
+        return new OtsuThresholdResult(image, threshold);
     }
 
 

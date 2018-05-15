@@ -1,14 +1,9 @@
 package presentation.presenter;
 
-import javax.swing.*;
-
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edit.ModifyPixelAction;
-import core.action.edit.space_domain.ApplyGlobalThresholdEstimationAction;
-import core.action.edit.space_domain.ApplyOtsuThresholdEstimationAction;
-import core.action.edit.space_domain.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.figure.CreateImageWithFigureAction;
@@ -16,7 +11,14 @@ import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.utils.EqualizedTimes;
-import core.action.image.*;
+import core.action.image.GetImageAction;
+import core.action.image.LoadImageAction;
+import core.action.image.PutModifiedImageAction;
+import core.action.image.UndoChangesAction;
+import core.action.image.UpdateCurrentImageAction;
+import core.action.threshold.ApplyGlobalThresholdEstimationAction;
+import core.action.threshold.ApplyOtsuThresholdEstimationAction;
+import core.action.threshold.ApplyThresholdAction;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.FilterSemaphore;
@@ -52,6 +54,7 @@ import presentation.scenecreator.RayleighSceneCreator;
 import presentation.scenecreator.SaltAndPepperNoiseSceneCreator;
 import presentation.scenecreator.SaveImageSceneCreator;
 import presentation.util.InsertValuePopup;
+import presentation.util.ShowResultPopup;
 import presentation.view.CustomImageView;
 
 public class MainPresenter {
@@ -100,7 +103,7 @@ public class MainPresenter {
             ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
             ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
             ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
-                         UndoChangesAction undoChangesAction) {
+            UndoChangesAction undoChangesAction) {
 
         this.view = view;
 
@@ -477,14 +480,14 @@ public class MainPresenter {
     public void onApplyGlobalThresholdEstimation() {
         this.getImageAction.execute()
                            .ifPresent(customImage -> {
-
                                int initialThreshold = Integer.parseInt(InsertValuePopup.show("Initial Threshold", "1").get());
                                int deltaT = Integer.parseInt(InsertValuePopup.show("Define Delta T", "1").get());
                                GlobalThresholdResult globalThresholdResult = applyGlobalThresholdEstimationAction
                                        .execute(customImage, initialThreshold, deltaT);
                                view.modifiedImageView.setImage(globalThresholdResult.getImage());
-                               JOptionPane.showMessageDialog(null, "Iterations: " + String.valueOf(globalThresholdResult.getIterations()) +
-                                       "\n" + "Final Threshold: " + String.valueOf(globalThresholdResult.getThreshold()));
+                               ShowResultPopup.show("Global Threshold Estimation",
+                                       "Iterations: " + String.valueOf(globalThresholdResult.getIterations()) + "\n" +
+                                               "Threshold: " + String.valueOf(globalThresholdResult.getThreshold()));
                            });
 
         view.applyChangesButton.setVisible(true);
@@ -495,7 +498,8 @@ public class MainPresenter {
                            .ifPresent(customImage -> {
                                OtsuThresholdResult otsuThresholdResult = applyOtsuThresholdEstimationAction.execute(customImage);
                                view.modifiedImageView.setImage(otsuThresholdResult.getImage());
-                               JOptionPane.showMessageDialog(null, "Final Threshold: " + String.valueOf(otsuThresholdResult.getThreshold()));
+                               ShowResultPopup.show("Otsu Threshold Estimation",
+                                       "Threshold: " + String.valueOf(otsuThresholdResult.getThreshold()));
                            });
 
         view.applyChangesButton.setVisible(true);
