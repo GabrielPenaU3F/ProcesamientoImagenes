@@ -68,7 +68,7 @@
                         </GridPane>
                     </Pane>
                 </Pane>
-                <Pane prefHeight="306.0" prefWidth="152.0">
+                <Pane prefHeight="371.0" prefWidth="152.0">
                <Button fx:id="applyChangesButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="265.0" mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false" />
                     <Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value" textAlignment="CENTER" />
@@ -79,6 +79,7 @@
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="161.0" text="B" textAlignment="CENTER" />
                         <TextField fx:id="valueB" editable="false" layoutX="22.0" layoutY="184.0" prefHeight="27.0" prefWidth="67.0" />
                     </Pane>
+               <Button fx:id="undoChangesButton" layoutX="43.0" layoutY="315.0" mnemonicParsing="false" onAction="#onUndoChanges" text="Undo changes" visible="false" />
                 </Pane>
             </VBox>
         </GridPane>

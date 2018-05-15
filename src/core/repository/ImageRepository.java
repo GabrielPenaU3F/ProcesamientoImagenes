@@ -8,6 +8,7 @@ public class ImageRepository {
 
     private CustomImage image;
     private CustomImage modifiedImage;
+    private CustomImage originalImageBackup;
 
     public CustomImage saveImage(CustomImage image) {
         this.image = image;
@@ -25,5 +26,13 @@ public class ImageRepository {
 
     public Optional<CustomImage> getModifiedImage() {
         return Optional.ofNullable(this.modifiedImage);
+    }
+
+    public void setOriginalImageBackup(CustomImage originalImageBackup) {
+        this.originalImageBackup = originalImageBackup;
+    }
+
+    public CustomImage getOriginalImageBackup(){
+        return this.originalImageBackup;
     }
 }

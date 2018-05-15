@@ -16,10 +16,7 @@ import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.utils.EqualizedTimes;
-import core.action.image.GetImageAction;
-import core.action.image.LoadImageAction;
-import core.action.image.PutModifiedImageAction;
-import core.action.image.UpdateCurrentImageAction;
+import core.action.image.*;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.FilterSemaphore;
@@ -82,6 +79,7 @@ public class MainPresenter {
     private final ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction;
     private final ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction;
     private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
+    private final UndoChangesAction undoChangesAction;
 
     public MainPresenter(MainSceneController view,
             LoadImageAction loadImageAction,
@@ -101,7 +99,8 @@ public class MainPresenter {
             UpdateCurrentImageAction updateCurrentImageAction,
             ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
             ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
-            ApplyLaplacianDetectorAction applyLaplacianDetectorAction) {
+            ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
+                         UndoChangesAction undoChangesAction) {
 
         this.view = view;
 
@@ -123,6 +122,7 @@ public class MainPresenter {
         this.applyGlobalThresholdEstimationAction = applyGlobalThresholdEstimationAction;
         this.applyOtsuThresholdEstimationAction = applyOtsuThresholdEstimationAction;
         this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
+        this.undoChangesAction = undoChangesAction;
     }
 
     public void initialize() {
@@ -167,6 +167,7 @@ public class MainPresenter {
         updateCurrentImageAction.execute(modifiedCustomImage);
         view.modifiedImageView.setImage(null);
         view.applyChangesButton.setVisible(false);
+        view.undoChangesButton.setVisible(true);
     }
 
     public void onShowGreyGradient() {
@@ -531,5 +532,11 @@ public class MainPresenter {
     public void onResetModifiedImage() {
         view.modifiedImageView.setImage(null);
         view.applyChangesButton.setVisible(false);
+    }
+
+    public void onUndoChanges() {
+        CustomImage originalImage = this.undoChangesAction.execute();
+        view.undoChangesButton.setVisible(false);
+        view.imageView.setImage(originalImage.toFXImage());
     }
 }
