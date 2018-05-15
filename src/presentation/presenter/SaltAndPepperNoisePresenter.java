@@ -48,19 +48,23 @@ public class SaltAndPepperNoisePresenter {
 
             if (percentToContaminate >= 0 && percentToContaminate <= 100) {
 
-                if (p0 < 1) {
+                if (p0 < 1 && p1 < 1 && (p0 + p1 == 1)) {
 
-                    if (p1 > p0) {
+                    if (p1 >= p0) {
 
                         applySaltAndPepperNoiseAction.execute(customImage, percentToContaminate, p0, p1);
                         view.closeWindow();
 
                     } else {
-                        view.p0ValidationLabel.setText("Validation error: p1 > p0");
+                        view.p0ValidationLabel.setText("Validation error: p1 must be > p0");
                     }
 
-                } else {
-                    view.p0ValidationLabel.setText("Validation error: p0 < 1");
+                } else if (p0 > 1){
+                    view.p0ValidationLabel.setText("Validation error: p0 must be < 1");
+                } else if (p1 > 1){
+                    view.p0ValidationLabel.setText("Validation error: p1 must be < 1");
+                } else if (p0 + p1 != 1){
+                    view.p0ValidationLabel.setText("Validation error: p0 + p1 must equal 1");
                 }
 
             } else {
