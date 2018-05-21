@@ -3,6 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.diffusion.ApplyDiffusionAction;
+import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
@@ -30,8 +31,11 @@ import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
+import core.service.MatrixService;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
+
+import javax.xml.ws.Service;
 
 class ActionProvider {
 
@@ -73,6 +77,7 @@ class ActionProvider {
     private static ApplyDiffusionAction applyDiffusionAction;
     private static UndoChangesAction undoChangesAction;
     private static GetImageLimitValuesAction getImageLimitValuesAction;
+    private static ApplyCannyDetectorAction applyCannyDetectorAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -386,5 +391,13 @@ class ActionProvider {
                     ServiceProvider.provideGrayLevelStatisticsService());
         }
         return getImageLimitValuesAction;
+    }
+
+    public static ApplyCannyDetectorAction provideApplyCannyDetectorAction() {
+        if (applyCannyDetectorAction == null) {
+            applyCannyDetectorAction = new ApplyCannyDetectorAction(ServiceProvider.provideImageOperationsService(),
+                    ServiceProvider.provideMatrixService());
+        }
+        return applyCannyDetectorAction;
     }
 }

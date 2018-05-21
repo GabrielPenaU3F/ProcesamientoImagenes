@@ -162,4 +162,12 @@ public class PresenterProvider {
                 ActionProvider.provideApplyDiffusionAction()
         );
     }
+
+    public static CannyPresenter provideCannyPresenter(CannySceneController cannySceneController) {
+        return new CannyPresenter(cannySceneController,
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyFilterAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                ActionProvider.provideApplyCannyDetectorAction());
+    }
 }

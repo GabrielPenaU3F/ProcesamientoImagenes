@@ -332,4 +332,7 @@ public class MainSceneController {
     public void onUndoChanges() {
         this.mainPresenter.onUndoChanges();
     }
+
+    @FXML
+    public void onApplyCannyEdgeDetector() { this.mainPresenter.onApplyCannyEdgeDetector(); }
 }
