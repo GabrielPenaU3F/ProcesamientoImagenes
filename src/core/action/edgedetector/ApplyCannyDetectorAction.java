@@ -31,28 +31,36 @@ public class ApplyCannyDetectorAction {
 
         int[][] roughSingleEdgedMatrix = this.applyNonMaximumSuppression(derivativesAbsoluteSumMatrix, gradientAngleMatrix);
 
-        int[][] finalEdgedMatrix = this.applyHysteresisThresholding(roughSingleEdgedMatrix, t1, t2);
+        int[][] finalEdgedMatrix = this.applyHysteresisThresholding(roughSingleEdgedMatrix, derivativesAbsoluteSumMatrix, t1, t2);
 
         return new CustomImage(this.imageOperationsService.toValidImageMatrix(new ChannelMatrix(finalEdgedMatrix,finalEdgedMatrix,finalEdgedMatrix)), filteredImage.getFormatString());
 
     }
 
-    private int[][] applyHysteresisThresholding(int[][] roughSingleEdgedMatrix, int t1, int t2) {
+    private int[][] applyHysteresisThresholding(int[][] roughSingleEdgedMatrix, int[][] derivativesAbsoluteSumMatrix,
+                                                int t1, int t2) {
 
-        int[][] edgedMatrix = new int[roughSingleEdgedMatrix.length][roughSingleEdgedMatrix[0].length];
+        int[][] edgedMatrix = roughSingleEdgedMatrix;
 
-        for (int x=0; x < roughSingleEdgedMatrix.length; x++) {
-            for (int y=0; y < roughSingleEdgedMatrix[x].length; y++) {
-
-                if (roughSingleEdgedMatrix[x][y] >= t2) edgedMatrix[x][y] = 255;
-                else if (roughSingleEdgedMatrix[x][y] < t1) edgedMatrix[x][y] = 0;
-                else edgedMatrix[x][y] = this.markEdgeIfItsConnectedToAnotherEdge(roughSingleEdgedMatrix, x, y);
-
+        //los mayores a t2 no los evaluo ya que los dejo igual (quiza para mayor claridad se podria poner igual)
+        for (int x=0; x < edgedMatrix.length; x++) {
+            for (int y = 0; y < edgedMatrix[x].length; y++) {
+                if (derivativesAbsoluteSumMatrix[x][y] < t1) {
+                    edgedMatrix[x][y] = 0;
+                }
             }
         }
 
-        return edgedMatrix;
+        //la recorro en otro for para no unirme a bordes falsos
+        for (int x=0; x < edgedMatrix.length; x++) {
+            for (int y = 0; y < edgedMatrix[x].length; y++) {
+                if(derivativesAbsoluteSumMatrix[x][y] > t1 && derivativesAbsoluteSumMatrix[x][y] < t2){
+                    edgedMatrix[x][y] = this.markEdgeIfItsConnectedToAnotherEdge(edgedMatrix, x, y);
+                }
 
+            }
+        }
+        return edgedMatrix;
     }
 
     private int markEdgeIfItsConnectedToAnotherEdge(int[][] roughSingleEdgedMatrix, int x, int y) {
