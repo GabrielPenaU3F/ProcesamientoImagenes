@@ -42,19 +42,24 @@ public class ApplyCannyDetectorAction {
 
         int[][] edgedMatrix = roughSingleEdgedMatrix;
 
-        //los mayores a t2 no los evaluo ya que los dejo igual (quiza para mayor claridad se podria poner igual)
         for (int x=0; x < edgedMatrix.length; x++) {
             for (int y = 0; y < edgedMatrix[x].length; y++) {
-                if (derivativesAbsoluteSumMatrix[x][y] < t1) {
+
+                if(roughSingleEdgedMatrix[x][y] > t2){
+                    edgedMatrix[x][y] = 255;
+                }
+
+                else if (roughSingleEdgedMatrix[x][y] < t1) {
                     edgedMatrix[x][y] = 0;
                 }
             }
         }
 
-        //la recorro en otro for para no unirme a bordes falsos
+        //la recorro en otro for para no unirme a bordes falsos (preguntar)
         for (int x=0; x < edgedMatrix.length; x++) {
             for (int y = 0; y < edgedMatrix[x].length; y++) {
-                if(derivativesAbsoluteSumMatrix[x][y] > t1 && derivativesAbsoluteSumMatrix[x][y] < t2){
+
+                if(roughSingleEdgedMatrix[x][y] >= t1 && roughSingleEdgedMatrix[x][y] <= t2){
                     edgedMatrix[x][y] = this.markEdgeIfItsConnectedToAnotherEdge(edgedMatrix, x, y);
                 }
 
@@ -114,25 +119,29 @@ public class ApplyCannyDetectorAction {
 
     private int suppressNorthwestAndSoutheastNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x-1][y-1]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x+1][y+1])) {
-            return 255;
+            //return 255;
+            return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
     private int suppressNorthAndSouthNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x][y-1]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x][y+1])) {
-            return 255;
+            //return 255;
+            return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
     private int suppressNortheastAndSouthwestNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x+1][y-1]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x-1][y+1])) {
-            return 255;
+            //return 255;
+            return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
     private int suppressWestAndEastNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x-1][y]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x+1][y])) {
-            return 255;
+            //return 255;
+            return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
