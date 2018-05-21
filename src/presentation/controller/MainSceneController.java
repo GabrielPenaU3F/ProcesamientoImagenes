@@ -335,4 +335,9 @@ public class MainSceneController {
 
     @FXML
     public void onApplyCannyEdgeDetector() { this.mainPresenter.onApplyCannyEdgeDetector(); }
+
+    @FXML
+    public void applySusanEdgeDetector(){
+        this.mainPresenter.onApplySusanEdgeDetector();
+    }
 }

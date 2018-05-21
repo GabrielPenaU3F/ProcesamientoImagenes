@@ -7,6 +7,7 @@ import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
+import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
@@ -78,6 +79,7 @@ class ActionProvider {
     private static UndoChangesAction undoChangesAction;
     private static GetImageLimitValuesAction getImageLimitValuesAction;
     private static ApplyCannyDetectorAction applyCannyDetectorAction;
+    private static ApplySusanDetectorAction applySusanDetectorAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -399,5 +401,12 @@ class ActionProvider {
                     ServiceProvider.provideMatrixService());
         }
         return applyCannyDetectorAction;
+    }
+
+    public static ApplySusanDetectorAction provideApplySusanDetectorAction() {
+        if (applySusanDetectorAction == null) {
+            applySusanDetectorAction = new ApplySusanDetectorAction();
+        }
+        return applySusanDetectorAction;
     }
 }

@@ -4,6 +4,7 @@ import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
+import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
@@ -38,6 +39,7 @@ import domain.mask.GaussianLaplacianMask;
 import domain.mask.LaplacianMask;
 import domain.mask.Mask;
 import domain.mask.filter.GaussianMask;
+import domain.mask.SusanMask;
 import domain.mask.filter.HighPassMask;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
@@ -76,28 +78,30 @@ public class MainPresenter {
     private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
     private final UndoChangesAction undoChangesAction;
     private final GetImageLimitValuesAction getImageLimitValuesAction;
+    private final ApplySusanDetectorAction applySusanDetectorAction;
 
     public MainPresenter(MainSceneController view,
-            LoadImageAction loadImageAction,
-            GetImageAction getImageAction,
-            PutModifiedImageAction putModifiedImageAction,
-            ModifyPixelAction modifyPixelAction,
-            CalculateNegativeImageAction calculateNegativeImageAction,
-            ApplyThresholdAction applyThresholdAction,
-            CreateImageWithGradientAction createImageWithGradientAction,
-            ObtainRGBChannelAction obtainRGBChannelAction,
-            ObtainHSVChannelAction obtainHSVChannelAction,
-            CreateImageWithFigureAction createImageWithFigureAction,
-            EqualizeGrayImageAction equalizeGrayImageAction,
-            Observable<Image> onModifiedImage,
-            CompressDynamicRangeAction compressDynamicRangeAction,
-            ApplyFilterAction applyFilterAction,
-            UpdateCurrentImageAction updateCurrentImageAction,
-            ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
-            ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
-            ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
-            UndoChangesAction undoChangesAction,
-            GetImageLimitValuesAction getImageLimitValuesAction) {
+                         LoadImageAction loadImageAction,
+                         GetImageAction getImageAction,
+                         PutModifiedImageAction putModifiedImageAction,
+                         ModifyPixelAction modifyPixelAction,
+                         CalculateNegativeImageAction calculateNegativeImageAction,
+                         ApplyThresholdAction applyThresholdAction,
+                         CreateImageWithGradientAction createImageWithGradientAction,
+                         ObtainRGBChannelAction obtainRGBChannelAction,
+                         ObtainHSVChannelAction obtainHSVChannelAction,
+                         CreateImageWithFigureAction createImageWithFigureAction,
+                         EqualizeGrayImageAction equalizeGrayImageAction,
+                         Observable<Image> onModifiedImage,
+                         CompressDynamicRangeAction compressDynamicRangeAction,
+                         ApplyFilterAction applyFilterAction,
+                         UpdateCurrentImageAction updateCurrentImageAction,
+                         ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
+                         ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
+                         ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
+                         UndoChangesAction undoChangesAction,
+                         GetImageLimitValuesAction getImageLimitValuesAction,
+                         ApplySusanDetectorAction applySusanDetectorAction) {
 
         this.view = view;
 
@@ -121,6 +125,7 @@ public class MainPresenter {
         this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
         this.undoChangesAction = undoChangesAction;
         this.getImageLimitValuesAction = getImageLimitValuesAction;
+        this.applySusanDetectorAction = applySusanDetectorAction;
     }
 
     public void initialize() {
@@ -546,4 +551,14 @@ public class MainPresenter {
         new CannySceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
     }
+
+    public void onApplySusanEdgeDetector(){
+        this.getImageAction.execute()
+                .ifPresent(customImage -> {
+                    Mask susanMask = new SusanMask();
+                    CustomImage edgedImage = this.applySusanDetectorAction.execute(customImage, susanMask);
+                    this.updateModifiedImage(edgedImage);
+                });
+    }
+
 }
