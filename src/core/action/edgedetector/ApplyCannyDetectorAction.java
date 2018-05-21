@@ -4,7 +4,6 @@ import core.service.ImageOperationsService;
 import core.service.MatrixService;
 import domain.customimage.ChannelMatrix;
 import domain.customimage.CustomImage;
-import domain.customimage.Pixel;
 import domain.customimage.RGB;
 import domain.mask.sobel.SobelXDerivativeMask;
 import domain.mask.sobel.SobelYDerivativeMask;
@@ -31,14 +30,13 @@ public class ApplyCannyDetectorAction {
 
         int[][] roughSingleEdgedMatrix = this.applyNonMaximumSuppression(derivativesAbsoluteSumMatrix, gradientAngleMatrix);
 
-        int[][] finalEdgedMatrix = this.applyHysteresisThresholding(roughSingleEdgedMatrix, derivativesAbsoluteSumMatrix, t1, t2);
+        int[][] finalEdgedMatrix = this.applyHysteresisThresholding(roughSingleEdgedMatrix, t1, t2);
 
         return new CustomImage(this.imageOperationsService.toValidImageMatrix(new ChannelMatrix(finalEdgedMatrix,finalEdgedMatrix,finalEdgedMatrix)), filteredImage.getFormatString());
 
     }
 
-    private int[][] applyHysteresisThresholding(int[][] roughSingleEdgedMatrix, int[][] derivativesAbsoluteSumMatrix,
-                                                int t1, int t2) {
+    private int[][] applyHysteresisThresholding(int[][] roughSingleEdgedMatrix, int t1, int t2) {
 
         int[][] edgedMatrix = roughSingleEdgedMatrix;
 
@@ -55,7 +53,6 @@ public class ApplyCannyDetectorAction {
             }
         }
 
-        //la recorro en otro for para no unirme a bordes falsos (preguntar)
         for (int x=0; x < edgedMatrix.length; x++) {
             for (int y = 0; y < edgedMatrix[x].length; y++) {
 

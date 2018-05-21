@@ -91,11 +91,11 @@ public class MatrixService {
         if(y==matrix[0].length-1) return this.obtainBottomSideNeighbors(matrix, x);
 
         //If the pixel is anywhere else
-        return this.obtainEveryNeighbor(matrix,x,y);
+        return this.obtainEveryNeighbors(matrix,x,y);
 
     }
 
-    private List<RGB> obtainEveryNeighbor(int[][] matrix, int x, int y) {
+    private List<RGB> obtainEveryNeighbors(int[][] matrix, int x, int y) {
         List<RGB> neighbors = new ArrayList<>();
         for (int i=-1; i < 1; i++) {
             neighbors.add(new RGB(matrix[x+i][y-1],matrix[x+i][y-1],matrix[x+i][y-1]));
