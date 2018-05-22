@@ -2,6 +2,7 @@ package presentation.presenter;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
@@ -36,25 +37,14 @@ import domain.generation.Gradient;
 import domain.mask.GaussianLaplacianMask;
 import domain.mask.LaplacianMask;
 import domain.mask.Mask;
+import domain.mask.filter.GaussianMask;
 import domain.mask.filter.HighPassMask;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.ContrastSceneCreator;
-import presentation.scenecreator.DiffusionSceneCreator;
-import presentation.scenecreator.EqualizeImageByHistogramSceneCreator;
-import presentation.scenecreator.ExponentialSceneCreator;
-import presentation.scenecreator.FilterSceneCreator;
-import presentation.scenecreator.GammaPowerFunctionSceneCreator;
-import presentation.scenecreator.GaussianSceneCreator;
-import presentation.scenecreator.ImageHistogramSceneCreator;
-import presentation.scenecreator.ImageInformSceneCreator;
-import presentation.scenecreator.ImagesOperationsSceneCreator;
-import presentation.scenecreator.RayleighSceneCreator;
-import presentation.scenecreator.SaltAndPepperNoiseSceneCreator;
-import presentation.scenecreator.SaveImageSceneCreator;
+import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.util.ShowResultPopup;
 import presentation.view.CustomImageView;
@@ -550,5 +540,10 @@ public class MainPresenter {
         CustomImage originalImage = this.undoChangesAction.execute();
         view.undoChangesButton.setVisible(false);
         view.imageView.setImage(originalImage.toFXImage());
+    }
+
+    public void onApplyCannyEdgeDetector() {
+        new CannySceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 }

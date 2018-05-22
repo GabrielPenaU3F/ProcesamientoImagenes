@@ -70,7 +70,7 @@
                 </Pane>
                 <Pane prefHeight="371.0" prefWidth="152.0">
                <Button fx:id="applyChangesButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="265.0" mnemonicParsing="false" onAction="#applyChanges" text="Apply Changes" visible="false" />
-               <Button fx:id="resetModifiedImageButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="300.0" mnemonicParsing="false" onAction="#resetModifiedImage" text="Reset"/>
+               <Button fx:id="resetModifiedImageButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="300.0" mnemonicParsing="false" onAction="#resetModifiedImage" text="Reset" />
                     <Pane layoutX="14.0" layoutY="14.0" prefHeight="225.0" prefWidth="112.0">
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="6.0" text="Value" textAlignment="CENTER" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="34.0" text="R" textAlignment="CENTER" />
@@ -94,7 +94,6 @@
         <Menu mnemonicParsing="false" text="Edit">
             <Menu mnemonicParsing="false" text="Space Domain">
                 <MenuItem mnemonicParsing="false" onAction="#calculateNegativeImage" text="Negative" />
-                <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
                 <MenuItem mnemonicParsing="false" onAction="#contrast" text="Contrast" />
                 <MenuItem mnemonicParsing="false" onAction="#compressDynamicRange" text="Dynamic Range Compression" />
                 <MenuItem mnemonicParsing="false" onAction="#gammaPowerFunction" text="Gamma Power Function" />
@@ -159,27 +158,37 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edges">
-            <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
-            <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
-         <Menu mnemonicParsing="false" text="Laplacian">
+         <Menu mnemonicParsing="false" text="Conventional Detectors">
+            <items>
+                  <Menu mnemonicParsing="false" text="Directional Derivative Operators">
+                      <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
+                      <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />
+                      <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
+                      <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
+                  </Menu>
+               <Menu mnemonicParsing="false" text="Laplacian">
+                 <items>
+                   <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetector" text="Standard Laplacian" />
+                     <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetectorWithSlopeEvaluation" text="Laplacian with slope evaluation" />
+                     <MenuItem mnemonicParsing="false" onAction="#onApplyMarrHildrethEdgeDetector" text="Marr-Hildreth (Gaussian-Laplacian)" />
+                 </items>
+               </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#onApplyEdgeEnhancement" text="Edge enhancement" />
+                  <MenuItem mnemonicParsing="false" onAction="#onApplyPrewittEdgeDetector" text="Prewitt" />
+                  <MenuItem mnemonicParsing="false" onAction="#onApplySobelEdgeDetector" text="Sobel" />
+      			<MenuItem mnemonicParsing="false" onAction="#onApplyDiffusion" text="Diffusion" />
+            </items>
+         </Menu>
+         <Menu mnemonicParsing="false" text="Unconventional Detectors">
            <items>
-             <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetector" text="Standard Laplacian" />
-               <MenuItem mnemonicParsing="false" onAction="#onApplyLaplacianEdgeDetectorWithSlopeEvaluation" text="Laplacian with slope evaluation" />
-               <MenuItem mnemonicParsing="false" onAction="#onApplyMarrHildrethEdgeDetector" text="Marr-Hildreth (Gaussian-Laplacian)" />
+             <MenuItem mnemonicParsing="false" onAction="#onApplyCannyEdgeDetector" text="Canny" />
            </items>
          </Menu>
-            <Menu mnemonicParsing="false" text="Directional Derivative Operators">
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorStandardMask" text="Standard Mask" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorKirshMask" text="Kirsh Mask" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorPrewittMask" text="Prewitt Mask" />
-                <MenuItem mnemonicParsing="false" onAction="#onApplyDirectionalDerivativeOperatorSobelMask" text="Sobel Mask" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Threshold">
-                <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimation" text="Global Threshold Estimation" />
-                <MenuItem mnemonicParsing="false" onAction="#applyOtsuThresholdEstimation" text="Otsu Threshold Estimation" />
-            </Menu>
-			<MenuItem mnemonicParsing="false" onAction="#onApplyDiffusion" text="Diffusion" />
 		</Menu>
+         <Menu mnemonicParsing="false" text="Threshold">
+             <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
+             <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimation" text="Global Threshold Estimation" />
+             <MenuItem mnemonicParsing="false" onAction="#applyOtsuThresholdEstimation" text="Otsu Threshold Estimation" />
+         </Menu>
     </MenuBar>
 </AnchorPane>
