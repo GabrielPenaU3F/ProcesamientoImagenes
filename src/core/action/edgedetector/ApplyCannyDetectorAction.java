@@ -155,7 +155,7 @@ public class ApplyCannyDetectorAction {
             for (int y=0; y < gradientAngleMatrix[x].length; y++) {
 
                 if (xDerivativeRedChannel[x][y] == 0) {
-                    gradientAngleMatrix[x][y] = 0;
+                    gradientAngleMatrix[x][y] = 90;
                 } else {
 
                     double realAngle = Math.toDegrees(Math.atan(yDerivativeRedChannel[x][y] / xDerivativeRedChannel[x][y]));
