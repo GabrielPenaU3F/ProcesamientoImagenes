@@ -14,13 +14,20 @@ public class HoughSceneController {
     public RadioButton lineRadioButton;
     @FXML
     public RadioButton circleRadioButton;
+    @FXML
+    public TextField toleranceTextField;
 
     @FXML
     public TextField lineThetaTextField;
     @FXML
     public TextField lineRhoTextField;
+
     @FXML
-    public TextField toleranceTextField;
+    public TextField circleXCenterTextField;
+    @FXML
+    public TextField circleYCenterTextField;
+    @FXML
+    public TextField circleRadiusTextField;
 
     public HoughSceneController() {
         this.houghPresenter = PresenterProvider.provideHoughPresenter(this);
@@ -43,11 +50,15 @@ public class HoughSceneController {
     }
 
     private void enableCircleInput() {
-
+        this.circleXCenterTextField.setDisable(false);
+        this.circleYCenterTextField.setDisable(false);
+        this.circleRadiusTextField.setDisable(false);
     }
 
     private void disableCircleInput() {
-
+        this.circleXCenterTextField.setDisable(true);
+        this.circleYCenterTextField.setDisable(true);
+        this.circleRadiusTextField.setDisable(true);
     }
 
     @FXML

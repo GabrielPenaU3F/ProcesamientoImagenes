@@ -177,6 +177,7 @@ public class PresenterProvider {
         return new HoughPresenter(houghSceneController,
                 PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                 PublishSubjectProvider.provideCannyPublishSubject(),
-                ActionProvider.provideLineHoughTransformAction());
+                ActionProvider.provideLineHoughTransformAction(),
+                ActionProvider.provideCircleHoughTransformAction());
     }
 }

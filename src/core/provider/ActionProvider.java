@@ -9,6 +9,8 @@ import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
+import core.action.edgedetector.hough.CircleHoughTransformAction;
+import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
@@ -82,6 +84,7 @@ class ActionProvider {
     private static ApplyCannyDetectorAction applyCannyDetectorAction;
     private static ApplySusanDetectorAction applySusanDetectorAction;
     private static LineHoughTransformAction lineHoughTransformAction;
+    private static CircleHoughTransformAction circleHoughTransformAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -417,5 +420,12 @@ class ActionProvider {
             lineHoughTransformAction = new LineHoughTransformAction();
         }
         return lineHoughTransformAction;
+    }
+
+    public static CircleHoughTransformAction provideCircleHoughTransformAction() {
+        if (circleHoughTransformAction == null) {
+            circleHoughTransformAction = new CircleHoughTransformAction();
+        }
+        return circleHoughTransformAction;
     }
 }
