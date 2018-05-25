@@ -3,6 +3,7 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import presentation.presenter.CannyPresenter;
 
 public class CannySceneController {
@@ -23,6 +24,11 @@ public class CannySceneController {
     @FXML
     public void onApply() {
         this.cannyPresenter.onApply();
+    }
+
+    public void closeWindow() {
+        Stage stage = (Stage) this.sigmaTextField.getScene().getWindow();
+        stage.close();
     }
 
 }

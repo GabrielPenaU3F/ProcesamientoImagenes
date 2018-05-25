@@ -169,6 +169,14 @@ public class PresenterProvider {
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplyFilterAction(),
                 PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
-                ActionProvider.provideApplyCannyDetectorAction());
+                ActionProvider.provideApplyCannyDetectorAction(),
+                PublishSubjectProvider.provideCannyPublishSubject());
+    }
+
+    public static HoughPresenter provideHoughPresenter(HoughSceneController houghSceneController) {
+        return new HoughPresenter(houghSceneController,
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                PublishSubjectProvider.provideCannyPublishSubject(),
+                ActionProvider.provideLineHoughTransformAction());
     }
 }

@@ -183,6 +183,7 @@
            <items>
 			   <MenuItem mnemonicParsing="false" onAction="#onApplyCannyEdgeDetector" text="Canny" />
 			   <MenuItem mnemonicParsing="false" onAction="#applySusanEdgeDetector" text="Susan" />
+			   <MenuItem mnemonicParsing="false" onAction="#onHoughTransform" text="Hough Transform" />
 		   </items>
          </Menu>
 		</Menu>

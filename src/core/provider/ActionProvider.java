@@ -8,6 +8,7 @@ import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplySusanDetectorAction;
+import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
@@ -80,6 +81,7 @@ class ActionProvider {
     private static GetImageLimitValuesAction getImageLimitValuesAction;
     private static ApplyCannyDetectorAction applyCannyDetectorAction;
     private static ApplySusanDetectorAction applySusanDetectorAction;
+    private static LineHoughTransformAction lineHoughTransformAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -408,5 +410,12 @@ class ActionProvider {
             applySusanDetectorAction = new ApplySusanDetectorAction();
         }
         return applySusanDetectorAction;
+    }
+
+    public static LineHoughTransformAction provideLineHoughTransformAction() {
+        if (lineHoughTransformAction == null) {
+            lineHoughTransformAction = new LineHoughTransformAction();
+        }
+        return lineHoughTransformAction;
     }
 }

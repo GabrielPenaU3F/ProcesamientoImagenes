@@ -1,5 +1,6 @@
 package core.provider;
 
+import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
@@ -8,6 +9,7 @@ public class PublishSubjectProvider {
     private static PublishSubject<Image> onModifiedImagePublishSubject;
     private static PublishSubject<Image> onNoiseImagePublishSubject;
     private static PublishSubject<Image> onEqualizeImagePublishSubject;
+    private static PublishSubject<Image> cannyPublishSubject;
 
     public static PublishSubject<Image> provideOnModifiedImagePublishSubject() {
         if (onModifiedImagePublishSubject == null) {
@@ -28,5 +30,12 @@ public class PublishSubjectProvider {
             onEqualizeImagePublishSubject = PublishSubject.create();
         }
         return onEqualizeImagePublishSubject;
+    }
+
+    public static PublishSubject<Image> provideCannyPublishSubject() {
+        if (cannyPublishSubject == null) {
+            cannyPublishSubject = PublishSubject.create();
+        }
+        return cannyPublishSubject;
     }
 }

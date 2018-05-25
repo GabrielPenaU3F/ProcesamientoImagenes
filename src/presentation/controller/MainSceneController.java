@@ -340,4 +340,7 @@ public class MainSceneController {
     public void applySusanEdgeDetector(){
         this.mainPresenter.onApplySusanEdgeDetector();
     }
+
+    @FXML
+    public void onHoughTransform(ActionEvent actionEvent) { this.mainPresenter.onHoughTransform();}
 }

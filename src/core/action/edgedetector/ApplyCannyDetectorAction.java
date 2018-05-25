@@ -116,28 +116,24 @@ public class ApplyCannyDetectorAction {
 
     private int suppressNorthwestAndSoutheastNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x-1][y-1]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x+1][y+1])) {
-            //return 255;
             return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
     private int suppressNorthAndSouthNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x][y-1]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x][y+1])) {
-            //return 255;
             return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
     private int suppressNortheastAndSouthwestNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x+1][y-1]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x-1][y+1])) {
-            //return 255;
             return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
 
     private int suppressWestAndEastNotMaximums(int[][] derivativesAbsoluteSumMatrix, int x, int y) {
         if ((derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x-1][y]) && (derivativesAbsoluteSumMatrix[x][y] > derivativesAbsoluteSumMatrix[x+1][y])) {
-            //return 255;
             return derivativesAbsoluteSumMatrix[x][y];
         } else return 0;
     }
@@ -158,7 +154,7 @@ public class ApplyCannyDetectorAction {
                     gradientAngleMatrix[x][y] = 90;
                 } else {
 
-                    double realAngle = Math.toDegrees(Math.atan(yDerivativeRedChannel[x][y] / xDerivativeRedChannel[x][y]));
+                    double realAngle = Math.toDegrees(Math.atan((double)yDerivativeRedChannel[x][y]/xDerivativeRedChannel[x][y]));
                     gradientAngleMatrix[x][y] = this.chooseImageAngle(realAngle);
                 }
 

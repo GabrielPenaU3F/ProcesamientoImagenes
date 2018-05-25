@@ -561,4 +561,9 @@ public class MainPresenter {
                 });
     }
 
+
+    public void onHoughTransform() {
+        new HoughSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
 }
