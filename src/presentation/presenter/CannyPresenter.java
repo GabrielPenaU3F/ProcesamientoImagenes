@@ -18,7 +18,8 @@ public class CannyPresenter {
     private final ApplyCannyDetectorAction applyCannyDetectorAction;
     private final PublishSubject<Image> cannyPublishSubject;
 
-    public CannyPresenter(CannySceneController view, GetImageAction getImageAction, ApplyFilterAction applyFilterAction, PublishSubject<Image> imagePublishSubject, ApplyCannyDetectorAction applyCannyDetectorAction, PublishSubject<Image> cannyPublishSubject) {
+    public CannyPresenter(CannySceneController view, GetImageAction getImageAction, ApplyFilterAction applyFilterAction,
+            PublishSubject<Image> imagePublishSubject, ApplyCannyDetectorAction applyCannyDetectorAction, PublishSubject<Image> cannyPublishSubject) {
         this.view = view;
         this.getImageAction = getImageAction;
         this.applyFilterAction = applyFilterAction;
@@ -26,7 +27,6 @@ public class CannyPresenter {
         this.applyCannyDetectorAction = applyCannyDetectorAction;
         this.cannyPublishSubject = cannyPublishSubject;
     }
-
 
     public void onApply() {
 
@@ -49,16 +49,17 @@ public class CannyPresenter {
                             this.view.closeWindow();
                         }
                 );
-
             }
-
         }
-
     }
 
     private boolean areThresholdsValid(int t1, int t2) {
-        if (t1 < 0 || t2 < 0) return false;
-        if (t1 > t2) return false;
+        if (t1 < 0 || t2 < 0) {
+            return false;
+        }
+        if (t1 > t2) {
+            return false;
+        }
         return true;
     }
 

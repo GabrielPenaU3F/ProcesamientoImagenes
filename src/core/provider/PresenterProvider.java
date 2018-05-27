@@ -184,4 +184,11 @@ public class PresenterProvider {
                 ActionProvider.provideApplyEdgeDetectorByGradient()
                 );
     }
+
+    public static ActiveContourPresenter provideActiveContourPresenter(ActiveContourSceneController activeContourSceneController) {
+        return new ActiveContourPresenter(activeContourSceneController,
+                ActionProvider.provideApplyActiveContourAction(),
+                ActionProvider.provideGetImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+    }
 }

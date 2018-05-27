@@ -577,4 +577,9 @@ public class MainPresenter {
         new HoughSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
     }
+
+    public void onApplyActiveContour() {
+        new ActiveContourSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
 }

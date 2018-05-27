@@ -186,6 +186,7 @@
 			   <MenuItem mnemonicParsing="false" onAction="#onHoughTransform" text="Hough Transform" />
 		   </items>
          </Menu>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContour" text="Active Contour"/>
 		</Menu>
          <Menu mnemonicParsing="false" text="Threshold">
              <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />

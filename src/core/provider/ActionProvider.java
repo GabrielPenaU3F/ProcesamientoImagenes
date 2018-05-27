@@ -11,11 +11,9 @@ import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.hough.CircleHoughTransformAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
+import core.action.edgedetector.ApplyActiveContourAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
-import core.action.threshold.ApplyGlobalThresholdEstimationAction;
-import core.action.threshold.ApplyOtsuThresholdEstimationAction;
-import core.action.threshold.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.edit.space_domain.GammaFunctionAction;
@@ -29,12 +27,23 @@ import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.image.*;
+import core.action.image.CreateImageInformAction;
+import core.action.image.GetImageAction;
+import core.action.image.GetImageLimitValuesAction;
+import core.action.image.GetModifiedImageAction;
+import core.action.image.LoadImageAction;
+import core.action.image.PutModifiedImageAction;
+import core.action.image.SaveImageAction;
+import core.action.image.UndoChangesAction;
+import core.action.image.UpdateCurrentImageAction;
 import core.action.noise.ApplyExponentialNoiseToImageAction;
 import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
+import core.action.threshold.ApplyGlobalThresholdEstimationAction;
+import core.action.threshold.ApplyOtsuThresholdEstimationAction;
+import core.action.threshold.ApplyThresholdAction;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
@@ -56,7 +65,6 @@ class ActionProvider {
     private static ApplyThresholdAction applyThresholdAction;
     private static CreateImageHistogramAction createImageHistogramAction;
     private static ApplyContrastAction applyContrastAction;
-    private static EqualizeGrayImageAction createEqualizeGrayImageAction;
     private static CompressDynamicRangeAction compressDynamicRangeAction;
     private static GammaFunctionAction gammaFunctionAction;
     private static MultiplyImagesAction multiplyImagesAction;
@@ -83,6 +91,7 @@ class ActionProvider {
     private static ApplySusanDetectorAction applySusanDetectorAction;
     private static LineHoughTransformAction lineHoughTransformAction;
     private static CircleHoughTransformAction circleHoughTransformAction;
+    private static ApplyActiveContourAction applyActiveContourAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -424,5 +433,12 @@ class ActionProvider {
             circleHoughTransformAction = new CircleHoughTransformAction();
         }
         return circleHoughTransformAction;
+    }
+
+    public static ApplyActiveContourAction provideApplyActiveContourAction() {
+        if (applyActiveContourAction == null) {
+            applyActiveContourAction = new ApplyActiveContourAction();
+        }
+        return applyActiveContourAction;
     }
 }

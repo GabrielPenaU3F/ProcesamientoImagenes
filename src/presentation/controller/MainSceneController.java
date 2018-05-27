@@ -334,7 +334,9 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onApplyCannyEdgeDetector() { this.mainPresenter.onApplyCannyEdgeDetector(); }
+    public void onApplyCannyEdgeDetector() {
+        this.mainPresenter.onApplyCannyEdgeDetector();
+    }
 
     @FXML
     public void applySusanEdgeDetector(){
@@ -342,5 +344,12 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onHoughTransform(ActionEvent actionEvent) { this.mainPresenter.onHoughTransform();}
+    public void onHoughTransform(ActionEvent actionEvent) {
+        this.mainPresenter.onHoughTransform();
+    }
+
+    @FXML
+    public void onApplyActiveContour() {
+        this.mainPresenter.onApplyActiveContour();
+    }
 }
