@@ -28,15 +28,14 @@ public class ApplyActiveContourAction {
         // Step 1
         List<XYPoint> lOut = activeContour.getlOut();
         List<XYPoint> lIn = activeContour.getlIn();
-
-        List<XYPoint> addToLOut = new ArrayList<>();
-        List<XYPoint> removeFromLOut = new ArrayList<>();
-        List<XYPoint> addToLIn = new ArrayList<>();
-
         int backgroundGrayAverage = activeContour.getBackgroundGrayAverage();
         int objectGrayAverage = activeContour.getObjectGrayAverage();
 
         // Step 2
+        List<XYPoint> addToLOut = new ArrayList<>();
+        List<XYPoint> removeFromLOut = new ArrayList<>();
+        List<XYPoint> addToLIn = new ArrayList<>();
+
         for (XYPoint xyPoint : lOut) {
 
             if (checkFdFunction(xyPoint, customImage, backgroundGrayAverage, objectGrayAverage) > 0) {
@@ -61,11 +60,11 @@ public class ApplyActiveContourAction {
         // Step 3
         activeContour.moveInvalidLInToObject();
 
+        // Step 4
         List<XYPoint> addToLOut2 = new ArrayList<>();
         List<XYPoint> addToLIn2 = new ArrayList<>();
         List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
 
-        // Step 4
         for (XYPoint xyPoint : lIn) {
 
             if (checkFdFunction(xyPoint, customImage, backgroundGrayAverage, objectGrayAverage) < 0) {

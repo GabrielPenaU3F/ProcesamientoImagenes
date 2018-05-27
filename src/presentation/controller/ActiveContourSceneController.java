@@ -71,6 +71,8 @@ public class ActiveContourSceneController {
         this.activeContourPresenter.onInitializeContours();
         this.getObjectButton.setDisable(false);
         this.getBackgroundButton.setDisable(false);
+        this.startButton.setDisable(false);
+        this.applyButton.setDisable(true);
         this.steps.setText("0");
     }
 
