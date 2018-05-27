@@ -6,7 +6,7 @@ public class XYRCircle {
     private int yCenter;
     private int radius;
 
-    public XYRCircle(int xCenter, int yCenter, int radius) {} {
+    public XYRCircle(int xCenter, int yCenter, int radius) {
         this.xCenter = xCenter;
         this.yCenter = yCenter;
         this.radius = radius;

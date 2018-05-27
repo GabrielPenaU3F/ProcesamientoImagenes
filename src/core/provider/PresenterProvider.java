@@ -147,7 +147,8 @@ public class PresenterProvider {
     public static EdgeDetectorPresenter provideEdgeDetectorPresenter() {
         return new EdgeDetectorPresenter(
                 ActionProvider.provideGetImageAction(),
-                ActionProvider.provideApplyEdgeDetectorByGradient()
+                ActionProvider.provideApplyEdgeDetectorByGradient(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject()
         );
     }
 
@@ -176,8 +177,11 @@ public class PresenterProvider {
     public static HoughPresenter provideHoughPresenter(HoughSceneController houghSceneController) {
         return new HoughPresenter(houghSceneController,
                 PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
-                PublishSubjectProvider.provideCannyPublishSubject(),
                 ActionProvider.provideLineHoughTransformAction(),
-                ActionProvider.provideCircleHoughTransformAction());
+                ActionProvider.provideCircleHoughTransformAction(),
+                ActionProvider.provideApplyOtsuThresholdEstimation(),
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyEdgeDetectorByGradient()
+                );
     }
 }

@@ -19,7 +19,7 @@ public class LineHoughTransformAction {
 
     private Map<RhoThetaLine, Integer> parameterMatrix;
 
-    public CustomImage execute(CustomImage edgedImage, int rhoDivisions, int thetaDivisions, double tolerance) {
+    public CustomImage execute(CustomImage originalImage, CustomImage edgedImage, int rhoDivisions, int thetaDivisions, double tolerance) {
 
         double diagonal = this.calculateDiagonal(edgedImage.getWidth(), edgedImage.getHeight());
         this.rhoLowerBound = -diagonal;
@@ -41,18 +41,18 @@ public class LineHoughTransformAction {
 
         Map<RhoThetaLine, Integer> acceptedLines = this.findAcceptedLines(threshold);
 
-        return this.drawLines(edgedImage.getWidth(), edgedImage.getHeight(), acceptedLines);
+        return this.drawLines(originalImage, edgedImage.getWidth(), edgedImage.getHeight(), acceptedLines);
 
     }
 
-    private CustomImage drawLines(Integer width, Integer height, Map<RhoThetaLine, Integer> acceptedLines) {
+    private CustomImage drawLines(CustomImage originalImage, Integer width, Integer height, Map<RhoThetaLine, Integer> acceptedLines) {
 
         WritableImage image = new WritableImage(width, height);
         PixelWriter writer = image.getPixelWriter();
 
         for(int x=0; x < width; x++) {
             for (int y=0; y < height; y++) {
-                writer.setColor(x,y, Color.BLACK);
+                writer.setColor(x,y, Color.rgb(originalImage.getAverageValue(x,y), originalImage.getAverageValue(x,y), originalImage.getAverageValue(x,y)));
             }
         }
 
@@ -68,9 +68,7 @@ public class LineHoughTransformAction {
 
             for (int x=0; x < width; x++) {
                 for (int y=0; y < height; y++) {
-
-                    if (line.contains(x,y)) writer.setColor(x,y, Color.WHITE);
-
+                    if (line.contains(x,y)) writer.setColor(x,y, Color.RED);
                 }
             }
 

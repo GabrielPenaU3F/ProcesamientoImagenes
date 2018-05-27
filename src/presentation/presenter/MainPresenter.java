@@ -2,7 +2,6 @@ package presentation.presenter;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
-import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edit.ModifyPixelAction;
@@ -14,6 +13,7 @@ import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
+import core.action.image.GetImageLimitValuesAction;
 import core.action.image.LoadImageAction;
 import core.action.image.PutModifiedImageAction;
 import core.action.image.UndoChangesAction;
@@ -21,7 +21,6 @@ import core.action.image.UpdateCurrentImageAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
 import core.action.threshold.ApplyOtsuThresholdEstimationAction;
 import core.action.threshold.ApplyThresholdAction;
-import core.action.image.*;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.FilterSemaphore;
@@ -38,7 +37,6 @@ import domain.generation.Gradient;
 import domain.mask.GaussianLaplacianMask;
 import domain.mask.LaplacianMask;
 import domain.mask.Mask;
-import domain.mask.filter.GaussianMask;
 import domain.mask.SusanMask;
 import domain.mask.filter.HighPassMask;
 import io.reactivex.Observable;
@@ -46,7 +44,21 @@ import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.*;
+import presentation.scenecreator.CannySceneCreator;
+import presentation.scenecreator.ContrastSceneCreator;
+import presentation.scenecreator.DiffusionSceneCreator;
+import presentation.scenecreator.EqualizeImageByHistogramSceneCreator;
+import presentation.scenecreator.ExponentialSceneCreator;
+import presentation.scenecreator.FilterSceneCreator;
+import presentation.scenecreator.GammaPowerFunctionSceneCreator;
+import presentation.scenecreator.GaussianSceneCreator;
+import presentation.scenecreator.HoughSceneCreator;
+import presentation.scenecreator.ImageHistogramSceneCreator;
+import presentation.scenecreator.ImageInformSceneCreator;
+import presentation.scenecreator.ImagesOperationsSceneCreator;
+import presentation.scenecreator.RayleighSceneCreator;
+import presentation.scenecreator.SaltAndPepperNoiseSceneCreator;
+import presentation.scenecreator.SaveImageSceneCreator;
 import presentation.util.InsertValuePopup;
 import presentation.util.ShowResultPopup;
 import presentation.view.CustomImageView;
@@ -81,27 +93,27 @@ public class MainPresenter {
     private final ApplySusanDetectorAction applySusanDetectorAction;
 
     public MainPresenter(MainSceneController view,
-                         LoadImageAction loadImageAction,
-                         GetImageAction getImageAction,
-                         PutModifiedImageAction putModifiedImageAction,
-                         ModifyPixelAction modifyPixelAction,
-                         CalculateNegativeImageAction calculateNegativeImageAction,
-                         ApplyThresholdAction applyThresholdAction,
-                         CreateImageWithGradientAction createImageWithGradientAction,
-                         ObtainRGBChannelAction obtainRGBChannelAction,
-                         ObtainHSVChannelAction obtainHSVChannelAction,
-                         CreateImageWithFigureAction createImageWithFigureAction,
-                         EqualizeGrayImageAction equalizeGrayImageAction,
-                         Observable<Image> onModifiedImage,
-                         CompressDynamicRangeAction compressDynamicRangeAction,
-                         ApplyFilterAction applyFilterAction,
-                         UpdateCurrentImageAction updateCurrentImageAction,
-                         ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
-                         ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
-                         ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
-                         UndoChangesAction undoChangesAction,
-                         GetImageLimitValuesAction getImageLimitValuesAction,
-                         ApplySusanDetectorAction applySusanDetectorAction) {
+            LoadImageAction loadImageAction,
+            GetImageAction getImageAction,
+            PutModifiedImageAction putModifiedImageAction,
+            ModifyPixelAction modifyPixelAction,
+            CalculateNegativeImageAction calculateNegativeImageAction,
+            ApplyThresholdAction applyThresholdAction,
+            CreateImageWithGradientAction createImageWithGradientAction,
+            ObtainRGBChannelAction obtainRGBChannelAction,
+            ObtainHSVChannelAction obtainHSVChannelAction,
+            CreateImageWithFigureAction createImageWithFigureAction,
+            EqualizeGrayImageAction equalizeGrayImageAction,
+            Observable<Image> onModifiedImage,
+            CompressDynamicRangeAction compressDynamicRangeAction,
+            ApplyFilterAction applyFilterAction,
+            UpdateCurrentImageAction updateCurrentImageAction,
+            ApplyGlobalThresholdEstimationAction applyGlobalThresholdEstimationAction,
+            ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
+            ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
+            UndoChangesAction undoChangesAction,
+            GetImageLimitValuesAction getImageLimitValuesAction,
+            ApplySusanDetectorAction applySusanDetectorAction) {
 
         this.view = view;
 
@@ -552,15 +564,14 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplySusanEdgeDetector(){
+    public void onApplySusanEdgeDetector() {
         this.getImageAction.execute()
-                .ifPresent(customImage -> {
-                    Mask susanMask = new SusanMask();
-                    CustomImage edgedImage = this.applySusanDetectorAction.execute(customImage, susanMask);
-                    this.updateModifiedImage(edgedImage);
-                });
+                           .ifPresent(customImage -> {
+                               Mask susanMask = new SusanMask();
+                               CustomImage edgedImage = this.applySusanDetectorAction.execute(customImage, susanMask);
+                               this.updateModifiedImage(edgedImage);
+                           });
     }
-
 
     public void onHoughTransform() {
         new HoughSceneCreator().createScene();

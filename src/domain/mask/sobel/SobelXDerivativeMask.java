@@ -7,7 +7,7 @@ public class SobelXDerivativeMask extends Mask {
     private static final int AVAILABLE_SIZE = 3;
 
     public SobelXDerivativeMask() {
-        super(Type.PREWITT, AVAILABLE_SIZE);
+        super(Type.SOBEL, AVAILABLE_SIZE);
         this.matrix = createMatrix(AVAILABLE_SIZE);
     }
 

@@ -35,11 +35,9 @@ import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
-import core.service.MatrixService;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
-import javax.xml.ws.Service;
 
 class ActionProvider {
 
@@ -324,7 +322,6 @@ class ActionProvider {
         if (applyEdgeDetectorByGradientAction == null) {
             applyEdgeDetectorByGradientAction = new ApplyEdgeDetectorByGradientAction(
                     ServiceProvider.provideImageOperationsService(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ServiceProvider.provideMatrixService()
             );
         }
