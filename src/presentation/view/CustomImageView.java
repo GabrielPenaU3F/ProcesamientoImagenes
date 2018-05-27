@@ -1,5 +1,6 @@
 package presentation.view;
 
+import core.action.edgedetector.activecontour.Corners;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiFunction;
 import javafx.event.EventHandler;
@@ -48,8 +49,9 @@ public class CustomImageView {
 
         public void handle(MouseEvent event) {
 
-            if (event.isSecondaryButtonDown())
+            if (event.isSecondaryButtonDown()) {
                 return;
+            }
 
             group.getChildren().remove(rect);
 
@@ -66,7 +68,6 @@ public class CustomImageView {
             try {
                 onPixelClick.apply(mouseAnchorX.intValue(), mouseAnchorY.intValue()).run();
             } catch (Exception ignored) {
-                ignored.printStackTrace();
             }
         }
     };
@@ -75,15 +76,16 @@ public class CustomImageView {
 
         public void handle(MouseEvent event) {
 
-            if (event.isSecondaryButtonDown())
+            if (event.isSecondaryButtonDown()) {
                 return;
+            }
 
             double offsetX = event.getX() - mouseAnchorX;
             double offsetY = event.getY() - mouseAnchorY;
 
-            if (offsetX > 0)
+            if (offsetX > 0) {
                 rect.setWidth(offsetX);
-            else {
+            } else {
                 rect.setX(event.getX());
                 rect.setWidth(mouseAnchorX - rect.getX());
             }
@@ -101,8 +103,9 @@ public class CustomImageView {
 
         public void handle(MouseEvent event) {
 
-            if (event.isSecondaryButtonDown())
+            if (event.isSecondaryButtonDown()) {
                 return;
+            }
         }
     };
 
@@ -130,5 +133,11 @@ public class CustomImageView {
 
     public void setImage(Image image) {
         this.imageView.setImage(image);
+    }
+
+    public Corners getCorners() {
+        Bounds bounds = rect.getBoundsInParent();
+
+        return new Corners((int) bounds.getMinX(), (int) bounds.getMaxX(), (int) bounds.getMinY(), (int) bounds.getMaxY());
     }
 }

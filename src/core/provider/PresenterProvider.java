@@ -170,4 +170,10 @@ public class PresenterProvider {
                 PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                 ActionProvider.provideApplyCannyDetectorAction());
     }
+
+    public static ActiveContourPresenter provideActiveContourPresenter(ActiveContourSceneController activeContourSceneController) {
+        return new ActiveContourPresenter(activeContourSceneController,
+                ActionProvider.provideApplyActiveContourAction(),
+                ActionProvider.provideGetImageAction());
+    }
 }

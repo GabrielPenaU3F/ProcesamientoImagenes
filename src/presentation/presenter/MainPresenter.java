@@ -546,4 +546,9 @@ public class MainPresenter {
         new CannySceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
     }
+
+    public void onApplyActiveContour() {
+        new ActiveContourSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
 }
