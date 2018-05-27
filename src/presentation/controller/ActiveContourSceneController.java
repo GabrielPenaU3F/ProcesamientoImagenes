@@ -22,6 +22,10 @@ public class ActiveContourSceneController {
     @FXML
     public Button getObjectButton;
     @FXML
+    public Button startButton;
+    @FXML
+    public Button applyButton;
+    @FXML
     public TextField steps;
 
     private CustomImageView customImageView;
@@ -35,6 +39,14 @@ public class ActiveContourSceneController {
     @FXML
     public void initialize() {
         this.activeContourPresenter.initialize();
+        this.applyButton.setDisable(true);
+    }
+
+    @FXML
+    public void onStart() {
+        this.activeContourPresenter.onStart();
+        this.startButton.setDisable(true);
+        this.applyButton.setDisable(false);
     }
 
     @FXML

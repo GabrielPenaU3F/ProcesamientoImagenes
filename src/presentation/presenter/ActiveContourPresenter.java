@@ -1,6 +1,8 @@
 package presentation.presenter;
 
+import core.action.edgedetector.activecontour.ActiveContour;
 import core.action.edgedetector.activecontour.ApplyActiveContourAction;
+import core.action.edgedetector.activecontour.ContourCustomImage;
 import core.action.edgedetector.activecontour.Corners;
 import core.action.image.GetImageAction;
 import domain.customimage.CustomImage;
@@ -17,8 +19,10 @@ public class ActiveContourPresenter {
     private final GetImageAction getImageAction;
 
     private Corners corners;
+    private Integer objectGrayAverage;
     private Integer outsideGrayAverage;
     private CustomImage currentCustomImage;
+    private ActiveContour activeContour;
 
     public ActiveContourPresenter(ActiveContourSceneController view,
             ApplyActiveContourAction applyActiveContourAction, GetImageAction getImageAction) {
@@ -36,17 +40,41 @@ public class ActiveContourPresenter {
     }
 
     public void onInitializeContours() {
-        this.getImageAction.execute().ifPresent(customImage -> setCurrentImage(customImage));
+        this.getImageAction.execute().ifPresent(customImage -> {
+            currentCustomImage = customImage;
+            view.setImage(customImage.toFXImage());
+        });
+    }
+
+    public void onStart() {
+        if (corners != null && outsideGrayAverage != null && currentCustomImage != null) {
+            Integer width = currentCustomImage.getWidth();
+            Integer height = currentCustomImage.getHeight();
+            activeContour = new ActiveContour(width, height, corners, outsideGrayAverage, objectGrayAverage);
+
+            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps()));
+        }
     }
 
     public void onApply() {
         if (corners != null && outsideGrayAverage != null && currentCustomImage != null) {
-            setCurrentImage(applyActiveContourAction.execute(currentCustomImage, corners, outsideGrayAverage, view.getSteps()));
+            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps()));
         }
+    }
+
+    private int getObjectGrayAverage(CustomImage customImage, Corners corners) {
+        int value = 0;
+        for (int i = corners.getFirstRow() + 2; i <= corners.getSecondRow() - 2; i++) {
+            for (int j = corners.getFirstColumn() + 2; j <= corners.getSecondColumn() - 2; j++) {
+                value += customImage.getAverageValue(i, j);
+            }
+        }
+        return value / (customImage.getWidth() * customImage.getHeight());
     }
 
     public void onGetInsidePressed() {
         corners = view.getCorners();
+        objectGrayAverage = getObjectGrayAverage(currentCustomImage, corners);
     }
 
     public void onGetOutsidePressed() {
@@ -68,8 +96,8 @@ public class ActiveContourPresenter {
         outsideGrayAverage = value / (width * height);
     }
 
-    private void setCurrentImage(CustomImage customImage) {
-        currentCustomImage = customImage;
-        view.setImage(customImage.toFXImage());
+    private void setCurrentContourCustomImage(ContourCustomImage contourCustomImage) {
+        activeContour = contourCustomImage.getActiveContour();
+        view.setImage(contourCustomImage.drawActiveContour().toFXImage());
     }
 }

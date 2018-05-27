@@ -7,32 +7,17 @@ import domain.customimage.CustomImage;
 
 public class ApplyActiveContourAction {
 
-    public CustomImage execute(CustomImage customImage, Corners corners, int backgroundGrayAverage, int steps) {
-        int objectGrayAverage = getObjectGrayAverage(customImage, corners);
-        Integer width = customImage.getWidth();
-        Integer height = customImage.getHeight();
-        ActiveContour activeContour = new ActiveContour(width, height, corners, backgroundGrayAverage, objectGrayAverage);
-
+    public ContourCustomImage execute(CustomImage customImage, ActiveContour activeContour, int steps) {
         return recursive(customImage, activeContour, steps);
     }
 
-    private int getObjectGrayAverage(CustomImage customImage, Corners corners) {
-        int value = 0;
-        for (int i = corners.getFirstRow() + 2; i <= corners.getSecondRow() - 2; i++) {
-            for (int j = corners.getFirstColumn() + 2; j <= corners.getSecondColumn() - 2; j++) {
-                value += customImage.getAverageValue(i, j);
-            }
-        }
-        return value / (customImage.getWidth() * customImage.getHeight());
-    }
-
-    private CustomImage recursive(CustomImage customImage, ActiveContour activeContour, int steps) {
+    private ContourCustomImage recursive(CustomImage customImage, ActiveContour activeContour, int steps) {
 
         ContourCustomImage contourCustomImage = applyActiveContour(customImage, activeContour);
 
         steps--;
         if (steps == 0) {
-            return contourCustomImage.drawActiveContour();
+            return contourCustomImage;
         }
 
         return recursive(contourCustomImage.getCustomImage(), contourCustomImage.getActiveContour(), steps);

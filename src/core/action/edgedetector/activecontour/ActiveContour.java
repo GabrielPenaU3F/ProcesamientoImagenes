@@ -142,11 +142,11 @@ public class ActiveContour {
     }
 
     private boolean hasValueLowerThanZero(int row, int column) {
-        return hasValidPosition(row, column) && this.matrix[row][column] < 0;
+        return hasValidPosition(row, column) && matrix[row][column] < 0;
     }
 
     private boolean hasValueHigherThanZero(int row, int column) {
-        return hasValidPosition(row, column) && this.matrix[row][column] > 0;
+        return hasValidPosition(row, column) && matrix[row][column] > 0;
     }
 
     private Set<XYPoint> getNeighborsWithValue(XYPoint xyPoint, int value) {

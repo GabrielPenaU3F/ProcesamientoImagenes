@@ -31,7 +31,12 @@
 						<Insets bottom="10.0" right="10.0" top="10.0"/>
 					</VBox.margin>
 				</Button>
-				<Button mnemonicParsing="false" onAction="#onApply" text="Apply">
+				<Button fx:id="startButton" mnemonicParsing="false" onAction="#onStart" text="Start">
+					<VBox.margin>
+						<Insets bottom="10.0" right="10.0" top="10.0"/>
+					</VBox.margin>
+				</Button>
+				<Button fx:id="applyButton" mnemonicParsing="false" onAction="#onApply" text="Apply">
 					<VBox.margin>
 						<Insets bottom="10.0" right="10.0" top="10.0"/>
 					</VBox.margin>
