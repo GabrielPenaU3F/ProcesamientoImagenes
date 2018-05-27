@@ -161,9 +161,9 @@ public class ActiveContour {
     }
 
     public boolean hasValidPosition(int row, int column) {
-        boolean columnIsValid = column < this.width && 0 <= column;
-        boolean rowIsValid = row < this.height && 0 <= row;
-        return columnIsValid && rowIsValid;
+        boolean rowIsValid = row < this.width && 0 <= row;
+        boolean columnIsValid = column < this.height && 0 <= column;
+        return rowIsValid && columnIsValid;
     }
 
     public boolean belongToBackground(XYPoint xyPoint) {
