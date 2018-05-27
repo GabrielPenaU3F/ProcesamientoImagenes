@@ -18,9 +18,9 @@ public class ActiveContourSceneController {
     @FXML
     public ImageView imageView;
     @FXML
-    public Button getOutsideButton;
+    public Button getBackgroundButton;
     @FXML
-    public Button getInsideButton;
+    public Button getObjectButton;
     @FXML
     public TextField steps;
 
@@ -43,22 +43,22 @@ public class ActiveContourSceneController {
     }
 
     @FXML
-    public void onGetInside() {
+    public void onGetObject() {
         this.activeContourPresenter.onGetInsidePressed();
-        this.getInsideButton.setDisable(true);
+        this.getObjectButton.setDisable(true);
     }
 
     @FXML
-    public void onGetOutside() {
+    public void onGetBackground() {
         this.activeContourPresenter.onGetOutsidePressed();
-        this.getOutsideButton.setDisable(true);
+        this.getBackgroundButton.setDisable(true);
     }
 
     @FXML
     public void onResetContours() {
         this.activeContourPresenter.onInitializeContours();
-        this.getInsideButton.setDisable(false);
-        this.getOutsideButton.setDisable(false);
+        this.getObjectButton.setDisable(false);
+        this.getBackgroundButton.setDisable(false);
         this.steps.setText("0");
     }
 

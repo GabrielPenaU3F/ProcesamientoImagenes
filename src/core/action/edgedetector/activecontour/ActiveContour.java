@@ -81,11 +81,11 @@ public class ActiveContour {
     }
 
     private int[][] initializeMatrix(int firstRowObject, int secondRowObject, int firstColumnObject, int secondColumnObject) {
-        int matrix[][] = new int[height][width];
+        int matrix[][] = new int[width][height];
 
         // Fill matrix with background value
-        for (int row = 0; row < height; row++) {
-            for (int column = 0; column < width; column++) {
+        for (int row = 0; row < width; row++) {
+            for (int column = 0; column < height; column++) {
                 matrix[row][column] = BACKGROUND_VALUE;
             }
         }

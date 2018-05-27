@@ -15,7 +15,7 @@ public class ActiveContourSceneCreator implements SceneCreator {
             Parent root = FXMLLoader.load(getClass().getResource("/view/active_contour_scene_view.fxml"));
             Scene channelScene = new Scene(root);
             Stage channelStage = new Stage(StageStyle.DECORATED);
-            channelStage.setTitle("Active ActiveContour");
+            channelStage.setTitle("Active Contour");
             channelStage.setScene(channelScene);
             channelStage.show();
 
