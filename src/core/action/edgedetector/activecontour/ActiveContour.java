@@ -33,7 +33,7 @@ public class ActiveContour {
 
         this.lOut = addPoints(firstRow, secondRow, firstColumn, secondColumn);
         this.lIn = addPoints(firstRow + 1, secondRow - 1, firstColumn + 1, secondColumn - 1);
-        this.matrix = initializeMatrix(firstColumn + 2, secondColumn - 2, firstColumn + 2, secondColumn - 2);
+        this.matrix = initializeMatrix(firstRow + 2, secondRow - 2, firstColumn + 2, secondColumn - 2);
     }
 
     public Integer getWidth() {
@@ -149,21 +149,15 @@ public class ActiveContour {
         return hasValidPosition(row, column) && matrix[row][column] > 0;
     }
 
-    private Set<XYPoint> getNeighborsWithValue(XYPoint xyPoint, int value) {
+    public Set<XYPoint> getNeighbors(XYPoint xyPoint) {
         Set<XYPoint> neighbors = new HashSet<>();
         int row = xyPoint.getX();
         int column = xyPoint.getY();
-        addNeighborIfContainsValue(row - 1, column, value, neighbors);
-        addNeighborIfContainsValue(row + 1, column, value, neighbors);
-        addNeighborIfContainsValue(row, column - 1, value, neighbors);
-        addNeighborIfContainsValue(row, column + 1, value, neighbors);
+        neighbors.add(new XYPoint(row -1, column));
+        neighbors.add(new XYPoint(row + 1, column));
+        neighbors.add(new XYPoint(row, column - 1));
+        neighbors.add(new XYPoint(row, column + 1));
         return neighbors;
-    }
-
-    private void addNeighborIfContainsValue(int row, int column, int value, Set<XYPoint> neighbors) {
-        if (hasValidPosition(row, column) && matrix[row][column] == value) {
-            neighbors.add(new XYPoint(row, column));
-        }
     }
 
     public boolean hasValidPosition(int row, int column) {
@@ -172,20 +166,24 @@ public class ActiveContour {
         return columnIsValid && rowIsValid;
     }
 
+    public boolean belongToBackground(XYPoint xyPoint) {
+        return hasValue(xyPoint, BACKGROUND_VALUE);
+    }
+
+    public boolean belongToObject(XYPoint xyPoint) {
+        return hasValue(xyPoint, OBJECT_VALUE);
+    }
+
+    private boolean hasValue(XYPoint xyPoint, int value) {
+        return matrix[xyPoint.getX()][xyPoint.getY()] == value;
+    }
+
     public void addLInToMatrix(XYPoint xyPoint) {
         matrix[xyPoint.getX()][xyPoint.getY()] = L_IN_VALUE;
     }
 
     public void addLOutToMatrix(XYPoint xyPoint) {
         matrix[xyPoint.getX()][xyPoint.getY()] = L_OUT_VALUE;
-    }
-
-    public Set<XYPoint> getBackgroundNeighbors(XYPoint xyPoint) {
-        return getNeighborsWithValue(xyPoint, BACKGROUND_VALUE);
-    }
-
-    public Set<XYPoint> getObjectNeighbors(XYPoint xyPoint) {
-        return getNeighborsWithValue(xyPoint, OBJECT_VALUE);
     }
 
     public void addLIn(List<XYPoint> toAddToLIn) {

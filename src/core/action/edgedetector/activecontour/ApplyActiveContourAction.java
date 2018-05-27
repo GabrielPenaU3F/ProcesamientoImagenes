@@ -43,9 +43,9 @@ public class ApplyActiveContourAction {
                 addToLIn.add(xyPoint);
                 activeContour.addLInToMatrix(xyPoint);
 
-                activeContour.getBackgroundNeighbors(xyPoint)
-                             .stream()
+                activeContour.getNeighbors(xyPoint).stream()
                              .filter(neighbor -> activeContour.hasValidPosition(neighbor.getX(), neighbor.getY()))
+                             .filter(neighbor -> activeContour.belongToBackground(neighbor))
                              .forEach(neighbor -> {
                                  addToLOut.add(neighbor);
                                  activeContour.addLOutToMatrix(neighbor);
@@ -72,7 +72,8 @@ public class ApplyActiveContourAction {
                 addToLOut2.add(xyPoint);
                 activeContour.addLOutToMatrix(xyPoint);
 
-                activeContour.getObjectNeighbors(xyPoint)
+                activeContour.getNeighbors(xyPoint).stream()
+                             .filter(neighbor -> activeContour.belongToObject(xyPoint))
                              .forEach(neighbor -> {
                                  addToLIn2.add(neighbor);
                                  activeContour.addLInToMatrix(neighbor);

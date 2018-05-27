@@ -62,6 +62,11 @@ public class ActiveContourPresenter {
         }
     }
 
+    public void onGetInsidePressed() {
+        corners = view.getCorners();
+        objectGrayAverage = getObjectGrayAverage(currentCustomImage, corners);
+    }
+
     private int getObjectGrayAverage(CustomImage customImage, Corners corners) {
         int value = 0;
         for (int i = corners.getFirstRow() + 2; i <= corners.getSecondRow() - 2; i++) {
@@ -72,13 +77,7 @@ public class ActiveContourPresenter {
         return value / (customImage.getWidth() * customImage.getHeight());
     }
 
-    public void onGetInsidePressed() {
-        corners = view.getCorners();
-        objectGrayAverage = getObjectGrayAverage(currentCustomImage, corners);
-    }
-
     public void onGetOutsidePressed() {
-
         Image image = view.getPartialImage();
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
