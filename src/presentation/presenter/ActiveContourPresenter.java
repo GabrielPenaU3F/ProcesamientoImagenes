@@ -52,7 +52,7 @@ public class ActiveContourPresenter {
             Integer height = currentCustomImage.getHeight();
             activeContour = new ActiveContour(width, height, corners, outsideGrayAverage, objectGrayAverage);
 
-            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps()));
+            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, 1));
         }
     }
 

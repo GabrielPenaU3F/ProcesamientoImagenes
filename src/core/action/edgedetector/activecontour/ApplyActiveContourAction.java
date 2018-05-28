@@ -32,9 +32,9 @@ public class ApplyActiveContourAction {
         int objectGrayAverage = activeContour.getObjectGrayAverage();
 
         // Step 2
-        List<XYPoint> addToLOut = new ArrayList<>();
         List<XYPoint> removeFromLOut = new ArrayList<>();
         List<XYPoint> addToLIn = new ArrayList<>();
+        List<XYPoint> addToLOut = new ArrayList<>();
 
         for (XYPoint xyPoint : lOut) {
 
@@ -82,8 +82,8 @@ public class ApplyActiveContourAction {
             }
         }
 
-        activeContour.addLOut(addToLOut2);
         activeContour.removeLIn(toRemoveFromLIn2);
+        activeContour.addLOut(addToLOut2);
         activeContour.addLIn(addToLIn2);
 
         // Step 5
@@ -98,6 +98,6 @@ public class ApplyActiveContourAction {
     }
 
     private double module(int value, int imageValue) {
-        return Math.sqrt(Math.pow(value - imageValue, 2));
+        return Math.abs(value - imageValue);
     }
 }
