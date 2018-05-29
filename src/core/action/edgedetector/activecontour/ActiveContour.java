@@ -153,7 +153,7 @@ public class ActiveContour {
         Set<XYPoint> neighbors = new HashSet<>();
         int row = xyPoint.getX();
         int column = xyPoint.getY();
-        neighbors.add(new XYPoint(row -1, column));
+        neighbors.add(new XYPoint(row - 1, column));
         neighbors.add(new XYPoint(row + 1, column));
         neighbors.add(new XYPoint(row, column - 1));
         neighbors.add(new XYPoint(row, column + 1));

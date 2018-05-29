@@ -69,12 +69,14 @@ public class ActiveContourPresenter {
 
     private int getObjectGrayAverage(CustomImage customImage, Corners corners) {
         int value = 0;
+        int widthObject = corners.getSecondRow() - corners.getFirstRow();
+        int heightObject = corners.getSecondColumn() - corners.getFirstColumn();
         for (int i = corners.getFirstRow() + 2; i <= corners.getSecondRow() - 2; i++) {
             for (int j = corners.getFirstColumn() + 2; j <= corners.getSecondColumn() - 2; j++) {
                 value += customImage.getAverageValue(i, j);
             }
         }
-        return value / (customImage.getWidth() * customImage.getHeight());
+        return value / (widthObject * heightObject);
     }
 
     public void onGetOutsidePressed() {
