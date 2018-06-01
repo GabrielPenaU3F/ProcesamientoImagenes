@@ -2,12 +2,15 @@ package presentation.controller;
 
 import core.action.edgedetector.activecontour.Corners;
 import core.provider.PresenterProvider;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import presentation.presenter.ActiveContourPresenter;
 import presentation.view.CustomImageView;
 
@@ -27,6 +30,8 @@ public class ActiveContourSceneController {
     public Button applyButton;
     @FXML
     public TextField steps;
+    @FXML
+    public Label steps_label;
 
     private CustomImageView customImageView;
 
@@ -74,6 +79,12 @@ public class ActiveContourSceneController {
         this.startButton.setDisable(false);
         this.applyButton.setDisable(true);
         this.steps.setText("0");
+        this.steps_label.setText("Insert steps");
+    }
+
+    @FXML
+    public void onFinish() {
+        this.activeContourPresenter.onFinish();
     }
 
     public void setInitializeCustomImageView(CustomImageView customImageView) {
@@ -85,7 +96,12 @@ public class ActiveContourSceneController {
     }
 
     public int getSteps() {
-        return Integer.parseInt(steps.getText());
+        String stepsText = steps.getText();
+        if(stepsText.trim().equals("")) {
+            this.stepsMustBeGreaterThanZero();
+            return 0;
+        }
+        return Integer.parseInt(stepsText);
     }
 
     public void setImage(Image image) {
@@ -94,5 +110,18 @@ public class ActiveContourSceneController {
 
     public Image getPartialImage() {
         return this.customImageView.cutPartialImage();
+    }
+
+    public void stepsMustBeGreaterThanZero() {
+        this.steps_label.setText("Steps > 0");
+    }
+
+    public void mustSelectArea() {
+        this.steps_label.setText("Must select area");
+    }
+
+    public void closeWindow() {
+        Stage stage = (Stage) this.startButton.getScene().getWindow();
+        stage.close();
     }
 }

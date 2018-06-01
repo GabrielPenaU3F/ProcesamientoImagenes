@@ -174,6 +174,7 @@ public class PresenterProvider {
     public static ActiveContourPresenter provideActiveContourPresenter(ActiveContourSceneController activeContourSceneController) {
         return new ActiveContourPresenter(activeContourSceneController,
                 ActionProvider.provideApplyActiveContourAction(),
-                ActionProvider.provideGetImageAction());
+                ActionProvider.provideGetImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 }

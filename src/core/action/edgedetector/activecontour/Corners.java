@@ -29,4 +29,8 @@ public class Corners {
     public int getSecondColumn() {
         return secondColumn;
     }
+
+    public boolean isValid() {
+        return firstRow > 0 && secondRow > 0 && firstColumn > 0 && secondColumn > 0;
+    }
 }

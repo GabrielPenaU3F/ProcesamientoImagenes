@@ -14,7 +14,7 @@
 	<BorderPane prefHeight="447.0" prefWidth="526.0">
 		<right>
 			<VBox alignment="CENTER" prefHeight="200.0" prefWidth="153.0" BorderPane.alignment="CENTER">
-				<Label text="Insert steps"/>
+				<Label fx:id="steps_label" text="Insert steps"/>
 				<TextField fx:id="steps" prefHeight="27.0" prefWidth="50.0" promptText="Steps"/>
 				<Button fx:id="getBackgroundButton" alignment="CENTER" mnemonicParsing="false" onAction="#onGetBackground" text="Get background">
 					<VBox.margin>
@@ -37,6 +37,11 @@
 					</VBox.margin>
 				</Button>
 				<Button fx:id="applyButton" mnemonicParsing="false" onAction="#onApply" text="Apply">
+					<VBox.margin>
+						<Insets bottom="10.0" right="10.0" top="10.0"/>
+					</VBox.margin>
+				</Button>
+				<Button fx:id="finishButton" mnemonicParsing="false" onAction="#onFinish" text="Finish">
 					<VBox.margin>
 						<Insets bottom="10.0" right="10.0" top="10.0"/>
 					</VBox.margin>
