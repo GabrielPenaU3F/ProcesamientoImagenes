@@ -7,7 +7,7 @@ import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
-import core.action.edgedetector.activecontour.ApplyActiveContourAction;
+import core.action.edgedetector.ApplyActiveContourAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;

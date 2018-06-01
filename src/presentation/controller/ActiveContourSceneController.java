@@ -1,8 +1,7 @@
 package presentation.controller;
 
-import core.action.edgedetector.activecontour.Corners;
+import domain.activecontour.SelectionSquare;
 import core.provider.PresenterProvider;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -91,8 +90,8 @@ public class ActiveContourSceneController {
         this.customImageView = customImageView;
     }
 
-    public Corners getCorners() {
-        return this.customImageView.getCorners();
+    public SelectionSquare getSelectionSquare() {
+        return this.customImageView.getSelectionSquare();
     }
 
     public int getSteps() {

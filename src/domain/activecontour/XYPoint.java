@@ -1,4 +1,4 @@
-package core.action.edgedetector.activecontour;
+package domain.activecontour;
 
 public class XYPoint {
 

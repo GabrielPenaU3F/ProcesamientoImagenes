@@ -1,4 +1,4 @@
-package core.action.edgedetector.activecontour;
+package domain.activecontour;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,22 +18,22 @@ public class ActiveContour {
     private final int objectGrayAverage;
     private final List<XYPoint> lOut;
     private final List<XYPoint> lIn;
-    private int[][] matrix;
+    private int[][] content;
 
-    public ActiveContour(Integer width, Integer height, Corners corners, int backgroundGrayAverage, int objectGrayAverage) {
+    public ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage) {
         this.width = width;
         this.height = height;
         this.backgroundGrayAverage = backgroundGrayAverage;
         this.objectGrayAverage = objectGrayAverage;
 
-        int firstRow = corners.getFirstRow();
-        int secondRow = corners.getSecondRow();
-        int firstColumn = corners.getFirstColumn();
-        int secondColumn = corners.getSecondColumn();
+        int firstRow = selectionSquare.getFirstRow();
+        int secondRow = selectionSquare.getSecondRow();
+        int firstColumn = selectionSquare.getFirstColumn();
+        int secondColumn = selectionSquare.getSecondColumn();
 
         this.lOut = addPoints(firstRow, secondRow, firstColumn, secondColumn);
         this.lIn = addPoints(firstRow + 1, secondRow - 1, firstColumn + 1, secondColumn - 1);
-        this.matrix = initializeMatrix(firstRow + 2, secondRow - 2, firstColumn + 2, secondColumn - 2);
+        this.content = initializeContent(firstRow + 2, secondRow - 2, firstColumn + 2, secondColumn - 2);
     }
 
     public Integer getWidth() {
@@ -50,10 +50,6 @@ public class ActiveContour {
 
     public List<XYPoint> getlIn() {
         return lIn;
-    }
-
-    public int[][] getMatrix() {
-        return matrix;
     }
 
     public int getBackgroundGrayAverage() {
@@ -80,7 +76,7 @@ public class ActiveContour {
         return positions;
     }
 
-    private int[][] initializeMatrix(int firstRowObject, int secondRowObject, int firstColumnObject, int secondColumnObject) {
+    private int[][] initializeContent(int firstRowObject, int secondRowObject, int firstColumnObject, int secondColumnObject) {
         int matrix[][] = new int[width][height];
 
         // Fill matrix with background value
@@ -108,7 +104,7 @@ public class ActiveContour {
             XYPoint xyPoint = lIn.get(i);
             if (hasAllNeighborsWithValueLowerThanZero(xyPoint)) {
                 lIn.remove(xyPoint);
-                matrix[xyPoint.getX()][xyPoint.getY()] = OBJECT_VALUE;
+                content[xyPoint.getX()][xyPoint.getY()] = OBJECT_VALUE;
             }
         }
     }
@@ -118,7 +114,7 @@ public class ActiveContour {
             XYPoint xyPoint = lOut.get(i);
             if (hasAllNeighborsWithValueHigherThanZero(xyPoint)) {
                 lOut.remove(xyPoint);
-                matrix[xyPoint.getX()][xyPoint.getY()] = BACKGROUND_VALUE;
+                content[xyPoint.getX()][xyPoint.getY()] = BACKGROUND_VALUE;
             }
         }
     }
@@ -142,11 +138,11 @@ public class ActiveContour {
     }
 
     private boolean hasValueLowerThanZero(int row, int column) {
-        return hasValidPosition(row, column) && matrix[row][column] < 0;
+        return hasValidPosition(row, column) && content[row][column] < 0;
     }
 
     private boolean hasValueHigherThanZero(int row, int column) {
-        return hasValidPosition(row, column) && matrix[row][column] > 0;
+        return hasValidPosition(row, column) && content[row][column] > 0;
     }
 
     public Set<XYPoint> getNeighbors(XYPoint xyPoint) {
@@ -175,15 +171,15 @@ public class ActiveContour {
     }
 
     private boolean hasValue(XYPoint xyPoint, int value) {
-        return matrix[xyPoint.getX()][xyPoint.getY()] == value;
+        return content[xyPoint.getX()][xyPoint.getY()] == value;
     }
 
     public void addLInToMatrix(XYPoint xyPoint) {
-        matrix[xyPoint.getX()][xyPoint.getY()] = L_IN_VALUE;
+        content[xyPoint.getX()][xyPoint.getY()] = L_IN_VALUE;
     }
 
     public void addLOutToMatrix(XYPoint xyPoint) {
-        matrix[xyPoint.getX()][xyPoint.getY()] = L_OUT_VALUE;
+        content[xyPoint.getX()][xyPoint.getY()] = L_OUT_VALUE;
     }
 
     public void addLIn(List<XYPoint> toAddToLIn) {

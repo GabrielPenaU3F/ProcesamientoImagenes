@@ -1,13 +1,13 @@
-package core.action.edgedetector.activecontour;
+package domain.activecontour;
 
-public class Corners {
+public class SelectionSquare {
 
     private final int firstRow;
     private final int secondRow;
     private final int firstColumn;
     private final int secondColumn;
 
-    public Corners(int firstRow, int secondRow, int firstColumn, int secondColumn) {
+    public SelectionSquare(int firstRow, int secondRow, int firstColumn, int secondColumn) {
         this.firstRow = firstRow;
         this.secondRow = secondRow;
         this.firstColumn = firstColumn;

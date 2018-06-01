@@ -1,6 +1,6 @@
 package presentation.view;
 
-import core.action.edgedetector.activecontour.Corners;
+import domain.activecontour.SelectionSquare;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiFunction;
 import javafx.event.EventHandler;
@@ -33,10 +33,10 @@ public class CustomImageView {
     public CustomImageView withSelectionMode() {
 
         rect = new Rectangle(0, 0, 0, 0);
-        rect.setStroke(Color.GREEN);
-        rect.setStrokeWidth(3);
+        rect.setStroke(Color.LIGHTGREEN);
+        rect.setStrokeWidth(1);
         rect.setStrokeLineCap(StrokeLineCap.ROUND);
-        rect.setFill(Color.LIGHTGREEN.deriveColor(0, 1.2, 1, 0.6));
+        rect.setFill(Color.color(0.5, 0.9, 0.5, 0.6));
 
         this.group.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressedEventHandler);
         this.group.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDraggedEventHandler);
@@ -135,9 +135,9 @@ public class CustomImageView {
         this.imageView.setImage(image);
     }
 
-    public Corners getCorners() {
+    public SelectionSquare getSelectionSquare() {
         Bounds bounds = rect.getBoundsInParent();
 
-        return new Corners((int) bounds.getMinX(), (int) bounds.getMaxX(), (int) bounds.getMinY(), (int) bounds.getMaxY());
+        return new SelectionSquare((int) bounds.getMinX(), (int) bounds.getMaxX(), (int) bounds.getMinY(), (int) bounds.getMaxY());
     }
 }

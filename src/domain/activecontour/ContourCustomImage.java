@@ -1,6 +1,7 @@
-package core.action.edgedetector.activecontour;
+package domain.activecontour;
 
 import domain.customimage.CustomImage;
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -23,7 +24,7 @@ public class ContourCustomImage {
         return activeContour;
     }
 
-    public CustomImage drawActiveContour() {
+    public Image drawActiveContour() {
         WritableImage imageWithContour = new WritableImage(customImage.getWidth(), customImage.getHeight());
         PixelWriter pixelWriter = imageWithContour.getPixelWriter();
 
@@ -36,6 +37,6 @@ public class ContourCustomImage {
         activeContour.getlIn().forEach(xyPoint -> pixelWriter.setColor(xyPoint.getX(), xyPoint.getY(), Color.RED));
         activeContour.getlOut().forEach(xyPoint -> pixelWriter.setColor(xyPoint.getX(), xyPoint.getY(), Color.BLUE));
 
-        return new CustomImage(imageWithContour, customImage.getFormatString());
+        return new CustomImage(imageWithContour, customImage.getFormatString()).toFXImage();
     }
 }

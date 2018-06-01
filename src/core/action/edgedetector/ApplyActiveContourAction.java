@@ -1,8 +1,11 @@
-package core.action.edgedetector.activecontour;
+package core.action.edgedetector;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.activecontour.ActiveContour;
+import domain.activecontour.ContourCustomImage;
+import domain.activecontour.XYPoint;
 import domain.customimage.CustomImage;
 
 public class ApplyActiveContourAction {

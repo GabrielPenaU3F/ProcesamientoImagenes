@@ -1,9 +1,9 @@
 package presentation.presenter;
 
-import core.action.edgedetector.activecontour.ActiveContour;
-import core.action.edgedetector.activecontour.ApplyActiveContourAction;
-import core.action.edgedetector.activecontour.ContourCustomImage;
-import core.action.edgedetector.activecontour.Corners;
+import domain.activecontour.ActiveContour;
+import core.action.edgedetector.ApplyActiveContourAction;
+import domain.activecontour.ContourCustomImage;
+import domain.activecontour.SelectionSquare;
 import core.action.image.GetImageAction;
 import domain.customimage.CustomImage;
 import io.reactivex.subjects.PublishSubject;
@@ -47,17 +47,17 @@ public class ActiveContourPresenter {
         this.getImageAction.execute().ifPresent(customImage -> {
             currentCustomImage = customImage;
             modifiedImage = customImage.toFXImage();
-            view.setImage(customImage.toFXImage());
+            view.setImage(modifiedImage);
         });
     }
 
     public void onStart() {
-        Corners corners = view.getCorners();
-        if(corners.isValid()) {
+        SelectionSquare selectionSquare = view.getSelectionSquare();
+        if(selectionSquare.isValid()) {
             if (outsideGrayAverage != null && currentCustomImage != null) {
                 Integer width = currentCustomImage.getWidth();
                 Integer height = currentCustomImage.getHeight();
-                activeContour = new ActiveContour(width, height, corners, outsideGrayAverage, objectGrayAverage);
+                activeContour = new ActiveContour(width, height, selectionSquare, outsideGrayAverage, objectGrayAverage);
 
                 setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, 1));
             }
@@ -77,24 +77,24 @@ public class ActiveContourPresenter {
     }
 
     public void onGetInsidePressed() {
-        Corners corners = view.getCorners();
-        if (corners.isValid()) {
-            objectGrayAverage = getObjectGrayAverage(currentCustomImage, corners);
+        SelectionSquare selectionSquare = view.getSelectionSquare();
+        if (selectionSquare.isValid()) {
+            objectGrayAverage = getObjectGrayAverage(currentCustomImage, selectionSquare);
         } else {
             view.mustSelectArea();
         }
     }
 
-    private int getObjectGrayAverage(CustomImage customImage, Corners corners) {
+    private int getObjectGrayAverage(CustomImage customImage, SelectionSquare selectionSquare) {
         int value = 0;
-        int widthObject = corners.getSecondRow() - corners.getFirstRow();
-        int heightObject = corners.getSecondColumn() - corners.getFirstColumn();
-        for (int i = corners.getFirstRow() + 2; i <= corners.getSecondRow() - 2; i++) {
-            for (int j = corners.getFirstColumn() + 2; j <= corners.getSecondColumn() - 2; j++) {
+        int objectWidth = selectionSquare.getSecondRow() - selectionSquare.getFirstRow();
+        int objectHeight = selectionSquare.getSecondColumn() - selectionSquare.getFirstColumn();
+        for (int i = selectionSquare.getFirstRow() + 2; i <= selectionSquare.getSecondRow() - 2; i++) {
+            for (int j = selectionSquare.getFirstColumn() + 2; j <= selectionSquare.getSecondColumn() - 2; j++) {
                 value += customImage.getAverageValue(i, j);
             }
         }
-        return value / (widthObject * heightObject);
+        return value / (objectWidth * objectHeight);
     }
 
     public void onGetOutsidePressed() {
@@ -122,7 +122,7 @@ public class ActiveContourPresenter {
 
     private void setCurrentContourCustomImage(ContourCustomImage contourCustomImage) {
         activeContour = contourCustomImage.getActiveContour();
-        modifiedImage = contourCustomImage.drawActiveContour().toFXImage();
+        modifiedImage = contourCustomImage.drawActiveContour();
         view.setImage(modifiedImage);
     }
 }
