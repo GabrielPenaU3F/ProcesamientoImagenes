@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import domain.activecontour.ActiveContourMode;
 import domain.activecontour.SelectionSquare;
 import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
@@ -42,15 +43,28 @@ public class ActiveContourSceneController {
 
     @FXML
     public void initialize() {
-        this.activeContourPresenter.initialize();
-        this.applyButton.setDisable(true);
+        this.activeContourPresenter.initialize(ActiveContourMode.isSingle());
     }
 
     @FXML
     public void onStart() {
         this.activeContourPresenter.onStart();
-        this.startButton.setDisable(true);
+    }
+
+    public void enableApplyButton() {
         this.applyButton.setDisable(false);
+    }
+
+    public void disableApplyButton() {
+        this.applyButton.setDisable(true);
+    }
+
+    public void enableStartButton() {
+        this.startButton.setDisable(false);
+    }
+
+    public void disableStartButton() {
+        this.startButton.setDisable(true);
     }
 
     @FXML
@@ -72,11 +86,11 @@ public class ActiveContourSceneController {
 
     @FXML
     public void onResetContours() {
-        this.activeContourPresenter.onInitializeContours();
+        this.activeContourPresenter.onInitializeContours(ActiveContourMode.isSingle());
         this.getObjectButton.setDisable(false);
         this.getBackgroundButton.setDisable(false);
         this.startButton.setDisable(false);
-        this.applyButton.setDisable(true);
+        disableApplyButton();
         this.steps.setText("0");
         this.steps_label.setText("Insert steps");
     }

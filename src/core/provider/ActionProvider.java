@@ -3,11 +3,13 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.diffusion.ApplyDiffusionAction;
+import core.action.edgedetector.ApplyActiveContourToImageSequenceAction;
 import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplyActiveContourAction;
+import core.action.edgedetector.GetImageSequenceAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
@@ -28,6 +30,7 @@ import core.action.image.GetImageAction;
 import core.action.image.GetImageLimitValuesAction;
 import core.action.image.GetModifiedImageAction;
 import core.action.image.LoadImageAction;
+import core.action.image.LoadImageSequenceAction;
 import core.action.image.PutModifiedImageAction;
 import core.action.image.SaveImageAction;
 import core.action.image.UndoChangesAction;
@@ -84,6 +87,9 @@ class ActionProvider {
     private static GetImageLimitValuesAction getImageLimitValuesAction;
     private static ApplyCannyDetectorAction applyCannyDetectorAction;
     private static ApplyActiveContourAction applyActiveContourAction;
+    private static LoadImageSequenceAction loadImageSequenceAction;
+    private static GetImageSequenceAction getImageSequenceAction;
+    private static ApplyActiveContourToImageSequenceAction applyActiveContourToImageSequenceAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -412,5 +418,30 @@ class ActionProvider {
             applyActiveContourAction = new ApplyActiveContourAction();
         }
         return applyActiveContourAction;
+    }
+
+    public static LoadImageSequenceAction provideLoadImageSequenceAction() {
+        if (loadImageSequenceAction == null) {
+            loadImageSequenceAction = new LoadImageSequenceAction(
+                    RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideOpenFileService(),
+                    CommonProvider.provideOpener(),
+                    ServiceProvider.provideImageRawService());
+        }
+        return loadImageSequenceAction;
+    }
+
+    public static GetImageSequenceAction provideImageSequenceAcion() {
+        if (getImageSequenceAction == null) {
+            getImageSequenceAction = new GetImageSequenceAction(RepositoryProvider.provideImageRepository());
+        }
+        return getImageSequenceAction;
+    }
+
+    public static ApplyActiveContourToImageSequenceAction provideApplyActiveContourToImageSequenceAction() {
+        if (applyActiveContourToImageSequenceAction == null) {
+            applyActiveContourToImageSequenceAction = new ApplyActiveContourToImageSequenceAction(ActionProvider.provideApplyActiveContourAction());
+        }
+        return applyActiveContourToImageSequenceAction;
     }
 }

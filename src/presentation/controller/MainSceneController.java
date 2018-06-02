@@ -60,6 +60,11 @@ public class MainSceneController {
     }
 
     @FXML
+    public void openImageSequence() {
+        this.mainPresenter.onOpenImageSequence();
+    }
+
+    @FXML
     public void saveModifiedImage() {
         this.mainPresenter.onSaveImage();
     }

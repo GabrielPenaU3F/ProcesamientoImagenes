@@ -4,6 +4,7 @@ import domain.customimage.Format;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 public class OpenFileService {
@@ -22,6 +23,16 @@ public class OpenFileService {
                 .filter(File::canWrite)
                 .filter(File::isAbsolute)
                 .filter(this::hasValidExtension);
+    }
+
+    public Optional<List<File>> openMultiple() {
+        return Optional.ofNullable(fileChooser.showOpenMultipleDialog(null))
+                       .filter(files -> files.stream().allMatch(File::exists))
+                       .filter(files -> files.stream().allMatch(File::isFile))
+                       .filter(files -> files.stream().allMatch(File::canRead))
+                       .filter(files -> files.stream().allMatch(File::canWrite))
+                       .filter(files -> files.stream().allMatch(File::isAbsolute))
+                       .filter(files -> files.stream().allMatch(this::hasValidExtension));
     }
 
     private boolean hasValidExtension(File file) {
