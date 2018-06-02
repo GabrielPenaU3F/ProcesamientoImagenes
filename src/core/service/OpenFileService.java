@@ -26,13 +26,7 @@ public class OpenFileService {
     }
 
     public Optional<List<File>> openMultiple() {
-        return Optional.ofNullable(fileChooser.showOpenMultipleDialog(null))
-                       .filter(files -> files.stream().allMatch(File::exists))
-                       .filter(files -> files.stream().allMatch(File::isFile))
-                       .filter(files -> files.stream().allMatch(File::canRead))
-                       .filter(files -> files.stream().allMatch(File::canWrite))
-                       .filter(files -> files.stream().allMatch(File::isAbsolute))
-                       .filter(files -> files.stream().allMatch(this::hasValidExtension));
+        return Optional.ofNullable(fileChooser.showOpenMultipleDialog(null));
     }
 
     private boolean hasValidExtension(File file) {

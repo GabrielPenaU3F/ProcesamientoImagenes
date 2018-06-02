@@ -1,8 +1,8 @@
 package presentation.controller;
 
+import core.provider.PresenterProvider;
 import domain.activecontour.ActiveContourMode;
 import domain.activecontour.SelectionSquare;
-import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -29,6 +29,8 @@ public class ActiveContourSceneController {
     @FXML
     public Button applyButton;
     @FXML
+    public Button nextButton;
+    @FXML
     public TextField steps;
     @FXML
     public Label steps_label;
@@ -43,7 +45,7 @@ public class ActiveContourSceneController {
 
     @FXML
     public void initialize() {
-        this.activeContourPresenter.initialize(ActiveContourMode.isSingle());
+        this.activeContourPresenter.initialize();
     }
 
     @FXML
@@ -67,9 +69,22 @@ public class ActiveContourSceneController {
         this.startButton.setDisable(true);
     }
 
+    public void disableNextButton() {
+        this.nextButton.setDisable(true);
+    }
+
+    public void enableNextButton() {
+        this.nextButton.setDisable(false);
+    }
+
     @FXML
     public void onApply() {
         this.activeContourPresenter.onApply();
+    }
+
+    @FXML
+    public void onNext() {
+        this.activeContourPresenter.onNext();
     }
 
     @FXML
@@ -86,7 +101,7 @@ public class ActiveContourSceneController {
 
     @FXML
     public void onResetContours() {
-        this.activeContourPresenter.onInitializeContours(ActiveContourMode.isSingle());
+        this.activeContourPresenter.onInitializeContours();
         this.getObjectButton.setDisable(false);
         this.getBackgroundButton.setDisable(false);
         this.startButton.setDisable(false);
@@ -110,7 +125,7 @@ public class ActiveContourSceneController {
 
     public int getSteps() {
         String stepsText = steps.getText();
-        if(stepsText.trim().equals("")) {
+        if (stepsText.trim().equals("")) {
             this.stepsMustBeGreaterThanZero();
             return 0;
         }
@@ -136,5 +151,9 @@ public class ActiveContourSceneController {
     public void closeWindow() {
         Stage stage = (Stage) this.startButton.getScene().getWindow();
         stage.close();
+    }
+
+    public void disableStepsTextField() {
+        steps.setDisable(true);
     }
 }

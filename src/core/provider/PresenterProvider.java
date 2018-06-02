@@ -177,7 +177,7 @@ public class PresenterProvider {
                 ActionProvider.provideApplyActiveContourAction(),
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideImageSequenceAcion(),
-                ActionProvider.provideApplyActiveContourToImageSequenceAction(), PublishSubjectProvider
+                ActionProvider.provideApplyActiveContourOnImageSequenceAction(), PublishSubjectProvider
                 .provideOnModifiedImagePublishSubject
                 ());
     }

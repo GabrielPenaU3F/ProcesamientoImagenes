@@ -2,10 +2,9 @@ package presentation.presenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import core.action.edgedetector.ApplyActiveContourAction;
-import core.action.edgedetector.ApplyActiveContourToImageSequenceAction;
+import core.action.edgedetector.ApplyActiveContourOnImageSequenceAction;
 import core.action.edgedetector.GetImageSequenceAction;
 import core.action.image.GetImageAction;
 import domain.activecontour.ActiveContour;
@@ -23,10 +22,10 @@ import presentation.view.CustomImageView;
 public class ActiveContourPresenter {
 
     private final ActiveContourSceneController view;
-    private final ApplyActiveContourAction applyActiveContourAction;
     private final GetImageAction getImageAction;
     private final GetImageSequenceAction getImageSequenceAction;
-    private final ApplyActiveContourToImageSequenceAction applyActiveContourToImageSequenceAction;
+    private final ApplyActiveContourAction applyActiveContourAction;
+    private final ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
     private final PublishSubject<Image> onModifiedImagePublishSubject;
 
     private Integer objectGrayAverage;
@@ -35,40 +34,41 @@ public class ActiveContourPresenter {
     private ActiveContour activeContour;
     private Image modifiedImage;
     private List<CustomImage> currentImages;
+    private List<ContourCustomImage> contours;
+    private int contourIndex = 0;
 
     public ActiveContourPresenter(ActiveContourSceneController view,
             ApplyActiveContourAction applyActiveContourAction, GetImageAction getImageAction,
             GetImageSequenceAction getImageSequenceAction,
-            ApplyActiveContourToImageSequenceAction applyActiveContourToImageSequenceAction,
+            ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction,
             PublishSubject<Image> onModifiedImagePublishSubject) {
         this.view = view;
         this.applyActiveContourAction = applyActiveContourAction;
         this.getImageAction = getImageAction;
         this.getImageSequenceAction = getImageSequenceAction;
-        this.applyActiveContourToImageSequenceAction = applyActiveContourToImageSequenceAction;
+        this.applyActiveContourOnImageSequenceAction = applyActiveContourOnImageSequenceAction;
         this.onModifiedImagePublishSubject = onModifiedImagePublishSubject;
         this.currentImages = new ArrayList<>();
+        this.contours = new ArrayList<>();
     }
 
-    public void initialize(boolean isSingle) {
+    public void initialize() {
         view.setInitializeCustomImageView(new CustomImageView(view.groupImageView, view.imageView)
                 .withSetPickOnBounds(true)
                 .withSelectionMode());
 
-        onInitializeContours(isSingle);
+        onInitializeContours();
     }
 
-    public void onInitializeContours(boolean isSingle) {
-        if (isSingle) {
-            view.disableApplyButton();
-            view.enableStartButton();
+    public void onInitializeContours() {
+        if (ActiveContourMode.isSingle()) {
             this.getImageAction.execute().ifPresent(customImage -> {
                 currentCustomImage = customImage;
                 modifiedImage = customImage.toFXImage();
                 view.setImage(modifiedImage);
             });
         } else {
-            view.disableStartButton();
+            this.contourIndex = 0;
             this.getImageSequenceAction.execute().ifPresent(customImages -> {
                 if (!customImages.isEmpty()) {
                     currentCustomImage = customImages.get(0);
@@ -77,7 +77,13 @@ public class ActiveContourPresenter {
                     view.setImage(modifiedImage);
                 }
             });
+
+            view.disableStepsTextField();
         }
+
+        view.disableNextButton();
+        view.disableApplyButton();
+        view.enableStartButton();
     }
 
     public void onStart() {
@@ -85,24 +91,14 @@ public class ActiveContourPresenter {
         if (selectionSquare.isValid() && outsideGrayAverage != null) {
             if (ActiveContourMode.isSingle()) {
                 onStartSingleMode(selectionSquare);
+                view.enableApplyButton();
             } else {
                 onStartSequenceMode(selectionSquare);
-                // start image sequence !
-                // falta el setImageSequence y todo el dialogo para cargar las imagenes
             }
+
+            view.disableStartButton();
         } else {
             view.mustSelectArea();
-        }
-
-        view.disableStartButton();
-    }
-
-    private void onStartSequenceMode(SelectionSquare selectionSquare) {
-        if (!currentImages.isEmpty()) {
-            activeContour = createActiveContour(selectionSquare, currentCustomImage);
-            applyActiveContourToImageSequenceAction.execute(currentImages, activeContour, view.getSteps())
-                                                   .delay(3, TimeUnit.SECONDS)
-                                                   .subscribe(customImage -> view.setImage(customImage.toFXImage()));
         }
     }
 
@@ -111,7 +107,15 @@ public class ActiveContourPresenter {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
             setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, 1));
         }
-        view.enableApplyButton();
+    }
+
+    private void onStartSequenceMode(SelectionSquare selectionSquare) {
+        if (currentImages != null && !currentImages.isEmpty()) {
+            activeContour = createActiveContour(selectionSquare, currentCustomImage);
+            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour);
+        }
+
+        view.enableNextButton();
     }
 
     private ActiveContour createActiveContour(SelectionSquare selectionSquare, CustomImage customImage) {
@@ -125,6 +129,15 @@ public class ActiveContourPresenter {
             }
         } else {
             view.stepsMustBeGreaterThanZero();
+        }
+    }
+
+    public void onNext() {
+        if (!contours.isEmpty() && contourIndex < contours.size()) {
+            view.setImage(contours.get(contourIndex).drawActiveContour());
+            contourIndex++;
+        } else {
+            view.disableNextButton();
         }
     }
 

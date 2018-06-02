@@ -180,6 +180,7 @@
 				<MenuItem mnemonicParsing="false" onAction="#onApplyCannyEdgeDetector" text="Canny"/>
 			</Menu>
 			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContour" text="Active Contour"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContourOnImageSequence" text="Active Contour on Image Sequence"/>
 		</Menu>
          <Menu mnemonicParsing="false" text="Threshold">
              <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />

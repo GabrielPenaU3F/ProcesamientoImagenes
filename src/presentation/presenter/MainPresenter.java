@@ -558,7 +558,7 @@ public class MainPresenter {
         view.applyChangesButton.setVisible(true);
     }
 
-    public void onApplyActiveContourToImageSequence() {
+    public void onApplyActiveContourOnImageSequence() {
         ActiveContourMode.sequence();
         new ActiveContourSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);

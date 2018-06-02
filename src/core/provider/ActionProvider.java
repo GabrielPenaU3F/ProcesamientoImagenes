@@ -3,7 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.diffusion.ApplyDiffusionAction;
-import core.action.edgedetector.ApplyActiveContourToImageSequenceAction;
+import core.action.edgedetector.ApplyActiveContourOnImageSequenceAction;
 import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
@@ -89,7 +89,7 @@ class ActionProvider {
     private static ApplyActiveContourAction applyActiveContourAction;
     private static LoadImageSequenceAction loadImageSequenceAction;
     private static GetImageSequenceAction getImageSequenceAction;
-    private static ApplyActiveContourToImageSequenceAction applyActiveContourToImageSequenceAction;
+    private static ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -438,10 +438,10 @@ class ActionProvider {
         return getImageSequenceAction;
     }
 
-    public static ApplyActiveContourToImageSequenceAction provideApplyActiveContourToImageSequenceAction() {
-        if (applyActiveContourToImageSequenceAction == null) {
-            applyActiveContourToImageSequenceAction = new ApplyActiveContourToImageSequenceAction(ActionProvider.provideApplyActiveContourAction());
+    public static ApplyActiveContourOnImageSequenceAction provideApplyActiveContourOnImageSequenceAction() {
+        if (applyActiveContourOnImageSequenceAction == null) {
+            applyActiveContourOnImageSequenceAction = new ApplyActiveContourOnImageSequenceAction(ActionProvider.provideApplyActiveContourAction());
         }
-        return applyActiveContourToImageSequenceAction;
+        return applyActiveContourOnImageSequenceAction;
     }
 }

@@ -11,7 +11,6 @@ public class ImageRepository {
     private CustomImage modifiedImage;
     private CustomImage originalImageBackup;
     private List<CustomImage> imageSequence;
-    private List<CustomImage> images;
 
     public CustomImage saveImage(CustomImage image) {
         this.image = image;
@@ -39,9 +38,10 @@ public class ImageRepository {
         return this.originalImageBackup;
     }
 
-    public List<CustomImage> saveImageSequence(List<CustomImage> images) {
-        this.images = images;
-        return images;
+    public List<CustomImage> saveImageSequence(List<CustomImage> imageSequence) {
+        this.image = imageSequence.get(0);
+        this.imageSequence = imageSequence;
+        return imageSequence;
     }
 
     public Optional<List<CustomImage>> getImageSequence() {

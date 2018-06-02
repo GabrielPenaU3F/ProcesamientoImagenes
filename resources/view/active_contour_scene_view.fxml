@@ -41,6 +41,11 @@
 						<Insets bottom="10.0" right="10.0" top="10.0"/>
 					</VBox.margin>
 				</Button>
+				<Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNext" text="Next">
+					<VBox.margin>
+						<Insets bottom="10.0" right="10.0" top="10.0"/>
+					</VBox.margin>
+				</Button>
 				<Button fx:id="finishButton" mnemonicParsing="false" onAction="#onFinish" text="Finish">
 					<VBox.margin>
 						<Insets bottom="10.0" right="10.0" top="10.0"/>
