@@ -4,7 +4,6 @@ import core.provider.PresenterProvider;
 import core.provider.ViewProvider;
 import domain.flags.LaplacianDetector;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -57,6 +56,11 @@ public class MainSceneController {
     @FXML
     public void openImage() {
         this.mainPresenter.onOpenImage();
+    }
+
+    @FXML
+    public void openImageSequence() {
+        this.mainPresenter.onOpenImageSequence();
     }
 
     @FXML
@@ -351,5 +355,10 @@ public class MainSceneController {
     @FXML
     public void onApplyActiveContour() {
         this.mainPresenter.onApplyActiveContour();
+    }
+
+    @FXML
+    public void onApplyActiveContourOnImageSequence() {
+        this.mainPresenter.onApplyActiveContourOnImageSequence();
     }
 }

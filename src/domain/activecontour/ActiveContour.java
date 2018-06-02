@@ -1,9 +1,11 @@
 package domain.activecontour;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ActiveContour {
 
@@ -18,11 +20,13 @@ public class ActiveContour {
     private final int objectGrayAverage;
     private final List<XYPoint> lOut;
     private final List<XYPoint> lIn;
+    private final SelectionSquare selectionSquare;
     private int[][] content;
 
     public ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage) {
         this.width = width;
         this.height = height;
+        this.selectionSquare = selectionSquare;
         this.backgroundGrayAverage = backgroundGrayAverage;
         this.objectGrayAverage = objectGrayAverage;
 
@@ -34,6 +38,25 @@ public class ActiveContour {
         this.lOut = addPoints(firstRow, secondRow, firstColumn, secondColumn);
         this.lIn = addPoints(firstRow + 1, secondRow - 1, firstColumn + 1, secondColumn - 1);
         this.content = initializeContent(firstRow + 2, secondRow - 2, firstColumn + 2, secondColumn - 2);
+    }
+
+    private ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage,
+            List<XYPoint> lOut, List<XYPoint> lIn, int[][] content) {
+        this.width = width;
+        this.height = height;
+        this.selectionSquare = selectionSquare;
+        this.backgroundGrayAverage = backgroundGrayAverage;
+        this.objectGrayAverage = objectGrayAverage;
+
+        this.lOut = lOut;
+        this.lIn = lIn;
+        this.content = content;
+    }
+
+    public static ActiveContour copy(ActiveContour activeContour) {
+        return new ActiveContour(activeContour.getWidth(), activeContour.getHeight(), activeContour.getSelectionSquare(),
+                activeContour.getBackgroundGrayAverage(), activeContour.getObjectGrayAverage(), new ArrayList<>(activeContour.getlOut()),
+                new ArrayList<>(activeContour.getlIn()), Arrays.copyOf(activeContour.getContent(), activeContour.getContent().length));
     }
 
     public Integer getWidth() {
@@ -61,7 +84,7 @@ public class ActiveContour {
     }
 
     private List<XYPoint> addPoints(int firstRow, int secondRow, int firstColumn, int secondColumn) {
-        List<XYPoint> positions = new ArrayList<>();
+        List<XYPoint> positions = new CopyOnWriteArrayList<>();
 
         for (int i = firstRow; i <= secondRow; i++) {
             positions.add(new XYPoint(i, firstColumn));
@@ -162,10 +185,12 @@ public class ActiveContour {
         return rowIsValid && columnIsValid;
     }
 
+    //fi(x) = 3
     public boolean belongToBackground(XYPoint xyPoint) {
         return hasValue(xyPoint, BACKGROUND_VALUE);
     }
 
+    //fi(x) = -3
     public boolean belongToObject(XYPoint xyPoint) {
         return hasValue(xyPoint, OBJECT_VALUE);
     }
@@ -174,11 +199,13 @@ public class ActiveContour {
         return content[xyPoint.getX()][xyPoint.getY()] == value;
     }
 
-    public void addLInToMatrix(XYPoint xyPoint) {
+    //Set fi(x) = -1
+    public void updateFiValueForLInPoint(XYPoint xyPoint) {
         content[xyPoint.getX()][xyPoint.getY()] = L_IN_VALUE;
     }
 
-    public void addLOutToMatrix(XYPoint xyPoint) {
+    //Set fi(x) = 1
+    public void updateFiValueForLOutPoint(XYPoint xyPoint) {
         content[xyPoint.getX()][xyPoint.getY()] = L_OUT_VALUE;
     }
 
@@ -196,5 +223,13 @@ public class ActiveContour {
 
     public void removeLOut(List<XYPoint> toRemoveFromLOut) {
         lOut.removeAll(toRemoveFromLOut);
+    }
+
+    public SelectionSquare getSelectionSquare() {
+        return selectionSquare;
+    }
+
+    public int[][] getContent() {
+        return content;
     }
 }

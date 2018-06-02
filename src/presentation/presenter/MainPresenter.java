@@ -15,6 +15,7 @@ import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
 import core.action.image.GetImageLimitValuesAction;
 import core.action.image.LoadImageAction;
+import core.action.image.LoadImageSequenceAction;
 import core.action.image.PutModifiedImageAction;
 import core.action.image.UndoChangesAction;
 import core.action.image.UpdateCurrentImageAction;
@@ -25,6 +26,7 @@ import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.FilterSemaphore;
 import domain.RandomElement;
+import domain.activecontour.ActiveContourMode;
 import domain.automaticthreshold.GlobalThresholdResult;
 import domain.automaticthreshold.ImageLimitValues;
 import domain.automaticthreshold.OtsuThresholdResult;
@@ -44,6 +46,7 @@ import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
+import presentation.scenecreator.ActiveContourSceneCreator;
 import presentation.scenecreator.CannySceneCreator;
 import presentation.scenecreator.ContrastSceneCreator;
 import presentation.scenecreator.DiffusionSceneCreator;
@@ -71,6 +74,7 @@ public class MainPresenter {
 
     private final MainSceneController view;
     private final LoadImageAction loadImageAction;
+    private final LoadImageSequenceAction loadImageSequenceAction;
     private final GetImageAction getImageAction;
     private final ModifyPixelAction modifyPixelAction;
     private final PutModifiedImageAction putModifiedImageAction;
@@ -94,7 +98,7 @@ public class MainPresenter {
 
     public MainPresenter(MainSceneController view,
             LoadImageAction loadImageAction,
-            GetImageAction getImageAction,
+            LoadImageSequenceAction loadImageSequenceAction, GetImageAction getImageAction,
             PutModifiedImageAction putModifiedImageAction,
             ModifyPixelAction modifyPixelAction,
             CalculateNegativeImageAction calculateNegativeImageAction,
@@ -118,6 +122,7 @@ public class MainPresenter {
         this.view = view;
 
         this.loadImageAction = loadImageAction;
+        this.loadImageSequenceAction = loadImageSequenceAction;
         this.getImageAction = getImageAction;
         this.modifyPixelAction = modifyPixelAction;
         this.putModifiedImageAction = putModifiedImageAction;
@@ -166,6 +171,10 @@ public class MainPresenter {
 
     public void onOpenImage() {
         setImageOnCustomImageView(this.loadImageAction.execute());
+    }
+
+    public void onOpenImageSequence() {
+        setImageOnCustomImageView(this.loadImageSequenceAction.execute().get(0));
     }
 
     private void setImageOnCustomImageView(CustomImage customImage) {
@@ -579,6 +588,13 @@ public class MainPresenter {
     }
 
     public void onApplyActiveContour() {
+        ActiveContourMode.single();
+        new ActiveContourSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyActiveContourOnImageSequence() {
+        ActiveContourMode.sequence();
         new ActiveContourSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
     }

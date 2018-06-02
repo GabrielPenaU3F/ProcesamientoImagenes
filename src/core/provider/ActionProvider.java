@@ -3,6 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.diffusion.ApplyDiffusionAction;
+import core.action.edgedetector.ApplyActiveContourOnImageSequenceAction;
 import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
@@ -12,6 +13,7 @@ import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.hough.CircleHoughTransformAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.ApplyActiveContourAction;
+import core.action.edgedetector.GetImageSequenceAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
@@ -32,6 +34,7 @@ import core.action.image.GetImageAction;
 import core.action.image.GetImageLimitValuesAction;
 import core.action.image.GetModifiedImageAction;
 import core.action.image.LoadImageAction;
+import core.action.image.LoadImageSequenceAction;
 import core.action.image.PutModifiedImageAction;
 import core.action.image.SaveImageAction;
 import core.action.image.UndoChangesAction;
@@ -92,6 +95,9 @@ class ActionProvider {
     private static LineHoughTransformAction lineHoughTransformAction;
     private static CircleHoughTransformAction circleHoughTransformAction;
     private static ApplyActiveContourAction applyActiveContourAction;
+    private static LoadImageSequenceAction loadImageSequenceAction;
+    private static GetImageSequenceAction getImageSequenceAction;
+    private static ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -440,5 +446,30 @@ class ActionProvider {
             applyActiveContourAction = new ApplyActiveContourAction();
         }
         return applyActiveContourAction;
+    }
+
+    public static LoadImageSequenceAction provideLoadImageSequenceAction() {
+        if (loadImageSequenceAction == null) {
+            loadImageSequenceAction = new LoadImageSequenceAction(
+                    RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideOpenFileService(),
+                    CommonProvider.provideOpener(),
+                    ServiceProvider.provideImageRawService());
+        }
+        return loadImageSequenceAction;
+    }
+
+    public static GetImageSequenceAction provideImageSequenceAcion() {
+        if (getImageSequenceAction == null) {
+            getImageSequenceAction = new GetImageSequenceAction(RepositoryProvider.provideImageRepository());
+        }
+        return getImageSequenceAction;
+    }
+
+    public static ApplyActiveContourOnImageSequenceAction provideApplyActiveContourOnImageSequenceAction() {
+        if (applyActiveContourOnImageSequenceAction == null) {
+            applyActiveContourOnImageSequenceAction = new ApplyActiveContourOnImageSequenceAction(ActionProvider.provideApplyActiveContourAction());
+        }
+        return applyActiveContourOnImageSequenceAction;
     }
 }
