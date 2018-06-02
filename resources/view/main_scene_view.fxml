@@ -88,6 +88,7 @@
     <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#openImage" text="Open" />
+            <MenuItem mnemonicParsing="false" onAction="#openImageSequence" text="Open Image Sequence" />
             <MenuItem mnemonicParsing="false" onAction="#saveModifiedImage" text="Save" />
             <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
         </Menu>
@@ -179,6 +180,7 @@
 				<MenuItem mnemonicParsing="false" onAction="#onApplyCannyEdgeDetector" text="Canny"/>
 			</Menu>
 			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContour" text="Active Contour"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContourOnImageSequence" text="Active Contour on Image Sequence"/>
 		</Menu>
          <Menu mnemonicParsing="false" text="Threshold">
              <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />

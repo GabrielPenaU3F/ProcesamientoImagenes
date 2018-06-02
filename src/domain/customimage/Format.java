@@ -10,6 +10,7 @@ public class Format {
     public static final String PGM = "pgm";
     public static final String BMP = "bmp";
     public static final String JPG = "jpg";
+    public static final String JPEG = "jpeg";
     public static final String PNG = "png";
 
     private String formatString;
@@ -22,6 +23,7 @@ public class Format {
         list.add(PGM);
         list.add(BMP);
         list.add(JPG);
+        list.add(JPEG);
         list.add(PNG);
         return list;
     }

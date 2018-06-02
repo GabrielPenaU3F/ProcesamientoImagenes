@@ -19,6 +19,7 @@ public class PresenterProvider {
             mainPresenter = new MainPresenter(
                     mainSceneController,
                     ActionProvider.provideLoadImageAction(),
+                    ActionProvider.provideLoadImageSequenceAction(),
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.providePutModifiedImageAction(),
                     ActionProvider.provideModifyPixelAction(),
@@ -175,6 +176,9 @@ public class PresenterProvider {
         return new ActiveContourPresenter(activeContourSceneController,
                 ActionProvider.provideApplyActiveContourAction(),
                 ActionProvider.provideGetImageAction(),
-                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+                ActionProvider.provideImageSequenceAcion(),
+                ActionProvider.provideApplyActiveContourOnImageSequenceAction(), PublishSubjectProvider
+                .provideOnModifiedImagePublishSubject
+                ());
     }
 }
