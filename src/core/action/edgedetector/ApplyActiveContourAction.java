@@ -94,14 +94,14 @@ public class ApplyActiveContourAction {
                      .filter(neighbor -> cycleOneContour.belongToObject(neighbor))
                      .forEach(neighbor -> {
                          addToLIn2.add(neighbor);
-                         cycleOneContour.addLInToMatrix(neighbor);
+                         cycleOneContour.updateFiValueForLInPoint(neighbor);
                      });
     }
 
     private void switchOutStepOne(ActiveContour cycleOneContour, List<XYPoint> addToLOut2, List<XYPoint> toRemoveFromLIn2, XYPoint xyPoint) {
         toRemoveFromLIn2.add(xyPoint);
         addToLOut2.add(xyPoint);
-        cycleOneContour.addLOutToMatrix(xyPoint);
+        cycleOneContour.updateFiValueForLOutPoint(xyPoint);
     }
 
     private void switchIn(CustomImage customImage, ActiveContour cycleOneContour, List<XYPoint> lOut, int backgroundGrayAverage, int objectGrayAverage) {
@@ -131,14 +131,14 @@ public class ApplyActiveContourAction {
                      .filter(neighbor -> cycleOneContour.belongToBackground(neighbor))
                      .forEach(neighbor -> {
                          addToLOut.add(neighbor);
-                         cycleOneContour.addLOutToMatrix(neighbor);
+                         cycleOneContour.updateFiValueForLOutPoint(neighbor);
                      });
     }
 
     private void switchInStepOne(ActiveContour cycleOneContour, List<XYPoint> removeFromLOut, List<XYPoint> addToLIn, XYPoint xyPoint) {
         removeFromLOut.add(xyPoint);
         addToLIn.add(xyPoint);
-        cycleOneContour.addLInToMatrix(xyPoint);
+        cycleOneContour.updateFiValueForLInPoint(xyPoint);
     }
 
     private double checkFdFunction(XYPoint xyPoint, CustomImage customImage, int backgroundGrayAverage, int objectGrayAverage) {

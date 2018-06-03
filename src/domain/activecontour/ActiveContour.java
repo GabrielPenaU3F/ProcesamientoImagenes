@@ -200,12 +200,12 @@ public class ActiveContour {
     }
 
     //Set fi(x) = -1
-    public void addLInToMatrix(XYPoint xyPoint) {
+    public void updateFiValueForLInPoint(XYPoint xyPoint) {
         content[xyPoint.getX()][xyPoint.getY()] = L_IN_VALUE;
     }
 
     //Set fi(x) = 1
-    public void addLOutToMatrix(XYPoint xyPoint) {
+    public void updateFiValueForLOutPoint(XYPoint xyPoint) {
         content[xyPoint.getX()][xyPoint.getY()] = L_OUT_VALUE;
     }
 
