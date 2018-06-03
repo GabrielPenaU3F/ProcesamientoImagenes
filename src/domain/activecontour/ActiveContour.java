@@ -21,7 +21,7 @@ public class ActiveContour {
     private final List<XYPoint> lOut;
     private final List<XYPoint> lIn;
     private final SelectionSquare selectionSquare;
-    private int[][] content;
+    private double[][] content;
 
     public ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage) {
         this.width = width;
@@ -41,7 +41,7 @@ public class ActiveContour {
     }
 
     private ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage,
-            List<XYPoint> lOut, List<XYPoint> lIn, int[][] content) {
+            List<XYPoint> lOut, List<XYPoint> lIn, double[][] content) {
         this.width = width;
         this.height = height;
         this.selectionSquare = selectionSquare;
@@ -99,8 +99,8 @@ public class ActiveContour {
         return positions;
     }
 
-    private int[][] initializeContent(int firstRowObject, int secondRowObject, int firstColumnObject, int secondColumnObject) {
-        int matrix[][] = new int[width][height];
+    private double[][] initializeContent(int firstRowObject, int secondRowObject, int firstColumnObject, int secondColumnObject) {
+        double matrix[][] = new double[width][height];
 
         // Fill matrix with background value
         for (int row = 0; row < width; row++) {
@@ -229,7 +229,11 @@ public class ActiveContour {
         return selectionSquare;
     }
 
-    public int[][] getContent() {
+    public double[][] getContent() {
         return content;
+    }
+
+    public void setFiFunction(double[][] fiFunction) {
+        this.content = fiFunction;
     }
 }

@@ -7,6 +7,7 @@ import domain.activecontour.ActiveContour;
 import domain.activecontour.ContourCustomImage;
 import domain.activecontour.XYPoint;
 import domain.customimage.CustomImage;
+import domain.mask.filter.GaussianMask;
 
 public class ApplyActiveContourAction {
 
@@ -27,18 +28,79 @@ public class ApplyActiveContourAction {
     }
 
     private ContourCustomImage applyActiveContour(CustomImage customImage, ActiveContour activeContour) {
-        ActiveContour cycleOneContour = applyCycleOne(customImage, activeContour);
-        //ActiveContour cycleTwoContour = applyCycleTwo(customImage, cycleOneContour);
 
-        return new ContourCustomImage(customImage, cycleOneContour);
+        ActiveContour cycleOneContour = applyCycleOne(customImage, activeContour);
+        ActiveContour cycleTwoContour = applyCycleTwo(cycleOneContour);
+
+        return new ContourCustomImage(customImage, cycleTwoContour);
     }
 
-    /*
-    private ActiveContour applyCycleTwo(CustomImage customImage, ActiveContour cycleOneContour) {
 
+    private ActiveContour applyCycleTwo(ActiveContour cycleOneContour) {
 
+        ActiveContour cycleTwoContour = ActiveContour.copy(cycleOneContour);
 
-    }*/
+        GaussianMask gaussianMask = new GaussianMask(1);
+        cycleTwoContour.setFiFunction(gaussianMask.apply(cycleTwoContour.getContent()));
+
+        // Step 0
+        List<XYPoint> lOut = cycleTwoContour.getlOut();
+        List<XYPoint> lIn = cycleTwoContour.getlIn();
+
+        //Step 1
+        cycleTwoSwitchIn(cycleTwoContour, lOut);
+
+        // Step 2
+        cycleTwoContour.moveInvalidLInToObject();
+
+        //Step 3
+        cycleTwoSwitchOut(cycleTwoContour, lIn);
+
+        //Step 4
+        cycleTwoContour.moveInvalidLOutToBackground();
+
+        return cycleTwoContour;
+
+    }
+
+    private void cycleTwoSwitchOut(ActiveContour cycleTwoContour, List<XYPoint> lIn) {
+
+        List<XYPoint> addToLOut2 = new ArrayList<>();
+        List<XYPoint> addToLIn2 = new ArrayList<>();
+        List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
+
+        for (XYPoint xyPoint : lIn) {
+
+            if (cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] > 0) {
+                fillSwitchOutLists(cycleTwoContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
+            }
+
+        }
+
+        cycleTwoContour.removeLIn(toRemoveFromLIn2);
+        cycleTwoContour.addLOut(addToLOut2);
+        cycleTwoContour.addLIn(addToLIn2);
+
+    }
+
+    private void cycleTwoSwitchIn(ActiveContour cycleTwoContour, List<XYPoint> lOut) {
+
+        List<XYPoint> removeFromLOut = new ArrayList<>();
+        List<XYPoint> addToLIn = new ArrayList<>();
+        List<XYPoint> addToLOut = new ArrayList<>();
+
+        for (XYPoint xyPoint : lOut) {
+
+            if(cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] < 0) {
+                fillSwitchInLists(cycleTwoContour, removeFromLOut, addToLIn, addToLOut, xyPoint);
+            }
+
+        }
+        cycleTwoContour.addLIn(addToLIn);
+        cycleTwoContour.removeLOut(removeFromLOut);
+        cycleTwoContour.addLOut(addToLOut);
+
+    }
 
     private ActiveContour applyCycleOne(CustomImage customImage, ActiveContour activeContour) {
 

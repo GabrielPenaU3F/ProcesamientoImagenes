@@ -1,5 +1,7 @@
 package domain.mask.filter;
 
+import core.provider.ServiceProvider;
+import core.service.MatrixService;
 import domain.customimage.CustomImage;
 import domain.customimage.RGB;
 import domain.mask.Mask;
@@ -7,6 +9,7 @@ import domain.mask.Mask;
 public class GaussianMask extends Mask {
 
     protected final double standardDeviation;
+    private MatrixService matrixService;
 
     public GaussianMask(double standardDeviation) {
         super(Type.GAUSSIAN, createSize(standardDeviation));
@@ -14,6 +17,8 @@ public class GaussianMask extends Mask {
         this.standardDeviation = standardDeviation;
         this.matrix = createMatrix(getSize());
         this.factor = createFactor();
+
+        this.matrixService = ServiceProvider.provideMatrixService();
     }
 
     public GaussianMask(double standardDeviation, int size, Type type) {
@@ -85,4 +90,47 @@ public class GaussianMask extends Mask {
 
         return new RGB(red, green, blue);
     }
+
+    //Apply mask to a simple matrix
+    public double[][] apply(double[][] targetMatrix) {
+
+        Integer width = targetMatrix.length;
+        Integer height = targetMatrix[0].length;
+        double[][] newMatrix = new double[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                newMatrix[x][y] = applyMaskToPixel(targetMatrix, x, y);
+            }
+        }
+
+        return newMatrix;
+    }
+
+    //Basic convolution algorithm with a simple matrix
+    public double applyMaskToPixel(double[][] targetMatrix, int x, int y) {
+
+        int width = targetMatrix.length;
+        int height = targetMatrix[0].length;
+
+        int newValue = 0;
+
+        for (int j = y - (size / 2); j <= y + (size / 2); j++) {
+            for (int i = x - (size / 2); i <= x + (size / 2); i++) {
+
+                if (this.matrixService.isPositionValid(width, height, i, j)) {
+
+                    int column = j + (size / 2) - y;
+                    int row = i + (size / 2) - x;
+                    double value = this.matrix[row][column];
+
+                    newValue += targetMatrix[i][j] * value * factor;
+
+                }
+            }
+        }
+
+        return newValue;
+    }
+
 }

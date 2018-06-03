@@ -177,4 +177,8 @@ public class MatrixService {
         neighbors.add(new RGB(matrix[1][1], matrix[1][1], matrix[1][1]));
         return neighbors;
     }
+
+    public boolean isPositionValid(int width, int height, int i, int j) {
+        return j >= 0 && j < height && i >= 0 && i < width;
+    }
 }
