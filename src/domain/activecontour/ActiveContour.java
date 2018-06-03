@@ -185,10 +185,12 @@ public class ActiveContour {
         return rowIsValid && columnIsValid;
     }
 
+    //fi(x) = 3
     public boolean belongToBackground(XYPoint xyPoint) {
         return hasValue(xyPoint, BACKGROUND_VALUE);
     }
 
+    //fi(x) = -3
     public boolean belongToObject(XYPoint xyPoint) {
         return hasValue(xyPoint, OBJECT_VALUE);
     }
@@ -197,10 +199,12 @@ public class ActiveContour {
         return content[xyPoint.getX()][xyPoint.getY()] == value;
     }
 
+    //Set fi(x) = -1
     public void addLInToMatrix(XYPoint xyPoint) {
         content[xyPoint.getX()][xyPoint.getY()] = L_IN_VALUE;
     }
 
+    //Set fi(x) = 1
     public void addLOutToMatrix(XYPoint xyPoint) {
         content[xyPoint.getX()][xyPoint.getY()] = L_OUT_VALUE;
     }
