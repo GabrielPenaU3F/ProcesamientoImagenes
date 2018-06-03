@@ -28,8 +28,17 @@ public class ApplyActiveContourAction {
 
     private ContourCustomImage applyActiveContour(CustomImage customImage, ActiveContour activeContour) {
         ActiveContour cycleOneContour = applyCycleOne(customImage, activeContour);
-        return new ContourCustomImage(customImage, activeContour);
+        //ActiveContour cycleTwoContour = applyCycleTwo(customImage, cycleOneContour);
+
+        return new ContourCustomImage(customImage, cycleOneContour);
     }
+
+    /*
+    private ActiveContour applyCycleTwo(CustomImage customImage, ActiveContour cycleOneContour) {
+
+
+
+    }*/
 
     private ActiveContour applyCycleOne(CustomImage customImage, ActiveContour activeContour) {
 
