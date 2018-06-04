@@ -39,4 +39,8 @@ public class ContourCustomImage {
 
         return new CustomImage(imageWithContour, customImage.getFormatString()).toFXImage();
     }
+
+    public boolean hasFinished() {
+        return activeContour.hasAllValidLOutPoints(customImage) && activeContour.hasAllValidLInPoints(customImage);
+    }
 }

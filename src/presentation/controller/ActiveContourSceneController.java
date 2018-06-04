@@ -2,7 +2,9 @@ package presentation.controller;
 
 import core.provider.PresenterProvider;
 import domain.activecontour.ActiveContourMode;
+import domain.activecontour.FdFunctionMode;
 import domain.activecontour.SelectionSquare;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -34,6 +36,10 @@ public class ActiveContourSceneController {
     public TextField steps;
     @FXML
     public Label steps_label;
+    @FXML
+    public TextField epsilon;
+    @FXML
+    public Label epsilon_label;
 
     private CustomImageView customImageView;
 
@@ -46,6 +52,7 @@ public class ActiveContourSceneController {
     @FXML
     public void initialize() {
         this.activeContourPresenter.initialize();
+        FdFunctionMode.classic();
     }
 
     @FXML
@@ -77,6 +84,14 @@ public class ActiveContourSceneController {
         this.nextButton.setDisable(false);
     }
 
+    public void disableGetBackgroundButton() {
+        this.getBackgroundButton.setDisable(true);
+    }
+
+    public void disableGetObjectButton() {
+        this.getObjectButton.setDisable(true);
+    }
+
     @FXML
     public void onApply() {
         this.activeContourPresenter.onApply();
@@ -90,13 +105,11 @@ public class ActiveContourSceneController {
     @FXML
     public void onGetObject() {
         this.activeContourPresenter.onGetInsidePressed();
-        this.getObjectButton.setDisable(true);
     }
 
     @FXML
     public void onGetBackground() {
         this.activeContourPresenter.onGetOutsidePressed();
-        this.getBackgroundButton.setDisable(true);
     }
 
     @FXML
@@ -132,6 +145,14 @@ public class ActiveContourSceneController {
         return Integer.parseInt(stepsText);
     }
 
+    public double getEpsilon() {
+        String epsilonText = epsilon.getText();
+        if (epsilonText.trim().equals("")) {
+            return 0;
+        }
+        return Double.parseDouble(epsilonText);
+    }
+
     public void setImage(Image image) {
         this.customImageView.setImage(image);
     }
@@ -155,5 +176,15 @@ public class ActiveContourSceneController {
 
     public void disableStepsTextField() {
         steps.setDisable(true);
+    }
+
+    public void onUseEpsilon() {
+        boolean epsilonToggle = !epsilon.isDisabled();
+        epsilon.setDisable(epsilonToggle);
+        if(epsilonToggle) {
+            FdFunctionMode.classic();
+        } else {
+            FdFunctionMode.withEpsilon();
+        }
     }
 }

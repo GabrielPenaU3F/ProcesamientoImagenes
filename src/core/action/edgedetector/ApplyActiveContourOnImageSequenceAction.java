@@ -18,12 +18,12 @@ public class ApplyActiveContourOnImageSequenceAction {
         this.applyActiveContourAction = applyActiveContourAction;
     }
 
-    public List<ContourCustomImage> execute(List<CustomImage> customImages, ActiveContour activeContour) {
+    public List<ContourCustomImage> execute(List<CustomImage> customImages, ActiveContour activeContour, double epsilon) {
 
         List<ContourCustomImage> contourCustomImages = new ArrayList<>();
 
         CustomImage first = customImages.get(0);
-        ContourCustomImage contourCustomImage = applyActiveContourAction.execute(first, activeContour, STEPS);
+        ContourCustomImage contourCustomImage = applyActiveContourAction.executeAutomatically(first, activeContour, epsilon);
         contourCustomImages.add(contourCustomImage);
 
         List<CustomImage> list = new ArrayList<>(customImages);
@@ -31,11 +31,10 @@ public class ApplyActiveContourOnImageSequenceAction {
 
         for (CustomImage customImage : list) {
             ActiveContour previousActiveContour = ActiveContour.copy(contourCustomImage.getActiveContour());
-            contourCustomImage = applyActiveContourAction.execute(customImage, previousActiveContour, STEPS);
+            contourCustomImage = applyActiveContourAction.executeAutomatically(customImage, previousActiveContour, epsilon);
             contourCustomImages.add(contourCustomImage);
         }
 
         return contourCustomImages;
     }
-
 }
