@@ -1,8 +1,9 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
-import domain.activecontour.ActiveContourMode;
+import domain.activecontour.FdFunctionMode;
 import domain.activecontour.SelectionSquare;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -29,11 +30,15 @@ public class ActiveContourSceneController {
     @FXML
     public Button applyButton;
     @FXML
+    public Button prevButton;
+    @FXML
     public Button nextButton;
     @FXML
     public TextField steps;
     @FXML
     public Label steps_label;
+    @FXML
+    public TextField epsilon;
 
     private CustomImageView customImageView;
 
@@ -77,6 +82,41 @@ public class ActiveContourSceneController {
         this.nextButton.setDisable(false);
     }
 
+    public void disableGetBackgroundButton() {
+        this.getBackgroundButton.setDisable(true);
+    }
+
+    public void disableGetObjectButton() {
+        this.getObjectButton.setDisable(true);
+    }
+
+    public void enablePrevButton() {
+        this.prevButton.setDisable(false);
+    }
+
+    public void disablePrevButton() {
+        this.prevButton.setDisable(true);
+    }
+
+    @FXML
+    public void onUseEpsilon() {
+        boolean epsilonToggle = !epsilon.isDisabled();
+        epsilon.setDisable(epsilonToggle);
+        if (epsilonToggle) {
+            FdFunctionMode.classic();
+        } else {
+            FdFunctionMode.withEpsilon();
+        }
+    }
+
+    public double getEpsilon() {
+        String epsilonText = epsilon.getText();
+        if (epsilonText.trim().equals("")) {
+            return 0;
+        }
+        return Double.parseDouble(epsilonText);
+    }
+
     @FXML
     public void onApply() {
         this.activeContourPresenter.onApply();
@@ -85,6 +125,10 @@ public class ActiveContourSceneController {
     @FXML
     public void onNext() {
         this.activeContourPresenter.onNext();
+    }
+
+    public void onPrev() {
+        this.activeContourPresenter.onPrev();
     }
 
     @FXML
@@ -151,9 +195,5 @@ public class ActiveContourSceneController {
     public void closeWindow() {
         Stage stage = (Stage) this.startButton.getScene().getWindow();
         stage.close();
-    }
-
-    public void disableStepsTextField() {
-        steps.setDisable(true);
     }
 }

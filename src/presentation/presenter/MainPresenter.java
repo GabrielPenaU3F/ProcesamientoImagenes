@@ -1,5 +1,7 @@
 package presentation.presenter;
 
+import java.util.List;
+
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
@@ -174,7 +176,10 @@ public class MainPresenter {
     }
 
     public void onOpenImageSequence() {
-        setImageOnCustomImageView(this.loadImageSequenceAction.execute().get(0));
+        List<CustomImage> customImages = this.loadImageSequenceAction.execute();
+        if(!customImages.isEmpty()) {
+            setImageOnCustomImageView(customImages.get(0));
+        }
     }
 
     private void setImageOnCustomImageView(CustomImage customImage) {

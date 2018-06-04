@@ -111,9 +111,9 @@ public class CustomImage {
 
     public int getAverageValue(Integer x, Integer y) {
         RGB pixelValue = getPixelValue(x, y);
-        return (pixelValue.getRed() +
+        return Math.round((pixelValue.getRed() +
                 pixelValue.getGreen() +
-                pixelValue.getBlue()) / 3;
+                pixelValue.getBlue()) / 3);
     }
 
     public RGB getPixelValue(Integer x, Integer y) {

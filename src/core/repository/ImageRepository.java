@@ -39,7 +39,7 @@ public class ImageRepository {
     }
 
     public List<CustomImage> saveImageSequence(List<CustomImage> imageSequence) {
-        this.image = imageSequence.get(0);
+        if(!imageSequence.isEmpty()) this.image = imageSequence.get(0);
         this.imageSequence = imageSequence;
         return imageSequence;
     }

@@ -348,7 +348,7 @@ public class MainSceneController {
     }
 
     @FXML
-    public void onHoughTransform(ActionEvent actionEvent) {
+    public void onHoughTransform() {
         this.mainPresenter.onHoughTransform();
     }
 
