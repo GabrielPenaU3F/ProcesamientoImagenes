@@ -2,17 +2,17 @@ package domain.activecontour;
 
 public class ActiveContourMode {
 
-    private static boolean single;
+    private static boolean mode;
 
     public static boolean isSingle() {
-        return single;
+        return mode;
     }
 
     public static void single() {
-        single = true;
+        mode = true;
     }
 
     public static void sequence() {
-        single = false;
+        mode = false;
     }
 }

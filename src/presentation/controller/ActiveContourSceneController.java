@@ -1,7 +1,7 @@
 package presentation.controller;
 
 import core.provider.PresenterProvider;
-import domain.activecontour.ActiveContourMode;
+import domain.activecontour.FdFunctionMode;
 import domain.activecontour.SelectionSquare;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -34,6 +34,8 @@ public class ActiveContourSceneController {
     public TextField steps;
     @FXML
     public Label steps_label;
+    @FXML
+    public TextField epsilon;
 
     private CustomImageView customImageView;
 
@@ -75,6 +77,33 @@ public class ActiveContourSceneController {
 
     public void enableNextButton() {
         this.nextButton.setDisable(false);
+    }
+
+    public void disableGetBackgroundButton() {
+        this.getBackgroundButton.setDisable(true);
+    }
+
+    public void disableGetObjectButton() {
+        this.getObjectButton.setDisable(true);
+    }
+
+    @FXML
+    public void onUseEpsilon() {
+        boolean epsilonToggle = !epsilon.isDisabled();
+        epsilon.setDisable(epsilonToggle);
+        if (epsilonToggle) {
+            FdFunctionMode.classic();
+        } else {
+            FdFunctionMode.withEpsilon();
+        }
+    }
+
+    public double getEpsilon() {
+        String epsilonText = epsilon.getText();
+        if (epsilonText.trim().equals("")) {
+            return 0;
+        }
+        return Double.parseDouble(epsilonText);
     }
 
     @FXML

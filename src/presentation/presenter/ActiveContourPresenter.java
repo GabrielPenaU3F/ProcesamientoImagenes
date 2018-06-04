@@ -10,6 +10,7 @@ import core.action.image.GetImageAction;
 import domain.activecontour.ActiveContour;
 import domain.activecontour.ActiveContourMode;
 import domain.activecontour.ContourCustomImage;
+import domain.activecontour.FdFunctionMode;
 import domain.activecontour.SelectionSquare;
 import domain.customimage.CustomImage;
 import io.reactivex.subjects.PublishSubject;
@@ -20,6 +21,9 @@ import presentation.controller.ActiveContourSceneController;
 import presentation.view.CustomImageView;
 
 public class ActiveContourPresenter {
+
+    private static final int STARTER_STEPS = 1;
+    private static final double DEFAULT_EPSILON = 0;
 
     private final ActiveContourSceneController view;
     private final GetImageAction getImageAction;
@@ -58,6 +62,7 @@ public class ActiveContourPresenter {
                 .withSelectionMode());
 
         onInitializeContours();
+        FdFunctionMode.classic();
     }
 
     public void onInitializeContours() {
@@ -103,14 +108,14 @@ public class ActiveContourPresenter {
     private void onStartSingleMode(SelectionSquare selectionSquare) {
         if (currentCustomImage != null) {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
-            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, 1));
+            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, STARTER_STEPS, DEFAULT_EPSILON));
         }
     }
 
     private void onStartSequenceMode(SelectionSquare selectionSquare) {
         if (currentImages != null && !currentImages.isEmpty()) {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
-            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour, view.getSteps());
+            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour, view.getSteps(), view.getEpsilon());
         }
 
         view.enableNextButton();
@@ -123,7 +128,7 @@ public class ActiveContourPresenter {
     public void onApply() {
         if (view.getSteps() > 0) {
             if (outsideGrayAverage != null && currentCustomImage != null) {
-                setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps()));
+                setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps(), view.getEpsilon()));
             }
         } else {
             view.stepsMustBeGreaterThanZero();
@@ -143,6 +148,7 @@ public class ActiveContourPresenter {
         SelectionSquare selectionSquare = view.getSelectionSquare();
         if (selectionSquare.isValid()) {
             objectGrayAverage = getObjectGrayAverage(currentCustomImage, selectionSquare);
+            view.disableGetObjectButton();
         } else {
             view.mustSelectArea();
         }
@@ -171,11 +177,13 @@ public class ActiveContourPresenter {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Color color = reader.getColor(x, y);
-                value += ((color.getRed() + color.getGreen() + color.getBlue()) / 3);
+                double value1 = Math.round((color.getRed() + color.getGreen() + color.getBlue()) / 3);
+                value += value1;
             }
         }
 
         outsideGrayAverage = value / (width * height);
+        view.disableGetBackgroundButton();
     }
 
     public void onFinish() {
