@@ -21,6 +21,8 @@ import presentation.view.CustomImageView;
 
 public class ActiveContourPresenter {
 
+    private static final int DEFAULT_EPSILON = 0;
+    private static final int STARTER_STEPS = 1;
     private final ActiveContourSceneController view;
     private final GetImageAction getImageAction;
     private final GetImageSequenceAction getImageSequenceAction;
@@ -105,14 +107,14 @@ public class ActiveContourPresenter {
     private void onStartSingleMode(SelectionSquare selectionSquare) {
         if (currentCustomImage != null) {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
-            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, 1));
+            setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, STARTER_STEPS, DEFAULT_EPSILON));
         }
     }
 
     private void onStartSequenceMode(SelectionSquare selectionSquare) {
         if (currentImages != null && !currentImages.isEmpty()) {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
-            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour);
+            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour, view.getEpsilon());
         }
 
         view.enableNextButton();
@@ -125,7 +127,7 @@ public class ActiveContourPresenter {
     public void onApply() {
         if (view.getSteps() > 0) {
             if (outsideGrayAverage != null && currentCustomImage != null) {
-                setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps()));
+                setCurrentContourCustomImage(applyActiveContourAction.execute(currentCustomImage, activeContour, view.getSteps(), view.getEpsilon()));
             }
         } else {
             view.stepsMustBeGreaterThanZero();
@@ -148,6 +150,7 @@ public class ActiveContourPresenter {
         } else {
             view.mustSelectArea();
         }
+        view.disableGetObjectButton();
     }
 
     private int getObjectGrayAverage(CustomImage customImage, SelectionSquare selectionSquare) {
@@ -178,6 +181,7 @@ public class ActiveContourPresenter {
         }
 
         outsideGrayAverage = value / (width * height);
+        view.disableGetBackgroundButton();
     }
 
     public void onFinish() {

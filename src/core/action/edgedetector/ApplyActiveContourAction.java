@@ -5,28 +5,34 @@ import java.util.List;
 
 import domain.activecontour.ActiveContour;
 import domain.activecontour.ContourCustomImage;
+import domain.activecontour.FdFunction;
+import domain.activecontour.FdFunctionMode;
 import domain.activecontour.XYPoint;
 import domain.customimage.CustomImage;
 
 public class ApplyActiveContourAction {
 
-    public ContourCustomImage execute(CustomImage customImage, ActiveContour activeContour, int steps) {
-        return recursive(customImage, activeContour, steps);
+    public ContourCustomImage execute(CustomImage customImage, ActiveContour activeContour, int steps, double epsilon) {
+        return recursive(customImage, activeContour, steps, epsilon);
     }
 
-    private ContourCustomImage recursive(CustomImage customImage, ActiveContour activeContour, int steps) {
+    public ContourCustomImage executeAutomatically(CustomImage customImage, ActiveContour activeContour, double epsilon) {
+        return recursive(customImage, activeContour, Integer.MAX_VALUE, epsilon);
+    }
 
-        ContourCustomImage contourCustomImage = applyActiveContour(customImage, activeContour);
+    private ContourCustomImage recursive(CustomImage customImage, ActiveContour activeContour, int steps, double epsilon) {
+
+        ContourCustomImage contourCustomImage = applyActiveContour(customImage, activeContour, epsilon);
 
         steps--;
         if (steps == 0) {
             return contourCustomImage;
         }
 
-        return recursive(contourCustomImage.getCustomImage(), contourCustomImage.getActiveContour(), steps);
+        return recursive(contourCustomImage.getCustomImage(), contourCustomImage.getActiveContour(), steps, epsilon);
     }
 
-    private ContourCustomImage applyActiveContour(CustomImage customImage, ActiveContour activeContour) {
+    private ContourCustomImage applyActiveContour(CustomImage customImage, ActiveContour activeContour, double epsilon) {
 
         // Step 1
         List<XYPoint> lOut = activeContour.getlOut();
@@ -41,7 +47,7 @@ public class ApplyActiveContourAction {
 
         for (XYPoint xyPoint : lOut) {
 
-            if (checkFdFunction(xyPoint, customImage, backgroundGrayAverage, objectGrayAverage) > 0) {
+            if (!checkFdFunction(xyPoint, customImage, objectGrayAverage, backgroundGrayAverage, epsilon)) {
                 removeFromLOut.add(xyPoint);
                 addToLIn.add(xyPoint);
                 activeContour.addLInToMatrix(xyPoint);
@@ -70,7 +76,7 @@ public class ApplyActiveContourAction {
 
         for (XYPoint xyPoint : lIn) {
 
-            if (checkFdFunction(xyPoint, customImage, backgroundGrayAverage, objectGrayAverage) < 0) {
+            if (checkFdFunction(xyPoint, customImage, objectGrayAverage, backgroundGrayAverage, epsilon)) {
                 toRemoveFromLIn2.add(xyPoint);
                 addToLOut2.add(xyPoint);
                 activeContour.addLOutToMatrix(xyPoint);
@@ -95,9 +101,13 @@ public class ApplyActiveContourAction {
         return new ContourCustomImage(customImage, activeContour);
     }
 
-    private double checkFdFunction(XYPoint xyPoint, CustomImage customImage, int backgroundGrayAverage, int objectGrayAverage) {
+    private boolean checkFdFunction(XYPoint xyPoint, CustomImage customImage, int objectGrayAverage, int backgroundGrayAverage, double epsilon) {
         int imageAverageValue = customImage.getAverageValue(xyPoint.getX(), xyPoint.getY());
-        return Math.log(module(backgroundGrayAverage, imageAverageValue) / module(objectGrayAverage, imageAverageValue));
+        if(FdFunctionMode.isClassic()) {
+            return FdFunction.classicLower(imageAverageValue, objectGrayAverage, backgroundGrayAverage);
+        }
+
+        return FdFunction.epsilonLower(imageAverageValue, objectGrayAverage, epsilon);
     }
 
     private double module(int value, int imageValue) {

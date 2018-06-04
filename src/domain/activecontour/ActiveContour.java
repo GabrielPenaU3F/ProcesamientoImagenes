@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import domain.customimage.CustomImage;
+
 public class ActiveContour {
 
     private static final int OBJECT_VALUE = -3;
@@ -221,11 +223,55 @@ public class ActiveContour {
         lOut.removeAll(toRemoveFromLOut);
     }
 
-    public SelectionSquare getSelectionSquare() {
+    private SelectionSquare getSelectionSquare() {
         return selectionSquare;
     }
 
-    public int[][] getContent() {
+    private int[][] getContent() {
         return content;
+    }
+
+    public boolean hasAllValidLInPoints(CustomImage customImage) {
+        return lIn.stream().allMatch(xyPoint -> {
+            boolean b = hasAllNeighborsWithFdFunctionValueHigherThanZero(xyPoint, customImage);
+            System.out.println("object point: " + "x= " + xyPoint.getX() + " y= " + xyPoint.getY() + " result= " + b);
+            return b;
+        });
+    }
+
+    public boolean hasAllValidLOutPoints(CustomImage customImage) {
+        return lOut.stream().allMatch(xyPoint -> {
+            boolean b = hasAllNeighborsWithFdFunctionValueLowerThanZero(xyPoint, customImage);
+            System.out.println("background point: " + "x= " + xyPoint.getX() + " y= " + xyPoint.getY() + " result= " + b);
+            return b;
+        });
+    }
+
+    private boolean hasAllNeighborsWithFdFunctionValueHigherThanZero(XYPoint xyPoint, CustomImage customImage) {
+        int row = xyPoint.getX();
+        int column = xyPoint.getY();
+        return hasFdFunctionValueHigherThanZero(row - 1, column, customImage) &&
+                hasFdFunctionValueHigherThanZero(row + 1, column, customImage) &&
+                hasFdFunctionValueHigherThanZero(row, column - 1, customImage) &&
+                hasFdFunctionValueHigherThanZero(row, column + 1, customImage);
+    }
+
+    private boolean hasAllNeighborsWithFdFunctionValueLowerThanZero(XYPoint xyPoint, CustomImage customImage) {
+        int row = xyPoint.getX();
+        int column = xyPoint.getY();
+        return hasFdFunctionValueLowerThanZero(row - 1, column, customImage) &&
+                hasFdFunctionValueLowerThanZero(row + 1, column, customImage) &&
+                hasFdFunctionValueLowerThanZero(row, column - 1, customImage) &&
+                hasFdFunctionValueLowerThanZero(row, column + 1, customImage);
+    }
+
+    private boolean hasFdFunctionValueHigherThanZero(int row, int column, CustomImage customImage) {
+        boolean checkFdFunction = FdFunction.classicHigher(customImage.getAverageValue(row, column), objectGrayAverage, backgroundGrayAverage);
+        return hasValidPosition(row, column) && checkFdFunction;
+    }
+
+    private boolean hasFdFunctionValueLowerThanZero(int row, int column, CustomImage customImage) {
+        boolean checkFdFunction = FdFunction.classicLower(customImage.getAverageValue(row, column), objectGrayAverage, backgroundGrayAverage);
+        return hasValidPosition(row, column) && checkFdFunction;
     }
 }
