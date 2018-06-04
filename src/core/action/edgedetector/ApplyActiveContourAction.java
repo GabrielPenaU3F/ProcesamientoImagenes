@@ -20,19 +20,34 @@ public class ApplyActiveContourAction {
         ContourCustomImage contourCustomImage = applyActiveContour(customImage, activeContour);
 
         steps--;
-        if (steps == 0) {
+        ActiveContour cycleOneContour = contourCustomImage.getActiveContour();
+        if (objectHasBeenFound(customImage, cycleOneContour)) {
+            return new ContourCustomImage(customImage, applyCycleTwo(cycleOneContour));
+        } else if (steps == 0) {
             return contourCustomImage;
         }
 
         return recursive(contourCustomImage.getCustomImage(), contourCustomImage.getActiveContour(), steps);
     }
 
+    private boolean objectHasBeenFound(CustomImage image, ActiveContour activeContour) {
+
+        for (XYPoint lOutPoint : activeContour.getlOut()) {
+            if (checkFdFunction(lOutPoint, image, activeContour.getBackgroundGrayAverage(), activeContour.getObjectGrayAverage()) > 0) return false;
+        }
+
+        for (XYPoint lInPoint : activeContour.getlIn()) {
+            if (checkFdFunction(lInPoint, image, activeContour.getBackgroundGrayAverage(), activeContour.getObjectGrayAverage()) < 0) return false;
+        }
+
+        return true;
+    }
+
     private ContourCustomImage applyActiveContour(CustomImage customImage, ActiveContour activeContour) {
 
         ActiveContour cycleOneContour = applyCycleOne(customImage, activeContour);
-        ActiveContour cycleTwoContour = applyCycleTwo(cycleOneContour);
 
-        return new ContourCustomImage(customImage, cycleTwoContour);
+        return new ContourCustomImage(customImage, cycleOneContour);
     }
 
 
