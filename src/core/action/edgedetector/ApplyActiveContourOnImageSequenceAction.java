@@ -1,7 +1,5 @@
 package core.action.edgedetector;
 
-import static java.lang.Thread.sleep;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +9,18 @@ import domain.customimage.CustomImage;
 
 public class ApplyActiveContourOnImageSequenceAction {
 
-    private static final int STEPS = 20;
     private final ApplyActiveContourAction applyActiveContourAction;
 
     public ApplyActiveContourOnImageSequenceAction(ApplyActiveContourAction applyActiveContourAction) {
         this.applyActiveContourAction = applyActiveContourAction;
     }
 
-    public List<ContourCustomImage> execute(List<CustomImage> customImages, ActiveContour activeContour) {
+    public List<ContourCustomImage> execute(List<CustomImage> customImages, ActiveContour activeContour, int steps) {
 
         List<ContourCustomImage> contourCustomImages = new ArrayList<>();
 
         CustomImage first = customImages.get(0);
-        ContourCustomImage contourCustomImage = applyActiveContourAction.execute(first, activeContour, STEPS);
+        ContourCustomImage contourCustomImage = applyActiveContourAction.execute(first, activeContour, steps);
         contourCustomImages.add(contourCustomImage);
 
         List<CustomImage> list = new ArrayList<>(customImages);
@@ -31,7 +28,7 @@ public class ApplyActiveContourOnImageSequenceAction {
 
         for (CustomImage customImage : list) {
             ActiveContour previousActiveContour = ActiveContour.copy(contourCustomImage.getActiveContour());
-            contourCustomImage = applyActiveContourAction.execute(customImage, previousActiveContour, STEPS);
+            contourCustomImage = applyActiveContourAction.execute(customImage, previousActiveContour, steps);
             contourCustomImages.add(contourCustomImage);
         }
 

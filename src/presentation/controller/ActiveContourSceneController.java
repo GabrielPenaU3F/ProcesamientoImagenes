@@ -152,8 +152,4 @@ public class ActiveContourSceneController {
         Stage stage = (Stage) this.startButton.getScene().getWindow();
         stage.close();
     }
-
-    public void disableStepsTextField() {
-        steps.setDisable(true);
-    }
 }

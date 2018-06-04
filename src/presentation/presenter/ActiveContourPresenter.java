@@ -77,8 +77,6 @@ public class ActiveContourPresenter {
                     view.setImage(modifiedImage);
                 }
             });
-
-            view.disableStepsTextField();
         }
 
         view.disableNextButton();
@@ -112,7 +110,7 @@ public class ActiveContourPresenter {
     private void onStartSequenceMode(SelectionSquare selectionSquare) {
         if (currentImages != null && !currentImages.isEmpty()) {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
-            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour);
+            contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour, view.getSteps());
         }
 
         view.enableNextButton();
