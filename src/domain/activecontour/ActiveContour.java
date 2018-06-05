@@ -44,7 +44,6 @@ public class ActiveContour {
         this.height = height;
         this.backgroundGrayAverage = backgroundGrayAverage;
         this.objectGrayAverage = objectGrayAverage;
-
         this.lOut = lOut;
         this.lIn = lIn;
         this.content = content;

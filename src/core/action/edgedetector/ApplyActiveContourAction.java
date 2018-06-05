@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.activecontour.ActiveContour;
+import domain.activecontour.ActiveContourMode;
 import domain.activecontour.ContourCustomImage;
 import domain.activecontour.FdFunction;
 import domain.activecontour.FdFunctionMode;
@@ -23,7 +24,11 @@ public class ApplyActiveContourAction {
 
         ActiveContour cycleOneContour = contourCustomImage.getActiveContour();
         if (objectHasBeenFound(customImage, cycleOneContour, epsilon)) {
-            return new ContourCustomImage(customImage, applyCycleTwo(cycleOneContour));
+            // Fixme cannot apply cycle two on image sequence
+            if(ActiveContourMode.isSingle()) {
+                cycleOneContour = applyCycleTwo(cycleOneContour);
+            }
+            return new ContourCustomImage(customImage, cycleOneContour);
         } else if (steps == 0) {
             return contourCustomImage;
         } else {
@@ -59,6 +64,31 @@ public class ApplyActiveContourAction {
         return new ContourCustomImage(customImage, cycleOneContour);
     }
 
+    private ActiveContour applyCycleOne(CustomImage customImage, ActiveContour activeContour, double epsilon) {
+
+        ActiveContour cycleOneContour = ActiveContour.copy(activeContour);
+
+        // Step 1
+        List<XYPoint> lOut = cycleOneContour.getlOut();
+        List<XYPoint> lIn = cycleOneContour.getlIn();
+        int backgroundGrayAverage = cycleOneContour.getBackgroundGrayAverage();
+        int objectGrayAverage = cycleOneContour.getObjectGrayAverage();
+
+        // Step 2
+        switchIn(customImage, cycleOneContour, lOut, backgroundGrayAverage, objectGrayAverage, epsilon);
+
+        // Step 3
+        cycleOneContour.moveInvalidLInToObject();
+
+        // Step 4
+        switchOut(customImage, cycleOneContour, lIn, backgroundGrayAverage, objectGrayAverage, epsilon);
+
+        // Step 5
+        cycleOneContour.moveInvalidLOutToBackground();
+
+        return cycleOneContour;
+    }
+
     private ActiveContour applyCycleTwo(ActiveContour cycleOneContour) {
 
         ActiveContour cycleTwoContour = ActiveContour.copy(cycleOneContour);
@@ -85,25 +115,6 @@ public class ApplyActiveContourAction {
         return cycleTwoContour;
     }
 
-    private void cycleTwoSwitchOut(ActiveContour cycleTwoContour, List<XYPoint> lIn) {
-
-        List<XYPoint> addToLOut2 = new ArrayList<>();
-        List<XYPoint> addToLIn2 = new ArrayList<>();
-        List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
-
-        for (XYPoint xyPoint : lIn) {
-
-            if (cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] > 0) {
-                fillSwitchOutLists(cycleTwoContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
-            }
-
-        }
-
-        cycleTwoContour.removeLIn(toRemoveFromLIn2);
-        cycleTwoContour.addLOut(addToLOut2);
-        cycleTwoContour.addLIn(addToLIn2);
-    }
-
     private void cycleTwoSwitchIn(ActiveContour cycleTwoContour, List<XYPoint> lOut) {
 
         List<XYPoint> removeFromLOut = new ArrayList<>();
@@ -115,75 +126,29 @@ public class ApplyActiveContourAction {
             if (cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] < 0) {
                 fillSwitchInLists(cycleTwoContour, removeFromLOut, addToLIn, addToLOut, xyPoint);
             }
-
         }
+
         cycleTwoContour.addLIn(addToLIn);
         cycleTwoContour.removeLOut(removeFromLOut);
         cycleTwoContour.addLOut(addToLOut);
     }
 
-    private ActiveContour applyCycleOne(CustomImage customImage, ActiveContour activeContour, double epsilon) {
+    private void cycleTwoSwitchOut(ActiveContour cycleTwoContour, List<XYPoint> lIn) {
 
-        ActiveContour cycleOneContour = ActiveContour.copy(activeContour);
-
-        // Step 1
-        List<XYPoint> lOut = cycleOneContour.getlOut();
-        List<XYPoint> lIn = cycleOneContour.getlIn();
-        int backgroundGrayAverage = cycleOneContour.getBackgroundGrayAverage();
-        int objectGrayAverage = cycleOneContour.getObjectGrayAverage();
-
-        // Step 2
-        switchIn(customImage, cycleOneContour, lOut, backgroundGrayAverage, objectGrayAverage, epsilon);
-
-        // Step 3
-        cycleOneContour.moveInvalidLInToObject();
-
-        // Step 4
-        switchOut(customImage, cycleOneContour, lIn, backgroundGrayAverage, objectGrayAverage, epsilon);
-
-        // Step 5
-        cycleOneContour.moveInvalidLOutToBackground();
-
-        return cycleOneContour;
-    }
-
-    private void switchOut(CustomImage customImage, ActiveContour cycleOneContour, List<XYPoint> lIn, int backgroundGrayAverage,
-            int objectGrayAverage, double epsilon) {
         List<XYPoint> addToLOut2 = new ArrayList<>();
         List<XYPoint> addToLIn2 = new ArrayList<>();
         List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
 
         for (XYPoint xyPoint : lIn) {
-            if (checkFdFunctionIsLowerThanEpsilon(xyPoint, customImage, backgroundGrayAverage, objectGrayAverage, epsilon)) {
-                fillSwitchOutLists(cycleOneContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
+
+            if (cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] > 0) {
+                fillSwitchOutLists(cycleTwoContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
             }
         }
 
-        cycleOneContour.removeLIn(toRemoveFromLIn2);
-        cycleOneContour.addLOut(addToLOut2);
-        cycleOneContour.addLIn(addToLIn2);
-    }
-
-    private void fillSwitchOutLists(ActiveContour cycleOneContour, List<XYPoint> addToLOut2, List<XYPoint> addToLIn2, List<XYPoint> toRemoveFromLIn2,
-            XYPoint xyPoint) {
-        switchOutStepOne(cycleOneContour, addToLOut2, toRemoveFromLIn2, xyPoint);
-        switchOutStepTwo(cycleOneContour, addToLIn2, xyPoint);
-    }
-
-    private void switchOutStepTwo(ActiveContour cycleOneContour, List<XYPoint> addToLIn2, XYPoint xyPoint) {
-        cycleOneContour.getNeighbors(xyPoint).stream()
-                       .filter(neighbor -> cycleOneContour.hasValidPosition(neighbor.getX(), neighbor.getY()))
-                       .filter(neighbor -> cycleOneContour.belongToObject(neighbor))
-                       .forEach(neighbor -> {
-                           addToLIn2.add(neighbor);
-                           cycleOneContour.updateFiValueForLInPoint(neighbor);
-                       });
-    }
-
-    private void switchOutStepOne(ActiveContour cycleOneContour, List<XYPoint> addToLOut2, List<XYPoint> toRemoveFromLIn2, XYPoint xyPoint) {
-        toRemoveFromLIn2.add(xyPoint);
-        addToLOut2.add(xyPoint);
-        cycleOneContour.updateFiValueForLOutPoint(xyPoint);
+        cycleTwoContour.removeLIn(toRemoveFromLIn2);
+        cycleTwoContour.addLOut(addToLOut2);
+        cycleTwoContour.addLIn(addToLIn2);
     }
 
     private void switchIn(CustomImage customImage, ActiveContour cycleOneContour, List<XYPoint> lOut, int backgroundGrayAverage,
@@ -203,10 +168,45 @@ public class ApplyActiveContourAction {
         cycleOneContour.addLOut(addToLOut);
     }
 
+    private void switchOut(CustomImage customImage, ActiveContour cycleOneContour, List<XYPoint> lIn, int backgroundGrayAverage,
+            int objectGrayAverage, double epsilon) {
+        List<XYPoint> addToLOut2 = new ArrayList<>();
+        List<XYPoint> addToLIn2 = new ArrayList<>();
+        List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
+
+        for (XYPoint xyPoint : lIn) {
+            if (checkFdFunctionIsLowerThanEpsilon(xyPoint, customImage, backgroundGrayAverage, objectGrayAverage, epsilon)) {
+                fillSwitchOutLists(cycleOneContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
+            }
+        }
+
+        cycleOneContour.removeLIn(toRemoveFromLIn2);
+        cycleOneContour.addLOut(addToLOut2);
+        cycleOneContour.addLIn(addToLIn2);
+    }
+
     private void fillSwitchInLists(ActiveContour cycleOneContour, List<XYPoint> removeFromLOut, List<XYPoint> addToLIn, List<XYPoint> addToLOut,
             XYPoint xyPoint) {
         switchInStepOne(cycleOneContour, removeFromLOut, addToLIn, xyPoint);
         switchInStepTwo(cycleOneContour, addToLOut, xyPoint);
+    }
+
+    private void fillSwitchOutLists(ActiveContour cycleOneContour, List<XYPoint> addToLOut2, List<XYPoint> addToLIn2, List<XYPoint> toRemoveFromLIn2,
+            XYPoint xyPoint) {
+        switchOutStepOne(cycleOneContour, addToLOut2, toRemoveFromLIn2, xyPoint);
+        switchOutStepTwo(cycleOneContour, addToLIn2, xyPoint);
+    }
+
+    private void switchInStepOne(ActiveContour cycleOneContour, List<XYPoint> removeFromLOut, List<XYPoint> addToLIn, XYPoint xyPoint) {
+        removeFromLOut.add(xyPoint);
+        addToLIn.add(xyPoint);
+        cycleOneContour.updateFiValueForLInPoint(xyPoint);
+    }
+
+    private void switchOutStepOne(ActiveContour cycleOneContour, List<XYPoint> addToLOut2, List<XYPoint> toRemoveFromLIn2, XYPoint xyPoint) {
+        toRemoveFromLIn2.add(xyPoint);
+        addToLOut2.add(xyPoint);
+        cycleOneContour.updateFiValueForLOutPoint(xyPoint);
     }
 
     private void switchInStepTwo(ActiveContour cycleOneContour, List<XYPoint> addToLOut, XYPoint xyPoint) {
@@ -219,10 +219,14 @@ public class ApplyActiveContourAction {
                        });
     }
 
-    private void switchInStepOne(ActiveContour cycleOneContour, List<XYPoint> removeFromLOut, List<XYPoint> addToLIn, XYPoint xyPoint) {
-        removeFromLOut.add(xyPoint);
-        addToLIn.add(xyPoint);
-        cycleOneContour.updateFiValueForLInPoint(xyPoint);
+    private void switchOutStepTwo(ActiveContour cycleOneContour, List<XYPoint> addToLIn2, XYPoint xyPoint) {
+        cycleOneContour.getNeighbors(xyPoint).stream()
+                       .filter(neighbor -> cycleOneContour.hasValidPosition(neighbor.getX(), neighbor.getY()))
+                       .filter(neighbor -> cycleOneContour.belongToObject(neighbor))
+                       .forEach(neighbor -> {
+                           addToLIn2.add(neighbor);
+                           cycleOneContour.updateFiValueForLInPoint(neighbor);
+                       });
     }
 
     private boolean checkFdFunctionIsLowerThanEpsilon(XYPoint xyPoint, CustomImage customImage,
