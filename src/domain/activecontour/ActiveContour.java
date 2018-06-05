@@ -233,4 +233,8 @@ public class ActiveContour {
     public void setFiFunction(double[][] fiFunction) {
         this.content = fiFunction;
     }
+
+    public void setFi(int x, int y, double newFiValue) {
+        this.content[x][y] = newFiValue;
+    }
 }

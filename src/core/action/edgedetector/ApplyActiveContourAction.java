@@ -94,7 +94,6 @@ public class ApplyActiveContourAction {
         ActiveContour cycleTwoContour = ActiveContour.copy(cycleOneContour);
 
         GaussianMask gaussianMask = new GaussianMask(1);
-        cycleTwoContour.setFiFunction(gaussianMask.apply(cycleTwoContour.getContent()));
 
         // Step 0
         List<XYPoint> lOut = cycleTwoContour.getlOut();
@@ -123,7 +122,10 @@ public class ApplyActiveContourAction {
 
         for (XYPoint xyPoint : lOut) {
 
-            if (cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] < 0) {
+            int x = xyPoint.getX();
+            int y = xyPoint.getY();
+            double newFiValue = new GaussianMask(3).applyMaskToPixel(cycleTwoContour.getContent(), x, y);
+            if (newFiValue < 0) {
                 fillSwitchInLists(cycleTwoContour, removeFromLOut, addToLIn, addToLOut, xyPoint);
             }
         }
@@ -139,9 +141,14 @@ public class ApplyActiveContourAction {
         List<XYPoint> addToLIn2 = new ArrayList<>();
         List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
 
+
+
         for (XYPoint xyPoint : lIn) {
 
-            if (cycleTwoContour.getContent()[xyPoint.getX()][xyPoint.getY()] > 0) {
+            int x = xyPoint.getX();
+            int y = xyPoint.getY();
+            double newFiValue = new GaussianMask(3).applyMaskToPixel(cycleTwoContour.getContent(), x, y);
+            if (newFiValue > 0) {
                 fillSwitchOutLists(cycleTwoContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
             }
         }
