@@ -97,7 +97,7 @@ public class MatrixService {
 
     private List<RGB> obtainEveryNeighbors(int[][] matrix, int x, int y) {
         List<RGB> neighbors = new ArrayList<>();
-        for (int i=-1; i < 1; i++) {
+        for (int i=-1; i <= 1; i++) {
             neighbors.add(new RGB(matrix[x+i][y-1],matrix[x+i][y-1],matrix[x+i][y-1]));
             neighbors.add(new RGB(matrix[x+i][y+1],matrix[x+i][y+1],matrix[x+i][y+1]));
         }

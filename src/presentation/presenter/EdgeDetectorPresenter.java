@@ -9,17 +9,22 @@ import domain.mask.prewitt.PrewittXDerivativeMask;
 import domain.mask.prewitt.PrewittYDerivativeMask;
 import domain.mask.sobel.SobelXDerivativeMask;
 import domain.mask.sobel.SobelYDerivativeMask;
+import io.reactivex.subjects.PublishSubject;
+import javafx.scene.image.Image;
 
 public class EdgeDetectorPresenter {
 
     private final GetImageAction getImageAction;
     private final ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction;
+    private final PublishSubject<Image> imagePublishSubject;
 
     public EdgeDetectorPresenter(GetImageAction getImageAction,
-                                 ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction) {
+                                 ApplyEdgeDetectorByGradientAction applyEdgeDetectorByGradientAction,
+                                 PublishSubject<Image> imagePublishSubject) {
 
         this.getImageAction = getImageAction;
         this.applyEdgeDetectorByGradientAction = applyEdgeDetectorByGradientAction;
+        this.imagePublishSubject = imagePublishSubject;
     }
 
     public void onInitialize() {
@@ -38,12 +43,14 @@ public class EdgeDetectorPresenter {
     private void applyPrewittEdgeDetector(CustomImage customImage) {
         Mask prewittXDerivativeMask = new PrewittXDerivativeMask();
         Mask prewittYDerivativeMask = new PrewittYDerivativeMask();
-        applyEdgeDetectorByGradientAction.execute(customImage, prewittXDerivativeMask, prewittYDerivativeMask);
+        Image edgedImage = applyEdgeDetectorByGradientAction.execute(customImage, prewittXDerivativeMask, prewittYDerivativeMask);
+        imagePublishSubject.onNext(edgedImage);
     }
 
     private void applySobelEdgeDetector(CustomImage customImage) {
         Mask sobelXDerivativeMask = new SobelXDerivativeMask();
         Mask sobelYDerivativeMask = new SobelYDerivativeMask();
-        applyEdgeDetectorByGradientAction.execute(customImage, sobelXDerivativeMask, sobelYDerivativeMask);
+        Image edgedImage = applyEdgeDetectorByGradientAction.execute(customImage, sobelXDerivativeMask, sobelYDerivativeMask);
+        imagePublishSubject.onNext(edgedImage);
     }
 }

@@ -9,6 +9,8 @@ import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
+import core.action.edgedetector.hough.CircleHoughTransformAction;
+import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
@@ -33,11 +35,9 @@ import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
-import core.service.MatrixService;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 
-import javax.xml.ws.Service;
 
 class ActionProvider {
 
@@ -82,6 +82,7 @@ class ActionProvider {
     private static ApplyCannyDetectorAction applyCannyDetectorAction;
     private static ApplySusanDetectorAction applySusanDetectorAction;
     private static LineHoughTransformAction lineHoughTransformAction;
+    private static CircleHoughTransformAction circleHoughTransformAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -321,7 +322,6 @@ class ActionProvider {
         if (applyEdgeDetectorByGradientAction == null) {
             applyEdgeDetectorByGradientAction = new ApplyEdgeDetectorByGradientAction(
                     ServiceProvider.provideImageOperationsService(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ServiceProvider.provideMatrixService()
             );
         }
@@ -417,5 +417,12 @@ class ActionProvider {
             lineHoughTransformAction = new LineHoughTransformAction();
         }
         return lineHoughTransformAction;
+    }
+
+    public static CircleHoughTransformAction provideCircleHoughTransformAction() {
+        if (circleHoughTransformAction == null) {
+            circleHoughTransformAction = new CircleHoughTransformAction();
+        }
+        return circleHoughTransformAction;
     }
 }
