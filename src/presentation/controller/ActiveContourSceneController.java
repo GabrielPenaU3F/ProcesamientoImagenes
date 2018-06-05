@@ -3,6 +3,7 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import domain.activecontour.FdFunctionMode;
 import domain.activecontour.SelectionSquare;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -28,6 +29,8 @@ public class ActiveContourSceneController {
     public Button startButton;
     @FXML
     public Button applyButton;
+    @FXML
+    public Button prevButton;
     @FXML
     public Button nextButton;
     @FXML
@@ -87,6 +90,14 @@ public class ActiveContourSceneController {
         this.getObjectButton.setDisable(true);
     }
 
+    public void enablePrevButton() {
+        this.prevButton.setDisable(false);
+    }
+
+    public void disablePrevButton() {
+        this.prevButton.setDisable(true);
+    }
+
     @FXML
     public void onUseEpsilon() {
         boolean epsilonToggle = !epsilon.isDisabled();
@@ -114,6 +125,10 @@ public class ActiveContourSceneController {
     @FXML
     public void onNext() {
         this.activeContourPresenter.onNext();
+    }
+
+    public void onPrev() {
+        this.activeContourPresenter.onPrev();
     }
 
     @FXML

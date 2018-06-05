@@ -20,13 +20,11 @@ public class ActiveContour {
     private final int objectGrayAverage;
     private final List<XYPoint> lOut;
     private final List<XYPoint> lIn;
-    private final SelectionSquare selectionSquare;
     private double[][] content;
 
     public ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage) {
         this.width = width;
         this.height = height;
-        this.selectionSquare = selectionSquare;
         this.backgroundGrayAverage = backgroundGrayAverage;
         this.objectGrayAverage = objectGrayAverage;
 
@@ -40,11 +38,10 @@ public class ActiveContour {
         this.content = initializeContent(firstRow + 2, secondRow - 2, firstColumn + 2, secondColumn - 2);
     }
 
-    private ActiveContour(Integer width, Integer height, SelectionSquare selectionSquare, int backgroundGrayAverage, int objectGrayAverage,
+    private ActiveContour(Integer width, Integer height, int backgroundGrayAverage, int objectGrayAverage,
             List<XYPoint> lOut, List<XYPoint> lIn, double[][] content) {
         this.width = width;
         this.height = height;
-        this.selectionSquare = selectionSquare;
         this.backgroundGrayAverage = backgroundGrayAverage;
         this.objectGrayAverage = objectGrayAverage;
 
@@ -54,9 +51,14 @@ public class ActiveContour {
     }
 
     public static ActiveContour copy(ActiveContour activeContour) {
-        return new ActiveContour(activeContour.getWidth(), activeContour.getHeight(), activeContour.getSelectionSquare(),
-                activeContour.getBackgroundGrayAverage(), activeContour.getObjectGrayAverage(), new ArrayList<>(activeContour.getlOut()),
-                new ArrayList<>(activeContour.getlIn()), Arrays.copyOf(activeContour.getContent(), activeContour.getContent().length));
+        return new ActiveContour(
+                activeContour.getWidth(),
+                activeContour.getHeight(),
+                activeContour.getBackgroundGrayAverage(),
+                activeContour.getObjectGrayAverage(),
+                new ArrayList<>(activeContour.getlOut()),
+                new ArrayList<>(activeContour.getlIn()),
+                Arrays.copyOf(activeContour.getContent(), activeContour.getContent().length));
     }
 
     public Integer getWidth() {
@@ -223,10 +225,6 @@ public class ActiveContour {
 
     public void removeLOut(List<XYPoint> toRemoveFromLOut) {
         lOut.removeAll(toRemoveFromLOut);
-    }
-
-    public SelectionSquare getSelectionSquare() {
-        return selectionSquare;
     }
 
     public double[][] getContent() {

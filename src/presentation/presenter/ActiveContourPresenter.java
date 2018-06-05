@@ -84,6 +84,7 @@ public class ActiveContourPresenter {
             });
         }
 
+        view.disablePrevButton();
         view.disableNextButton();
         view.disableApplyButton();
         view.enableStartButton();
@@ -116,6 +117,8 @@ public class ActiveContourPresenter {
         if (currentImages != null && !currentImages.isEmpty()) {
             activeContour = createActiveContour(selectionSquare, currentCustomImage);
             contours = applyActiveContourOnImageSequenceAction.execute(currentImages, activeContour, view.getSteps(), view.getEpsilon());
+            view.setImage(contours.get(contourIndex).drawActiveContour());
+            contourIndex++;
         }
 
         view.enableNextButton();
@@ -135,9 +138,20 @@ public class ActiveContourPresenter {
         }
     }
 
+    public void onPrev() {
+        if (!contours.isEmpty() && contourIndex > 0) {
+            contourIndex--;
+            view.setImage(contours.get(contourIndex).drawActiveContour());
+            view.enableNextButton();
+        } else {
+            view.disablePrevButton();
+        }
+    }
+
     public void onNext() {
         if (!contours.isEmpty() && contourIndex < contours.size()) {
             view.setImage(contours.get(contourIndex).drawActiveContour());
+            view.enablePrevButton();
             contourIndex++;
         } else {
             view.disableNextButton();
