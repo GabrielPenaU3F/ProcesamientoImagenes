@@ -233,6 +233,6 @@ public class ApplyActiveContourAction {
             return FdFunction.lowerThanZero(imageAverageValue, backgroundGrayAverage, objectGrayAverage, 0);
         }
 
-        return FdFunction.lowerThanEpsilon(imageAverageValue, objectGrayAverage, epsilon);
+        return FdFunction.greaterThanEpsilon(imageAverageValue, objectGrayAverage, epsilon);
     }
 }
