@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.activecontour.ActiveContour;
-import domain.activecontour.ActiveContourMode;
 import domain.activecontour.ContourCustomImage;
 import domain.activecontour.FdFunction;
 import domain.activecontour.FdFunctionMode;
@@ -13,6 +12,8 @@ import domain.customimage.CustomImage;
 import domain.mask.filter.GaussianMask;
 
 public class ApplyActiveContourAction {
+
+    public static final int GAUSSIAN_STANDARD_DEVIATION = 1;
 
     public ContourCustomImage execute(CustomImage customImage, ActiveContour activeContour, int steps, double epsilon) {
         return recursive(customImage, activeContour, steps, epsilon);
@@ -24,11 +25,7 @@ public class ApplyActiveContourAction {
 
         ActiveContour cycleOneContour = contourCustomImage.getActiveContour();
         if (objectHasBeenFound(customImage, cycleOneContour, epsilon)) {
-            // Fixme cannot apply cycle two on image sequence
-            if(ActiveContourMode.isSingle()) {
-                cycleOneContour = applyCycleTwo(cycleOneContour);
-            }
-            return new ContourCustomImage(customImage, cycleOneContour);
+            return new ContourCustomImage(customImage, applyCycleTwo(cycleOneContour));
         } else if (steps == 0) {
             return contourCustomImage;
         } else {
@@ -120,9 +117,8 @@ public class ApplyActiveContourAction {
 
         for (XYPoint xyPoint : lOut) {
 
-            int x = xyPoint.getX();
-            int y = xyPoint.getY();
-            double newFiValue = new GaussianMask(1).applyMaskToPixel(cycleTwoContour.getContent(), x, y);
+            double newFiValue = new GaussianMask(GAUSSIAN_STANDARD_DEVIATION)
+                    .applyMaskToPixel(cycleTwoContour.getContent(), xyPoint.getX(), xyPoint.getY());
             if (newFiValue < 0) {
                 fillSwitchInLists(cycleTwoContour, removeFromLOut, addToLIn, addToLOut, xyPoint);
             }
@@ -139,13 +135,10 @@ public class ApplyActiveContourAction {
         List<XYPoint> addToLIn2 = new ArrayList<>();
         List<XYPoint> toRemoveFromLIn2 = new ArrayList<>();
 
-
-
         for (XYPoint xyPoint : lIn) {
 
-            int x = xyPoint.getX();
-            int y = xyPoint.getY();
-            double newFiValue = new GaussianMask(1).applyMaskToPixel(cycleTwoContour.getContent(), x, y);
+            double newFiValue = new GaussianMask(GAUSSIAN_STANDARD_DEVIATION)
+                    .applyMaskToPixel(cycleTwoContour.getContent(), xyPoint.getX(), xyPoint.getY());
             if (newFiValue > 0) {
                 fillSwitchOutLists(cycleTwoContour, addToLOut2, addToLIn2, toRemoveFromLIn2, xyPoint);
             }

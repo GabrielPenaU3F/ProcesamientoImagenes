@@ -141,7 +141,9 @@ public class ActiveContourPresenter {
     public void onPrev() {
         if (!contours.isEmpty() && contourIndex > 0) {
             contourIndex--;
-            view.setImage(contours.get(contourIndex).drawActiveContour());
+            Image image = contours.get(contourIndex).drawActiveContour();
+            modifiedImage = image;
+            view.setImage(image);
             view.enableNextButton();
         } else {
             view.disablePrevButton();
@@ -150,7 +152,9 @@ public class ActiveContourPresenter {
 
     public void onNext() {
         if (!contours.isEmpty() && contourIndex < contours.size()) {
-            view.setImage(contours.get(contourIndex).drawActiveContour());
+            Image image = contours.get(contourIndex).drawActiveContour();
+            modifiedImage = image;
+            view.setImage(image);
             view.enablePrevButton();
             contourIndex++;
         } else {
