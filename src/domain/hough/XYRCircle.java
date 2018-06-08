@@ -1,5 +1,7 @@
 package domain.hough;
 
+import java.util.Objects;
+
 public class XYRCircle {
 
     private int xCenter;
@@ -24,7 +26,7 @@ public class XYRCircle {
 
     @Override
     public int hashCode() {
-        return this.xCenter*1000 + this.yCenter*1000 + this.radius*1000;
+        return Objects.hash(this.xCenter, this.yCenter, this.radius);
     }
 
 }

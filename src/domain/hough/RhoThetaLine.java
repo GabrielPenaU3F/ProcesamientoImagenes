@@ -1,5 +1,7 @@
 package domain.hough;
 
+import java.util.Objects;
+
 public class RhoThetaLine {
 
     private double rho;
@@ -22,6 +24,6 @@ public class RhoThetaLine {
 
     @Override
     public int hashCode() {
-        return (int)(this.rho*1000 + this.theta*1000);
+        return Objects.hash(this.rho, this.theta);
     }
 }
