@@ -301,6 +301,7 @@ public class MainPresenter {
         Image image = view.customImageView.cutPartialImage();
         view.modifiedImageView.setImage(image);
         this.putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), Format.PNG));
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCalculateNegativeImage() {

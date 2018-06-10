@@ -21,9 +21,8 @@ public class LineHoughTransformAction {
 
     public CustomImage execute(CustomImage originalImage, CustomImage edgedImage, int rhoDivisions, int thetaDivisions, double tolerance) {
 
-        double diagonal = this.calculateDiagonal(edgedImage.getWidth(), edgedImage.getHeight());
-        this.rhoLowerBound = -diagonal;
-        this.rhoUpperBound = diagonal;
+        this.rhoLowerBound = 0;
+        this.rhoUpperBound = this.calculateDiagonal(edgedImage.getWidth(), edgedImage.getHeight());
         this.createParameterMatrix(rhoDivisions, thetaDivisions);
 
         int[][] channel = edgedImage.getRedMatrix();
@@ -85,20 +84,20 @@ public class LineHoughTransformAction {
             return new XYPoint((int)currentRho, imageHeight-1);
         }
 
-        double intercept = this.formatTopleftIntercept(this.getIntercept(currentRho, currentTheta), imageHeight);
+        double intercept = this.getIntercept(currentRho, currentTheta);
         double slope = this.getSlope(currentTheta);
         double rightBoundCross = slope*imageWidth + intercept;
 
         //The line is decreasing and the segment 'ends' on the lower image bound, hence the formulae for x when y=L
         //x = (L-b)/m, y=L
-        if (rightBoundCross > imageHeight && slope < 0) {
-            return new XYPoint((int)((imageHeight - intercept)/slope), imageHeight);
+        if (rightBoundCross < 0 && slope < 0) {
+            return new XYPoint((int)(-intercept/slope), imageHeight);
         }
 
         //The line is increasing and the segment 'ends' on the upper image bound, hence the formulae for x when y=0
         //x = -b/m, y=0
-        if (rightBoundCross < 0 && slope > 0) {
-            return new XYPoint((int)(-intercept/slope),0);
+        if (rightBoundCross > imageHeight && slope > 0) {
+            return new XYPoint((int)((imageHeight - intercept)/slope),0);
         }
 
         //Any other case the segment 'ends' on the right image bound, and y is the right bound crossing
@@ -113,19 +112,19 @@ public class LineHoughTransformAction {
             return new XYPoint((int)currentRho, 0);
         }
 
-        double intercept = this.formatTopleftIntercept(this.getIntercept(currentRho, currentTheta), imageHeight);
+        double intercept = this.getIntercept(currentRho, currentTheta);
         double slope = this.getSlope(currentTheta);
 
         //The line is decreasing and the segment 'starts' on the upper image bound, hence the formulae for x when y=0
         //x = -b/m, y=0
-        if (intercept < 0 && slope < 0) {
-            return new XYPoint((int)(-intercept/slope),0);
+        if (intercept > imageHeight && slope < 0) {
+            return new XYPoint((int)((imageHeight - intercept)/slope), 0);
         }
 
         //The line is increasing and the segment 'starts' on the lower image bound, hence the formulae for x when y=L
         //x = (L-b)/m, y=L
-        if (intercept > imageHeight && slope > 0) {
-            return new XYPoint((int)((imageHeight - intercept)/slope), imageHeight);
+        if (intercept < 0 && slope > 0) {
+            return new XYPoint((int)(-intercept/slope), imageHeight);
         }
 
         //Any other case the segment 'starts' on the left image bound, and y is the intercept
@@ -133,13 +132,11 @@ public class LineHoughTransformAction {
 
     }
 
-    private double formatTopleftIntercept(double intercept, int height) {
-        //Porque el origen de coordenadas esta ahora en la esquina superior izquierda
-        return height - intercept;
-    }
-
     private double getSlope(double theta) {
-        return -1.0/Math.tan(Math.toRadians(theta)); //Recordar que el arco tangente de theta me da la pendiente de la semirrecta perpendicular a la recta de interes. Entonces, esta tiene pendiente opuesta e inversa.
+
+        if (Math.abs(theta) == 90) return 0;
+
+        return -1.0/Math.tan(Math.toRadians(theta)); //Recordar que la tangente de theta me da la pendiente de la semirrecta perpendicular a la recta de interes. Entonces, esta tiene pendiente opuesta e inversa.
     }
 
     private double getIntercept(double rho, double theta) {
@@ -210,6 +207,9 @@ public class LineHoughTransformAction {
     }
 
     private boolean evaluateLine(int x, int y, double currentRho, double currentTheta, double tolerance) {
-        return Math.abs((x*Math.cos(Math.toRadians(currentTheta)) + y*Math.sin(Math.toRadians(currentTheta)) - currentRho)) < tolerance;
+        if (Math.abs((x*Math.cos(Math.toRadians(currentTheta)) + y*Math.sin(Math.toRadians(currentTheta)) - currentRho)) < tolerance) {
+            return true;
+        }
+        return false;
     }
 }
