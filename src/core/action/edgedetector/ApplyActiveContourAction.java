@@ -7,7 +7,7 @@ import domain.activecontour.ActiveContour;
 import domain.activecontour.ContourCustomImage;
 import domain.activecontour.FdFunction;
 import domain.activecontour.FdFunctionMode;
-import domain.activecontour.XYPoint;
+import domain.XYPoint;
 import domain.customimage.CustomImage;
 import domain.mask.filter.GaussianMask;
 

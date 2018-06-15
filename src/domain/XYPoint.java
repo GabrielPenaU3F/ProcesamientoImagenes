@@ -1,4 +1,4 @@
-package domain.activecontour;
+package domain;
 
 public class XYPoint {
 

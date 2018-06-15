@@ -1,8 +1,8 @@
 package core.action.edgedetector.hough;
 
+import domain.XYPoint;
 import domain.customimage.CustomImage;
 import domain.hough.RhoThetaLine;
-import domain.hough.XYPoint;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;

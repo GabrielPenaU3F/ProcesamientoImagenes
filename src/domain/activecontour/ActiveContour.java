@@ -1,5 +1,7 @@
 package domain.activecontour;
 
+import domain.XYPoint;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
