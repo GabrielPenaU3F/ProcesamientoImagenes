@@ -3,14 +3,19 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.diffusion.ApplyDiffusionAction;
+import core.action.edgedetector.ApplyActiveContourOnImageSequenceAction;
+import core.action.edgedetector.ApplyCannyDetectorAction;
 import core.action.edgedetector.ApplyDirectionalDerivativeOperatorAction;
 import core.action.edgedetector.ApplyEdgeDetectorByGradientAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
+import core.action.edgedetector.ApplySusanDetectorAction;
+import core.action.edgedetector.hough.LineHoughTransformAction;
+import core.action.edgedetector.hough.CircleHoughTransformAction;
+import core.action.edgedetector.hough.LineHoughTransformAction;
+import core.action.edgedetector.ApplyActiveContourAction;
+import core.action.edgedetector.GetImageSequenceAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.ApplyContrastAction;
-import core.action.threshold.ApplyGlobalThresholdEstimationAction;
-import core.action.threshold.ApplyOtsuThresholdEstimationAction;
-import core.action.threshold.ApplyThresholdAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
 import core.action.edit.space_domain.GammaFunctionAction;
@@ -24,14 +29,27 @@ import core.action.filter.ApplyFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
-import core.action.image.*;
+import core.action.image.CreateImageInformAction;
+import core.action.image.GetImageAction;
+import core.action.image.GetImageLimitValuesAction;
+import core.action.image.GetModifiedImageAction;
+import core.action.image.LoadImageAction;
+import core.action.image.LoadImageSequenceAction;
+import core.action.image.PutModifiedImageAction;
+import core.action.image.SaveImageAction;
+import core.action.image.UndoChangesAction;
+import core.action.image.UpdateCurrentImageAction;
 import core.action.noise.ApplyExponentialNoiseToImageAction;
 import core.action.noise.ApplyGaussianNoiseToImageAction;
 import core.action.noise.ApplyRayleighNoiseToImageAction;
 import core.action.noise.ApplySaltAndPepperNoiseAction;
 import core.action.noise.generator.GenerateSyntheticNoiseImageAction;
+import core.action.threshold.ApplyGlobalThresholdEstimationAction;
+import core.action.threshold.ApplyOtsuThresholdEstimationAction;
+import core.action.threshold.ApplyThresholdAction;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
+
 
 class ActionProvider {
 
@@ -50,7 +68,6 @@ class ActionProvider {
     private static ApplyThresholdAction applyThresholdAction;
     private static CreateImageHistogramAction createImageHistogramAction;
     private static ApplyContrastAction applyContrastAction;
-    private static EqualizeGrayImageAction createEqualizeGrayImageAction;
     private static CompressDynamicRangeAction compressDynamicRangeAction;
     private static GammaFunctionAction gammaFunctionAction;
     private static MultiplyImagesAction multiplyImagesAction;
@@ -73,6 +90,14 @@ class ActionProvider {
     private static ApplyDiffusionAction applyDiffusionAction;
     private static UndoChangesAction undoChangesAction;
     private static GetImageLimitValuesAction getImageLimitValuesAction;
+    private static ApplyCannyDetectorAction applyCannyDetectorAction;
+    private static ApplySusanDetectorAction applySusanDetectorAction;
+    private static LineHoughTransformAction lineHoughTransformAction;
+    private static CircleHoughTransformAction circleHoughTransformAction;
+    private static ApplyActiveContourAction applyActiveContourAction;
+    private static LoadImageSequenceAction loadImageSequenceAction;
+    private static GetImageSequenceAction getImageSequenceAction;
+    private static ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -312,7 +337,6 @@ class ActionProvider {
         if (applyEdgeDetectorByGradientAction == null) {
             applyEdgeDetectorByGradientAction = new ApplyEdgeDetectorByGradientAction(
                     ServiceProvider.provideImageOperationsService(),
-                    PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
                     ServiceProvider.provideMatrixService()
             );
         }
@@ -386,5 +410,66 @@ class ActionProvider {
                     ServiceProvider.provideGrayLevelStatisticsService());
         }
         return getImageLimitValuesAction;
+    }
+
+    public static ApplyCannyDetectorAction provideApplyCannyDetectorAction() {
+        if (applyCannyDetectorAction == null) {
+            applyCannyDetectorAction = new ApplyCannyDetectorAction(ServiceProvider.provideImageOperationsService(),
+                    ServiceProvider.provideMatrixService());
+        }
+        return applyCannyDetectorAction;
+    }
+
+    public static ApplySusanDetectorAction provideApplySusanDetectorAction() {
+        if (applySusanDetectorAction == null) {
+            applySusanDetectorAction = new ApplySusanDetectorAction();
+        }
+        return applySusanDetectorAction;
+    }
+
+    public static LineHoughTransformAction provideLineHoughTransformAction() {
+        if (lineHoughTransformAction == null) {
+            lineHoughTransformAction = new LineHoughTransformAction();
+        }
+        return lineHoughTransformAction;
+    }
+
+    public static CircleHoughTransformAction provideCircleHoughTransformAction() {
+        if (circleHoughTransformAction == null) {
+            circleHoughTransformAction = new CircleHoughTransformAction();
+        }
+        return circleHoughTransformAction;
+    }
+
+    public static ApplyActiveContourAction provideApplyActiveContourAction() {
+        if (applyActiveContourAction == null) {
+            applyActiveContourAction = new ApplyActiveContourAction();
+        }
+        return applyActiveContourAction;
+    }
+
+    public static LoadImageSequenceAction provideLoadImageSequenceAction() {
+        if (loadImageSequenceAction == null) {
+            loadImageSequenceAction = new LoadImageSequenceAction(
+                    RepositoryProvider.provideImageRepository(),
+                    ServiceProvider.provideOpenFileService(),
+                    CommonProvider.provideOpener(),
+                    ServiceProvider.provideImageRawService());
+        }
+        return loadImageSequenceAction;
+    }
+
+    public static GetImageSequenceAction provideImageSequenceAcion() {
+        if (getImageSequenceAction == null) {
+            getImageSequenceAction = new GetImageSequenceAction(RepositoryProvider.provideImageRepository());
+        }
+        return getImageSequenceAction;
+    }
+
+    public static ApplyActiveContourOnImageSequenceAction provideApplyActiveContourOnImageSequenceAction() {
+        if (applyActiveContourOnImageSequenceAction == null) {
+            applyActiveContourOnImageSequenceAction = new ApplyActiveContourOnImageSequenceAction(ActionProvider.provideApplyActiveContourAction());
+        }
+        return applyActiveContourOnImageSequenceAction;
     }
 }

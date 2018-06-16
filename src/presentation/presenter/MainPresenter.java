@@ -1,8 +1,11 @@
 package presentation.presenter;
 
+import java.util.List;
+
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.edgedetector.ApplyLaplacianDetectorAction;
+import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edit.ModifyPixelAction;
 import core.action.edit.space_domain.CalculateNegativeImageAction;
 import core.action.edit.space_domain.CompressDynamicRangeAction;
@@ -12,18 +15,20 @@ import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.EqualizeGrayImageAction;
 import core.action.histogram.utils.EqualizedTimes;
 import core.action.image.GetImageAction;
+import core.action.image.GetImageLimitValuesAction;
 import core.action.image.LoadImageAction;
+import core.action.image.LoadImageSequenceAction;
 import core.action.image.PutModifiedImageAction;
 import core.action.image.UndoChangesAction;
 import core.action.image.UpdateCurrentImageAction;
 import core.action.threshold.ApplyGlobalThresholdEstimationAction;
 import core.action.threshold.ApplyOtsuThresholdEstimationAction;
 import core.action.threshold.ApplyThresholdAction;
-import core.action.image.*;
 import core.provider.PresenterProvider;
 import core.semaphore.RandomGeneratorsSemaphore;
 import domain.FilterSemaphore;
 import domain.RandomElement;
+import domain.activecontour.ActiveContourMode;
 import domain.automaticthreshold.GlobalThresholdResult;
 import domain.automaticthreshold.ImageLimitValues;
 import domain.automaticthreshold.OtsuThresholdResult;
@@ -36,12 +41,15 @@ import domain.generation.Gradient;
 import domain.mask.GaussianLaplacianMask;
 import domain.mask.LaplacianMask;
 import domain.mask.Mask;
+import domain.mask.SusanMask;
 import domain.mask.filter.HighPassMask;
 import io.reactivex.Observable;
 import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
+import presentation.scenecreator.ActiveContourSceneCreator;
+import presentation.scenecreator.CannySceneCreator;
 import presentation.scenecreator.ContrastSceneCreator;
 import presentation.scenecreator.DiffusionSceneCreator;
 import presentation.scenecreator.EqualizeImageByHistogramSceneCreator;
@@ -49,6 +57,7 @@ import presentation.scenecreator.ExponentialSceneCreator;
 import presentation.scenecreator.FilterSceneCreator;
 import presentation.scenecreator.GammaPowerFunctionSceneCreator;
 import presentation.scenecreator.GaussianSceneCreator;
+import presentation.scenecreator.HoughSceneCreator;
 import presentation.scenecreator.ImageHistogramSceneCreator;
 import presentation.scenecreator.ImageInformSceneCreator;
 import presentation.scenecreator.ImagesOperationsSceneCreator;
@@ -67,6 +76,7 @@ public class MainPresenter {
 
     private final MainSceneController view;
     private final LoadImageAction loadImageAction;
+    private final LoadImageSequenceAction loadImageSequenceAction;
     private final GetImageAction getImageAction;
     private final ModifyPixelAction modifyPixelAction;
     private final PutModifiedImageAction putModifiedImageAction;
@@ -86,10 +96,11 @@ public class MainPresenter {
     private final ApplyLaplacianDetectorAction applyLaplacianDetectorAction;
     private final UndoChangesAction undoChangesAction;
     private final GetImageLimitValuesAction getImageLimitValuesAction;
+    private final ApplySusanDetectorAction applySusanDetectorAction;
 
     public MainPresenter(MainSceneController view,
             LoadImageAction loadImageAction,
-            GetImageAction getImageAction,
+            LoadImageSequenceAction loadImageSequenceAction, GetImageAction getImageAction,
             PutModifiedImageAction putModifiedImageAction,
             ModifyPixelAction modifyPixelAction,
             CalculateNegativeImageAction calculateNegativeImageAction,
@@ -107,11 +118,13 @@ public class MainPresenter {
             ApplyOtsuThresholdEstimationAction applyOtsuThresholdEstimationAction,
             ApplyLaplacianDetectorAction applyLaplacianDetectorAction,
             UndoChangesAction undoChangesAction,
-            GetImageLimitValuesAction getImageLimitValuesAction) {
+            GetImageLimitValuesAction getImageLimitValuesAction,
+            ApplySusanDetectorAction applySusanDetectorAction) {
 
         this.view = view;
 
         this.loadImageAction = loadImageAction;
+        this.loadImageSequenceAction = loadImageSequenceAction;
         this.getImageAction = getImageAction;
         this.modifyPixelAction = modifyPixelAction;
         this.putModifiedImageAction = putModifiedImageAction;
@@ -131,6 +144,7 @@ public class MainPresenter {
         this.applyLaplacianDetectorAction = applyLaplacianDetectorAction;
         this.undoChangesAction = undoChangesAction;
         this.getImageLimitValuesAction = getImageLimitValuesAction;
+        this.applySusanDetectorAction = applySusanDetectorAction;
     }
 
     public void initialize() {
@@ -159,6 +173,13 @@ public class MainPresenter {
 
     public void onOpenImage() {
         setImageOnCustomImageView(this.loadImageAction.execute());
+    }
+
+    public void onOpenImageSequence() {
+        List<CustomImage> customImages = this.loadImageSequenceAction.execute();
+        if(!customImages.isEmpty()) {
+            setImageOnCustomImageView(customImages.get(0));
+        }
     }
 
     private void setImageOnCustomImageView(CustomImage customImage) {
@@ -280,6 +301,7 @@ public class MainPresenter {
         Image image = view.customImageView.cutPartialImage();
         view.modifiedImageView.setImage(image);
         this.putModifiedImageAction.execute(new CustomImage(SwingFXUtils.fromFXImage(image, null), Format.PNG));
+        view.applyChangesButton.setVisible(true);
     }
 
     public void onCalculateNegativeImage() {
@@ -550,5 +572,36 @@ public class MainPresenter {
         CustomImage originalImage = this.undoChangesAction.execute();
         view.undoChangesButton.setVisible(false);
         view.imageView.setImage(originalImage.toFXImage());
+    }
+
+    public void onApplyCannyEdgeDetector() {
+        new CannySceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplySusanEdgeDetector() {
+        this.getImageAction.execute()
+                           .ifPresent(customImage -> {
+                               Mask susanMask = new SusanMask();
+                               CustomImage edgedImage = this.applySusanDetectorAction.execute(customImage, susanMask);
+                               this.updateModifiedImage(edgedImage);
+                           });
+    }
+
+    public void onHoughTransform() {
+        new HoughSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyActiveContour() {
+        ActiveContourMode.single();
+        new ActiveContourSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyActiveContourOnImageSequence() {
+        ActiveContourMode.sequence();
+        new ActiveContourSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 }

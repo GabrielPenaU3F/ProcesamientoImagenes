@@ -4,6 +4,7 @@ import domain.customimage.Format;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 public class OpenFileService {
@@ -22,6 +23,10 @@ public class OpenFileService {
                 .filter(File::canWrite)
                 .filter(File::isAbsolute)
                 .filter(this::hasValidExtension);
+    }
+
+    public Optional<List<File>> openMultiple() {
+        return Optional.ofNullable(fileChooser.showOpenMultipleDialog(null));
     }
 
     private boolean hasValidExtension(File file) {

@@ -19,6 +19,7 @@ public class PresenterProvider {
             mainPresenter = new MainPresenter(
                     mainSceneController,
                     ActionProvider.provideLoadImageAction(),
+                    ActionProvider.provideLoadImageSequenceAction(),
                     ActionProvider.provideGetImageAction(),
                     ActionProvider.providePutModifiedImageAction(),
                     ActionProvider.provideModifyPixelAction(),
@@ -38,7 +39,8 @@ public class PresenterProvider {
                     ActionProvider.provideApplyOtsuThresholdEstimation(),
                     ActionProvider.provideApplyLaplacianDetectorAction(),
                     ActionProvider.provideUndoChangesAction(),
-                    ActionProvider.provideGetImageLimitValuesAction());
+                    ActionProvider.provideGetImageLimitValuesAction(),
+                    ActionProvider.provideApplySusanDetectorAction());
 
             return mainPresenter;
         }
@@ -146,7 +148,8 @@ public class PresenterProvider {
     public static EdgeDetectorPresenter provideEdgeDetectorPresenter() {
         return new EdgeDetectorPresenter(
                 ActionProvider.provideGetImageAction(),
-                ActionProvider.provideApplyEdgeDetectorByGradient()
+                ActionProvider.provideApplyEdgeDetectorByGradient(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject()
         );
     }
 
@@ -161,5 +164,35 @@ public class PresenterProvider {
                 ActionProvider.provideGetImageAction(),
                 ActionProvider.provideApplyDiffusionAction()
         );
+    }
+
+    public static CannyPresenter provideCannyPresenter(CannySceneController cannySceneController) {
+        return new CannyPresenter(cannySceneController,
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyFilterAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                ActionProvider.provideApplyCannyDetectorAction(),
+                PublishSubjectProvider.provideCannyPublishSubject());
+    }
+
+    public static HoughPresenter provideHoughPresenter(HoughSceneController houghSceneController) {
+        return new HoughPresenter(houghSceneController,
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject(),
+                ActionProvider.provideLineHoughTransformAction(),
+                ActionProvider.provideCircleHoughTransformAction(),
+                ActionProvider.provideApplyOtsuThresholdEstimation(),
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideApplyEdgeDetectorByGradient()
+                );
+    }
+
+    public static ActiveContourPresenter provideActiveContourPresenter(ActiveContourSceneController activeContourSceneController) {
+        return new ActiveContourPresenter(activeContourSceneController,
+                ActionProvider.provideApplyActiveContourAction(),
+                ActionProvider.provideGetImageAction(),
+                ActionProvider.provideImageSequenceAcion(),
+                ActionProvider.provideApplyActiveContourOnImageSequenceAction(), PublishSubjectProvider
+                .provideOnModifiedImagePublishSubject
+                ());
     }
 }

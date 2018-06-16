@@ -1,5 +1,11 @@
 package domain.customimage;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import core.provider.ServiceProvider;
 import core.service.MatrixService;
 import javafx.embed.swing.SwingFXUtils;
@@ -8,12 +14,6 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 public class CustomImage {
 
@@ -111,9 +111,9 @@ public class CustomImage {
 
     public int getAverageValue(Integer x, Integer y) {
         RGB pixelValue = getPixelValue(x, y);
-        return (pixelValue.getRed() +
+        return Math.round((pixelValue.getRed() +
                 pixelValue.getGreen() +
-                pixelValue.getBlue()) / 3;
+                pixelValue.getBlue()) / 3);
     }
 
     public RGB getPixelValue(Integer x, Integer y) {
@@ -155,5 +155,9 @@ public class CustomImage {
     public boolean isPositionValid(int width, int height, int i, int j) {
         // Ignore the portion of the mask outside the image.
         return j >= 0 && j < height && i >= 0 && i < width;
+    }
+
+    public Color getColor(int x, int y) {
+        return Color.rgb(getRChannelValue(x, y), getGChannelValue(x, y), getBChannelValue(x, y));
     }
 }

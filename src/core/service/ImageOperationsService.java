@@ -358,4 +358,25 @@ public class ImageOperationsService {
         }
         return result;
     }
+
+    public ChannelMatrix calculateAbsoluteSum(ChannelMatrix firstImage, ChannelMatrix secondImage) {
+        int[][] redChannel = this.calculateAbsoluteSum(firstImage.getRedChannel(), secondImage.getRedChannel());
+        int[][] greenChannel = this.calculateAbsoluteSum(firstImage.getGreenChannel(), secondImage.getGreenChannel());
+        int[][] blueChannel = this.calculateAbsoluteSum(firstImage.getBlueChannel(), secondImage.getBlueChannel());
+        return new ChannelMatrix(redChannel, greenChannel, blueChannel);
+    }
+
+    private int[][] calculateAbsoluteSum(int[][] firstChannel, int[][] secondChanne1) {
+
+        int[][] absoluteSumChannel = new int[firstChannel.length][firstChannel[0].length];
+
+        for (int x=0; x < firstChannel.length; x++) {
+            for (int y=0; y < firstChannel[x].length; y++) {
+                absoluteSumChannel[x][y] = Math.abs(firstChannel[x][y]) + Math.abs(secondChanne1[x][y]);
+            }
+        }
+
+        return absoluteSumChannel;
+    }
+
 }

@@ -2,6 +2,7 @@ package core.repository;
 
 import domain.customimage.CustomImage;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ImageRepository {
@@ -9,6 +10,7 @@ public class ImageRepository {
     private CustomImage image;
     private CustomImage modifiedImage;
     private CustomImage originalImageBackup;
+    private List<CustomImage> imageSequence;
 
     public CustomImage saveImage(CustomImage image) {
         this.image = image;
@@ -34,5 +36,15 @@ public class ImageRepository {
 
     public CustomImage getOriginalImageBackup(){
         return this.originalImageBackup;
+    }
+
+    public List<CustomImage> saveImageSequence(List<CustomImage> imageSequence) {
+        if(!imageSequence.isEmpty()) this.image = imageSequence.get(0);
+        this.imageSequence = imageSequence;
+        return imageSequence;
+    }
+
+    public Optional<List<CustomImage>> getImageSequence() {
+        return Optional.ofNullable(imageSequence);
     }
 }
