@@ -212,4 +212,98 @@ public class MatrixService {
         return trace;
     }
 
+    public int calculateDeterminant(int[][] matrix) {
+
+        if(!isSquare(matrix)) throw new RuntimeException("Determinant of a non square matrix is not defined");
+
+        if(is2x2(matrix)) {
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        } else {
+
+            int determinant = 0;
+            for (int j=0; j < matrix[0].length; j++) {
+
+                int[][] complementaryMinor = calculateComplementaryMinor(matrix, j);
+
+                determinant += (Math.pow(-1, j) * matrix[0][j] * this.calculateDeterminant(complementaryMinor));
+
+            }
+            return determinant;
+
+        }
+    }
+
+    public double calculateDeterminant(double[][] matrix) {
+
+        if(!isSquare(matrix)) throw new RuntimeException("Determinant of a non square matrix is not defined");
+
+        if(is2x2(matrix)) {
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        } else {
+
+            double determinant = 0;
+            for (int j=0; j < matrix[0].length; j++) {
+
+                double[][] complementaryMinor = calculateComplementaryMinor(matrix, j);
+
+                determinant += (Math.pow(-1, j) * matrix[0][j] * this.calculateDeterminant(complementaryMinor));
+
+            }
+            return determinant;
+
+        }
+    }
+
+    public int[][] calculateComplementaryMinor(int[][] matrix, int j) {
+
+        int[][] auxMatrix = new int[matrix.length-1][matrix[0].length-1];
+
+        int k=0;
+        int l=0;
+        for (int x=1; x < matrix.length; x++) {
+            for (int y=0; y < matrix[x].length; y++) {
+
+                if (y!=j) {
+                    auxMatrix[k][l] = matrix[x][y];
+                    l++;
+                }
+
+            }
+            k++;
+            l=0;
+        }
+
+        return auxMatrix;
+    }
+
+    public double[][] calculateComplementaryMinor(double[][] matrix, int j) {
+
+        double[][] auxMatrix = new double[matrix.length-1][matrix[0].length-1];
+
+        int k=0;
+        int l=0;
+        for (int x=1; x < matrix.length; x++) {
+            for (int y=0; y < matrix[x].length; y++) {
+
+                if (y!=j) {
+                    auxMatrix[k][l] = matrix[x][y];
+                    l++;
+                }
+
+            }
+            k++;
+            l=0;
+        }
+
+        return auxMatrix;
+    }
+
+    private boolean is2x2(int[][] matrix) {
+        return matrix.length == 2 && matrix[0].length == 2;
+    }
+
+    private boolean is2x2(double[][] matrix) {
+        return matrix.length == 2 && matrix[0].length == 2;
+    }
+
 }
