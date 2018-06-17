@@ -181,4 +181,35 @@ public class MatrixService {
     public boolean isPositionValid(int width, int height, int i, int j) {
         return j >= 0 && j < height && i >= 0 && i < width;
     }
+
+    public boolean isSquare(int[][] matrix) {
+        return matrix.length == matrix[0].length;
+    }
+
+    public boolean isSquare(double[][] matrix) {
+        return matrix.length == matrix[0].length;
+    }
+
+    public int calculateTrace(int[][] matrix) {
+
+        if(!isSquare(matrix)) throw new RuntimeException("Trace of a non square matrix is not defined");
+
+        int trace = 0;
+        for(int i=0; i < matrix.length; i++) {
+            trace += matrix[i][i];
+        }
+        return trace;
+    }
+
+    public double calculateTrace(double[][] matrix) {
+
+        if(!isSquare(matrix)) throw new RuntimeException("Trace of a non square matrix is not defined");
+
+        double trace = 0;
+        for(int i=0; i < matrix.length; i++) {
+            trace += matrix[i][i];
+        }
+        return trace;
+    }
+
 }
