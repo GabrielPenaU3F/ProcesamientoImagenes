@@ -107,8 +107,48 @@ public class GaussianMask extends Mask {
         return newMatrix;
     }
 
+    public double[][] apply(int[][] targetMatrix) {
+
+        Integer width = targetMatrix.length;
+        Integer height = targetMatrix[0].length;
+        double[][] newMatrix = new double[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                newMatrix[x][y] = applyMaskToPixel(targetMatrix, x, y);
+            }
+        }
+
+        return newMatrix;
+    }
+
     //Basic convolution algorithm with a simple matrix
     public double applyMaskToPixel(double[][] targetMatrix, int x, int y) {
+
+        int width = targetMatrix.length;
+        int height = targetMatrix[0].length;
+
+        int newValue = 0;
+
+        for (int j = y - (size / 2); j <= y + (size / 2); j++) {
+            for (int i = x - (size / 2); i <= x + (size / 2); i++) {
+
+                if (this.matrixService.isPositionValid(width, height, i, j)) {
+
+                    int column = j + (size / 2) - y;
+                    int row = i + (size / 2) - x;
+                    double value = this.matrix[row][column];
+
+                    newValue += targetMatrix[i][j] * value * factor;
+
+                }
+            }
+        }
+
+        return newValue;
+    }
+
+    public double applyMaskToPixel(int[][] targetMatrix, int x, int y) {
 
         int width = targetMatrix.length;
         int height = targetMatrix[0].length;

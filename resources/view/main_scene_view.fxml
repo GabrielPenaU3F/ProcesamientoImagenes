@@ -187,13 +187,18 @@
 			   <MenuItem mnemonicParsing="false" onAction="#onHoughTransform" text="Hough Transform" />
 		   </items>
          </Menu>
-			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContour" text="Active Contour"/>
-			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContourOnImageSequence" text="Active Contour on Image Sequence"/>
+			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContour" text="Active Contour" />
+			<MenuItem mnemonicParsing="false" onAction="#onApplyActiveContourOnImageSequence" text="Active Contour on Image Sequence" />
 		</Menu>
          <Menu mnemonicParsing="false" text="Threshold">
              <MenuItem mnemonicParsing="false" onAction="#threshold" text="Threshold" />
              <MenuItem mnemonicParsing="false" onAction="#applyGlobalThresholdEstimation" text="Global Threshold Estimation" />
              <MenuItem mnemonicParsing="false" onAction="#applyOtsuThresholdEstimation" text="Otsu Threshold Estimation" />
          </Menu>
+      <Menu mnemonicParsing="false" text="Characteristic Points">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#onApplyHarris" text="Corners (Harris)" />
+        </items>
+      </Menu>
     </MenuBar>
 </AnchorPane>

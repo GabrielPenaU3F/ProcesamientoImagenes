@@ -361,4 +361,7 @@ public class MainSceneController {
     public void onApplyActiveContourOnImageSequence() {
         this.mainPresenter.onApplyActiveContourOnImageSequence();
     }
+
+    @FXML
+    public void onApplyHarris() { this.mainPresenter.onApplyHarris(); }
 }
