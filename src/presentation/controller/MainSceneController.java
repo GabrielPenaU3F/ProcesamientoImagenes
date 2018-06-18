@@ -364,4 +364,7 @@ public class MainSceneController {
 
     @FXML
     public void onApplyHarris() { this.mainPresenter.onApplyHarris(); }
+
+    @FXML
+    public void onApplySift() { this.mainPresenter.onApplySift(); }
 }

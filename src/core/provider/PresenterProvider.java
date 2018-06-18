@@ -201,4 +201,10 @@ public class PresenterProvider {
                 ActionProvider.provideLoadImageAction(),
                 ActionProvider.provideApplyHarrisDetectorAction());
     }
+
+    public static SiftPresenter provideSiftPresenter(SiftSceneController siftSceneController) {
+        return new SiftPresenter(siftSceneController,
+                ActionProvider.provideLoadImageAction(),
+                ActionProvider.provideApplySiftDetectorAction());
+    }
 }

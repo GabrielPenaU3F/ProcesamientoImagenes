@@ -3,6 +3,7 @@ package core.provider;
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
 import core.action.characteristic_points.ApplyHarrisDetectorAction;
+import core.action.characteristic_points.ApplySiftDetectorAction;
 import core.action.diffusion.ApplyDiffusionAction;
 import core.action.edgedetector.ApplyActiveContourOnImageSequenceAction;
 import core.action.edgedetector.ApplyCannyDetectorAction;
@@ -100,6 +101,7 @@ class ActionProvider {
     private static GetImageSequenceAction getImageSequenceAction;
     private static ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
     private static ApplyHarrisDetectorAction applyHarrisDetectorAction;
+    private static ApplySiftDetectorAction applySiftDetectorAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -480,5 +482,12 @@ class ActionProvider {
             applyHarrisDetectorAction = new ApplyHarrisDetectorAction(ServiceProvider.provideMatrixService());
         }
         return applyHarrisDetectorAction;
+    }
+
+    public static ApplySiftDetectorAction provideApplySiftDetectorAction() {
+        if (applySiftDetectorAction == null) {
+            applySiftDetectorAction = new ApplySiftDetectorAction();
+        }
+        return applySiftDetectorAction;
     }
 }

@@ -34,9 +34,7 @@ public class MatrixService {
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                int grayMean =
-                        (int) (reader.getColor(x, y).getRed() * 255 + reader.getColor(x, y).getBlue() * 255 + reader.getColor(x, y).getGreen() * 255)
-                                / 3;
+                int grayMean = (int) (reader.getColor(x, y).getRed() * 255 + reader.getColor(x, y).getBlue() * 255 + reader.getColor(x, y).getGreen() * 255) / 3;
                 matrix[x][y] = grayMean;
             }
         }

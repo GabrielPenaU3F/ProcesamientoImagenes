@@ -593,4 +593,8 @@ public class MainPresenter {
     public void onApplyHarris() {
         new HarrisSceneCreator().createScene();
     }
+
+    public void onApplySift() {
+        new SiftSceneCreator().createScene();
+    }
 }
