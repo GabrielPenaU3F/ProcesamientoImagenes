@@ -2,6 +2,7 @@ package core.provider;
 
 import core.action.channels.ObtainHSVChannelAction;
 import core.action.channels.ObtainRGBChannelAction;
+import core.action.characteristic_points.ApplyHarrisDetectorAction;
 import core.action.diffusion.ApplyDiffusionAction;
 import core.action.edgedetector.ApplyActiveContourOnImageSequenceAction;
 import core.action.edgedetector.ApplyCannyDetectorAction;
@@ -98,6 +99,7 @@ class ActionProvider {
     private static LoadImageSequenceAction loadImageSequenceAction;
     private static GetImageSequenceAction getImageSequenceAction;
     private static ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
+    private static ApplyHarrisDetectorAction applyHarrisDetectorAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -471,5 +473,12 @@ class ActionProvider {
             applyActiveContourOnImageSequenceAction = new ApplyActiveContourOnImageSequenceAction(ActionProvider.provideApplyActiveContourAction());
         }
         return applyActiveContourOnImageSequenceAction;
+    }
+
+    public static ApplyHarrisDetectorAction provideApplyHarrisDetectorAction() {
+        if (applyHarrisDetectorAction == null) {
+            applyHarrisDetectorAction = new ApplyHarrisDetectorAction(ServiceProvider.provideMatrixService());
+        }
+        return applyHarrisDetectorAction;
     }
 }

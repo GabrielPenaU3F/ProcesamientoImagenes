@@ -195,4 +195,10 @@ public class PresenterProvider {
                 .provideOnModifiedImagePublishSubject
                 ());
     }
+
+    public static HarrisPresenter provideHarrisPresenter(HarrisSceneController harrisSceneController) {
+        return new HarrisPresenter(harrisSceneController,
+                ActionProvider.provideLoadImageAction(),
+                ActionProvider.provideApplyHarrisDetectorAction());
+    }
 }

@@ -48,22 +48,7 @@ import io.reactivex.functions.Action;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import presentation.controller.MainSceneController;
-import presentation.scenecreator.ActiveContourSceneCreator;
-import presentation.scenecreator.CannySceneCreator;
-import presentation.scenecreator.ContrastSceneCreator;
-import presentation.scenecreator.DiffusionSceneCreator;
-import presentation.scenecreator.EqualizeImageByHistogramSceneCreator;
-import presentation.scenecreator.ExponentialSceneCreator;
-import presentation.scenecreator.FilterSceneCreator;
-import presentation.scenecreator.GammaPowerFunctionSceneCreator;
-import presentation.scenecreator.GaussianSceneCreator;
-import presentation.scenecreator.HoughSceneCreator;
-import presentation.scenecreator.ImageHistogramSceneCreator;
-import presentation.scenecreator.ImageInformSceneCreator;
-import presentation.scenecreator.ImagesOperationsSceneCreator;
-import presentation.scenecreator.RayleighSceneCreator;
-import presentation.scenecreator.SaltAndPepperNoiseSceneCreator;
-import presentation.scenecreator.SaveImageSceneCreator;
+import presentation.scenecreator.*;
 import presentation.util.InsertValuePopup;
 import presentation.util.ShowResultPopup;
 import presentation.view.CustomImageView;
@@ -603,5 +588,9 @@ public class MainPresenter {
         ActiveContourMode.sequence();
         new ActiveContourSceneCreator().createScene();
         view.applyChangesButton.setVisible(true);
+    }
+
+    public void onApplyHarris() {
+        new HarrisSceneCreator().createScene();
     }
 }
