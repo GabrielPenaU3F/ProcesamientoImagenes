@@ -197,7 +197,8 @@
          </Menu>
       <Menu mnemonicParsing="false" text="Characteristic Points">
         <items>
-          <MenuItem mnemonicParsing="false" onAction="#onApplyHarris" text="Corners (Harris)" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplyHarris" text="Corners (Harris)" />
+            <MenuItem mnemonicParsing="false" onAction="#onApplySift" text="Sift" />
         </items>
       </Menu>
     </MenuBar>

@@ -1,9 +1,7 @@
 package presentation.presenter;
 
 import java.text.DecimalFormat;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import core.action.characteristic_points.ApplyHarrisDetectorAction;
 import core.action.image.LoadImageAction;
