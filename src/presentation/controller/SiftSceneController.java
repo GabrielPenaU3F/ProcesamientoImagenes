@@ -3,6 +3,7 @@ package presentation.controller;
 import core.provider.PresenterProvider;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import presentation.presenter.SiftPresenter;
 
 public class SiftSceneController {

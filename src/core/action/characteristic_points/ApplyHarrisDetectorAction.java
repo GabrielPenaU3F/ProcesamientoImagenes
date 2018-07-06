@@ -24,14 +24,14 @@ public class ApplyHarrisDetectorAction {
         int[][] xDeriv = new SobelXDerivativeMask().apply(image).getRedChannel();
         int[][] yDeriv = new SobelYDerivativeMask().apply(image).getRedChannel();
 
-        double[][] xSquare = this.applyGaussianFilter(this.matrixService.calculateSquare(xDeriv));
-        double[][] ySquare = this.applyGaussianFilter(this.matrixService.calculateSquare(yDeriv));
+        double[][] xSquareDeriv = this.applyGaussianFilter(this.matrixService.calculateSquare(xDeriv));
+        double[][] ySquareDeriv = this.applyGaussianFilter(this.matrixService.calculateSquare(yDeriv));
         double[][] xyCrossProduct = this.applyGaussianFilter(this.matrixService.multiplyPointToPoint(xDeriv, yDeriv));
 
         double[][] possibleCorners = new double[xDeriv.length][xDeriv[0].length];
         for (int i = 0; i < possibleCorners.length; i++) {
             for (int j = 0; j < possibleCorners[i].length; j++) {
-                possibleCorners[i][j] = this.calculateC1(xSquare[i][j], ySquare[i][j], xyCrossProduct[i][j]);
+                possibleCorners[i][j] = this.calculateC1(xSquareDeriv[i][j], ySquareDeriv[i][j], xyCrossProduct[i][j]);
             }
         }
 
@@ -55,36 +55,11 @@ public class ApplyHarrisDetectorAction {
         return corners;
     }
 
-    private double calculateC1(double xDeriv, double yDeriv, double xyCrossProduct) {
-        double determinant = xDeriv * yDeriv - Math.pow(xyCrossProduct, 2);
-        double trace = xDeriv + yDeriv;
+    private double calculateC1(double xSquareDeriv, double ySquareDeriv, double xyCrossProduct) {
+        double determinant = xSquareDeriv * ySquareDeriv - Math.pow(xyCrossProduct, 2);
+        double trace = xSquareDeriv + ySquareDeriv;
         return determinant - k * Math.pow(trace, 2);
     }
-
-    /*
-    private double computeR(double[][] M) {
-        double determinant = this.matrixService.calculateDeterminant(M);
-        double trace = this.matrixService.calculateTrace(M);
-        return determinant - k*Math.pow(trace,2);
-    }
-
-    private double[][] createMMatrix(double[][] xSquare, double[][] ySquare, double[][] xyCrossProduct) {
-
-        double[][] M = new double[xyCrossProduct.length][xyCrossProduct[0].length];
-
-        for (int i=0; i < xyCrossProduct.length; i++) {
-            for (int j=0; j < xyCrossProduct[i].length; j++) {
-
-                M[0][0] += xSquare[i][j];
-                M[0][1] += xyCrossProduct[i][j];
-                M[1][0] += xyCrossProduct[i][j];
-                M[1][1] += ySquare[i][j];
-
-            }
-        }
-        return M;
-
-    }*/
 
     private double[][] applyGaussianFilter(int[][] matrix) {
         return new GaussianMask(2).apply(matrix);
