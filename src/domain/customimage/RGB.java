@@ -1,6 +1,7 @@
 package domain.customimage;
 
 public class RGB {
+
     private final int red;
     private final int green;
     private final int blue;
