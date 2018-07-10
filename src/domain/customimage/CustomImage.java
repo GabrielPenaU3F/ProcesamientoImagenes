@@ -8,6 +8,7 @@ import java.util.List;
 
 import core.provider.ServiceProvider;
 import core.service.MatrixService;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -28,8 +29,8 @@ public class CustomImage {
     private int[][] blueMatrix;
     private List<Pixel> pixelList;
 
-    public CustomImage(ChannelMatrix channelMatrix, String formatString) {
-        this(channelMatrixToFXImage(channelMatrix.getRedChannel(), channelMatrix.getGreenChannel(), channelMatrix.getBlueChannel()), formatString);
+    public CustomImage(RGBChannelMatrix RGBChannelMatrix, String formatString) {
+        this(channelMatrixToFXImage(RGBChannelMatrix.getRedChannel(), RGBChannelMatrix.getGreenChannel(), RGBChannelMatrix.getBlueChannel()), formatString);
     }
 
     public CustomImage(Image image, String formatString) {

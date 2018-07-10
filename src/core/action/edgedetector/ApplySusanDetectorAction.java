@@ -1,6 +1,6 @@
 package core.action.edgedetector;
 
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.mask.Mask;
 
@@ -8,8 +8,8 @@ public class ApplySusanDetectorAction {
 
     public CustomImage execute(CustomImage customImage, Mask mask) {
 
-        ChannelMatrix originalImageMatrix = new ChannelMatrix(customImage.getRedMatrix(), customImage.getBlueMatrix(), customImage.getGreenMatrix());
-        ChannelMatrix maskResult = mask.apply(customImage);
+        RGBChannelMatrix originalImageMatrix = new RGBChannelMatrix(customImage.getRedMatrix(), customImage.getBlueMatrix(), customImage.getGreenMatrix());
+        RGBChannelMatrix maskResult = mask.apply(customImage);
 
         for (int i = 0; i < originalImageMatrix.getWidth(); i++) {
             for (int j = 0; j < originalImageMatrix.getHeight(); j++) {

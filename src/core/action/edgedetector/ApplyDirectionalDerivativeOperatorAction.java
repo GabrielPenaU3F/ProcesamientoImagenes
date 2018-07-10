@@ -2,7 +2,7 @@ package core.action.edgedetector;
 
 import core.service.ImageOperationsService;
 import core.service.MatrixService;
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.customimage.RGB;
 import domain.mask.Mask;
@@ -29,24 +29,24 @@ public class ApplyDirectionalDerivativeOperatorAction {
             Mask mainDiagonalMask,
             Mask secondaryDiagonalMask) {
 
-        ChannelMatrix channelMatrix = applyMasks(customImage, horizontalStraightMask, verticalStraightMask,
+        RGBChannelMatrix RGBChannelMatrix = applyMasks(customImage, horizontalStraightMask, verticalStraightMask,
                 mainDiagonalMask, secondaryDiagonalMask);
 
-        int[][] redChannel = channelMatrix.getRedChannel();
-        int[][] greenChannel = channelMatrix.getGreenChannel();
-        int[][] blueChannel = channelMatrix.getBlueChannel();
+        int[][] redChannel = RGBChannelMatrix.getRedChannel();
+        int[][] greenChannel = RGBChannelMatrix.getGreenChannel();
+        int[][] blueChannel = RGBChannelMatrix.getBlueChannel();
         Image resultantImage = this.matrixService.toImage(redChannel, greenChannel, blueChannel);
 
         imagePublishSubject.onNext(resultantImage);
     }
 
-    private ChannelMatrix applyMasks(CustomImage image,
-            Mask horizontalStraightMask, Mask verticalStraightMask,
-            Mask mainDiagonalMask, Mask secondaryDiagonalMask) {
+    private RGBChannelMatrix applyMasks(CustomImage image,
+                                        Mask horizontalStraightMask, Mask verticalStraightMask,
+                                        Mask mainDiagonalMask, Mask secondaryDiagonalMask) {
 
         Integer width = image.getWidth();
         Integer height = image.getHeight();
-        ChannelMatrix channelMatrix = new ChannelMatrix(width, height);
+        RGBChannelMatrix RGBChannelMatrix = new RGBChannelMatrix(width, height);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -58,11 +58,11 @@ public class ApplyDirectionalDerivativeOperatorAction {
 
                 RGB maxRGB = getMaxRGB(horizontalRGB, verticalRGB, mainDiagonalRGB, secondaryDiagonalRGB);
 
-                channelMatrix.setValue(x, y, maxRGB);
+                RGBChannelMatrix.setValue(x, y, maxRGB);
             }
         }
 
-        return this.imageOperationsService.toValidImageMatrix(channelMatrix);
+        return this.imageOperationsService.toValidImageMatrix(RGBChannelMatrix);
     }
 
     private RGB getMaxRGB(RGB horizontalRGB, RGB verticalRGB, RGB mainDiagonalRGB, RGB secondaryDiagonalRGB) {

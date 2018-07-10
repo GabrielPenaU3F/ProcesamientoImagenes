@@ -1,7 +1,7 @@
 package core.action.diffusion;
 
 import core.service.ImageOperationsService;
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.customimage.RGB;
 import domain.diffusion.Derivative;
@@ -24,28 +24,28 @@ public class ApplyDiffusionAction {
 
         Integer width = customImage.getWidth();
         Integer height = customImage.getHeight();
-        ChannelMatrix channelMatrix = new ChannelMatrix(customImage.getRedMatrix(), customImage.getGreenMatrix(), customImage.getBlueMatrix());
+        RGBChannelMatrix RGBChannelMatrix = new RGBChannelMatrix(customImage.getRedMatrix(), customImage.getGreenMatrix(), customImage.getBlueMatrix());
 
         for (int i = 0; i < times; i++) {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    Derivative redDerivative = new Derivative(channelMatrix.getRedChannel(), x, y);
-                    Derivative greenDerivative = new Derivative(channelMatrix.getGreenChannel(), x, y);
-                    Derivative blueDerivative = new Derivative(channelMatrix.getBlueChannel(), x, y);
+                    Derivative redDerivative = new Derivative(RGBChannelMatrix.getRedChannel(), x, y);
+                    Derivative greenDerivative = new Derivative(RGBChannelMatrix.getGreenChannel(), x, y);
+                    Derivative blueDerivative = new Derivative(RGBChannelMatrix.getBlueChannel(), x, y);
 
                     int red = diffusion.apply(redDerivative);
                     int green = diffusion.apply(greenDerivative);
                     int blue = diffusion.apply(blueDerivative);
                     RGB value = new RGB(red, green, blue);
 
-                    channelMatrix.setValue(x, y, value);
+                    RGBChannelMatrix.setValue(x, y, value);
                 }
             }
 
-            channelMatrix = this.imageOperationsService.toValidImageMatrix(channelMatrix);
+            RGBChannelMatrix = this.imageOperationsService.toValidImageMatrix(RGBChannelMatrix);
         }
 
-        CustomImage image = new CustomImage(channelMatrix, customImage.getFormatString());
+        CustomImage image = new CustomImage(RGBChannelMatrix, customImage.getFormatString());
         onModifiedImagePublishSubject.onNext(image.toFXImage());
 
         return image;

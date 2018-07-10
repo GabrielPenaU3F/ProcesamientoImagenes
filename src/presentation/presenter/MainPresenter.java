@@ -597,4 +597,10 @@ public class MainPresenter {
     public void onApplySift() {
         new SiftSceneCreator().createScene();
     }
+
+    public void onBilateralFilter() {
+
+
+
+    }
 }

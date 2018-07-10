@@ -157,6 +157,7 @@
             <MenuItem mnemonicParsing="false" onAction="#onApplyMedianFilter" text="Median" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyWeightedMedianFilter" text="Weighted Median" />
             <MenuItem mnemonicParsing="false" onAction="#onApplyGaussianFilter" text="Gaussian" />
+         <MenuItem fx:id="onBilateralFilter" mnemonicParsing="false" text="Bilateral" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edges">
          <Menu mnemonicParsing="false" text="Conventional Detectors">

@@ -74,7 +74,7 @@ public class MatrixService {
         return copy;
     }
 
-    //We will mostly have to refactor this methods to support color images, i.e., using a ChannelMatrix instead of int[][]
+    //We will mostly have to refactor this methods to support color images, i.e., using a RGBChannelMatrix instead of int[][]
 
     public List<RGB> obtainNeighbors(int[][] matrix, int x, int y) {
 
@@ -374,5 +374,25 @@ public class MatrixService {
         }
 
         return max;
+    }
+
+    public static double[][] convertToDouble(int[][] matrix) {
+        double [][] doubleMatrix = new double[matrix.length][matrix[0].length];
+        for (int i=0; i < matrix.length; i++) {
+            for (int j=0; j < matrix[0].length; j++) {
+                doubleMatrix[i][j] = matrix[i][j];
+            }
+        }
+        return doubleMatrix;
+    }
+
+    public static int[][] convertToInt(double[][] matrix) {
+        int [][] intMatrix = new int[matrix.length][matrix[0].length];
+        for (int i=0; i < matrix.length; i++) {
+            for (int j=0; j < matrix[0].length; j++) {
+                intMatrix[i][j] = (int)matrix[i][j];
+            }
+        }
+        return intMatrix;
     }
 }

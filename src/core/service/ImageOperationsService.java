@@ -1,7 +1,7 @@
 package core.service;
 
 import core.service.statistics.GrayLevelStatisticsService;
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.customimage.Pixel;
 import javafx.scene.image.Image;
@@ -292,32 +292,32 @@ public class ImageOperationsService {
         return this.adjustScale(this.displacePixelsValues(pixels));
     }
 
-    public ChannelMatrix toValidImageMatrix(ChannelMatrix channelMatrix) {
-        int[][] redChannel = this.toValidImageMatrix(channelMatrix.getRedChannel());
-        int[][] greenChannel = this.toValidImageMatrix(channelMatrix.getGreenChannel());
-        int[][] blueChannel = this.toValidImageMatrix(channelMatrix.getBlueChannel());
-        return new ChannelMatrix(redChannel, greenChannel, blueChannel);
+    public RGBChannelMatrix toValidImageMatrix(RGBChannelMatrix RGBChannelMatrix) {
+        int[][] redChannel = this.toValidImageMatrix(RGBChannelMatrix.getRedChannel());
+        int[][] greenChannel = this.toValidImageMatrix(RGBChannelMatrix.getGreenChannel());
+        int[][] blueChannel = this.toValidImageMatrix(RGBChannelMatrix.getBlueChannel());
+        return new RGBChannelMatrix(redChannel, greenChannel, blueChannel);
     }
 
-    public ChannelMatrix multiplyChannelMatrixs(ChannelMatrix channelMatrix1, ChannelMatrix channelMatrix2) {
-        int[][] redChannel = multiplyMatrix(channelMatrix1.getRedChannel(), channelMatrix2.getRedChannel());
-        int[][] greenChannel = multiplyMatrix(channelMatrix1.getGreenChannel(), channelMatrix2.getGreenChannel());
-        int[][] blueChannel = multiplyMatrix(channelMatrix1.getBlueChannel(), channelMatrix2.getBlueChannel());
-        return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
+    public RGBChannelMatrix multiplyChannelMatrixs(RGBChannelMatrix RGBChannelMatrix1, RGBChannelMatrix RGBChannelMatrix2) {
+        int[][] redChannel = multiplyMatrix(RGBChannelMatrix1.getRedChannel(), RGBChannelMatrix2.getRedChannel());
+        int[][] greenChannel = multiplyMatrix(RGBChannelMatrix1.getGreenChannel(), RGBChannelMatrix2.getGreenChannel());
+        int[][] blueChannel = multiplyMatrix(RGBChannelMatrix1.getBlueChannel(), RGBChannelMatrix2.getBlueChannel());
+        return toValidImageMatrix(new RGBChannelMatrix(redChannel, greenChannel, blueChannel));
     }
 
-    public ChannelMatrix sumChannelMatrixs(ChannelMatrix channelMatrix1, ChannelMatrix channelMatrix2) {
-        int[][] redChannel = sumMatrix(channelMatrix1.getRedChannel(), channelMatrix2.getRedChannel());
-        int[][] greenChannel = sumMatrix(channelMatrix1.getGreenChannel(), channelMatrix2.getGreenChannel());
-        int[][] blueChannel = sumMatrix(channelMatrix1.getBlueChannel(), channelMatrix2.getBlueChannel());
-        return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
+    public RGBChannelMatrix sumChannelMatrixs(RGBChannelMatrix RGBChannelMatrix1, RGBChannelMatrix RGBChannelMatrix2) {
+        int[][] redChannel = sumMatrix(RGBChannelMatrix1.getRedChannel(), RGBChannelMatrix2.getRedChannel());
+        int[][] greenChannel = sumMatrix(RGBChannelMatrix1.getGreenChannel(), RGBChannelMatrix2.getGreenChannel());
+        int[][] blueChannel = sumMatrix(RGBChannelMatrix1.getBlueChannel(), RGBChannelMatrix2.getBlueChannel());
+        return toValidImageMatrix(new RGBChannelMatrix(redChannel, greenChannel, blueChannel));
     }
 
-    public ChannelMatrix sqrtChannelMatrixs(ChannelMatrix channelMatrix) {
-        int[][] redChannel = sqrtMatrix(channelMatrix.getRedChannel());
-        int[][] greenChannel = sqrtMatrix(channelMatrix.getGreenChannel());
-        int[][] blueChannel = sqrtMatrix(channelMatrix.getBlueChannel());
-        return toValidImageMatrix(new ChannelMatrix(redChannel, greenChannel, blueChannel));
+    public RGBChannelMatrix sqrtChannelMatrixs(RGBChannelMatrix RGBChannelMatrix) {
+        int[][] redChannel = sqrtMatrix(RGBChannelMatrix.getRedChannel());
+        int[][] greenChannel = sqrtMatrix(RGBChannelMatrix.getGreenChannel());
+        int[][] blueChannel = sqrtMatrix(RGBChannelMatrix.getBlueChannel());
+        return toValidImageMatrix(new RGBChannelMatrix(redChannel, greenChannel, blueChannel));
     }
 
     public int[][] sumMatrix(int[][] matrix1, int[][] matrix2) {
@@ -359,11 +359,11 @@ public class ImageOperationsService {
         return result;
     }
 
-    public ChannelMatrix calculateAbsoluteSum(ChannelMatrix firstImage, ChannelMatrix secondImage) {
+    public RGBChannelMatrix calculateAbsoluteSum(RGBChannelMatrix firstImage, RGBChannelMatrix secondImage) {
         int[][] redChannel = this.calculateAbsoluteSum(firstImage.getRedChannel(), secondImage.getRedChannel());
         int[][] greenChannel = this.calculateAbsoluteSum(firstImage.getGreenChannel(), secondImage.getGreenChannel());
         int[][] blueChannel = this.calculateAbsoluteSum(firstImage.getBlueChannel(), secondImage.getBlueChannel());
-        return new ChannelMatrix(redChannel, greenChannel, blueChannel);
+        return new RGBChannelMatrix(redChannel, greenChannel, blueChannel);
     }
 
     private int[][] calculateAbsoluteSum(int[][] firstChannel, int[][] secondChanne1) {
