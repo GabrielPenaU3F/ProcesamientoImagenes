@@ -599,8 +599,7 @@ public class MainPresenter {
     }
 
     public void onBilateralFilter() {
-
-
-
+        new BilateralFilterSceneCreator().createScene();
+        view.applyChangesButton.setVisible(true);
     }
 }

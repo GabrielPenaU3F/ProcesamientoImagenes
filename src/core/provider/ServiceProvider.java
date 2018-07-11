@@ -78,4 +78,8 @@ public class ServiceProvider {
     public static ApplyThresholdService provideApplyThresholdService(){
         return new ApplyThresholdService(provideModifyImageService());
     }
+
+    public static BilateralFunctionsService provideBilateralFunctionsService() {
+        return new BilateralFunctionsService();
+    }
 }
