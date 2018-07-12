@@ -210,6 +210,8 @@ public class PresenterProvider {
 
     public static BilateralPresenter provideBilateralPresenter(BilateralFilterSceneController bilateralFilterSceneController) {
         return new BilateralPresenter(bilateralFilterSceneController,
-                ActionProvider.provideApplyBilateralFilterAction());
+                ActionProvider.provideApplyBilateralFilterAction(),
+                ActionProvider.provideGetImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
     }
 }

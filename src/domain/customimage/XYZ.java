@@ -1,26 +1,18 @@
 package domain.customimage;
 
-public class XYZ {
-
-    private final double x;
-    private final double y;
-    private final double z;
+public class XYZ extends TriChannelValue {
 
     public XYZ(double X, double Y, double Z) {
-        x = X;
-        y = Y;
-        z = Z;
+        super(X,Y,Z);
     }
 
     public double getX() {
-        return x;
+        return super.getChannel1Value();
     }
 
-    public double getY() {
-        return y;
-    }
+    public double getY() { return super.getChannel2Value(); }
 
     public double getZ() {
-        return z;
+        return super.getChannel3Value();
     }
 }

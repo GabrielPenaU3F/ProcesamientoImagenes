@@ -495,7 +495,7 @@ class ActionProvider {
 
     public static ApplyBilateralFilterAction provideApplyBilateralFilterAction() {
         if (applyBilateralFilterAction == null) {
-            applyBilateralFilterAction = new ApplyBilateralFilterAction(ServiceProvider.provideBilateralFunctionsService());
+            applyBilateralFilterAction = new ApplyBilateralFilterAction();
         }
         return applyBilateralFilterAction;
     }

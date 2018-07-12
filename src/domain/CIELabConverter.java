@@ -1,4 +1,4 @@
-package core.action.filter.bilateral;
+package domain;
 
 import domain.customimage.LAB;
 import domain.customimage.RGB;

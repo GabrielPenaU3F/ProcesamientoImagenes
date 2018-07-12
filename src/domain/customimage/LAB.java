@@ -1,26 +1,20 @@
 package domain.customimage;
 
-public class LAB {
-
-    private final double L;
-    private final double a;
-    private final double b;
+public class LAB extends TriChannelValue {
 
     public LAB(double L, double a, double b) {
-        this.L = L;
-        this.a = a;
-        this.b = b;
+        super(L,a,b);
     }
 
     public double getL() {
-        return L;
+        return super.getChannel1Value();
     }
 
     public double getA() {
-        return a;
+        return super.getChannel2Value();
     }
 
     public double getB() {
-        return b;
+        return super.getChannel3Value();
     }
 }
