@@ -31,5 +31,4 @@ public class RGBChannelMatrix extends ChannelMatrix {
         return MatrixService.convertToInt(super.getChannel3());
     }
 
-
 }

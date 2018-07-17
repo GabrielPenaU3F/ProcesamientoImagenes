@@ -1,7 +1,10 @@
 package core.action.filter.bilateral;
 
+import domain.CIELabConverter;
 import domain.customimage.CustomImage;
 import domain.customimage.channel_matrix.ChannelMatrix;
+import domain.customimage.channel_matrix.LABChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.mask.Mask;
 import domain.mask.filter.BilateralMask;
 
@@ -25,8 +28,16 @@ public class ApplyBilateralFilterAction {
             filteredChannels.add(mask.applyBilateralMask(channel));
 
         }
+
+        LABChannelMatrix labChannelMatrix = new LABChannelMatrix(filteredChannels.get(0), filteredChannels.get(1), filteredChannels.get(2));
+
+        CustomImage image = new CustomImage(labChannelMatrix, "png");
+
+        //onModifiedImagePublishSubject.onNext(image.toFXImage());
+
+        return image;
         //TODO: Crear una imagen a partir de los canales filtrados. De alguna manera habría que detectar en que sistema (RGB o LAB) viene la imagen para poder crearla.
-        return null; //DEVOLVER ACA LA IMAGEN
+        //return null; //DEVOLVER ACA LA IMAGEN
     }
 
     private int getMeanSigma(double closenessSigma, double similaritySigma) {

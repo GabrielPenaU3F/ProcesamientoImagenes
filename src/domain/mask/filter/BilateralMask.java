@@ -7,6 +7,9 @@ import domain.XYPoint;
 import domain.customimage.RGB;
 import domain.mask.Mask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class BilateralMask extends Mask {
 
@@ -17,7 +20,7 @@ public class BilateralMask extends Mask {
 
     public BilateralMask(int size, double closenessSigma, double similaritySigma) {
         super(Type.BILATERAL, size);
-        this.createMatrix(size);
+        this.matrix = this.createMatrix(size);
         this.bilateralFunctionsService = ServiceProvider.provideBilateralFunctionsService();
         this.matrixService = ServiceProvider.provideMatrixService();
         this.closenessSigma = closenessSigma;
@@ -74,32 +77,42 @@ public class BilateralMask extends Mask {
 
         XYPoint center = new XYPoint(xCenter, yCenter);
         double centerValue = channel[xCenter][yCenter];
+        List<XYPoint> positionsIgnored = new ArrayList<>();
 
         for (int j = yCenter - (size / 2); j <= yCenter + (size / 2); j++) {
             for (int i = xCenter - (size / 2); i <= xCenter + (size / 2); i++) {
-
+                int maskColumn = j + (size / 2) - yCenter;
+                int maskRow = i + (size / 2) - xCenter;
                 if (this.matrixService.isPositionValid(channel.length, channel[0].length, i, j)) {
-
                     XYPoint current = new XYPoint(i, j);
                     double currentValue = channel[i][j];
-                    this.matrix[i][j] =
-                            this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma)
+                    this.matrix[maskRow][maskColumn] = this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma)
                             * this.bilateralFunctionsService.calculateSimilarity(centerValue, currentValue, similaritySigma);
 
-                } else this.matrix[i][j] = 0;
+                } else positionsIgnored.add(new XYPoint(maskRow,maskColumn));//else this.matrix[i][j] = 0;
             }
-            this.calculateFactor();
-
+            //this.calculateFactor(positionsIgnored, xCenter, yCenter);
         }
-
+        this.calculateFactor(positionsIgnored, xCenter, yCenter);
     }
 
-    private void calculateFactor() {
-
+    private void calculateFactor(List<XYPoint> positionsIgnored, int xCenter, int yCenter) {
         double sum = 0;
-        for (int i=0; i < size; i++) {
-            for (int j=0; j < size; j++) {
-                sum += this.matrix[i][j];
+        for (int j = yCenter - (size / 2); j <= yCenter + (size / 2); j++) {
+            for (int i = xCenter - (size / 2); i <= xCenter + (size / 2); i++) {
+                int maskColumn = j + (size / 2) - yCenter;
+                int maskRow = i + (size / 2) - xCenter;
+                boolean positionExists = true;
+                for (XYPoint xypoint :
+                        positionsIgnored) {
+                    if (xypoint.getX() == maskRow && xypoint.getY() == maskColumn) {
+                        positionExists = false;
+                    }
+                }
+                if(positionExists){
+                    sum += this.matrix[maskRow][maskColumn];
+                }
+
             }
         }
         this.factor = 1/sum;
