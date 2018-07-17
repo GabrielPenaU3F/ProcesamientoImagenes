@@ -69,7 +69,8 @@ public class BilateralMask extends Mask {
     }
 
 
-    private void generateMaskValues(int xCenter, int yCenter, double[][] channel, double closenessSigma, double similaritySigma) {
+    private void generateMaskValues(int xCenter, int yCenter, double[][] channel, double closenessSigma,
+                                    double similaritySigma) {
 
         XYPoint center = new XYPoint(xCenter, yCenter);
         double centerValue = channel[xCenter][yCenter];
@@ -81,7 +82,9 @@ public class BilateralMask extends Mask {
 
                     XYPoint current = new XYPoint(i, j);
                     double currentValue = channel[i][j];
-                    this.matrix[i][j] = this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma) * this.bilateralFunctionsService.calculateSimilarity(centerValue, currentValue, similaritySigma);
+                    this.matrix[i][j] =
+                            this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma)
+                            * this.bilateralFunctionsService.calculateSimilarity(centerValue, currentValue, similaritySigma);
 
                 } else this.matrix[i][j] = 0;
             }
