@@ -1,15 +1,13 @@
 package domain.mask.filter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import core.provider.ServiceProvider;
 import core.service.BilateralFunctionsService;
 import core.service.MatrixService;
 import domain.XYPoint;
-import domain.customimage.RGB;
 import domain.mask.Mask;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class BilateralMask extends Mask {
 
@@ -26,7 +24,6 @@ public class BilateralMask extends Mask {
         this.closenessSigma = closenessSigma;
         this.similaritySigma = similaritySigma;
     }
-
 
     @Override
     protected double[][] createMatrix(int size) {
@@ -71,9 +68,8 @@ public class BilateralMask extends Mask {
         return value;
     }
 
-
     private void generateMaskValues(int xCenter, int yCenter, double[][] channel, double closenessSigma,
-                                    double similaritySigma) {
+            double similaritySigma) {
 
         XYPoint center = new XYPoint(xCenter, yCenter);
         double centerValue = channel[xCenter][yCenter];
@@ -89,7 +85,9 @@ public class BilateralMask extends Mask {
                     this.matrix[maskRow][maskColumn] = this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma)
                             * this.bilateralFunctionsService.calculateSimilarity(centerValue, currentValue, similaritySigma);
 
-                } else positionsIgnored.add(new XYPoint(maskRow,maskColumn));//else this.matrix[i][j] = 0;
+                } else {
+                    positionsIgnored.add(new XYPoint(maskRow, maskColumn));//else this.matrix[i][j] = 0;
+                }
             }
             //this.calculateFactor(positionsIgnored, xCenter, yCenter);
         }
@@ -109,13 +107,13 @@ public class BilateralMask extends Mask {
                         positionExists = false;
                     }
                 }
-                if(positionExists){
+                if (positionExists) {
                     sum += this.matrix[maskRow][maskColumn];
                 }
 
             }
         }
-        this.factor = 1/sum;
+        this.factor = 1 / sum;
 
     }
 

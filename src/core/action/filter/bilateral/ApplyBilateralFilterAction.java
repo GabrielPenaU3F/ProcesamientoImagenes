@@ -1,47 +1,37 @@
 package core.action.filter.bilateral;
 
-import domain.CIELabConverter;
-import domain.customimage.CustomImage;
-import domain.customimage.channel_matrix.ChannelMatrix;
-import domain.customimage.channel_matrix.LABChannelMatrix;
-import domain.customimage.channel_matrix.RGBChannelMatrix;
-import domain.mask.Mask;
-import domain.mask.filter.BilateralMask;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.customimage.CustomImage;
+import domain.customimage.Format;
+import domain.customimage.channel_matrix.LABChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
+import domain.mask.filter.BilateralMask;
+
 public class ApplyBilateralFilterAction {
 
-    public CustomImage execute(CustomImage image, double closenessSigma, double similaritySigma) {
-        return this.apply(image.getLABChannelMatrix(), closenessSigma, similaritySigma); //Here we can change LAB by RGB to test the algorithm on RGB System
-    }
-
-    public CustomImage apply(ChannelMatrix channels, double closenessSigma, double similaritySigma) {
-
+    public CustomImage execute(CustomImage image, double closenessSigma, double similaritySigma, CustomImage.SystemType imageSystemType) {
         List<double[][]> filteredChannels = new ArrayList<>();
+        int size = 2 * this.getMeanSigma(closenessSigma, similaritySigma) + 1;
+        BilateralMask mask = new BilateralMask(size, closenessSigma, similaritySigma);
 
-        for (double[][] channel : channels.getChannels()) {
-
-            int size = 2*this.getMeanSigma(closenessSigma,similaritySigma)+1;
-            BilateralMask mask = new BilateralMask(size, closenessSigma, similaritySigma);
+        for (double[][] channel : image.getChannelMatrix(imageSystemType).getChannels()) {
             filteredChannels.add(mask.applyBilateralMask(channel));
-
         }
 
-        LABChannelMatrix labChannelMatrix = new LABChannelMatrix(filteredChannels.get(0), filteredChannels.get(1), filteredChannels.get(2));
+        return createCustomImage(filteredChannels, imageSystemType);
+    }
 
-        CustomImage image = new CustomImage(labChannelMatrix, "png");
-
-        //onModifiedImagePublishSubject.onNext(image.toFXImage());
-
-        return image;
-        //TODO: Crear una imagen a partir de los canales filtrados. De alguna manera habría que detectar en que sistema (RGB o LAB) viene la imagen para poder crearla.
-        //return null; //DEVOLVER ACA LA IMAGEN
+    private CustomImage createCustomImage(List<double[][]> filteredChannels, CustomImage.SystemType imageSystemType) {
+        if (CustomImage.SystemType.LAB.equals(imageSystemType)) {
+            return new CustomImage(new LABChannelMatrix(filteredChannels.get(0), filteredChannels.get(1), filteredChannels.get(2)), Format.PNG);
+        }
+        return new CustomImage(new RGBChannelMatrix(filteredChannels.get(0), filteredChannels.get(1), filteredChannels.get(2)), Format.PNG);
     }
 
     private int getMeanSigma(double closenessSigma, double similaritySigma) {
-        return (int)(closenessSigma + similaritySigma)/2;
+        return (int) (closenessSigma + similaritySigma) / 2;
     }
 
 }

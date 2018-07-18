@@ -9,26 +9,27 @@ public class CIELabConverter {
     /**
      * reference white in XYZ coordinates
      */
-    private double[] D50 = { 96.4212, 100.0, 82.5188 };
-    private double[] D55 = { 95.6797, 100.0, 92.1481 };
-    private double[] D65 = { 95.0429, 100.0, 108.8900 };
-    private double[] D75 = { 94.9722, 100.0, 122.6394 };
-    private double[] whitePoint = D65;
+    private static double[] D50 = { 96.4212, 100.0, 82.5188 };
+    private static double[] D55 = { 95.6797, 100.0, 92.1481 };
+    private static double[] D65 = { 95.0429, 100.0, 108.8900 };
+    private static double[] D75 = { 94.9722, 100.0, 122.6394 };
+    private static double[] whitePoint = D65;
 
     /**
      * sRGB to XYZ conversion matrix
      */
-    private double[][] M = { { 0.4124, 0.3576, 0.1805 },
+    private static double[][] M = { { 0.4124, 0.3576, 0.1805 },
             { 0.2126, 0.7152, 0.0722 },
             { 0.0193, 0.1192, 0.9505 } };
 
     /**
      * XYZ to sRGB conversion matrix
      */
-    private double[][] Mi = { { 3.2406, -1.5372, -0.4986 },
+    private static double[][] Mi = { { 3.2406, -1.5372, -0.4986 },
             { -0.9689, 1.8758, 0.0415 },
             { 0.0557, -0.2040, 1.0570 } };
 
+    /* Uncomment when need change the level of white
     public CIELabConverter(String white) {
         whitePoint = D65;
         if (white.equalsIgnoreCase("d50")) {
@@ -40,17 +41,17 @@ public class CIELabConverter {
         } else if (white.equalsIgnoreCase("d75")) {
             whitePoint = D75;
         }
-    }
+    }*/
 
-    public RGB LABtoRGB(LAB lab) {
+    public static RGB LABtoRGB(LAB lab) {
         return XYZtoRGB(LABtoXYZ(lab));
     }
 
-    public LAB RGBtoLAB(RGB rgb) {
+    public static LAB RGBtoLAB(RGB rgb) {
         return XYZtoLAB(RGBtoXYZ(rgb));
     }
 
-    private XYZ LABtoXYZ(LAB lab) {
+    private static XYZ LABtoXYZ(LAB lab) {
 
         double y = (lab.getL() + 16.0) / 116.0;
         double y3 = Math.pow(y, 3.0);
@@ -78,7 +79,7 @@ public class CIELabConverter {
         return new XYZ(x * whitePoint[0], y * whitePoint[1], z * whitePoint[2]);
     }
 
-    private XYZ RGBtoXYZ(RGB rgb) {
+    private static XYZ RGBtoXYZ(RGB rgb) {
 
         // convert 0..255 into 0..1
         double r = rgb.getRed() / 255.0;
@@ -114,7 +115,7 @@ public class CIELabConverter {
         return new XYZ(x, y, z);
     }
 
-    private LAB XYZtoLAB(XYZ xyz) {
+    private static LAB XYZtoLAB(XYZ xyz) {
 
         double x = xyz.getX() / whitePoint[0];
         double y = xyz.getY() / whitePoint[1];
@@ -143,7 +144,7 @@ public class CIELabConverter {
         return new LAB(L, A, B);
     }
 
-    private RGB XYZtoRGB(XYZ xyz) {
+    private static RGB XYZtoRGB(XYZ xyz) {
 
         double x = xyz.getX() / 100.0;
         double y = xyz.getY() / 100.0;

@@ -170,6 +170,21 @@ public class CustomImage {
     }
 
     public ChannelMatrix getLABChannelMatrix() {
-        return FormatConversionService.RGBtoLAB(new RGBChannelMatrix(this.redMatrix, this.greenMatrix, this.blueMatrix));
+        return FormatConversionService.RGBtoLAB(getRgbChannelMatrix());
+    }
+
+    private RGBChannelMatrix getRgbChannelMatrix() {
+        return new RGBChannelMatrix(this.redMatrix, this.greenMatrix, this.blueMatrix);
+    }
+
+    public ChannelMatrix getChannelMatrix(SystemType imageSystemType) {
+        if(SystemType.LAB.equals(imageSystemType)) {
+            return getLABChannelMatrix();
+        }
+        return getRgbChannelMatrix();
+    }
+
+    public enum SystemType {
+        RGB, LAB
     }
 }

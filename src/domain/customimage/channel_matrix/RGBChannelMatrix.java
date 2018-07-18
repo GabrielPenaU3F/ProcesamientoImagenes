@@ -13,6 +13,10 @@ public class RGBChannelMatrix extends ChannelMatrix {
         super(MatrixService.convertToDouble(redChannel), MatrixService.convertToDouble(greenChannel), MatrixService.convertToDouble(blueChannel));
     }
 
+    public RGBChannelMatrix(double[][] redChannel, double[][] greenChannel, double[][] blueChannel) {
+        super(redChannel, greenChannel, blueChannel);
+    }
+
     public void setValue(int x, int y, RGB value) {
         this.channel1[x][y] = value.getRed();
         this.channel2[x][y] = value.getGreen();
