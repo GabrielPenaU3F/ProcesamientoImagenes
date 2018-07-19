@@ -39,6 +39,8 @@ public class BilateralPresenter {
                 this.imagePublishSubject.onNext(image);
             });
         }
+
+        view.closeWindow();
     }
 
     private boolean isValid(String sigma) {

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import presentation.presenter.BilateralPresenter;
 
 public class BilateralFilterSceneController {
@@ -56,5 +57,10 @@ public class BilateralFilterSceneController {
 
     public void putDefaultAsFirstImageSystemType() {
         imageSystemType.getSelectionModel().select(0);
+    }
+
+    public void closeWindow() {
+        Stage stage = (Stage) this.similaritySigmaTextField.getScene().getWindow();
+        stage.close();
     }
 }
