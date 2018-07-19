@@ -82,8 +82,9 @@ public class BilateralMask extends Mask {
                 if (this.matrixService.isPositionValid(channel.length, channel[0].length, i, j)) {
                     XYPoint current = new XYPoint(i, j);
                     double currentValue = channel[i][j];
-                    this.matrix[maskRow][maskColumn] = this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma)
-                            * this.bilateralFunctionsService.calculateSimilarity(centerValue, currentValue, similaritySigma);
+                    double closeness = this.bilateralFunctionsService.calculateCloseness(center, current, closenessSigma);
+                    double similarity = this.bilateralFunctionsService.calculateSimilarity(centerValue, currentValue, similaritySigma);
+                    this.matrix[maskRow][maskColumn] = closeness * similarity;
 
                 } else {
                     positionsIgnored.add(new XYPoint(maskRow, maskColumn));//else this.matrix[i][j] = 0;

@@ -3,7 +3,7 @@ package domain.customimage;
 public class LAB extends TriChannelValue {
 
     public LAB(double L, double a, double b) {
-        super(L,a,b);
+        super(L, a, b);
     }
 
     public double getL() {

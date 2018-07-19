@@ -55,8 +55,10 @@ public class CIELabConverter {
 
         double y = (lab.getL() + 16.0) / 116.0;
         double y3 = Math.pow(y, 3.0);
+
         double x = (lab.getA() / 500.0) + y;
         double x3 = Math.pow(x, 3.0);
+
         double z = y - (lab.getB() / 200.0);
         double z3 = Math.pow(z, 3.0);
 

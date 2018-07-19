@@ -14,16 +14,11 @@ public class FormatConversionService {
 
         for (int i = 0; i < labChannelMatrix.getWidth(); i++) {
             for (int j = 0; j < labChannelMatrix.getHeight(); j++) {
-
                 LAB lab = new LAB(labChannelMatrix.getLChannel()[i][j], labChannelMatrix.getAChannel()[i][j], labChannelMatrix.getBChannel()[i][j]);
-                RGB rgb = CIELabConverter.LABtoRGB(lab);
-                rgbChannelMatrix.setValue(i, j, rgb);
-
+                rgbChannelMatrix.setValue(i, j, CIELabConverter.LABtoRGB(lab));
             }
         }
-
         return rgbChannelMatrix;
-
     }
 
     public static LABChannelMatrix RGBtoLAB(RGBChannelMatrix rgbChannelMatrix) {
@@ -32,17 +27,10 @@ public class FormatConversionService {
 
         for (int i = 0; i < rgbChannelMatrix.getWidth(); i++) {
             for (int j = 0; j < rgbChannelMatrix.getHeight(); j++) {
-
-                RGB rgb = new RGB(rgbChannelMatrix.getRedChannel()[i][j], rgbChannelMatrix.getGreenChannel()[i][j],
-                        rgbChannelMatrix.getBlueChannel()[i][j]);
-                LAB lab = CIELabConverter.RGBtoLAB(rgb);
-                labChannelMatrix.setValue(i, j, lab);
-
+                RGB rgb = new RGB(rgbChannelMatrix.getRedChannel()[i][j], rgbChannelMatrix.getGreenChannel()[i][j], rgbChannelMatrix.getBlueChannel()[i][j]);
+                labChannelMatrix.setValue(i, j, CIELabConverter.RGBtoLAB(rgb));
             }
         }
-
         return labChannelMatrix;
-
     }
-
 }

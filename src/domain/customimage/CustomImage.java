@@ -67,12 +67,19 @@ public class CustomImage {
         PixelWriter pixelWriter = image.getPixelWriter();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                Color color = Color.rgb(red[i][j], green[i][j], blue[i][j]);
+                int truncatedRed = truncate(red[i][j]);
+                int truncatedGreen = truncate(green[i][j]);
+                int truncatedBlue = truncate(blue[i][j]);
+                Color color = Color.rgb(truncatedRed, truncatedGreen, truncatedBlue);
                 pixelWriter.setColor(i, j, color);
             }
         }
 
         return image;
+    }
+
+    private static int truncate(int truncated) {
+        return truncated > 255 ? 255 : truncated;
     }
 
     public int[][] getRedMatrix() {
