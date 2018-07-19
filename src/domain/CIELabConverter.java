@@ -84,7 +84,7 @@ public class CIELabConverter {
         // convert 0..255 into 0..1
         double r = rgb.getRed() / 255.0;
         double g = rgb.getGreen() / 255.0;
-        double b = rgb.getRed() / 255.0;
+        double b = rgb.getBlue() / 255.0;
 
         // assume sRGB
         if (r <= 0.04045) {

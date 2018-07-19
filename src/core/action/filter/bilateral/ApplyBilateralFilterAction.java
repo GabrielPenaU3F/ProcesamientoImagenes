@@ -11,9 +11,9 @@ import domain.mask.filter.BilateralMask;
 
 public class ApplyBilateralFilterAction {
 
-    public CustomImage execute(CustomImage image, double closenessSigma, double similaritySigma, CustomImage.SystemType imageSystemType) {
+    public CustomImage execute(CustomImage image, double closenessSigma, double similaritySigma, int maskSize, CustomImage.SystemType imageSystemType) {
         List<double[][]> filteredChannels = new ArrayList<>();
-        int size = 2 * this.getMeanSigma(closenessSigma, similaritySigma) + 1;
+        int size = maskSize; //2 * this.getMeanSigma(closenessSigma, similaritySigma) + 1;
         BilateralMask mask = new BilateralMask(size, closenessSigma, similaritySigma);
 
         for (double[][] channel : image.getChannelMatrix(imageSystemType).getChannels()) {
@@ -33,5 +33,6 @@ public class ApplyBilateralFilterAction {
     private int getMeanSigma(double closenessSigma, double similaritySigma) {
         return (int) (closenessSigma + similaritySigma) / 2;
     }
+
 
 }

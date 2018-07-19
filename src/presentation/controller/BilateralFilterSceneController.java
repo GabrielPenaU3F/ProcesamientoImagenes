@@ -20,6 +20,9 @@ public class BilateralFilterSceneController {
     public TextField similaritySigmaTextField;
 
     @FXML
+    public TextField maskSize;
+
+    @FXML
     public ChoiceBox<String> imageSystemType;
 
 
@@ -43,6 +46,10 @@ public class BilateralFilterSceneController {
 
     public String getSimilaritySigmaTextField() {
         return similaritySigmaTextField.getText();
+    }
+
+    public String getMaskSize() {
+        return maskSize.getText();
     }
 
     public String getSystemTypeTextField() {

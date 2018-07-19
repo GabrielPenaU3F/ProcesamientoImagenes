@@ -28,14 +28,16 @@ public class BilateralPresenter {
         String closenessSigma = view.getClosenessSigmaTextField();
         String similaritySigma = view.getSimilaritySigmaTextField();
         String systemType = view.getSystemTypeTextField();
+        String maskSize = view.getMaskSize();
 
-        if (isValid(closenessSigma) && isValid(similaritySigma)) {
+        if (isValidSigma(closenessSigma) && isValidSigma(similaritySigma) && isValidMaskSize(maskSize)) {
 
             this.getImageAction.execute().ifPresent(customImage -> {
                 double closenessSigma1 = Double.parseDouble(closenessSigma);
                 double similaritySigma1 = Double.parseDouble(similaritySigma);
+                int maskSize1 = Integer.parseInt(maskSize);
                 SystemType imageSystemType = SystemType.valueOf(systemType);
-                Image image = applyBilateralFilterAction.execute(customImage, closenessSigma1, similaritySigma1, imageSystemType).toFXImage();
+                Image image = applyBilateralFilterAction.execute(customImage, closenessSigma1, similaritySigma1, maskSize1, imageSystemType).toFXImage();
                 this.imagePublishSubject.onNext(image);
             });
         }
@@ -43,8 +45,13 @@ public class BilateralPresenter {
         view.closeWindow();
     }
 
-    private boolean isValid(String sigma) {
+    private boolean isValidSigma(String sigma) {
         return (sigma != "") && (Double.parseDouble(sigma) > 0);
+    }
+
+    private boolean isValidMaskSize(String maskSize) {
+
+        return (maskSize != "") && (Integer.parseInt(maskSize) > 0) && (Integer.parseInt(maskSize) % 2) != 0 ;
     }
 
     public void onInitializeView() {
