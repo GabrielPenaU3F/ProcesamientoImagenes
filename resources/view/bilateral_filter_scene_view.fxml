@@ -16,6 +16,6 @@
 	<TextField fx:id="maskSize" layoutX="525.0" layoutY="85.0" />
 	<Button layoutX="358.0" layoutY="151.0" mnemonicParsing="false" onAction="#onApply" text="Apply" />
    <ChoiceBox fx:id="imageSystemType" layoutX="743.0" layoutY="85.0" prefWidth="150.0" />
-	<Label layoutX="542.0" layoutY="115.0" text="Recommended value" />
+	<Label layoutX="542.0" layoutY="115.0" text="Recommended size" />
    <Button layoutX="580.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCalculateRecommendedMaskValue" text="Calculate" />
 </AnchorPane>
