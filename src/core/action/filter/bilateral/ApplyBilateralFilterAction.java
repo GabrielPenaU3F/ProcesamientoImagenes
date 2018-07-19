@@ -30,9 +30,5 @@ public class ApplyBilateralFilterAction {
         return new CustomImage(new RGBChannelMatrix(filteredChannels.get(0), filteredChannels.get(1), filteredChannels.get(2)), Format.PNG);
     }
 
-    private int getMeanSigma(double closenessSigma, double similaritySigma) {
-        return (int) (closenessSigma + similaritySigma) / 2;
-    }
-
 
 }

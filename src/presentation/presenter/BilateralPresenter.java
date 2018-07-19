@@ -4,9 +4,12 @@ import static domain.customimage.CustomImage.SystemType;
 
 import core.action.filter.bilateral.ApplyBilateralFilterAction;
 import core.action.image.GetImageAction;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.subjects.PublishSubject;
 import javafx.scene.image.Image;
 import presentation.controller.BilateralFilterSceneController;
+import presentation.util.ShowResultPopup;
 
 public class BilateralPresenter {
 
@@ -23,12 +26,24 @@ public class BilateralPresenter {
         this.imagePublishSubject = imagePublishSubject;
     }
 
-    public void onApply() {
+    public void onCalculateRecommendedMaskValue(){
+        String closenessSigma = view.getClosenessSigmaTextField();
+        String similaritySigma = view.getSimilaritySigmaTextField();
+        if (isValidSigma(closenessSigma) && isValidSigma(similaritySigma)){
+            int closenessSigma1 = Integer.parseInt(closenessSigma);
+            int similaritySigma1 = Integer.parseInt(similaritySigma);
+            int recommendedMaskSize = (2 * ((int) (closenessSigma1 + similaritySigma1) / 2)) + 1; //2 * this.getMeanSigma(closenessSigma, similaritySigma) + 1;
+            ShowResultPopup.show("Recommended Mask Size", String.valueOf(recommendedMaskSize));
+        }
 
+    }
+
+    public void onApply() {
         String closenessSigma = view.getClosenessSigmaTextField();
         String similaritySigma = view.getSimilaritySigmaTextField();
         String systemType = view.getSystemTypeTextField();
         String maskSize = view.getMaskSize();
+
 
         if (isValidSigma(closenessSigma) && isValidSigma(similaritySigma) && isValidMaskSize(maskSize)) {
 

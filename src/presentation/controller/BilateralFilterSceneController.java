@@ -40,6 +40,11 @@ public class BilateralFilterSceneController {
         this.bilateralPresenter.onApply();
     }
 
+    @FXML
+    public void onCalculateRecommendedMaskValue() {
+        this.bilateralPresenter.onCalculateRecommendedMaskValue();
+    }
+
     public String getClosenessSigmaTextField() {
         return closenessSigmaTextField.getText();
     }
