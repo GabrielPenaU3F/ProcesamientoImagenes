@@ -4,7 +4,6 @@ import core.provider.PresenterProvider;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import presentation.presenter.BilateralPresenter;
@@ -74,5 +73,9 @@ public class BilateralFilterSceneController {
     public void closeWindow() {
         Stage stage = (Stage) this.similaritySigmaTextField.getScene().getWindow();
         stage.close();
+    }
+
+    public void setRecommendedMaskSize(String value) {
+        this.maskSize.setText(value);
     }
 }
