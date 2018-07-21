@@ -90,24 +90,25 @@ public class CIELabConverter {
 
         // assume sRGB
         if (r <= 0.04045) {
-            r = r / 12.92;
+            r = r / 12.92 * 100.0;
         } else {
-            r = Math.pow(((r + 0.055) / 1.055), 2.4);
+            r = Math.pow(((r + 0.055) / 1.055), 2.4) * 100.0;
         }
         if (g <= 0.04045) {
-            g = g / 12.92;
+            g = g / 12.92 * 100.0;
         } else {
-            g = Math.pow(((g + 0.055) / 1.055), 2.4);
+            g = Math.pow(((g + 0.055) / 1.055), 2.4) * 100.0;
         }
         if (b <= 0.04045) {
-            b = b / 12.92;
+            b = b / 12.92 * 100.0;
         } else {
-            b = Math.pow(((b + 0.055) / 1.055), 2.4);
+            b = Math.pow(((b + 0.055) / 1.055), 2.4) * 100.0;
         }
 
+        /*se lo meto en las cuentas de arriba
         r *= 100.0;
         g *= 100.0;
-        b *= 100.0;
+        b *= 100.0;*/
 
         // [X Y Z] = [r g b][M]
         double x = (r * M[0][0]) + (g * M[0][1]) + (b * M[0][2]);

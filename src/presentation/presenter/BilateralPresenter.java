@@ -27,8 +27,10 @@ public class BilateralPresenter {
     }
 
     public void onCalculateRecommendedMaskValue(){
-        String closenessSigma = view.getClosenessSigmaTextField();
-        String similaritySigma = view.getSimilaritySigmaTextField();
+        String closenessSigma = "";
+        closenessSigma = view.getClosenessSigmaTextField();
+        String similaritySigma = "";
+        similaritySigma = view.getSimilaritySigmaTextField();
         if (isValidSigma(closenessSigma) && isValidSigma(similaritySigma)){
             int closenessSigma1 = Integer.parseInt(closenessSigma);
             int similaritySigma1 = Integer.parseInt(similaritySigma);
