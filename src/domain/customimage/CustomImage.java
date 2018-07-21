@@ -8,9 +8,6 @@ import java.util.List;
 
 import core.provider.ServiceProvider;
 import core.service.MatrixService;
-import core.service.transformations.FormatConversionService;
-import domain.customimage.channel_matrix.ChannelMatrix;
-import domain.customimage.channel_matrix.LABChannelMatrix;
 import domain.customimage.channel_matrix.RGBChannelMatrix;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -34,10 +31,6 @@ public class CustomImage {
 
     public CustomImage(RGBChannelMatrix RGBChannelMatrix, String formatString) {
         this(channelMatrixToFXImage(RGBChannelMatrix.getRedChannel(), RGBChannelMatrix.getGreenChannel(), RGBChannelMatrix.getBlueChannel()), formatString);
-    }
-
-    public CustomImage(LABChannelMatrix labChannelMatrix, String formatString) {
-        this(FormatConversionService.LABtoRGB(labChannelMatrix), formatString);
     }
 
     public CustomImage(Image image, String formatString) {
@@ -176,19 +169,8 @@ public class CustomImage {
         return Color.rgb(getRChannelValue(x, y), getGChannelValue(x, y), getBChannelValue(x, y));
     }
 
-    public ChannelMatrix getLABChannelMatrix() {
-        return FormatConversionService.RGBtoLAB(getRgbChannelMatrix());
-    }
-
-    private RGBChannelMatrix getRgbChannelMatrix() {
+    public RGBChannelMatrix getRgbChannelMatrix() {
         return new RGBChannelMatrix(this.redMatrix, this.greenMatrix, this.blueMatrix);
-    }
-
-    public ChannelMatrix getChannelMatrix(SystemType imageSystemType) {
-        if(SystemType.LAB.equals(imageSystemType)) {
-            return getLABChannelMatrix();
-        }
-        return getRgbChannelMatrix();
     }
 
     public enum SystemType {

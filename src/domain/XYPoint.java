@@ -30,4 +30,8 @@ public class XYPoint {
     public int hashCode() {
         return Objects.hash(this.x, this.y);
     }
+
+    public boolean equals(int row, int column) {
+        return x == row && y == column;
+    }
 }

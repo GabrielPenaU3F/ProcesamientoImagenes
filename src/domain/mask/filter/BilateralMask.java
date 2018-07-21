@@ -7,6 +7,7 @@ import core.provider.ServiceProvider;
 import core.service.BilateralFunctionsService;
 import core.service.MatrixService;
 import domain.XYPoint;
+import domain.customimage.channel_matrix.Channel;
 import domain.mask.Mask;
 
 public class BilateralMask extends Mask {
@@ -30,7 +31,8 @@ public class BilateralMask extends Mask {
         return new double[size][size];
     }
 
-    public double[][] applyBilateralMask(double[][] channel) {
+    public Channel applyBilateralMask(Channel asChannel) {
+        double[][] channel = asChannel.getChannel();
         Integer width = channel.length;
         Integer height = channel[0].length;
         double[][] filteredChannel = new double[width][height];
@@ -41,35 +43,33 @@ public class BilateralMask extends Mask {
             }
         }
 
-        return filteredChannel;
+        return new Channel(filteredChannel);
     }
 
     /* Basic convolution segment algorithm */
     public double applyMaskToPixel(double[][] channel, int x, int y) {
 
         double value = 0;
-        this.generateMaskValues(x, y, channel, closenessSigma, similaritySigma);
+        this.factor = this.generateMaskValues(x, y, channel, closenessSigma, similaritySigma);
 
         for (int j = y - (size / 2); j <= y + (size / 2); j++) {
             for (int i = x - (size / 2); i <= x + (size / 2); i++) {
 
+                //Ignoring the invalid positions, is equal to do a zero-padding. We're averaging zeros
                 if (this.matrixService.isPositionValid(channel.length, channel[0].length, i, j)) {
-
                     int maskColumn = j + (size / 2) - y;
                     int maskRow = i + (size / 2) - x;
                     double maskValue = this.matrix[maskRow][maskColumn];
 
                     value += channel[i][j] * maskValue * this.factor;
                 }
-                //Ignoring the invalid positions, is equal to do a zero-padding. We're averaging zeros
             }
         }
 
         return value;
     }
 
-    private void generateMaskValues(int xCenter, int yCenter, double[][] channel, double closenessSigma,
-            double similaritySigma) {
+    private double generateMaskValues(int xCenter, int yCenter, double[][] channel, double closenessSigma, double similaritySigma) {
 
         XYPoint center = new XYPoint(xCenter, yCenter);
         double centerValue = channel[xCenter][yCenter];
@@ -90,32 +90,31 @@ public class BilateralMask extends Mask {
                     positionsIgnored.add(new XYPoint(maskRow, maskColumn));//else this.matrix[i][j] = 0;
                 }
             }
-            //this.calculateFactor(positionsIgnored, xCenter, yCenter);
         }
-        this.calculateFactor(positionsIgnored, xCenter, yCenter);
+
+        return this.calculateFactor(positionsIgnored, xCenter, yCenter);
     }
 
-    private void calculateFactor(List<XYPoint> positionsIgnored, int xCenter, int yCenter) {
+    private double calculateFactor(List<XYPoint> positionsIgnored, int xCenter, int yCenter) {
         double sum = 0;
         for (int j = yCenter - (size / 2); j <= yCenter + (size / 2); j++) {
             for (int i = xCenter - (size / 2); i <= xCenter + (size / 2); i++) {
                 int maskColumn = j + (size / 2) - yCenter;
                 int maskRow = i + (size / 2) - xCenter;
                 boolean positionExists = true;
-                for (XYPoint xypoint :
-                        positionsIgnored) {
-                    if (xypoint.getX() == maskRow && xypoint.getY() == maskColumn) {
+
+                for (XYPoint xypoint : positionsIgnored) {
+                    if (xypoint.equals(maskRow, maskColumn)) {
                         positionExists = false;
                     }
                 }
                 if (positionExists) {
                     sum += this.matrix[maskRow][maskColumn];
                 }
-
             }
         }
-        this.factor = 1 / sum;
 
+        return 1 / sum;
     }
 
 }

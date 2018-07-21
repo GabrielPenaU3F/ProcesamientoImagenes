@@ -1,40 +1,65 @@
 package core.service.transformations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import domain.CIELabConverter;
 import domain.customimage.LAB;
 import domain.customimage.RGB;
 import domain.customimage.channel_matrix.LABChannelMatrix;
 import domain.customimage.channel_matrix.RGBChannelMatrix;
+import io.reactivex.Single;
 
 public class FormatConversionService {
 
-    public static RGBChannelMatrix LABtoRGB(LABChannelMatrix labChannelMatrix) {
+    private final CIELabConverter converter;
 
+    public FormatConversionService(CIELabConverter converter) {
+        this.converter = converter;
+    }
+
+    public RGBChannelMatrix LABtoRGB(LABChannelMatrix labChannelMatrix) {
+        List<Single<RGB>> singles = new ArrayList<>();
         RGBChannelMatrix rgbChannelMatrix = new RGBChannelMatrix(labChannelMatrix.getWidth(), labChannelMatrix.getHeight());
-        long startTime = System.currentTimeMillis();
+        double[][] lChannel = labChannelMatrix.getLChannel();
+        double[][] aChannel = labChannelMatrix.getAChannel();
+        double[][] bChannel = labChannelMatrix.getBChannel();
+
         for (int i = 0; i < labChannelMatrix.getWidth(); i++) {
             for (int j = 0; j < labChannelMatrix.getHeight(); j++) {
-                LAB lab = new LAB(labChannelMatrix.getLChannel()[i][j], labChannelMatrix.getAChannel()[i][j], labChannelMatrix.getBChannel()[i][j]);
-                rgbChannelMatrix.setValue(i, j, CIELabConverter.LABtoRGB(lab));
+                final int ic = i;
+                final int jc = j;
+
+                LAB lab = new LAB(lChannel[i][j], aChannel[i][j], bChannel[i][j]);
+                Single<RGB> rgbSingle = Single.fromCallable(() -> this.converter.LABtoRGB(lab))
+                                              .map(value -> rgbChannelMatrix.setValue(ic, jc, value));
+
+                singles.add(rgbSingle);
             }
         }
-        long endTime = System.currentTimeMillis();
-        System.out.println("LABtoRGB " + (endTime - startTime) + " milliseconds");
+        Single.merge(singles).toList().blockingGet();
         return rgbChannelMatrix;
     }
 
-    public static LABChannelMatrix RGBtoLAB(RGBChannelMatrix rgbChannelMatrix) {
-
+    public LABChannelMatrix RGBtoLAB(RGBChannelMatrix rgbChannelMatrix) {
+        List<Single<LAB>> singles = new ArrayList<>();
         LABChannelMatrix labChannelMatrix = new LABChannelMatrix(rgbChannelMatrix.getWidth(), rgbChannelMatrix.getHeight());
-        long startTime = System.currentTimeMillis();
+        int[][] redChannel = rgbChannelMatrix.getRedChannel();
+        int[][] greenChannel = rgbChannelMatrix.getGreenChannel();
+        int[][] blueChannel = rgbChannelMatrix.getBlueChannel();
+
         for (int i = 0; i < rgbChannelMatrix.getWidth(); i++) {
             for (int j = 0; j < rgbChannelMatrix.getHeight(); j++) {
-                RGB rgb = new RGB(rgbChannelMatrix.getRedChannel()[i][j], rgbChannelMatrix.getGreenChannel()[i][j], rgbChannelMatrix.getBlueChannel()[i][j]);
-                labChannelMatrix.setValue(i, j, CIELabConverter.RGBtoLAB(rgb));
+                final int ic = i;
+                final int jc = j;
+
+                RGB rgb = new RGB(redChannel[i][j], greenChannel[i][j], blueChannel[i][j]);
+                Single<LAB> labSingle = Single.fromCallable(() -> this.converter.RGBtoLAB(rgb))
+                                              .map(value -> labChannelMatrix.setValue(ic, jc, value));
+                singles.add(labSingle);
             }
         }
-        long endTime = System.currentTimeMillis();
-        System.out.println("RGBtoLAB " + (endTime - startTime) + " milliseconds");
+        Single.merge(singles).toList().blockingGet();
         return labChannelMatrix;
     }
 }

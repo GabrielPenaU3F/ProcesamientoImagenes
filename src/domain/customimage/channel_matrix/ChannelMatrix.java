@@ -1,10 +1,9 @@
 package domain.customimage.channel_matrix;
 
-import domain.customimage.RGB;
-import domain.customimage.TriChannelValue;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.customimage.TriChannelValue;
 
 public class ChannelMatrix {
 
@@ -51,9 +50,5 @@ public class ChannelMatrix {
         channels.add(this.channel2);
         channels.add(this.channel3);
         return channels;
-    }
-
-    public void setValue(int x, int y, TriChannelValue value) {
-
     }
 }

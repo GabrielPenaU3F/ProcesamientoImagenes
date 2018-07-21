@@ -10,7 +10,9 @@ import core.service.generation.ImageGradientService;
 import core.service.statistics.GrayLevelStatisticsService;
 import core.service.statistics.RandomNumberGenerationService;
 import core.service.*;
+import core.service.transformations.FormatConversionService;
 import core.service.transformations.TransformRGBtoHSVImageService;
+import domain.CIELabConverter;
 import javafx.stage.FileChooser;
 
 import java.util.Random;
@@ -81,5 +83,9 @@ public class ServiceProvider {
 
     public static BilateralFunctionsService provideBilateralFunctionsService() {
         return new BilateralFunctionsService();
+    }
+
+    public static FormatConversionService provideFormatConversionService() {
+        return new FormatConversionService(new CIELabConverter());
     }
 }

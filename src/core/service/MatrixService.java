@@ -377,9 +377,9 @@ public class MatrixService {
     }
 
     public static double[][] convertToDouble(int[][] matrix) {
-        double [][] doubleMatrix = new double[matrix.length][matrix[0].length];
-        for (int i=0; i < matrix.length; i++) {
-            for (int j=0; j < matrix[0].length; j++) {
+        double[][] doubleMatrix = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 doubleMatrix[i][j] = matrix[i][j];
             }
         }
@@ -387,10 +387,10 @@ public class MatrixService {
     }
 
     public static int[][] convertToInt(double[][] matrix) {
-        int [][] intMatrix = new int[matrix.length][matrix[0].length];
-        for (int i=0; i < matrix.length; i++) {
-            for (int j=0; j < matrix[0].length; j++) {
-                intMatrix[i][j] = (int)matrix[i][j];
+        int[][] intMatrix = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                intMatrix[i][j] = (int) matrix[i][j];
             }
         }
         return intMatrix;

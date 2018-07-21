@@ -13,7 +13,6 @@ import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.hough.CircleHoughTransformAction;
-import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.ApplyActiveContourAction;
 import core.action.edgedetector.GetImageSequenceAction;
 import core.action.edit.ModifyPixelAction;
@@ -495,7 +494,7 @@ class ActionProvider {
 
     public static ApplyBilateralFilterAction provideApplyBilateralFilterAction() {
         if (applyBilateralFilterAction == null) {
-            applyBilateralFilterAction = new ApplyBilateralFilterAction();
+            applyBilateralFilterAction = new ApplyBilateralFilterAction(ServiceProvider.provideFormatConversionService());
         }
         return applyBilateralFilterAction;
     }

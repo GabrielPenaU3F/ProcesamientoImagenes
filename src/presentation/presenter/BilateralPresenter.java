@@ -54,7 +54,9 @@ public class BilateralPresenter {
                 double similaritySigma1 = Double.parseDouble(similaritySigma);
                 int maskSize1 = Integer.parseInt(maskSize);
                 SystemType imageSystemType = SystemType.valueOf(systemType);
+                long time = System.currentTimeMillis();
                 Image image = applyBilateralFilterAction.execute(customImage, closenessSigma1, similaritySigma1, maskSize1, imageSystemType).toFXImage();
+                System.out.println("ApplyBilateralFilterAction Period elapsed for "+ systemType + ": " + (System.currentTimeMillis() - time));
                 this.imagePublishSubject.onNext(image);
             });
         }
