@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="214.0" prefWidth="925.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.controller.BilateralFilterSceneController">
+	<Label layoutX="104.0" layoutY="58.0" text="Closeness Function Sigma" />
+	<Label layoutX="323.0" layoutY="58.0" text="Similarity Function Sigma" />
+	<Label layoutX="542.0" layoutY="58.0" text="Mask size (only odd values)" />
+	<Label layoutX="761.0" layoutY="58.0" text="Image system type" />
+	<TextField fx:id="closenessSigmaTextField" layoutX="99.0" layoutY="85.0" />
+	<TextField fx:id="similaritySigmaTextField" layoutX="317.0" layoutY="85.0" />
+	<TextField fx:id="maskSize" layoutX="525.0" layoutY="85.0" />
+	<Button layoutX="358.0" layoutY="151.0" mnemonicParsing="false" onAction="#onApply" text="Apply" />
+   <ChoiceBox fx:id="imageSystemType" layoutX="743.0" layoutY="85.0" prefWidth="150.0" />
+	<Label layoutX="542.0" layoutY="115.0" text="Recommended size" />
+   <Button layoutX="580.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCalculateRecommendedMaskValue" text="Calculate" />
+</AnchorPane>

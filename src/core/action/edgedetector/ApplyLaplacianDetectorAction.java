@@ -1,28 +1,28 @@
 package core.action.edgedetector;
 
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.mask.Mask;
 
 public class ApplyLaplacianDetectorAction {
 
     public CustomImage execute(CustomImage customImage, Mask mask, int slopeThreshold) {
-        ChannelMatrix maskResult = mask.apply(customImage);
-        ChannelMatrix markZeroCrossings = this.markZeroCrossings(maskResult, slopeThreshold);
+        RGBChannelMatrix maskResult = mask.apply(customImage);
+        RGBChannelMatrix markZeroCrossings = this.markZeroCrossings(maskResult, slopeThreshold);
         return new CustomImage(markZeroCrossings, customImage.getFormatString());
     }
 
-    private ChannelMatrix markZeroCrossings(ChannelMatrix channelMatrix, int slopeThreshold) {
+    private RGBChannelMatrix markZeroCrossings(RGBChannelMatrix RGBChannelMatrix, int slopeThreshold) {
 
-        int edgedRedMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getRedChannel(), slopeThreshold);
-        int edgedGreenMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getGreenChannel(), slopeThreshold);
-        int edgedBlueMatrix[][] = this.markHorizontalZeroCrossings(channelMatrix.getBlueChannel(), slopeThreshold);
+        int edgedRedMatrix[][] = this.markHorizontalZeroCrossings(RGBChannelMatrix.getRedChannel(), slopeThreshold);
+        int edgedGreenMatrix[][] = this.markHorizontalZeroCrossings(RGBChannelMatrix.getGreenChannel(), slopeThreshold);
+        int edgedBlueMatrix[][] = this.markHorizontalZeroCrossings(RGBChannelMatrix.getBlueChannel(), slopeThreshold);
 
-        int resultantRedMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getRedChannel(), edgedRedMatrix, slopeThreshold);
-        int resultantGreenMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getGreenChannel(), edgedGreenMatrix, slopeThreshold);
-        int resultantBlueMatrix[][] = this.markVerticalZeroCrossings(channelMatrix.getBlueChannel(), edgedBlueMatrix, slopeThreshold);
+        int resultantRedMatrix[][] = this.markVerticalZeroCrossings(RGBChannelMatrix.getRedChannel(), edgedRedMatrix, slopeThreshold);
+        int resultantGreenMatrix[][] = this.markVerticalZeroCrossings(RGBChannelMatrix.getGreenChannel(), edgedGreenMatrix, slopeThreshold);
+        int resultantBlueMatrix[][] = this.markVerticalZeroCrossings(RGBChannelMatrix.getBlueChannel(), edgedBlueMatrix, slopeThreshold);
 
-        return new ChannelMatrix(resultantRedMatrix, resultantGreenMatrix, resultantBlueMatrix);
+        return new RGBChannelMatrix(resultantRedMatrix, resultantGreenMatrix, resultantBlueMatrix);
     }
 
     private int[][] markHorizontalZeroCrossings(int[][] matrix, int slopeThreshold) {

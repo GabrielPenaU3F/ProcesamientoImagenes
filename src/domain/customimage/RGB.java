@@ -1,25 +1,17 @@
 package domain.customimage;
 
-public class RGB {
-    private final int red;
-    private final int green;
-    private final int blue;
+public class RGB extends TriChannelValue {
+
 
     public RGB(int red, int green, int blue) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+        super(red, green, blue);
     }
 
     public int getRed() {
-        return red;
+        return (int)super.getChannel1Value();
     }
 
-    public int getGreen() {
-        return green;
-    }
+    public int getGreen() { return (int)super.getChannel2Value(); }
 
-    public int getBlue() {
-        return blue;
-    }
+    public int getBlue() { return (int)super.getChannel3Value(); }
 }

@@ -367,4 +367,7 @@ public class MainSceneController {
 
     @FXML
     public void onApplySift() { this.mainPresenter.onApplySift(); }
+
+    @FXML
+    public void onBilateralFilter() { this.mainPresenter.onBilateralFilter(); }
 }

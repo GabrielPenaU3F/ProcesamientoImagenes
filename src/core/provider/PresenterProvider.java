@@ -207,4 +207,11 @@ public class PresenterProvider {
                 ActionProvider.provideLoadImageAction(),
                 ActionProvider.provideApplySiftDetectorAction());
     }
+
+    public static BilateralPresenter provideBilateralPresenter(BilateralFilterSceneController bilateralFilterSceneController) {
+        return new BilateralPresenter(bilateralFilterSceneController,
+                ActionProvider.provideApplyBilateralFilterAction(),
+                ActionProvider.provideGetImageAction(),
+                PublishSubjectProvider.provideOnModifiedImagePublishSubject());
+    }
 }

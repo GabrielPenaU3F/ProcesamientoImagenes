@@ -13,7 +13,6 @@ import core.action.edgedetector.ApplyLaplacianDetectorAction;
 import core.action.edgedetector.ApplySusanDetectorAction;
 import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.hough.CircleHoughTransformAction;
-import core.action.edgedetector.hough.LineHoughTransformAction;
 import core.action.edgedetector.ApplyActiveContourAction;
 import core.action.edgedetector.GetImageSequenceAction;
 import core.action.edit.ModifyPixelAction;
@@ -28,6 +27,7 @@ import core.action.edit.space_domain.operations.SubstractImagesAction;
 import core.action.edit.space_domain.operations.SumImagesAction;
 import core.action.figure.CreateImageWithFigureAction;
 import core.action.filter.ApplyFilterAction;
+import core.action.filter.bilateral.ApplyBilateralFilterAction;
 import core.action.gradient.CreateImageWithGradientAction;
 import core.action.histogram.CreateImageHistogramAction;
 import core.action.histogram.EqualizeGrayImageAction;
@@ -102,6 +102,7 @@ class ActionProvider {
     private static ApplyActiveContourOnImageSequenceAction applyActiveContourOnImageSequenceAction;
     private static ApplyHarrisDetectorAction applyHarrisDetectorAction;
     private static ApplySiftDetectorAction applySiftDetectorAction;
+    private static ApplyBilateralFilterAction applyBilateralFilterAction;
 
     public static GetImageAction provideGetImageAction() {
         if (getImageAction == null) {
@@ -489,5 +490,12 @@ class ActionProvider {
             applySiftDetectorAction = new ApplySiftDetectorAction();
         }
         return applySiftDetectorAction;
+    }
+
+    public static ApplyBilateralFilterAction provideApplyBilateralFilterAction() {
+        if (applyBilateralFilterAction == null) {
+            applyBilateralFilterAction = new ApplyBilateralFilterAction(ServiceProvider.provideFormatConversionService());
+        }
+        return applyBilateralFilterAction;
     }
 }

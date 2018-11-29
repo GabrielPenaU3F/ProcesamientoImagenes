@@ -2,7 +2,7 @@ package domain.mask;
 
 import domain.customimage.RGB;
 import domain.customimage.CustomImage;
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 
 public abstract class Mask {
 
@@ -33,18 +33,18 @@ public abstract class Mask {
     protected abstract double[][] createMatrix(int size);
 
     /* This is a default mask implementation it returns the convolution between an image and the concrete mask */
-    public ChannelMatrix apply(CustomImage image) {
+    public RGBChannelMatrix apply(CustomImage image) {
         Integer width = image.getWidth();
         Integer height = image.getHeight();
-        ChannelMatrix channelMatrix = new ChannelMatrix(width, height);
+        RGBChannelMatrix RGBChannelMatrix = new RGBChannelMatrix(width, height);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                channelMatrix.setValue(x, y, applyMaskToPixel(image, x, y));
+                RGBChannelMatrix.setValue(x, y, applyMaskToPixel(image, x, y));
             }
         }
 
-        return channelMatrix;
+        return RGBChannelMatrix;
     }
 
     /* Basic convolution segment algorithm */
@@ -77,6 +77,6 @@ public abstract class Mask {
     }
 
     public enum Type {
-        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN, SOBEL, DERIVATE_DIRECTIONAL_OPERATOR_STANDARD, DERIVATE_DIRECTIONAL_OPERATOR_KIRSH, DERIVATE_DIRECTIONAL_OPERATOR_PREWITT, DERIVATE_DIRECTIONAL_OPERATOR_SOBEL, LAPLACIAN, GAUSSIAN_LAPLACIAN, HIGH_PASS, SUSAN
+        MEAN, WEIGHTED_MEDIAN, GAUSSIAN, PREWITT, MEDIAN, SOBEL, DERIVATE_DIRECTIONAL_OPERATOR_STANDARD, DERIVATE_DIRECTIONAL_OPERATOR_KIRSH, DERIVATE_DIRECTIONAL_OPERATOR_PREWITT, DERIVATE_DIRECTIONAL_OPERATOR_SOBEL, LAPLACIAN, GAUSSIAN_LAPLACIAN, HIGH_PASS, BILATERAL, SUSAN
     }
 }

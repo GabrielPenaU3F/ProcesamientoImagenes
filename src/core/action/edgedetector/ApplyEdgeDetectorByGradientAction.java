@@ -2,7 +2,7 @@ package core.action.edgedetector;
 
 import core.service.ImageOperationsService;
 import core.service.MatrixService;
-import domain.customimage.ChannelMatrix;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import domain.customimage.CustomImage;
 import domain.mask.Mask;
 import javafx.scene.image.Image;
@@ -20,13 +20,13 @@ public class ApplyEdgeDetectorByGradientAction {
 
     public Image execute(CustomImage customImage, Mask xDerivativeMask, Mask yDerivativeMask) {
         //We calculate the partial X and Y derivative matrixes
-        ChannelMatrix xDerivateChannelMatrix = xDerivativeMask.apply(customImage);
-        ChannelMatrix yDerivateChannelMatrix = yDerivativeMask.apply(customImage);
+        RGBChannelMatrix xDerivateRGBChannelMatrix = xDerivativeMask.apply(customImage);
+        RGBChannelMatrix yDerivateRGBChannelMatrix = yDerivativeMask.apply(customImage);
 
         //We calculate the gradient by applying the formulae: sqrt(X^2 + Y^2)
-        ChannelMatrix xDerivativeSquare = this.imageOperationsService.multiplyChannelMatrixs(xDerivateChannelMatrix, xDerivateChannelMatrix);
-        ChannelMatrix yDerivativeSquare = this.imageOperationsService.multiplyChannelMatrixs(yDerivateChannelMatrix, yDerivateChannelMatrix);
-        ChannelMatrix gradientMagnitude = imageOperationsService
+        RGBChannelMatrix xDerivativeSquare = this.imageOperationsService.multiplyChannelMatrixs(xDerivateRGBChannelMatrix, xDerivateRGBChannelMatrix);
+        RGBChannelMatrix yDerivativeSquare = this.imageOperationsService.multiplyChannelMatrixs(yDerivateRGBChannelMatrix, yDerivateRGBChannelMatrix);
+        RGBChannelMatrix gradientMagnitude = imageOperationsService
                 .sqrtChannelMatrixs(imageOperationsService.sumChannelMatrixs(xDerivativeSquare, yDerivativeSquare));
 
         //The result is normalized and written into an image

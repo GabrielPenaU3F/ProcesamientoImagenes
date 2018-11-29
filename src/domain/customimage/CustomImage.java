@@ -8,6 +8,7 @@ import java.util.List;
 
 import core.provider.ServiceProvider;
 import core.service.MatrixService;
+import domain.customimage.channel_matrix.RGBChannelMatrix;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -28,8 +29,8 @@ public class CustomImage {
     private int[][] blueMatrix;
     private List<Pixel> pixelList;
 
-    public CustomImage(ChannelMatrix channelMatrix, String formatString) {
-        this(channelMatrixToFXImage(channelMatrix.getRedChannel(), channelMatrix.getGreenChannel(), channelMatrix.getBlueChannel()), formatString);
+    public CustomImage(RGBChannelMatrix RGBChannelMatrix, String formatString) {
+        this(channelMatrixToFXImage(RGBChannelMatrix.getRedChannel(), RGBChannelMatrix.getGreenChannel(), RGBChannelMatrix.getBlueChannel()), formatString);
     }
 
     public CustomImage(Image image, String formatString) {
@@ -59,12 +60,19 @@ public class CustomImage {
         PixelWriter pixelWriter = image.getPixelWriter();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                Color color = Color.rgb(red[i][j], green[i][j], blue[i][j]);
+                int truncatedRed = truncate(red[i][j]);
+                int truncatedGreen = truncate(green[i][j]);
+                int truncatedBlue = truncate(blue[i][j]);
+                Color color = Color.rgb(truncatedRed, truncatedGreen, truncatedBlue);
                 pixelWriter.setColor(i, j, color);
             }
         }
 
         return image;
+    }
+
+    private static int truncate(int truncated) {
+        return truncated > 255 ? 255 : truncated;
     }
 
     public int[][] getRedMatrix() {
@@ -159,5 +167,13 @@ public class CustomImage {
 
     public Color getColor(int x, int y) {
         return Color.rgb(getRChannelValue(x, y), getGChannelValue(x, y), getBChannelValue(x, y));
+    }
+
+    public RGBChannelMatrix getRgbChannelMatrix() {
+        return new RGBChannelMatrix(this.redMatrix, this.greenMatrix, this.blueMatrix);
+    }
+
+    public enum SystemType {
+        RGB, LAB
     }
 }
